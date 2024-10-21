@@ -1,0 +1,11 @@
+fragment OurPartnerInfo on OurPartnerNode {
+    id
+    title
+    image
+    validFrom
+    validTo
+    status
+    logo
+    link
+    description
+}

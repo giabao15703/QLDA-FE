@@ -1,0 +1,21 @@
+<div class="modal-wrapper">
+    <div class="modal-header flex items-center justify-between px-8">
+        <div class="text-white font-semibold lg:text-2xl text-lg">{{ data?.modal?.title | translate }}</div>
+        <mat-icon class="text-white cursor-pointer" (click)="close()">close</mat-icon>
+    </div>
+    <mat-dialog-content>
+        <ng-container #dynamicContent />
+    </mat-dialog-content>
+    @if (data?.modal?.footer) {
+        <mat-dialog-actions align="end">
+            <button
+                mat-raised-button
+                color="primary"
+                (click)="dynamicContentRef?.instance?.onSubmit()"
+                class="w-32 mx-5 mb-3"
+            >
+                {{ 'common.submit-btn' | translate }}
+            </button>
+        </mat-dialog-actions>
+    }
+</div>

@@ -1,0 +1,31 @@
+.menu-button {
+    transition: 300ms ease-in-out;
+    transform: rotate(0deg);
+}
+.menu-button.rotated {
+    transform: rotate(180deg);
+}
+.submenu {
+    overflow-y: hidden;
+    transition: transform 300ms ease;
+    transform: scaleY(0);
+    transform-origin: top;
+    padding-left: 30px;
+}
+.submenu.expanded {
+    transform: scaleY(1);
+}
+
+mat-sidenav-container {
+    mat-sidenav {
+        background-color: #000;
+    }
+
+    mat-sidenav-content {
+        background-color: #ffffff;
+        z-index: 2;
+    }
+}
+.mat-drawer.mat-drawer-side {
+    z-index: 1000;
+}

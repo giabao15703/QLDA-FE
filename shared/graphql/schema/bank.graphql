@@ -1,0 +1,33 @@
+query getBanks(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $name_Icontains: String
+    $itemCode_Icontains: String
+    $status: Boolean
+    $orderBy: String
+) {
+    banks(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        name_Icontains: $name_Icontains
+        itemCode_Icontains: $itemCode_Icontains
+        status: $status
+        orderBy: $orderBy
+    ) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...BankInfo
+            }
+        }
+    }
+}

@@ -1,0 +1,19 @@
+<div>
+    <button mat-button [matMenuTriggerFor]="translate">
+        <div class="flex items-center gap-2">
+            <img src="/assets/icons/navbar/translate-svgrepo-com.svg" alt="" />
+            <div class="lg:block hidden text-[#fff]">{{ currentLanguageFlag }}</div>
+            <img src="/assets/icons/navbar/down-arrow-svgrepo-com.svg" alt="" />
+        </div>
+    </button>
+</div>
+<div>
+    <mat-menu #translate="matMenu" class="!bg-gradient-to-r from-[#3CC9C7] to-[#15677f]">
+        <div mat-menu-item (click)="changeLanguage('en')">
+            <span class="!text-white">ENG</span>
+        </div>
+        <div mat-menu-item (click)="changeLanguage('vi')">
+            <span class="!text-white">VIE</span>
+        </div>
+    </mat-menu>
+</div>

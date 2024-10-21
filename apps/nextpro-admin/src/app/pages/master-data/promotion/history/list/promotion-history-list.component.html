@@ -1,0 +1,33 @@
+<mat-drawer-container [hasBackdrop]="false">
+    <!-- <mat-drawer [disableClose]="true" [opened]="!!detail" mode="over" position="end" class="!w-full">
+        @if (detail) {
+            <nextpro-admin-promotion-history-detail
+                [mode]="detail.mode"
+                [data]="detail.data"
+                [onCloseDrawer]="handleCloseDetailDrawer"
+                [refetch]="table.refetch"
+            />
+        }
+    </mat-drawer> -->
+    <mat-drawer-content>
+        <app-table
+            [attr.name]="table.name"
+            [isLoading]="loadingService.checkLoading(['getPromotionHistory'])"
+            [extendHeight]="228"
+            [columns]="table.config.columns"
+            [data]="table.state.data"
+            [pagination]="table.state.pagination"
+            [onSelectionInit]="table.onSelectionInit"
+            [onSort]="handleSort"
+            [onPageChange]="table.handlePageChange"
+        />
+        @if (table.state.selection) {
+            <div class="footer-fixed">
+                <button mat-raised-button color="primary" (click)="handleExport()">
+                    <mat-icon>download</mat-icon>
+                    {{ 'button.export' | translate | uppercase }}
+                </button>
+            </div>
+        }
+    </mat-drawer-content>
+</mat-drawer-container>

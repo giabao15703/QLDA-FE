@@ -1,0 +1,436 @@
+@if (form) {
+    <form [formGroup]="form.form" [class]="formClass">
+        <ng-container
+            *ngTemplateOutlet="formFieldTemplate; context: { formGroup: form.form, formConfig: form.config }"
+        />
+        <ng-template #formFieldTemplate let-formGroup="formGroup" let-formConfig="formConfig">
+            <ng-container [formGroup]="formGroup">
+                @for (config of formConfig; track $index) {
+                    <div [class]="config.wrapperClass">
+                        @switch (config.fieldType) {
+                            @case ('container') {
+                                @switch (config.containerType) {
+                                    @case ('div') {
+                                        <div [class]="config.class">
+                                            @if (config.label) {
+                                                <div [class]="config.labelClass">{{ config.label | translate }}</div>
+                                            }
+                                            <ng-container
+                                                *ngTemplateOutlet="
+                                                    formFieldTemplate;
+                                                    context: { formGroup, formConfig: config.children }
+                                                "
+                                            />
+                                        </div>
+                                    }
+                                    @case ('fieldset') {
+                                        <fieldset [class]="config.class">
+                                            @if (config.label) {
+                                                <legend [class]="config.labelClass">
+                                                    {{ config.label | translate }}
+                                                </legend>
+                                            }
+                                            <ng-container
+                                                *ngTemplateOutlet="
+                                                    formFieldTemplate;
+                                                    context: { formGroup, formConfig: config.children }
+                                                "
+                                            />
+                                        </fieldset>
+                                    }
+                                }
+                            }
+                            @case ('text') {
+                                <div [class]="config.class">{{ config.value | translate }}</div>
+                            }
+                            @case ('dynamic') {
+                                <div [class]="config.class" [formArrayName]="config.name">
+                                    @for (
+                                        control of form.getDynamicFields(config.name).controls;
+                                        track control;
+                                        let controlIndex = $index
+                                    ) {
+                                        <div [class]="config.rowClass" [formGroupName]="controlIndex">
+                                            <ng-container
+                                                *ngTemplateOutlet="
+                                                    formFieldTemplate;
+                                                    context: { formGroup: control, formConfig: config.children }
+                                                "
+                                            />
+                                            <button
+                                                mat-icon-button
+                                                color="warn"
+                                                (click)="form.deleteDynamicField(config, controlIndex)"
+                                            >
+                                                <mat-icon>remove_circle</mat-icon>
+                                            </button>
+                                        </div>
+                                    }
+                                </div>
+                                @if (config.createButton) {
+                                    <div class="mt-4 flex justify-end">
+                                        <button
+                                            mat-raised-button
+                                            color="primary"
+                                            (click)="form.createDynamicField(config)"
+                                            [disabled]="
+                                                form.getDynamicFields(config.name).controls.length === config.maxLength
+                                            "
+                                        >
+                                            <div class="flex items-center gap-x-1">
+                                                <img src="assets/icons/plus-svgrepo-com.svg" alt="Add" class="size-6" />
+                                                <span>{{ config.createButton.text | translate | uppercase }}</span>
+                                            </div>
+                                        </button>
+                                    </div>
+                                }
+                            }
+                            @case ('input') {
+                                <mat-form-field
+                                    class="w-full"
+                                    [class]="config.class"
+                                    [appearance]="config?.appearance ?? 'outline'"
+                                    [matTooltip]="form.getFieldError(config)"
+                                >
+                                    @if (config?.loadingName && loadingService.checkLoading([config.loadingName])) {
+                                        <app-loading [diameter]="25" />
+                                    }
+                                    @if (config?.prefix?.text) {
+                                        <span matTextPrefix>
+                                            {{ config.prefix.text | translate }}
+                                        </span>
+                                    }
+                                    @if (config?.prefix?.icon) {
+                                        <button
+                                            matPrefix
+                                            mat-icon-button
+                                            color="primary"
+                                            [class]="config.prefix.class"
+                                            [disabled]="
+                                                loadingService.checkLoading([config?.loadingName]) ||
+                                                form.getField(config.name).disabled
+                                            "
+                                            (click)="config.prefix?.onClick($event)"
+                                        >
+                                            <mat-icon>
+                                                {{ config.prefix.icon }}
+                                            </mat-icon>
+                                        </button>
+                                    }
+                                    <mat-label>{{ config.label | translate }}</mat-label>
+                                    @switch (config.inputType) {
+                                        @case ('text') {
+                                            <input
+                                                matInput
+                                                [formControlName]="config.name"
+                                                [type]="config.inputType"
+                                                [placeholder]="config.placeholder | translate"
+                                                (blur)="config.onBlur?.($event)"
+                                                (input)="form.onFieldChange($event, config)"
+                                            />
+                                        }
+                                        @case ('password') {
+                                            <input
+                                                matInput
+                                                [formControlName]="config.name"
+                                                [type]="config._showPassword ? 'text' : 'password'"
+                                                [placeholder]="config.placeholder | translate"
+                                                (blur)="config.onBlur?.($event)"
+                                                (input)="form.onFieldChange($event, config)"
+                                            />
+                                        }
+                                        @case ('autocomplete') {
+                                            <input
+                                                matInput
+                                                [formControlName]="config.name"
+                                                [placeholder]="config.placeholder | translate"
+                                                [matAutocomplete]="auto"
+                                                (blur)="config.onBlur?.($event)"
+                                                (input)="form.onFieldChangeDebounce($event, config)"
+                                            />
+                                            <mat-autocomplete
+                                                #auto="matAutocomplete"
+                                                [displayWith]="form.autoCompleteDisplayWith"
+                                                (optionSelected)="form.onFieldChange($event, config)"
+                                            >
+                                                @if (config?.loadingName) {
+                                                    @if (loadingService.checkLoading([config.loadingName])) {
+                                                        <app-loading [diameter]="25" />
+                                                    }
+                                                }
+                                                @if (config.options) {
+                                                    @for (option of config.options; track $index) {
+                                                        <mat-option [value]="option">
+                                                            {{ option.label | translate }}
+                                                        </mat-option>
+                                                    }
+                                                }
+                                            </mat-autocomplete>
+                                        }
+                                        @case ('chip') {
+                                            <mat-chip-grid #chipGrid>
+                                                @for (item of form.getFieldValue(config); track item) {
+                                                    <mat-chip-row>
+                                                        {{ item.label }}
+                                                    </mat-chip-row>
+                                                }
+                                                <input
+                                                    matInput
+                                                    class="!hidden"
+                                                    [formControlName]="config.name"
+                                                    [placeholder]="config.placeholder | translate"
+                                                    (blur)="config.onBlur?.($event)"
+                                                    (input)="form.onFieldChange($event, config)"
+                                                    [matChipInputFor]="chipGrid"
+                                                />
+                                            </mat-chip-grid>
+                                        }
+                                    }
+                                    @switch (config.inputType) {
+                                        @case ('password') {
+                                            <button
+                                                matSuffix
+                                                mat-icon-button
+                                                color="primary"
+                                                (click)="form.togglePassword($event, config)"
+                                                [disabled]="form.getField(config.name).disabled"
+                                            >
+                                                <mat-icon>
+                                                    {{ config._showPassword ? 'visibility' : 'visibility_off' }}
+                                                </mat-icon>
+                                            </button>
+                                        }
+                                    }
+                                    @if (config.maxLength) {
+                                        <mat-hint align="end">
+                                            {{ form.getFieldValue(config)?.length }}/{{ config.maxLength }}
+                                        </mat-hint>
+                                    }
+                                    @if (config?.suffix?.text) {
+                                        <span matTextSuffix>
+                                            {{ config.suffix.text | translate }}
+                                        </span>
+                                    }
+                                    @if (config?.suffix?.icon) {
+                                        <button
+                                            matSuffix
+                                            mat-icon-button
+                                            color="primary"
+                                            [class]="config.suffix.class"
+                                            [disabled]="
+                                                loadingService.checkLoading([config?.loadingName]) ||
+                                                form.getField(config.name).disabled
+                                            "
+                                            (click)="config.suffix?.onClick($event)"
+                                        >
+                                            <mat-icon>
+                                                {{ config.suffix.icon }}
+                                            </mat-icon>
+                                        </button>
+                                    }
+                                </mat-form-field>
+                            }
+                            @case ('textarea') {
+                                <mat-form-field
+                                    class="w-full"
+                                    [class]="config.class"
+                                    [appearance]="config?.appearance ?? 'outline'"
+                                    [matTooltip]="form.getFieldError(config)"
+                                >
+                                    @if (loadingService.checkLoading([config?.loadingName])) {
+                                        <app-loading [diameter]="25" />
+                                    }
+                                    <mat-label>{{ config.label | translate }}</mat-label>
+                                    <textarea
+                                        matInput
+                                        [formControlName]="config.name"
+                                        [placeholder]="config.placeholder | translate"
+                                        [rows]="config.rows"
+                                    ></textarea>
+                                </mat-form-field>
+                            }
+                            @case ('select') {
+                                <mat-form-field
+                                    class="w-full"
+                                    [class]="config.class"
+                                    [appearance]="config?.appearance ?? 'outline'"
+                                    [matTooltip]="form.getFieldError(config)"
+                                >
+                                    @if (config?.loadingName) {
+                                        @if (loadingService.checkLoading([config.loadingName])) {
+                                            <app-loading [diameter]="25" />
+                                        }
+                                    }
+                                    <mat-label>{{ config.label | translate }}</mat-label>
+                                    <mat-select
+                                        [multiple]="config.multiple"
+                                        [formControlName]="config.name"
+                                        (selectionChange)="form.onFieldChange($event, config)"
+                                    >
+                                        @if (config.options) {
+                                            @for (option of config.options; track $index) {
+                                                <mat-option [value]="option.value">
+                                                    {{ option.label | translate }}
+                                                </mat-option>
+                                            }
+                                        }
+                                    </mat-select>
+                                </mat-form-field>
+                            }
+                            @case ('checkbox') {
+                                <mat-checkbox
+                                    color="primary"
+                                    [formControlName]="config.name"
+                                    [class]="config.class"
+                                    [matTooltip]="form.getFieldError(config)"
+                                    (change)="form.onFieldChange($event, config)"
+                                >
+                                    {{ config.label | translate }}
+                                </mat-checkbox>
+                            }
+                            @case ('radio') {
+                                <div class="flex items-center">
+                                    @if (config?.prefix?.text) {
+                                        <div [class]="config.prefix.class">{{ config.prefix.text | translate }}:</div>
+                                    }
+                                    <mat-radio-group
+                                        [formControlName]="config.name"
+                                        [class]="config.class"
+                                        [matTooltip]="form.getFieldError(config)"
+                                        (change)="form.onFieldChange($event, config)"
+                                    >
+                                        @if (config.options) {
+                                            @for (option of config.options; track $index) {
+                                                <mat-radio-button [value]="option.value">
+                                                    {{ option.label | translate }}
+                                                </mat-radio-button>
+                                            }
+                                        }
+                                    </mat-radio-group>
+                                </div>
+                            }
+                            @case ('rating') {
+                                <div
+                                    class="flex items-center"
+                                    [class]="config.class"
+                                    [matTooltip]="form.getFieldError(config)"
+                                >
+                                    <app-rating [formControlName]="config.name" />
+                                </div>
+                            }
+                            @case ('upload') {
+                                <div class="app-file-upload">
+                                    @if (!config.disabled) {
+                                        <mat-form-field
+                                            readonly
+                                            class="w-full"
+                                            [class]="config.class"
+                                            [appearance]="config?.appearance ?? 'outline'"
+                                        >
+                                            <mat-label>{{ config.label | translate }}</mat-label>
+                                            @if (config.showDownload && form.getFieldValue(config)) {
+                                                <button
+                                                    mat-button
+                                                    matPrefix
+                                                    color="primary"
+                                                    (click)="form.downloadFile(config)"
+                                                >
+                                                    <mat-icon>download</mat-icon>
+                                                </button>
+                                            }
+                                            <ngx-mat-file-input
+                                                [formControl]="getFormControl(config)"
+                                                [multiple]="config.uploadType === 'multiple'"
+                                                [accept]="config.accept"
+                                                [matTooltip]="form.getFieldError(config)"
+                                            />
+                                        </mat-form-field>
+                                    }
+                                    @if (
+                                        config.fieldType === 'upload' &&
+                                        config.showPreview &&
+                                        form.getFieldValue(config)
+                                    ) {
+                                        @if (form.getFieldValueFileType(config) === 'image') {
+                                            <ks-plain-gallery
+                                                [id]="1"
+                                                [images]="form.getPreviewImages(config)"
+                                                [config]="form.libConfigPlainGalleryGrid"
+                                                (clickImage)="form.showPreviewImage(1, $event, config)"
+                                            />
+                                        }
+                                        @if (form.getFieldValueFileType(config) === 'video') {
+                                            <video
+                                                preload="auto"
+                                                controls
+                                                disablePictureInPicture
+                                                controlsList="nodownload"
+                                                style="max-width: 100%"
+                                            >
+                                                <source src="{{ form.previewValue }}" type="video/mp4" />
+                                            </video>
+                                        }
+                                    }
+                                </div>
+                            }
+                            @case ('text-editor') {
+                                <div class="mt-5 w-full" [matTooltip]="form.getFieldError(config)">
+                                    <ckeditor
+                                        [formControlName]="config.name"
+                                        [class]="config.class"
+                                        [editor]="Editor"
+                                        [config]="{ placeholder: config.placeholder | translate }"
+                                    />
+                                </div>
+                            }
+                            @case ('datepicker') {
+                                <mat-form-field
+                                    class="w-full"
+                                    [class]="config.class"
+                                    [appearance]="config?.appearance ?? 'outline'"
+                                    [matTooltip]="form.getFieldError(config)"
+                                >
+                                    <mat-label>{{ config.label | translate }}</mat-label>
+                                    <input
+                                        matInput
+                                        readonly
+                                        [matDatepicker]="datepicker"
+                                        [formControlName]="config.name"
+                                        [placeholder]="config.placeholder | translate"
+                                        [min]="form.datepickerMin(config)"
+                                        [max]="form.datepickerMax(config)"
+                                        (click)="datepicker.open()"
+                                    />
+                                    <mat-datepicker-toggle matIconSuffix [for]="datepicker" />
+                                    <mat-datepicker
+                                        #datepicker
+                                        [panelClass]="config.panelClass"
+                                        [startView]="config.startView ?? 'month'"
+                                        (yearSelected)="form.datepickerYearSelected($event, datepicker, config)"
+                                        (monthSelected)="form.datepickerMonthSelected($event, datepicker, config)"
+                                    />
+                                </mat-form-field>
+                            }
+                            @case ('table') {
+                                <app-table [attr.name]="config.name" [form]="form" [config]="config" />
+                            }
+                            @case ('button') {
+                                <button
+                                    mat-button
+                                    [class]="config.class"
+                                    [color]="config.color"
+                                    (click)="config.onClick()"
+                                >
+                                    @if (config.icon) {
+                                        <mat-icon>config.icon</mat-icon>
+                                    }
+                                    {{ config.label | translate }}
+                                </button>
+                            }
+                        }
+                    </div>
+                }
+            </ng-container>
+        </ng-template>
+    </form>
+}

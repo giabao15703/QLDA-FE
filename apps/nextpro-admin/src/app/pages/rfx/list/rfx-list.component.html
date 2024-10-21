@@ -1,0 +1,23 @@
+<mat-drawer-container [hasBackdrop]="false">
+    <mat-drawer class="!w-auto" mode="side" position="start" [disableClose]="true" [opened]="table.config.showFilter">
+        <app-filter
+            formClass="grid grid-cols-2 gap-2"
+            [onFilter]="handleFilter"
+            [formConfig]="table.config.filterForm"
+            [onCloseDrawer]="table.toggleFilterDrawer"
+        />
+    </mat-drawer>
+    <mat-drawer-content>
+        <app-table
+            [attr.name]="table.name"
+            [isLoading]="loadingService.checkLoading(['getRfxes'])"
+            [extendHeight]="136"
+            [columns]="table.config.columns"
+            [data]="table.state.data"
+            [pagination]="table.state.pagination"
+            [onShowFilter]="table.toggleFilterDrawer"
+            [onSort]="table.handleSort"
+            [onPageChange]="table.handlePageChange"
+        />
+    </mat-drawer-content>
+</mat-drawer-container>

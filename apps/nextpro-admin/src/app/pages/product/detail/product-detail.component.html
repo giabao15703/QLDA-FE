@@ -1,0 +1,264 @@
+<!-- <div class="text-xl text-[#15677F] font-semibold bg-[#F2F2F2] lg:py-3 py-5 lg:px-32 px-6">
+        {{ 'product.product-detail.title' | translate }}
+    </div> -->
+<section>
+    <div class="flex items-center gap-2 mb-2 sticky top-0 z-[101] bg-[#01313f] text-white rounded">
+        <button mat-raised-button color="warn" (click)="onCloseDrawer()">
+            <mat-icon class="!mr-0">close</mat-icon>
+        </button>
+        @if (mode === 'CREATE') {
+            <div class="flex-1 text-center font-bold text-[20px]">
+                {{ 'supplier-profile.tabs.product.productCreate' | translate }}
+            </div>
+        } @else {
+            <div class="flex-1 text-center font-bold text-[20px]">{{ data?.productName }}</div>
+        }
+    </div>
+    <div>
+        <div class="mt-5 border rounded-lg p-4 mx-6">
+            <!-- generalInfoForm -->
+            <div>
+                <div class="font-semibold mb-2">{{ 'product.generalInformation' | translate }}</div>
+                <app-form [form]="generalInfoForm" [attr.name]="generalInfoForm.name" />
+            </div>
+
+            <!-- specificationsForm -->
+            <div>
+                <div class="font-semibold my-2">{{ 'product.create.specifications' | translate }}</div>
+                <div class="border border-[#A9A5A5] px-4 py-3 h-auto">
+                    <app-form [form]="specificationsForm" [attr.name]="specificationsForm.name" />
+                    <p class="mt-2 text-xs text-center text-[#A9A5A5]">
+                        {{ 'product.create.product-images.upload-image' | translate }}
+                    </p>
+                </div>
+            </div>
+
+            <!-- otherInformationForm -->
+            <div>
+                <div class="font-semibold my-2">{{ 'product.otherInformation' | translate }}</div>
+                <app-form [form]="otherInformationForm" [attr.name]="otherInformationForm.name" />
+            </div>
+
+            <!-- productGroupForm -->
+            <div>
+                <div class="font-semibold my-2">{{ 'product.otherInformation' | translate }}</div>
+                <app-form
+                    [form]="productGroupForm"
+                    [attr.name]="productGroupForm.name"
+                    formClass="grid lg:grid-rows-1 items-center gap-x-4"
+                />
+            </div>
+            <div class="grid lg:grid-cols-2 grid-cols-1 lg:gap-x-10">
+                <!-- productPriceForm -->
+                <div class="flex flex-col">
+                    <div class="font-semibold my-3">{{ 'product.create.featured-products.title' | translate }}</div>
+                    <app-form [form]="productPriceForm" [attr.name]="productPriceForm.name"></app-form>
+                </div>
+
+                <!-- wholeSalePriceForm -->
+                <div class="flex flex-col">
+                    <div class="font-semibold my-3">{{ 'product.create.wholesale-price.title' | translate }}</div>
+                    <app-form [form]="wholeSalePriceForm" [attr.name]="wholeSalePriceForm.name"></app-form>
+                </div>
+            </div>
+
+            <!-- productServiceDetailForm -->
+            <div>
+                <div class="font-semibold mb-2">{{ 'product.create.product-service.title' | translate }}</div>
+                <app-form [form]="productServiceDetailForm" formClass="grid lg:grid-cols-2 lg:gap-x-10 grid-col-1" />
+            </div>
+
+            <div class="font-semibold mb-2">{{ 'product.create.accept-payment.title' | translate }}</div>
+            <div class="grid lg:grid-cols-2 grid-cols-1 items-start">
+                <div>
+                    <div class="hidden lg:flex flex-col">
+                        <div class="flex items-center gap-x-3">
+                            <mat-radio-button value="1">{{
+                                'product.create.accept-payment.payment-with-nextpro' | translate
+                            }}</mat-radio-button>
+                            <button mat-icon-button>
+                                <img src="/assets/icons/voucher.svg" alt="" class="size-4" />
+                            </button>
+                        </div>
+                        <div class="mt-2">
+                            <mat-radio-button value="2">{{
+                                'product.create.accept-payment.payment-transfer' | translate
+                            }}</mat-radio-button>
+                        </div>
+                    </div>
+                    <div class="lg:hidden flex flex-col">
+                        <div class="flex flex-col">
+                            <div class="flex items-center">
+                                <mat-radio-button value="1">{{
+                                    'product.create.accept-payment.payment-with-nextpro' | translate
+                                }}</mat-radio-button>
+                                <button mat-icon-button>
+                                    <img src="/assets/icons/voucher.svg" alt="" />
+                                </button>
+                            </div>
+                            <div class="ml-12 flex flex-col gap-y-1 lg:hidden text-sm text-[#A9A5A5]">
+                                <p>{{ 'product.create.accept-payment.transfer-fee' | translate }}: %</p>
+                                <p>{{ 'product.create.accept-payment.service-fee' | translate }}: %</p>
+                            </div>
+                        </div>
+
+                        <div class="mt-3">
+                            <mat-radio-button value="2">{{
+                                'product.create.accept-payment.payment-transfer' | translate
+                            }}</mat-radio-button>
+                        </div>
+                    </div>
+                </div>
+                <div class="hidden mt-1 lg:flex justify-around text-sm text-[#A9A5A5]">
+                    <p>{{ 'product.create.accept-payment.transfer-fee' | translate }}: %</p>
+                    <p>{{ 'product.create.accept-payment.service-fee' | translate }}: %</p>
+                </div>
+            </div>
+
+            <!-- voucherForm -->
+            <div>
+                <div class="font-semibold my-2">
+                    {{ 'product.create.voucher-when-purchased-now.title' | translate }}
+                </div>
+                <div class="border border-[#707070] p-4 h-auto">
+                    <app-form [form]="voucherForm" [attr.name]="voucherForm.name" />
+                </div>
+            </div>
+
+            <!-- discountProgramForm -->
+            <div class="mt-5 border border-[#707070] p-4 h-auto">
+                <app-form [form]="discountProgramForm" [attr.name]="discountProgramForm.name" />
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-1">
+                    <div class="flex lg:flex-col flex-row lg:items-center justify-between text-sm">
+                        <div>{{ 'product.create.membership.gold-member' | translate }}</div>
+                        <p class="text-[#AEAEAE]">-3%</p>
+                    </div>
+                    <div class="flex lg:flex-col flex-row lg:items-center justify-between text-sm">
+                        <div>{{ 'product.create.membership.platinum-member' | translate }}</div>
+                        <p class="text-[#AEAEAE]">-4%</p>
+                    </div>
+                    <div class="flex lg:flex-col flex-row lg:items-center justify-between text-sm">
+                        <div>{{ 'product.create.membership.diamond-member' | translate }}</div>
+                        <p class="text-[#AEAEAE]">-5%</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- certificationForm -->
+            <div class="my-5">
+                <div class="my-3 flex justify-between">
+                    <div class="font-semibold lg:w-auto w-60">
+                        {{ 'product.create.certification.title' | translate }}
+                        <span class="text-xs font-normal text-[#6F6D6D]">{{
+                            'product.create.certification.description' | translate
+                        }}</span>
+                    </div>
+                </div>
+                <app-form [form]="certificationForm" [attr.name]="certificationForm.name" />
+            </div>
+
+            <!-- productImageForm -->
+            <div>
+                <div class="my-3 flex justify-between">
+                    <div class="font-semibold lg:w-auto w-60">
+                        {{ 'product.create.product-images.title' | translate }}
+                        <span class="text-xs font-normal text-[#6F6D6D]">{{
+                            'product.create.product-images.upload-image' | translate
+                        }}</span>
+                    </div>
+                </div>
+                <app-form [form]="productImageForm" [attr.name]="productImageForm.name" />
+            </div>
+
+            <div class="my-3">
+                <div class="font-semibold">
+                    {{ 'product.create.related-products.title' | translate }}
+                    <span class="text-xs font-normal text-[#6F6D6D]">
+                        {{ 'product.create.related-products.description' | translate }}
+                    </span>
+                </div>
+                <div class="mt-3 flex flex-col items-center gap-y-3 border border-[#707070] p-4 h-auto">
+                    <button class="flex justify-end">
+                        <img src="assets/icons/add.svg" alt="Add" class="size-5" />
+                    </button>
+                    <div class="text-xs text-center text-[#A9A5A5]">
+                        {{ 'product.create.related-products.describe' | translate }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @if (mode === 'CREATE') {
+            <div class="mt-2 flex items-center px-6">
+                <mat-checkbox (change)="onIsTermAcceptChange($event)">
+                    <div class="lg:text-[17px] text-[14px]" [ngClass]="{ disabled: !isTermAccept }">
+                        {{ 'product.create.policy-checkbox.description' | translate }}
+                        <a
+                            href="https://discovery.nextpro.io/chinh-sach-bao-mat-quy-dinh-quyen-va-nghia-vu/"
+                            target="_blank"
+                            class="no-underline text-[#15677f] font-semibold cursor-pointer"
+                            >{{ 'product.create.policy-checkbox.policy' | translate }}
+                        </a>
+                    </div>
+                </mat-checkbox>
+            </div>
+        }
+        <div class="hidden my-10 lg:flex lg:justify-end lg:gap-4 px-6">
+            <button mat-stroked-button class="!border-[#15677F] w-[130px]" (click)="onCloseDrawer()">
+                <div class="pt-[2px] font-semibold text-[#15677F] relative z-10">
+                    {{ 'product.create.submit-btn.cancel' | translate }}
+                </div>
+            </button>
+            @if (mode === 'UPDATE') {
+                <button mat-raised-button color="primary" class="w-[130px]">
+                    <div class="pt-[2px] font-semibold relative z-10">
+                        {{ 'product.create.submit-btn.save' | translate }}
+                    </div>
+                </button>
+            }
+            @if (mode === 'CREATE') {
+                <button
+                    mat-raised-button
+                    color="primary"
+                    class="w-[130px]"
+                    [disabled]="!isTermAccept"
+                    (click)="onSubmit()"
+                >
+                    <div class="pt-[2px] font-semibold relative z-10">
+                        {{ 'product.create.submit-btn.confirm' | translate }}
+                    </div>
+                </button>
+            }
+        </div>
+
+        <div class="lg:hidden flex flex-col gap-y-5 my-8 px-6">
+            <div class="flex justify-between gap-4">
+                <button mat-stroked-button class="!border-[#15677F] w-full" (click)="onCloseDrawer()">
+                    <div class="pt-[2px] font-semibold text-[#15677F] relative z-10">
+                        {{ 'product.create.submit-btn.cancel' | translate }}
+                    </div>
+                </button>
+                @if (mode === 'UPDATE') {
+                    <button mat-raised-button color="primary" class="w-full">
+                        <div class="pt-[2px] font-semibold text-[#15677F] relative z-10">
+                            {{ 'product.create.submit-btn.save' | translate }}
+                        </div>
+                    </button>
+                }
+            </div>
+            @if (mode === 'CREATE') {
+                <button
+                    mat-raised-button
+                    color="primary"
+                    class="mt-4 w-full"
+                    [disabled]="!isTermAccept"
+                    (click)="onSubmit()"
+                >
+                    <div class="pt-[2px] font-semibold relative z-10">
+                        {{ 'product.create.submit-btn.confirm' | translate }}
+                    </div>
+                </button>
+            }
+        </div>
+    </div>
+</section>

@@ -1,0 +1,58 @@
+<section>
+    <nextpro-user-navbar />
+</section>
+<section class="mx-12 my-8">
+    <!--  Search Product/Service -->
+    <div class="mt-6 relative flex items-center">
+        <input
+            placeholder="{{ 'homepage-product.navigation.product-service-keywords' | translate }}"
+            class="w-full h-[40px] lg:rounded-[20px] rounded-[25px] border-[1px] border-[#979797] pl-[20px] pr-[50px] focus:outline-none placeholder:text-xs lg:placeholder:text-base"
+            [formControl]="searchControl"
+            
+            (input)="onSearch()"
+            (click)="onInputClick()"
+        />
+        <!-- <mat-autocomplete #auto="matAutocomplete" (optionsScroll)="onOptionsScroll()">
+            @if (isLoading()) {
+                <mat-option [value]="'loading'">
+                    {{ 'common.loading' | translate }}
+                </mat-option>
+            }
+            @if (options.length > 0) {
+                @for (option of options; track $index) {
+                    <mat-option [value]="option.value" (click)="onSelectOption(option)">
+                        {{ option.label }}
+                    </mat-option>
+                }
+            }
+            @if (options.length === 0 && !isLoading()) {
+                <mat-option>
+                    {{ 'home.noResult' | translate }}
+                </mat-option>
+            }
+        </mat-autocomplete> -->
+        <div
+            class="absolute right-2 flex justify-center items-center lg:w-[62px] w-[50px] lg:h-8 h-9 bg-gradient-to-r from-[#15677F] to-[#0B3440] p-2 rounded-full cursor-pointer"
+        >
+            <img src="/assets/icons/search-svgrepo-com.svg" alt="" class="w-6" />
+        </div>
+    </div>
+
+    <app-filter
+        class="mt-3 !items-stretch"
+        formClass="grid grid-cols-3 gap-x-6"
+        [onFilter]="table.handleFilter"
+        [formConfig]="table.config.filterForm"
+        [showClose]="false"
+        [showExportButton]="true"
+    />
+    <app-table
+        class="mt-8"
+        [attr.name]="table.name"
+        [extendHeight]="180"
+        [columns]="table.config.columns"
+        [data]="table.state.data"
+        [pagination]="table.state.pagination"
+        [onPageChange]="table.handlePageChange"
+    />
+</section>

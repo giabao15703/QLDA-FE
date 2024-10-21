@@ -1,0 +1,96 @@
+query getAdmin($id: ID!) {
+    admin(id: $id) {
+        ...AdminInfo
+    }
+}
+
+query getAdmins(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $longName: String
+    $created: String
+    $username: String
+    $email: String
+    $status: String
+    $shortName: String
+    $validFrom: String
+    $validTo: String
+    $orderBy: String
+) {
+    admins(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        longName: $longName
+        created: $created
+        username: $username
+        email: $email
+        status: $status
+        shortName: $shortName
+        validFrom: $validFrom
+        validTo: $validTo
+        orderBy: $orderBy
+    ) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...AdminInfo
+            }
+        }
+    }
+}
+
+mutation createAdmin($admin: AdminInput!) {
+    adminCreate(admin: $admin) {
+        status
+        error {
+            ...ErrorInfo
+        }
+        admin {
+            ...AdminInfo
+        }
+    }
+}
+
+mutation updateAdmin($admin: AdminUpdateInput!, $id: String!, $isDelete: Boolean!) {
+    adminUpdate(admin: $admin, id: $id, isDelete: $isDelete) {
+        status
+        error {
+            ...ErrorInfo
+        }
+        admin {
+            ...AdminInfo
+        }
+    }
+}
+
+mutation updateAdminStatus($listStatus: [AdminStatusUpdateInput]!) {
+    adminStatusUpdate(listStatus: $listStatus) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+query getGroupPermissions($before: String, $after: String, $first: Int, $last: Int, $id: ID) {
+    groupPermissions(before: $before, after: $after, first: $first, last: $last, id: $id) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...GroupPermissionInfo
+            }
+        }
+    }
+}

@@ -1,0 +1,65 @@
+@if (loadingService.checkLoading(['getBuyerSubAccountWithBuyer'])) {
+    <app-loading [backdrop]="true" />
+}
+<mat-drawer-container [hasBackdrop]="false">
+    <mat-drawer [disableClose]="true" [opened]="!!detail" mode="over" position="end" class="!w-full">
+        @if (detail) {
+            <nextpro-admin-account-buyer-sub-account-detail
+                [mode]="detail.mode"
+                [data]="detail.data"
+                [onCloseDrawer]="handleCloseDetailDrawer"
+                [refetch]="table.refetch"
+            />
+        }
+    </mat-drawer>
+    <mat-drawer class="!w-auto" mode="side" position="start" [disableClose]="true" [opened]="table.config.showFilter">
+        <app-filter
+            formClass="grid grid-cols-2 gap-2"
+            [onFilter]="handleFilter"
+            [formConfig]="table.config.filterForm"
+            [onCloseDrawer]="table.toggleFilterDrawer"
+        />
+    </mat-drawer>
+    <mat-drawer-content>
+        <app-table
+            [attr.name]="table.name"
+            [isLoading]="loadingService.checkLoading(['getBuyerSubAccountsWithBuyer'])"
+            [extendHeight]="228"
+            [columns]="table.config.columns"
+            [data]="table.state.data"
+            [pagination]="table.state.pagination"
+            [onSelectionInit]="table.onSelectionInit"
+            [onExpandInit]="table.onExpandInit"
+            [onShowFilter]="table.toggleFilterDrawer"
+            [onSort]="table.handleSort"
+            [onPageChange]="table.handlePageChange"
+            dataNested="buyerSubAccountsActivity.edges"
+        />
+        @if (table.state.selection) {
+            <div class="footer-fixed">
+                <button
+                    mat-raised-button
+                    color="primary"
+                    (click)="handleUpdateStatus(1)"
+                    [disabled]="!table.state.selection.hasValue()"
+                >
+                    <mat-icon>check</mat-icon>
+                    {{ 'button.activate' | translate | uppercase }}
+                </button>
+                <button
+                    mat-raised-button
+                    color="warn"
+                    (click)="handleUpdateStatus(3)"
+                    [disabled]="!table.state.selection.hasValue()"
+                >
+                    <mat-icon>close</mat-icon>
+                    {{ 'button.deactivate' | translate | uppercase }}
+                </button>
+                <button mat-raised-button color="primary" (click)="handleExport()">
+                    <mat-icon>download</mat-icon>
+                    {{ 'button.exportAll' | translate | uppercase }}
+                </button>
+            </div>
+        }
+    </mat-drawer-content>
+</mat-drawer-container>

@@ -1,0 +1,128 @@
+query getUserSupplierSicp($id: ID!) {
+    userSupplierSicp(id: $id) {
+        ...SupplierSICPInfo
+    }
+}
+
+query getUserSupplierSicps(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $isReviewed: String
+    $isConfirmed: String
+    $supplierId: String
+    $latestFiles: Float
+    $accountId: String
+    $accountName: String
+    $accountEmail: String
+    $sicpRegistration: String
+    $dateCreatedFrom: DateTime
+    $dateCreatedTo: DateTime
+    $dateCreated: DateTime
+    $fileFilter: Float
+    $sicpTypeFilter: Boolean
+    $sanctionCheckFilter: Boolean
+    $orderBy: String
+) {
+    userSupplierSicps(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        isReviewed: $isReviewed
+        isConfirmed: $isConfirmed
+        supplierId: $supplierId
+        latestFiles: $latestFiles
+        accountId: $accountId
+        accountName: $accountName
+        accountEmail: $accountEmail
+        sicpRegistration: $sicpRegistration
+        dateCreatedFrom: $dateCreatedFrom
+        dateCreatedTo: $dateCreatedTo
+        dateCreated: $dateCreated
+        fileFilter: $fileFilter
+        sicpTypeFilter: $sicpTypeFilter
+        sanctionCheckFilter: $sanctionCheckFilter
+        orderBy: $orderBy
+    ) {
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...SupplierSICPInfo
+            }
+        }
+        totalCount
+    }
+}
+
+mutation createUserSupplierSicp($input: SICPInput!) {
+    userSupplierSicpCreate(input: $input) {
+        status
+        error {
+            ...ErrorInfo
+        }
+        sicp {
+            ...SupplierSICPInfo
+        }
+    }
+}
+
+mutation updateUserSupplierSicp($input: SupplierSICPUpdateInput!) {
+    userSupplierSicpUpdate(input: $input) {
+        status
+
+        supplierSicp {
+            ...SupplierSICPInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+query getUserSupplierSicpTextEditor(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $sicpTypeFilter: String
+    $orderBy: String
+) {
+    userSupplierSicpTextEditor(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        sicpTypeFilter: $sicpTypeFilter
+        orderBy: $orderBy
+    ) {
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...SICPTextEditorNestedInfo
+            }
+        }
+        totalCount
+    }
+}
+
+mutation CreateUserSupplierSicpTextEditor($input: SICPTextEditorCreateInput!) {
+    userSupplierSicpTextEditorCreate(input: $input) {
+        status
+        error {
+            ...ErrorInfo
+        }
+        sicpTextEditor {
+            ...SICPTextEditorNestedInfo
+        }
+    }
+}

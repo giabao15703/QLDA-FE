@@ -1,0 +1,24 @@
+.rating-wrapper {
+    display: flex;
+    color: #e6b615;
+
+    &.disabled {
+        cursor: default;
+        pointer-events: none;
+        color: rgba(0, 0, 0, 0.38);
+    }
+
+    .outlined {
+        font-variation-settings: 'FILL' 0;
+        font-size: inherit;
+        width: inherit;
+        height: inherit;
+    }
+
+    .filled {
+        font-variation-settings: 'FILL' 1;
+        font-size: inherit;
+        width: inherit;
+        height: inherit;
+    }
+}

@@ -1,0 +1,32 @@
+.nextpro-user-tree-wrapper {
+    display: block;
+    max-height: 40vh;
+    overflow: auto;
+
+    .nextpro-user-tree-invisible {
+        display: none;
+    }
+
+    .nextpro-user-tree {
+        ul,
+        li {
+            margin-top: 0;
+            margin-bottom: 0;
+            list-style-type: none;
+        }
+    }
+
+    .nextpro-user-tree-node {
+        display: block;
+
+        .nextpro-user-tree-node {
+            padding-left: 40px;
+        }
+
+        .nextpro-user-tree-node-selectable {
+            display: flex;
+            align-items: center;
+            width: fit-content;
+        }
+    }
+}

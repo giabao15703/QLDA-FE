@@ -1,0 +1,164 @@
+<div class="flex items-center justify-between bg-[url(/assets/images/menu-bar.png)] bg-cover px-4 py-1.5">
+    <div class="hidden lg:flex lg:flex-1 justify-start">
+        <img src="/assets/icons/logo.svg" alt="nextpro-logo" class="w-36" />
+    </div>
+    <div class="lg:flex-2 text-center text-lg font-semibold text-white">
+        {{ 'common.buy-now' | translate }}
+    </div>
+    <div class="flex lg:flex-1 justify-end">
+        <div (click)="closeDialog()" class="cursor-pointer">
+            <img src="/assets/icons/close.svg" alt="" class="size-4" />
+        </div>
+    </div>
+</div>
+<mat-dialog-content>
+    <div class="flex lg:flex-row flex-col gap-x-8 text-sm text-black">
+        <div style="flex: 1" class="flex flex-col gap-y-2">
+            @for (item of buyNow; track item) {
+                <div class="flex justify-between">
+                    <div class="font-semibold">{{ 'product.product-detail.moq' | translate }}:</div>
+                    <p>
+                        {{ item.minQuantity }}
+                        <!-- TODO: update unit -->
+                    </p>
+                </div>
+                <nextpro-user-quantity-selector
+                    [label]="'Số lượng đặt hàng'"
+                    [customClass]="'font-semibold'"
+                    class="my-1.5"
+                />
+                <div class="flex justify-between">
+                    <div class="font-semibold">{{ 'order.detail.general-info.product-total' | translate }}:</div>
+                    <p>
+                        {{ item.price }}
+                        <!-- TODO: update currency -->
+                    </p>
+                </div>
+                <div class="my-2 font-semibold">{{ 'order.detail.delivery-address' | translate }}:</div>
+                <div class="flex flex-col lg:pl-4">
+                    <div class="flex lg:flex-row flex-col lg:items-center lg:justify-between">
+                        <label class="mt-[-5px]">{{ 'order.detail.address' | translate }}:</label>
+                        <mat-form-field appearance="outline" class="lg:w-[300px] mt-2">
+                            <input matInput />
+                        </mat-form-field>
+                    </div>
+                    <div class="mt-[-5px] flex lg:flex-row flex-col lg:items-center lg:justify-between">
+                        <label class="mt-[-5px]">{{ 'order.detail.country' | translate }}:</label>
+                        <mat-form-field appearance="outline" class="lg:w-[300px] mt-2">
+                            <mat-select>
+                                <mat-option value="vietnam">Việt Nam</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="mt-[-5px] flex lg:flex-row flex-col lg:items-center lg:justify-between">
+                        <label class="mt-[-5px]">{{ 'order.detail.city' | translate }}:</label>
+                        <mat-form-field appearance="outline" class="lg:w-[300px] mt-2">
+                            <mat-select>
+                                <mat-option value="hochiminh">Hồ Chí Minh</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-y-5">
+                    <div class="flex justify-between">
+                        <div class="font-semibold">{{ 'order.detail.delivery-fee' | translate }}:</div>
+                        <p>
+                            {{ item.transportFee }}
+                            <!-- TODO: update currency -->
+                        </p>
+                    </div>
+                    <div class="flex justify-between">
+                        <div class="font-semibold">Voucher:</div>
+                        <p>
+                            {{ item.voucher }}
+                            <!-- TODO: update currency -->
+                        </p>
+                    </div>
+                    <div class="flex justify-between">
+                        <div class="font-semibold">
+                            {{ 'order.detail.general-info.product-club-buyer' | translate }}:
+                        </div>
+                        <p>
+                            {{ item.buyerClub }}
+                            <!-- TODO: update currency -->
+                        </p>
+                    </div>
+                </div>
+                <div class="my-3 flex lg:flex-row flex-col lg:items-center lg:justify-between">
+                    <label class="font-semibold">
+                        {{ 'auth.register.become-supplier.form-supplier.referralCode' | translate }} :</label
+                    >
+                    <input
+                        name="referralCode"
+                        class="border border-[#707070] p-3 lg:w-[300px] focus:outline-none rounded-md mt-2 h-[40px]"
+                    />
+                </div>
+                <div class="flex justify-between">
+                    <div class="font-semibold">{{ 'order.detail.total' | translate }}:</div>
+                    <p>
+                        {{ item.totalPrice }}
+                        <!-- TODO: update currency -->
+                    </p>
+                </div>
+                <mat-divider />
+                <div class="mt-2 flex flex-col gap-y-4">
+                    <div class="flex justify-between">
+                        <div class="font-semibold">{{ 'rating.delivery-time' | translate }}:</div>
+                        <p>
+                            {{ item.deliveryTime }}
+                            <!-- TODO: update currency -->
+                        </p>
+                    </div>
+                    <div class="flex justify-between">
+                        <div class="font-semibold">{{ 'order.detail.edd' | translate }}:</div>
+                        <p>
+                            {{ item.deliveryDate }}
+                            <!-- TODO: update currency -->
+                        </p>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="lg:flex-1 lg:mt-0 mt-4">
+            <div class="font-semibold">{{ 'order.detail.note' | translate }}:</div>
+            <app-form [form]="form" [attr.name]="form.name" />
+        </div>
+    </div>
+    <div class="lg:mt-4 flex flex-col gap-y-4 text-sm text-black">
+        <div class="flex lg:flex-row flex-col lg:gap-x-2 gap-y-1">
+            <div class="font-semibold">{{ 'order.detail.returns-refunds' | translate }}:</div>
+            <p>
+                {{ 'order.detail.refund-description' | translate }}
+                <a href="" class="no-underline text-[#15677F]"> {{ 'order.detail.see-detail' | translate }} </a>
+            </p>
+        </div>
+        <div class="flex lg:flex-row flex-col lg:gap-x-2 gap-y-1">
+            <div class="font-semibold">Giao hàng:</div>
+            <span>
+                {{ 'order.detail.delivery-description' | translate }}:
+                <span class="text-[#15677F]">31/03/2023</span>
+                ​</span
+            >
+        </div>
+    </div>
+    <div class="mt-5 flex lg:flex-row flex-col lg:gap-x-3 lg:items-center text-sm text-black">
+        <label class="lg:mt-[-20px] font-semibold">{{ 'order.detail.payment-method' | translate }}:</label>
+        <mat-form-field appearance="outline" class="lg:w-[230px] mt-2">
+            <mat-select>
+                <mat-option value="hochiminh">Đảm bảo thanh toán</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="flex lg:justify-end gap-x-3">
+        <button mat-stroked-button (click)="closeDialog()" class="!border-[#15677F] border py-2 px-4 lg:w-40 w-full">
+            <div class="text-[#15677F] text-sm">{{ 'button.cancel' | translate }}</div>
+        </button>
+        <button
+            mat-raised-button
+            class="!bg-gradient-to-l !from-[#0B3440] !to-[#15677F] px-4 py-2 lg:w-40 w-full"
+            (click)="confirmPurchase()"
+        >
+            <div class="text-white text-sm">{{ 'upgrade-profile-supplier.buy' | translate }}</div>
+        </button>
+    </div>
+</mat-dialog-content>

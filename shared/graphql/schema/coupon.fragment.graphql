@@ -1,0 +1,12 @@
+fragment CouponInfo on CouponNode {
+    id
+    couponProgram
+    description
+    commission
+    validFrom
+    validTo
+    email
+    fullName
+    note
+    status
+}

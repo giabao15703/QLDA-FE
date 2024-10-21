@@ -1,0 +1,144 @@
+<section>
+    <div class="lg:mt-4 lg:mx-72 m-2 flex relative">
+        <button
+            [disabled]="isLoading"
+            [ngClass]="{
+                'z-[1001]': isMenuOpen,
+            }"
+            mat-button
+            [matMenuTriggerFor]="menu"
+            #menuTrigger="matMenuTrigger"
+            (click)="toggle(); familyCodesDisplayLimit = 8; displayAll = false"
+        >
+            <div class="flex items-center gap-2">
+                <div class="lg:text-[17px] text-[19px] flex justify-center items-center gap-3">
+                    {{ 'common.category' | translate }}
+                    <img
+                        src="assets/icons/arrow-down-338-svgrepo-com.svg"
+                        alt="Arrow"
+                        class="size-4 transition-transform duration-300 ease-in-out"
+                        [ngClass]="{ 'rotate-180': isMenuOpen }"
+                    />
+                </div>
+                @if (isLoading) {
+                    <mat-spinner color="accent" diameter="20" />
+                }
+            </div>
+        </button>
+        <mat-menu #menu="matMenu" class="absolute left-0 !max-w-none !w-auto">
+            @if (familyCodesDisplayLimit > 8) {
+                <div class="grid lg:grid-cols-3 grid-cols-none gap-x-4 max-h-[360px] overflow-x-auto p-2">
+                    @for (familyCode of familyCodes | slice: 0 : familyCodesDisplayLimit; track familyCode) {
+                        <ng-container>
+                            @if (familyCode.children && familyCode.children.length > 0) {
+                                <span>
+                                    <div mat-menu-item [matMenuTriggerFor]="childMenu">
+                                        <div class="flex gap-3 items-center text-[#15677F]">
+                                            <img
+                                                *ngIf="+familyCode.id < 9"
+                                                [src]="'assets/icons/category/' + getIcon(familyCode.id)"
+                                                alt="{{ familyCode.name }} Icon"
+                                                class="icon-size"
+                                            />
+                                            <span>
+                                                {{ familyCode.id }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <mat-menu #childMenu="matMenu">
+                                        @for (subFamilyCode of familyCode.children; track subFamilyCode) {
+                                            <div mat-menu-item>
+                                                {{ subFamilyCode.name }}
+                                                <span>({{ subFamilyCode.supplierNumber || 0 }})</span>
+                                            </div>
+                                        }
+                                    </mat-menu>
+                                </span>
+                            }
+                            @if (!familyCode.children || familyCode.children.length === 0) {
+                                <span>
+                                    <button mat-menu-item>
+                                        <div class="flex gap-3 items-center text-[#15677F]">
+                                            <img
+                                                *ngIf="+familyCode.id < 9"
+                                                [src]="'assets/icons/category/' + getIcon(familyCode.id)"
+                                                alt="{{ familyCode.name }} Icon"
+                                                class="icon-size"
+                                            />
+                                            <span>
+                                                {{ familyCode.name }}
+                                            </span>
+                                        </div>
+                                    </button>
+                                </span>
+                            }
+                        </ng-container>
+                    }
+                    @if (!displayAll) {
+                        <span class="flex gap-3 px-4 items-center" (click)="displayAllFamilyCodes()">
+                            <img [src]="'assets/icons/category/' + getIcon('9')" alt="Icon All" class="icon-size" />
+                            <button mat-menu-item>
+                                <span class="text-[#15677F]">{{ 'common.all-category' | translate }}</span>
+                            </button>
+                        </span>
+                    }
+                </div>
+            } @else {
+                @for (familyCode of familyCodes | slice: 0 : familyCodesDisplayLimit; track familyCode) {
+                    <ng-container>
+                        @if (familyCode.children && familyCode.children.length > 0) {
+                            <span>
+                                <div mat-menu-item [matMenuTriggerFor]="childMenu">
+                                    <div class="flex gap-3 items-center text-[#15677F]">
+                                        <img
+                                            *ngIf="+familyCode.id < 9"
+                                            [src]="'assets/icons/category/' + getIcon(familyCode.id)"
+                                            alt="{{ familyCode.name }} Icon"
+                                            class="icon-size"
+                                        />
+                                        <span>
+                                            {{ familyCode.id }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <mat-menu #childMenu="matMenu">
+                                    @for (subFamilyCode of familyCode.children; track subFamilyCode) {
+                                        <div mat-menu-item>
+                                            {{ subFamilyCode.name }}
+                                            <span>({{ subFamilyCode.supplierNumber || 0 }})</span>
+                                        </div>
+                                    }
+                                </mat-menu>
+                            </span>
+                        }
+                        @if (!familyCode.children || familyCode.children.length === 0) {
+                            <span>
+                                <button mat-menu-item>
+                                    <div class="flex gap-3 items-center text-[#15677F]">
+                                        <img
+                                            *ngIf="+familyCode.id < 9"
+                                            [src]="'assets/icons/category/' + getIcon(familyCode.id)"
+                                            alt="{{ familyCode.name }} Icon"
+                                            class="icon-size"
+                                        />
+                                        <span>
+                                            {{ familyCode.name }}
+                                        </span>
+                                    </div>
+                                </button>
+                            </span>
+                        }
+                    </ng-container>
+                }
+                @if (!displayAll) {
+                    <span class="flex gap-3 px-4 items-center" (click)="displayAllFamilyCodes()">
+                        <img [src]="'assets/icons/category/' + getIcon('9')" alt="Icon All" class="icon-size" />
+                        <button mat-menu-item>
+                            <span class="text-[#15677F]">{{ 'common.all-category' | translate }}</span>
+                        </button>
+                    </span>
+                }
+            }
+        </mat-menu>
+    </div>
+</section>

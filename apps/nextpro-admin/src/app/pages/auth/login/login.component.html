@@ -1,0 +1,13 @@
+<mat-card class="h-[380px]">
+    <mat-card-header class="justify-center">
+        <mat-card-title>
+            <div class="mb-2 text-2xl">{{ 'auth.login.login' | translate }}</div>
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="flex flex-col justify-center">
+        <app-form [form]="form" [attr.name]="form.name" class="flex flex-col w-[300px]" />
+        <button (click)="onSubmit()" color="primary" mat-raised-button class="mt-5 w-full">
+            {{ 'auth.login.login' | translate | uppercase }}
+        </button>
+    </mat-card-content>
+</mat-card>

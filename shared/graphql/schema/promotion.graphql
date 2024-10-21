@@ -1,0 +1,5 @@
+query checkValidReferralCode($referralCode: String) {
+    promotions(first: 1, referralCodeChecking: $referralCode) {
+        totalCount
+    }
+}

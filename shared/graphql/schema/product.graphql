@@ -1,0 +1,216 @@
+query getSupplierProductList(
+    $flag: Boolean
+    $orderRandom: Boolean
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $skuNumber_Icontains: String
+    $description_Icontains: String
+    $userSupplier: String
+    $isVisibility: Boolean
+    $productName_Icontains: String
+    $discountedPriceFrom: Float
+    $discountedPriceTo: Float
+    $isDisplay: Boolean
+    $excludeIdList: String
+    $initialPriceFrom: Float
+    $initialPriceTo: Float
+    $confirmedStatus: String
+    $type: String
+    $companyNameFilter: String
+    $supplierNo: String
+    $orderBy: String
+) {
+    supplierProductList(
+        flag: $flag
+        orderRandom: $orderRandom
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        skuNumber_Icontains: $skuNumber_Icontains
+        description_Icontains: $description_Icontains
+        userSupplier: $userSupplier
+        isVisibility: $isVisibility
+        productName_Icontains: $productName_Icontains
+        discountedPriceFrom: $discountedPriceFrom
+        discountedPriceTo: $discountedPriceTo
+        isDisplay: $isDisplay
+        excludeIdList: $excludeIdList
+        initialPriceFrom: $initialPriceFrom
+        initialPriceTo: $initialPriceTo
+        confirmedStatus: $confirmedStatus
+        type: $type
+        companyNameFilter: $companyNameFilter
+        supplierNo: $supplierNo
+        orderBy: $orderBy
+    ) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...ProductInfo
+            }
+        }
+    }
+}
+
+query getSupplierProductListSimple(
+    $flag: Boolean
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $skuNumber_Icontains: String
+    $productName_Icontains: String
+    $description_Icontains: String
+    $userSupplier: String
+    $isVisibility: Boolean
+    $discountedPriceFrom: Float
+    $discountedPriceTo: Float
+    $isDisplay: Boolean
+    $excludeIdList: String
+    $initialPriceFrom: Float
+    $initialPriceTo: Float
+    $confirmedStatus: String
+    $type: String
+    $companyNameFilter: String
+    $supplierNo: String
+    $orderBy: String
+) {
+    supplierProductList(
+        flag: $flag
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        skuNumber_Icontains: $skuNumber_Icontains
+        productName_Icontains: $productName_Icontains
+        description_Icontains: $description_Icontains
+        userSupplier: $userSupplier
+        isVisibility: $isVisibility
+        discountedPriceFrom: $discountedPriceFrom
+        discountedPriceTo: $discountedPriceTo
+        isDisplay: $isDisplay
+        excludeIdList: $excludeIdList
+        initialPriceFrom: $initialPriceFrom
+        initialPriceTo: $initialPriceTo
+        confirmedStatus: $confirmedStatus
+        type: $type
+        companyNameFilter: $companyNameFilter
+        supplierNo: $supplierNo
+        orderBy: $orderBy
+    ) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...ProductInfoSimple
+            }
+        }
+    }
+}
+
+query getSameCategoryProductList(
+    $supplierProductId: String!
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $skuNumber_Icontains: String
+    $productName_Icontains: String
+    $description_Icontains: String
+    $userSupplier: String
+    $isVisibility: Boolean
+    $discountedPriceFrom: Float
+    $discountedPriceTo: Float
+    $flag: Boolean
+    $isDisplay: Boolean
+    $excludeIdList: String
+    $initialPriceFrom: Float
+    $initialPriceTo: Float
+    $confirmedStatus: String
+    $type: String
+    $companyNameFilter: String
+    $supplierNo: String
+    $orderBy: String
+) {
+    supplierProductSameCategoryList(
+        supplierProductId: $supplierProductId
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        skuNumber_Icontains: $skuNumber_Icontains
+        productName_Icontains: $productName_Icontains
+        description_Icontains: $description_Icontains
+        userSupplier: $userSupplier
+        isVisibility: $isVisibility
+        type: $type
+        discountedPriceFrom: $discountedPriceFrom
+        discountedPriceTo: $discountedPriceTo
+        flag: $flag
+        isDisplay: $isDisplay
+        excludeIdList: $excludeIdList
+        initialPriceFrom: $initialPriceFrom
+        initialPriceTo: $initialPriceTo
+        confirmedStatus: $confirmedStatus
+        companyNameFilter: $companyNameFilter
+        supplierNo: $supplierNo
+        orderBy: $orderBy
+    ) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...ProductInfo
+            }
+        }
+    }
+}
+
+query getSupplierProduct($id: ID!) {
+    supplierProduct(id: $id) {
+        ...ProductInfo
+    }
+}
+
+mutation updateSupplierProductStatus($listIsConfirmed: [SupplierProductConfirmedStatusUpdateInput]!) {
+    supplierProductConfirmedStatusUpdate(listIsConfirmed: $listIsConfirmed) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation createSupplierProduct($input: SupplierProductCreateInput!) {
+    supplierProductCreate(input: $input) {
+        status
+        supplierProduct {
+            ...ProductInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation supplierProductClickCount($supplierProductId: String!) {
+    supplierProductClickCount(supplierProductId: $supplierProductId) {
+        status
+    }
+}

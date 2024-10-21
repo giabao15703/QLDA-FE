@@ -1,0 +1,45 @@
+fragment ModuleInfo on ModulesNode {
+    id
+    name
+    status
+    role
+}
+
+fragment CoursesProfileFeaturesBuyerInfo on CoursesProfileFeaturesBuyerNode {
+    id
+    profileFeatures {
+        ...ProfileFeaturesBuyerInfo
+    }
+}
+
+fragment CoursesProfileFeaturesSupplierInfo on CoursesProfileFeaturesSupplierNode {
+    id
+    profileFeatures {
+        ...ProfileFeaturesSupplierInfo
+    }
+}
+
+fragment CourseInfo on CoursesNode {
+    id
+    name
+    video
+    modules {
+        ...ModuleInfo
+    }
+    status
+    role
+    coursesprofilefeaturesbuyerSet {
+        edges {
+            node {
+                ...CoursesProfileFeaturesBuyerInfo
+            }
+        }
+    }
+    coursesprofilefeaturessupplierSet {
+        edges {
+            node {
+                ...CoursesProfileFeaturesSupplierInfo
+            }
+        }
+    }
+}

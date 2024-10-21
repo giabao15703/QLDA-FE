@@ -1,0 +1,49 @@
+<div class="mb-10 overflow-hidden">
+    <div class="my-5 text-2xl font-bold">
+        {{ 'buyer-profile.tabs.upgrade-profile.title' | translate }}
+    </div>
+    <app-form [form]="form" [attr.name]="form.formName" />
+    <div class="font-bold text-lg">{{ 'buyer-profile.tabs.upgrade-profile.nextpro-terms' | translate }}</div>
+    <div class="mt-2 flex items-center">
+        <mat-checkbox (change)="onIsTermAcceptChange($event)">
+            <div class="lg:text-[17px] text-[14px] text-[#000]">
+                {{ 'buyer-profile.tabs.upgrade-profile.agreeToAccept' | translate }}
+                <a
+                    href="https://discovery.nextpro.io/chinh-sach-bao-mat-quy-dinh-quyen-va-nghia-vu/"
+                    target="_blank"
+                    class="underline-none cursor-pointer"
+                >
+                    <span class="text-[#15677f] font-semibold">
+                        {{ 'buyer-profile.tabs.upgrade-profile.privacyPolicy' | translate }}
+                    </span> </a
+                >,
+                <a
+                    href="https://discovery.nextpro.io/chinh-sach-dang-san-pham-nha-cung-cap/"
+                    target="_blank"
+                    class="underline-none cursor-pointer text-[#15677f] font-semibold"
+                >
+                    {{ 'buyer-profile.tabs.upgrade-profile.productsPolicy' | translate }}
+                </a>
+                {{ 'buyer-profile.tabs.upgrade-profile.and' | translate }}
+                <a
+                    href="https://discovery.nextpro.io/dieu-khoan-dich-vu/"
+                    target="_blank"
+                    class="underline-none cursor-pointer text-[#15677f] font-semibold"
+                >
+                    {{ 'buyer-profile.tabs.upgrade-profile.termsOfService' | translate }}
+                </a>
+            </div>
+        </mat-checkbox>
+    </div>
+    <div class="lg:mt-10 mt-5 flex lg:justify-end">
+        <button
+            mat-raised-button
+            color="primary"
+            class="lg:w-[200px] w-full pt-[2px] font-semibold"
+            [disabled]="!isTermAccept || !checkPayment"
+            (click)="onSubmit()"
+        >
+            {{ 'buyer-profile.tabs.upgrade-profile.payment-btn' | translate }}
+        </button>
+    </div>
+</div>

@@ -1,0 +1,69 @@
+<div class="relative">
+    @if (
+        loadingService.checkLoading([
+            'getFamilyCodes',
+            'getFamilyCodeWithClusterCode',
+            'getClusterCodeWithSubClusterCode',
+            'getSubClusterCodeWithCategory',
+        ])
+    ) {
+        <app-loading [backdrop]="true" />
+    }
+    <app-filter
+        formClass="grid grid-cols-4 gap-2"
+        class="flex gap-2 items-baseline"
+        [onFilter]="handleFilter"
+        [formConfig]="filterFormConfig"
+    />
+    <cdk-tree class="nextpro-user-tree-wrapper" [dataSource]="dataSource" [treeControl]="treeControl">
+        <cdk-nested-tree-node *cdkTreeNodeDef="let node" class="nextpro-user-tree-node">
+            <div class="nextpro-user-tree-node-selectable">
+                @if (node.fetchChildren) {
+                    <div class="cursor-pointer" (click)="node.fetchChildren()">
+                        <button mat-icon-button>
+                            <mat-icon class="text-[#15677f] mat-icon-rtl-mirror"> folder </mat-icon>
+                        </button>
+                        {{ node.name }}
+                    </div>
+                } @else {
+                    <mat-checkbox
+                        class="pb-1 ml-auto overflow-x-hidden"
+                        [checked]="isSelected(node)"
+                        (change)="select(node)"
+                    >
+                        {{ node.name }}
+                    </mat-checkbox>
+                }
+            </div>
+        </cdk-nested-tree-node>
+        <cdk-nested-tree-node *cdkTreeNodeDef="let node; when: hasChild" class="nextpro-user-tree-node">
+            <button mat-icon-button cdkTreeNodeToggle>
+                <mat-icon class="text-[#15677f] mat-icon-rtl-mirror">
+                    {{ treeControl.isExpanded(node) ? 'folder_open' : 'folder' }}
+                </mat-icon>
+            </button>
+            {{ node.name }}
+            <div [class.nextpro-user-tree-invisible]="!treeControl.isExpanded(node)">
+                <ng-container cdkTreeNodeOutlet />
+            </div>
+        </cdk-nested-tree-node>
+    </cdk-tree>
+    <mat-form-field appearance="outline" class="w-full">
+        <mat-label>
+            {{ 'shared.search-ccc.selectedCategory' | translate }}
+        </mat-label>
+        <mat-chip-grid #categoryGrid>
+            @for (category of categoriesSelected; track category) {
+                <ng-container>
+                    <mat-chip-row (removed)="remove(category)">
+                        {{ category.name }}
+                        <button matChipRemove>
+                            <mat-icon>cancel</mat-icon>
+                        </button>
+                    </mat-chip-row>
+                </ng-container>
+            }
+            <input [matChipInputFor]="categoryGrid" />
+        </mat-chip-grid>
+    </mat-form-field>
+</div>

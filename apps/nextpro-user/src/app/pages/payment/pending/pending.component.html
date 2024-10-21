@@ -1,0 +1,61 @@
+<mat-stepper labelPosition="bottom" #stepper>
+    <mat-step [stepControl]="firstFormGroup">
+        <form [formGroup]="firstFormGroup">
+            <ng-template matStepLabel>
+                {{ 'payment.pages.pending-payment.pendingPayment' | translate }}
+            </ng-template>
+
+            <div class="mt-4">
+                <div class="text-xl font-semibold">
+                    {{ 'payment.pages.my-account.searchTransactionStatement' | translate }}
+                </div>
+                <app-filter
+                    class="!items-stretch"
+                    formClass="grid grid-cols-5 gap-x-4"
+                    [onFilter]="table.handleFilter"
+                    [formConfig]="table.config.filterForm"
+                    [showClose]="false"
+                />
+                <app-table
+                    class="mt-8"
+                    [attr.name]="table.name"
+                    [extendHeight]="800"
+                    [columns]="table.config.columns"
+                    [data]="table.state.data"
+                    [pagination]="table.state.pagination"
+                    [onPageChange]="table.handlePageChange"
+                />
+                <div class="mt-5 lg:flex lg:justify-end lg:gap-x-6">
+                    <button mat-raised-button color="primary" class="w-[140px]">
+                        <div class="font-semibold uppercase">
+                            {{ 'button.payment' | translate }}
+                        </div>
+                    </button>
+                    <button mat-stroked-button class="!border-[#15677F] w-[130px]">
+                        <div class="font-semibold text-[#15677F] uppercase">
+                            {{ 'button.cancel' | translate }}
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </mat-step>
+
+    <mat-step [stepControl]="secondFormGroup">
+        <form [formGroup]="secondFormGroup">
+            <ng-template matStepLabel>
+                {{ 'payment.pages.pending-payment.paymentInformationConfirmation' | translate }}
+            </ng-template>
+            <div class="mt-5">// Payment information confirmation</div>
+        </form>
+    </mat-step>
+
+    <mat-step>
+        <ng-template matStepLabel>{{ 'payment.pages.pending-payment.payment' | translate }}</ng-template>
+        <div class="mt-5">You are now done.</div>
+        <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button (click)="stepper.reset()">Reset</button>
+        </div>
+    </mat-step>
+</mat-stepper>

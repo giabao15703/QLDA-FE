@@ -1,0 +1,34 @@
+fragment ShippingFeeInfo on ShippingFeeNode {
+    id
+    pickUpCity {
+        ...CityInfo
+    }
+    destinationCity {
+       ...CityInfo
+    }
+    weight
+    fee
+    status
+}
+fragment TransporterListInfo on TransporterListNode {
+    id
+    shortName
+    longName
+    code
+    tax
+    phone
+    address
+    email
+    status
+}
+fragment DeliveryResponsibleInfo on DeliveryResponsibleNode{
+    id
+    transporterCode{
+        ...TransporterListInfo
+    }
+    cityCode{
+        ...CityInfo
+    }
+    effectiveDate
+    status
+}

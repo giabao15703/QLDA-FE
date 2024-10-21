@@ -1,0 +1,109 @@
+<div class="my-10">
+    <div class="grid grid-cols-2 gap-x-14 mt-6">
+        <div class="bg-[#dbdbdb] h-56 flex justify-center p-4 shadow-inner">
+            <p class="font-bold uppercase text-lg">{{ 'payment.pages.my-account.accountBalance' | translate }}</p>
+        </div>
+        <div class="bg-[#dbdbdb] h-56 flex justify-center p-4 shadow-inner">
+            <p class="font-bold uppercase text-lg">
+                {{ 'payment.pages.my-account.tenLastestPaymentTransactions' | translate }}
+            </p>
+        </div>
+    </div>
+
+    <div class="mt-6">
+        <div class="text-xl font-semibold mb-6">
+            {{ 'payment.pages.my-account.accountInformation' | translate }}
+        </div>
+        <app-form [form]="accountInformationForm" [attr.name]="accountInformationForm.name" />
+        <div class="flex lg:justify-end">
+            <button mat-raised-button color="primary" class="font-semibold !uppercase" (click)="onSubmit()">
+                {{ 'payment.pages.my-account.topUp' | translate }}
+            </button>
+        </div>
+    </div>
+
+    <div class="mt-6 !overflow-hidden">
+        <div class="text-xl font-semibold">
+            {{ 'payment.pages.my-account.searchTransactionStatement' | translate }}
+        </div>
+        <app-filter
+            class="!items-stretch"
+            formClass="grid grid-cols-5 mt-3 gap-x-4"
+            [onFilter]="table.handleFilter"
+            [formConfig]="table.config.filterForm"
+            [showClose]="false"
+        />
+        <app-form [form]="transactionStatementForm" [attr.name]="transactionStatementForm.name" />
+        <div class="flex lg:justify-end">
+            <button mat-raised-button color="primary" class="font-semibold !uppercase" (click)="openRefundRequest()">
+                {{ 'payment.pages.my-account.refundRequest' | translate }}
+            </button>
+        </div>
+
+        @if (showRefundForm) {
+            <div
+                class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[1000]"
+                (click)="closeRefundForm()"
+            >
+                <div class="relative bg-white rounded-lg shadow-lg w-3/4 h-auto" (click)="$event.stopPropagation()">
+                    <div
+                        class="flex items-center justify-between h-[76px] bg-[url(/assets/images/background_header.png)] lg:px-8 px-3"
+                    >
+                        <div class="hidden lg:flex lg:items-center lg:gap-10">
+                            <a [routerLink]="['/product']">
+                                <img src="/assets/icons/navbar/NextPro-Logo.svg" alt="nextpro-logo" class="h-[40px]" />
+                            </a>
+                        </div>
+                        <button class="absolute top-3 right-3" style="color: white" (click)="closeRefundForm()">
+                            <img src="/assets/icons/close-tab-svgrepo-com.svg" alt="nextpro-logo" class="size-5" />
+                        </button>
+                    </div>
+
+                    <div class="mx-8 my-5">
+                        <div class="font-semibold uppercase text-end">
+                            {{ 'payment.components.popups.refundRequest' | translate }}
+                        </div>
+                        <mat-divider class="!my-1"></mat-divider>
+                        <div class="mt-5">
+                            <app-form [form]="refundForm" [attr.name]="refundForm.name" />
+                        </div>
+                    </div>
+                    <div class="flex items-center bg-[#f8f8f8] px-8 py-4">
+                        <div class="text-sm">
+                            {{ 'payment.components.popups.msgRefundRequest' | translate }}
+                        </div>
+                        <div class="ml-auto">
+                            <button mat-raised-button color="primary" (click)="handleRefundSubmit()" class="w-auto">
+                                <div class="font-semibold">
+                                    {{ 'payment.components.popups.refundRequest' | translate }}
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <app-table
+            class="mt-8"
+            [attr.name]="table.name"
+            [extendHeight]="800"
+            [columns]="table.config.columns"
+            [data]="table.state.data"
+            [pagination]="table.state.pagination"
+            [onPageChange]="table.handlePageChange"
+        />
+        <div class="my-5 lg:flex lg:justify-end lg:gap-x-6">
+            <button mat-raised-button color="primary" class="w-[140px]">
+                <div class="font-semibold uppercase">
+                    {{ 'button.payment' | translate }}
+                </div>
+            </button>
+            <button mat-stroked-button class="!border-[#15677F] w-[130px]">
+                <div class="font-semibold text-[#15677F] uppercase">
+                    {{ 'button.cancel' | translate }}
+                </div>
+            </button>
+        </div>
+    </div>
+</div>

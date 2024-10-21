@@ -1,0 +1,128 @@
+query getHistoryPayment($id: ID!) {
+    historyPayment(id: $id) {
+        ...HistoryPaymentInfo
+    }
+}
+
+query getHistoryPayments(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $type: String
+    $status: String
+    $balance: Float
+    $methodPayment: String
+    $amount: Float
+    $dateFrom: String
+    $dateTo: String
+    $amountFrom: String
+    $amountTo: String
+    $userType: String
+    $fullName: String
+    $transactionDescription: String
+    $orderNo: String
+    $adminBalance: Float
+    $date: String
+    $username: String
+    $orderBy: String
+) {
+    historyPayments(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        type: $type
+        status: $status
+        balance: $balance
+        methodPayment: $methodPayment
+        amount: $amount
+        dateFrom: $dateFrom
+        dateTo: $dateTo
+        amountFrom: $amountFrom
+        amountTo: $amountTo
+        userType: $userType
+        fullName: $fullName
+        transactionDescription: $transactionDescription
+        orderNo: $orderNo
+        adminBalance: $adminBalance
+        date: $date
+        username: $username
+        orderBy: $orderBy
+    ) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...HistoryPaymentInfo
+            }
+        }
+    }
+}
+
+query getUserPayment($id: ID!) {
+    userPayment(id: $id) {
+        ...UserPaymentInfo
+    }
+}
+
+query getUserPayments($before: String, $after: String, $first: Int, $last: Int, $id: ID) {
+    userPayments(before: $before, after: $after, first: $first, last: $last) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...UserPaymentInfo
+            }
+        }
+    }
+}
+
+query getHistoryPending($id: ID!) {
+    historyPending(id: $id) {
+        ...HistoryPendingInfo
+    }
+}
+
+mutation updateHistoryStatus($history: HistoryUpdateStatusInput!) {
+    historyUpdateStatus(history: $history) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation checkPaymentPending(
+    $profileFeatures: String
+    $diamondSponsor: String
+    $sicpRegistration: String
+    $order: String
+) {
+    paymentPendingCheck(
+        profileFeatures: $profileFeatures
+        sicpRegistration: $sicpRegistration
+        diamondSponsor: $diamondSponsor
+        order: $order
+    ) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation createBankTransfer($bankTransferInput: BankTransferInput!, $payment: PaymentBankTransferInput!) {
+    bankTransferCreate(bankTransferInput: $bankTransferInput, payment: $payment) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}

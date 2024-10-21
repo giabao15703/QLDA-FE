@@ -1,0 +1,207 @@
+<div>
+    <section>
+        <nextpro-user-navbar />
+    </section>
+
+    <div id="allFamilyCodes"></div>
+    <section class="sticky top-0 z-[100] background-homepage pb-4">
+        <div class="pt-3 flex justify-center items-center lg:gap-6 gap-3">
+            <a
+                [routerLink]="['/product']"
+                class="underline-offset-[6px] underline decoration-[2px] text-[#fff] font-bold lg:text-[21px] text-[19px]"
+            >
+                {{ 'homepage-product.navigation.products-services' | translate }}
+            </a>
+            <a [routerLink]="['/supplier']" class="text-[#fff] lg:text-[15px] text-[14px] no-underline">
+                {{ 'homepage-supplier.navigation.supplier' | translate }}
+            </a>
+        </div>
+        <div class="flex justify-center items-center gap-2">
+            <nextpro-user-global-search />
+            <div class="mt-2 cursor-pointer">
+                <a [routerLink]="['/cart']">
+                    <img src="/assets/icons/cart-shopping-svgrepo-com.svg" alt="" class="w-9" />
+                </a>
+            </div>
+        </div>
+    </section>
+    <section class="lg:block hidden background-homepage pb-4">
+        <div class="flex justify-center gap-4">
+            <div class="flex justify-center items-center gap-3 w-[260px] h-9 bg-[#fff] p-2 rounded-full cursor-pointer">
+                <img src="/assets/icons/Genuine.svg" alt="" class="w-5" />
+                <div class="text-[#15677F]">{{ 'homepage-product.navigation.authentic' | translate }}</div>
+            </div>
+            <div class="flex justify-center items-center gap-3 w-[260px] h-9 bg-[#fff] p-2 rounded-full cursor-pointer">
+                <img src="/assets/icons/Leaf.svg" alt="" class="w-5" />
+                <div class="text-[#15677F]">{{ 'homepage-product.navigation.clean-product' | translate }}</div>
+            </div>
+            <div class="flex justify-center items-center gap-3 w-[260px] h-9 bg-[#fff] p-2 rounded-full cursor-pointer">
+                <img src="/assets/icons/Delivery.svg" alt="" class="w-6" />
+                <div class="text-[#15677F]">
+                    {{ 'homepage-product.navigation.items-available' | translate }}
+                </div>
+            </div>
+        </div>
+        <div class="mt-4 h-[73px] bg-[#fff] border border-[#15677F] rounded-lg flex justify-evenly w-auto mx-16">
+            <a href="#" class="flex justify-center items-center gap-2 no-underline">
+                <img src="/assets/icons/price-list.svg" alt="" class="w-[50px]" />
+                <div class="text-[17px] text-[#15677F]">
+                    {{ 'homepage-product.navigation.request-for-quote' | translate }}
+                </div>
+            </a>
+
+            <div class="border-r border-[#15677F]"></div>
+
+            <a href="#" class="flex items-center gap-2 no-underline">
+                <img src="/assets/icons/Cashback.svg" alt="" class="w-[50px]" />
+                <div class="text-[17px] text-[#15677F]">
+                    {{ 'homepage-product.navigation.refund' | translate }}
+                </div>
+            </a>
+            <div class="border-r border-[#15677F]"></div>
+            <a href="#" class="flex items-center gap-2 no-underline">
+                <img src="/assets/icons/stopwatch.svg" alt="" class="w-[50px]" />
+                <div class="text-[17px] text-[#15677F]">
+                    {{ 'homepage-product.navigation.flash-sale' | translate }}
+                </div>
+            </a>
+            <div class="border-r border-[#15677F]"></div>
+            <a href="#" class="flex items-center gap-2 no-underline">
+                <img src="/assets/icons/Path.svg" alt="" class="w-10" />
+                <div class="text-[17px] text-[#15677F]">
+                    {{ 'homepage-product.navigation.appreciate' | translate }}
+                </div>
+            </a>
+        </div>
+    </section>
+    <section>
+        <nextpro-user-family-code
+            [familyCodes]="familyCodes"
+            [isLoading]="loadingService.checkLoading(['getFamilyCodes'])"
+        />
+    </section>
+    <section>
+        <div class="lg:mt-3 relative">
+            <owl-carousel-o [options]="customOptions">
+                @for (slide of slides; track slide) {
+                    <ng-container>
+                        <ng-template carouselSlide>
+                            <img [src]="slide.image" class="lg:my-[-100px]" />
+                        </ng-template>
+                    </ng-container>
+                }
+            </owl-carousel-o>
+            <div class="absolute bottom-16 right-4 z-50">
+                <button
+                    class="bg-black lg:text-2xl text-lg text-white font-semibold py-2 px-4 rounded-3xl lg:w-[300px]"
+                    (click)="navigateFindNow('allFamilyCodes')"
+                >
+                    {{ 'homepage-product.find-now-btn' | translate }}
+                </button>
+            </div>
+        </div>
+    </section>
+    <section class="lg:hidden block">
+        <div class="background-homepage py-6">
+            <div class="flex justify-around gap-1 px-1">
+                <div
+                    class="flex flex-col justify-center items-center gap-1 w-full min-h-[80px] bg-[#fff] lg:rounded-full rounded-lg cursor-pointer p-1"
+                >
+                    <img src="/assets/icons/Genuine.svg" alt="" class="w-8" />
+                    <div class="text-[#15677F] text-[13px] text-center]">
+                        {{ 'homepage-product.navigation.authentic' | translate }}
+                    </div>
+                </div>
+                <div
+                    class="flex flex-col justify-center items-center gap-1 w-full min-h-[80px] bg-[#fff] lg:rounded-full rounded-lg cursor-pointer p-2"
+                >
+                    <img src="/assets/icons/Leaf.svg" alt="" class="w-8" />
+                    <div class="text-[#15677F] text-[13px] text-center">
+                        {{ 'homepage-product.navigation.clean-product' | translate }}
+                    </div>
+                </div>
+                <div
+                    class="flex flex-col justify-center items-center gap-1 w-full min-h-[80px] bg-[#fff] lg:rounded-full rounded-lg cursor-pointer p-2"
+                >
+                    <img src="/assets/icons/Delivery.svg" alt="" class="w-8" />
+                    <div class="text-[#15677F] text-[13px] text-center">
+                        {{ 'homepage-product.navigation.items-available' | translate }}
+                    </div>
+                </div>
+            </div>
+            <div class="mt-4 flex justify-center gap-2 px-2">
+                <div class="w-[100px] h-auto bg-[#fff] border border-[#15677F] rounded-lg p-2">
+                    <a href="#" class="flex flex-col justify-center items-center gap-2 no-underline text-center">
+                        <img src="/assets/icons/price-list.svg" alt="" class="w-[35px]" />
+                        <div class="text-[15px] text-[#15677F]">
+                            {{ 'homepage-product.navigation.request-for-quote' | translate }}
+                        </div>
+                    </a>
+                </div>
+                <div class="w-[100px] h-auto bg-[#fff] border border-[#15677F] rounded-lg p-2">
+                    <a href="#" class="flex flex-col justify-center items-center gap-2 no-underline text-center">
+                        <img src="/assets/icons/Cashback.svg" alt="" class="w-[35px]" />
+                        <div class="text-[15px] text-[#15677F]">
+                            {{ 'homepage-product.navigation.refund' | translate }}
+                        </div>
+                    </a>
+                </div>
+                <div class="w-[100px] h-auto bg-[#fff] border border-[#15677F] rounded-lg p-2">
+                    <a href="#" class="flex flex-col justify-center items-center gap-2 no-underline text-center">
+                        <img src="/assets/icons/stopwatch.svg" alt="" class="w-[35px]" />
+                        <div class="text-[15px] text-[#15677F]">Flash sale</div>
+                    </a>
+                </div>
+                <div class="w-[100px] h-auto bg-[#fff] border border-[#15677F] rounded-lg p-2">
+                    <a href="#" class="flex flex-col justify-center items-center gap-2 no-underline text-center">
+                        <img src="/assets/icons/Path.svg" alt="" class="w-[35px]" />
+                        <div class="text-[15px] text-[#15677F]">
+                            {{ 'homepage-product.navigation.appreciate' | translate }}
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="lg:mt-4 background-discounted-products min-h-[380px] relative">
+        @if (loadingService.checkLoading(['getSupplierProductList'])) {
+            <app-loading />
+        }
+        <nextpro-user-discounted-products [productsList]="productFlashSalesTop" />
+    </section>
+
+    <nextpro-user-scrolling-text />
+
+    <hr class="!m-0" />
+    <section class="lg:mx-20 mx-3 relative min-h-[500px]">
+        @if (loadingService.checkLoading(['getSupplierProductList'])) {
+            <app-loading />
+        }
+        <nextpro-user-product-list-component [productList]="products" />
+    </section>
+    @if (productHasNextPage) {
+        <section class="mt-8 lg:mx-20 mx-3 py-10 flex justify-end items-center">
+            <button
+                (click)="loadMoreProducts()"
+                mat-stroked-button
+                class="!border-[#15677F] w-[150px] h-[35px] relative"
+            >
+                @if (loadingService.checkLoading(['getSupplierProductList'])) {
+                    <app-loading [diameter]="25" />
+                }
+                <div class="!text-[#15677F] pt-[4px]">
+                    {{ 'homepage-product.load-more-btn' | translate }}
+                </div>
+            </button>
+        </section>
+    }
+    <section class="lg:mt-4 background-discounted-products min-h-[380px] relative">
+        @if (loadingService.checkLoading(['getSupplierProductList'])) {
+            <app-loading />
+        }
+        <nextpro-user-discounted-products [productsList]="productFlashSalesBottom" />
+    </section>
+    <section>
+        <nextpro-user-footer />
+    </section>
+</div>

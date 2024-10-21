@@ -1,0 +1,35 @@
+<div>
+    <section>
+        <nextpro-user-navbar />
+    </section>
+    <div class="flex lg:mt-4 lg:mb-6 my-5 lg:px-32">
+        <div class="py-1 lg:px-5 px-3 focus:outline-none cursor-pointer" (click)="selectTab('list')">
+            <a class="inline-block" [ngClass]="{
+                    'underline decoration-2 decoration-[#15677F] underline-offset-8 font-semibold':
+                        activeTab === 'list',
+                }">
+                {{ 'order.list.title' | translate }}
+            </a>
+        </div>
+        <div class="py-1 lg:px-5 px-3 focus:outline-none cursor-pointer" (click)="selectTab('detail')">
+            <a class="inline-block" [ngClass]="{
+                    'underline decoration-2 decoration-[#15677F] underline-offset-8 font-semibold':
+                        activeTab === 'detail',
+                }">
+                {{ 'order.detail.title' | translate }}
+            </a>
+        </div>
+    </div>
+    @if (activeTab === 'list') {
+    <nextpro-user-order-list (detailClicked)="onDetailClicked($event)" />
+    }
+    @if (activeTab === 'detail') {
+    <nextpro-user-order-detail-buyer [orderDetail]="selectedOrder" />
+    }
+    @if (activeTab === 'list') {
+    <nextpro-user-recommendation />
+    }
+    <section>
+        <nextpro-user-detailed-footer />
+    </section>
+</div>

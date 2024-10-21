@@ -1,0 +1,481 @@
+query getSupplierLists(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $name_Icontains: String
+    $status: Boolean
+    $orderBy: String
+) {
+    supplierLists(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        name_Icontains: $name_Icontains
+        status: $status
+        orderBy: $orderBy
+    ) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                id
+                name
+                status
+                translations {
+                    id
+                    name
+                    languageCode
+                }
+            }
+        }
+    }
+}
+
+query getSupplier($id: ID!) {
+    supplier(id: $id) {
+        ...SupplierInfo
+    }
+}
+
+query getSuppliers(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: String
+    $ratingStar: String
+    $companyCountry: String
+    $companyCountryState: String
+    $companyNumberOfEmployee: String
+    $companyFullName: String
+    $projectSize: String
+    $email: String
+    $username: String
+    $usernameExact: String
+    $status: String
+    $created: String
+    $validFrom: String
+    $validTo: String
+    $profileFeature: String
+    $reportYear: String
+    $flashSale: String
+    $changedBy: String
+    $changedDate: String
+    $reasonManual: String
+    $changedState: String
+    $companyCity: String
+    $locations: String
+    $proSizeFilter: String
+    $clientFocusFilter: String
+    $employeeFilter: String
+    $companyNameFilter: String
+    $industryFocusFilter: String
+    $industryClusterFilter: String
+    $clusterFilter: String
+    $familyFilter: String
+    $supplierFlashSaleFilter: Boolean
+    $subClusterFilter: String
+    $discriptionFilter: String
+    $minimumOrderValueFrom: String
+    $minimumOrderValueTo: String
+    $minimumOrderValue: String
+    $category: String
+    $orderBy: String
+) {
+    suppliers(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        ratingStar: $ratingStar
+        companyCountry: $companyCountry
+        companyCountryState: $companyCountryState
+        companyNumberOfEmployee: $companyNumberOfEmployee
+        companyFullName: $companyFullName
+        projectSize: $projectSize
+        email: $email
+        username: $username
+        usernameExact: $usernameExact
+        status: $status
+        created: $created
+        validFrom: $validFrom
+        validTo: $validTo
+        profileFeature: $profileFeature
+        reportYear: $reportYear
+        flashSale: $flashSale
+        changedBy: $changedBy
+        changedDate: $changedDate
+        reasonManual: $reasonManual
+        changedState: $changedState
+        companyCity: $companyCity
+        locations: $locations
+        proSizeFilter: $proSizeFilter
+        clientFocusFilter: $clientFocusFilter
+        employeeFilter: $employeeFilter
+        companyNameFilter: $companyNameFilter
+        industryFocusFilter: $industryFocusFilter
+        industryClusterFilter: $industryClusterFilter
+        clusterFilter: $clusterFilter
+        familyFilter: $familyFilter
+        supplierFlashSaleFilter: $supplierFlashSaleFilter
+        subClusterFilter: $subClusterFilter
+        discriptionFilter: $discriptionFilter
+        minimumOrderValueFrom: $minimumOrderValueFrom
+        minimumOrderValueTo: $minimumOrderValueTo
+        minimumOrderValue: $minimumOrderValue
+        category: $category
+        orderBy: $orderBy
+    ) {
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...SupplierInfo
+            }
+        }
+        totalCount
+        reach
+    }
+}
+
+mutation updateSupplierDetail($input: SupplierDetailUpdateInput!) {
+    supplierDetailUpdate(input: $input) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+query getSuppliersWithProducts(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: String
+    $ratingStar: String
+    $companyCountry: String
+    $companyCountryState: String
+    $companyNumberOfEmployee: String
+    $companyFullName: String
+    $projectSize: String
+    $email: String
+    $username: String
+    $usernameExact: String
+    $status: String
+    $created: String
+    $validFrom: String
+    $validTo: String
+    $profileFeature: String
+    $reportYear: String
+    $flashSale: String
+    $changedBy: String
+    $changedDate: String
+    $reasonManual: String
+    $changedState: String
+    $companyCity: String
+    $locations: String
+    $proSizeFilter: String
+    $clientFocusFilter: String
+    $employeeFilter: String
+    $companyNameFilter: String
+    $industryFocusFilter: String
+    $industryClusterFilter: String
+    $clusterFilter: String
+    $familyFilter: String
+    $supplierFlashSaleFilter: Boolean
+    $subClusterFilter: String
+    $discriptionFilter: String
+    $minimumOrderValueFrom: String
+    $minimumOrderValueTo: String
+    $minimumOrderValue: String
+    $category: String
+    $orderBy: String
+) {
+    suppliers(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        ratingStar: $ratingStar
+        companyCountry: $companyCountry
+        companyCountryState: $companyCountryState
+        companyNumberOfEmployee: $companyNumberOfEmployee
+        companyFullName: $companyFullName
+        projectSize: $projectSize
+        email: $email
+        username: $username
+        usernameExact: $usernameExact
+        status: $status
+        created: $created
+        validFrom: $validFrom
+        validTo: $validTo
+        profileFeature: $profileFeature
+        reportYear: $reportYear
+        flashSale: $flashSale
+        changedBy: $changedBy
+        changedDate: $changedDate
+        reasonManual: $reasonManual
+        changedState: $changedState
+        companyCity: $companyCity
+        locations: $locations
+        proSizeFilter: $proSizeFilter
+        clientFocusFilter: $clientFocusFilter
+        employeeFilter: $employeeFilter
+        companyNameFilter: $companyNameFilter
+        industryFocusFilter: $industryFocusFilter
+        industryClusterFilter: $industryClusterFilter
+        clusterFilter: $clusterFilter
+        familyFilter: $familyFilter
+        supplierFlashSaleFilter: $supplierFlashSaleFilter
+        subClusterFilter: $subClusterFilter
+        discriptionFilter: $discriptionFilter
+        minimumOrderValueFrom: $minimumOrderValueFrom
+        minimumOrderValueTo: $minimumOrderValueTo
+        minimumOrderValue: $minimumOrderValue
+        category: $category
+        orderBy: $orderBy
+    ) {
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...SupplierWithProductsInfo
+            }
+        }
+        totalCount
+        reach
+    }
+}
+
+mutation updateSupplierStatus($listStatus: [SupplierStatusUpdateInput]!, $reasonManual: String) {
+    supplierStatusUpdate(listStatus: $listStatus, reasonManual: $reasonManual) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+query getSupplierSubAccount($id: ID!) {
+    supplierSubAccount(id: $id) {
+        ...SupplierSubAccountInfo
+    }
+}
+
+query getSupplierSubAccountWithSupplier($id: ID!) {
+    supplierSubAccount(id: $id) {
+        ...SupplierSubAccountWithSupplierInfo
+    }
+}
+
+query getSupplierSubAccounts(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $created: String
+    $username: String
+    $email: String
+    $status: String
+    $validFrom: String
+    $validTo: String
+    $changedBy: String
+    $changedDate: String
+    $reasonManual: String
+    $changedState: String
+    $profileFeature: String
+    $flashSale: Float
+    $reportYear: Float
+    $supplierId: String
+    $orderBy: String
+) {
+    supplierSubAccounts(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        created: $created
+        username: $username
+        email: $email
+        status: $status
+        validFrom: $validFrom
+        validTo: $validTo
+        changedBy: $changedBy
+        changedDate: $changedDate
+        reasonManual: $reasonManual
+        changedState: $changedState
+        profileFeature: $profileFeature
+        flashSale: $flashSale
+        reportYear: $reportYear
+        supplierId: $supplierId
+        orderBy: $orderBy
+    ) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...SupplierSubAccountInfo
+            }
+        }
+    }
+}
+
+query getSupplierSubAccountsWithSupplier(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $created: String
+    $username: String
+    $email: String
+    $status: String
+    $validFrom: String
+    $validTo: String
+    $changedBy: String
+    $changedDate: String
+    $reasonManual: String
+    $changedState: String
+    $profileFeature: String
+    $flashSale: Float
+    $reportYear: Float
+    $supplierId: String
+    $orderBy: String
+) {
+    supplierSubAccounts(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        created: $created
+        username: $username
+        email: $email
+        status: $status
+        validFrom: $validFrom
+        validTo: $validTo
+        changedBy: $changedBy
+        changedDate: $changedDate
+        reasonManual: $reasonManual
+        changedState: $changedState
+        profileFeature: $profileFeature
+        flashSale: $flashSale
+        reportYear: $reportYear
+        supplierId: $supplierId
+        orderBy: $orderBy
+    ) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...SupplierSubAccountWithSupplierInfo
+            }
+        }
+    }
+}
+
+mutation createSupplierSubAccount($supplierSubAccount: SupplierSubAccountInput!) {
+    supplierSubAccountsCreate(supplierSubAccount: $supplierSubAccount) {
+        status
+        error {
+            ...ErrorInfo
+        }
+        supplierSubAccount {
+            ...SupplierSubAccountInfo
+        }
+    }
+}
+
+mutation updateSupplierSubAccount($input: SupplierSubAccountUpdateInput!) {
+    supplierSubAccountsUpdate(input: $input) {
+        status
+        error {
+            ...ErrorInfo
+        }
+        supplierSubAccount {
+            ...SupplierSubAccountInfo
+        }
+    }
+}
+
+mutation updateSupplierSubAccountsStatus($listId: [String]!, $reasonManual: String, $status: Int!) {
+    supplierSubAccountsStatusUpdate(listId: $listId, reasonManual: $reasonManual, status: $status) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+query getSupplierProfile {
+    profile {
+        ...SupplierProfileInfo
+    }
+}
+
+
+
+
+query getClientFocuses(
+$before: String
+$after: String
+$first: Int
+$last: Int
+$id: ID
+$status: Boolean
+$name: String
+$nameVi: String
+$nameEn: String
+$orderBy: String
+) {
+    clientFocuses(
+before: $before
+after: $after
+first: $first
+last: $last
+id: $id
+status: $status
+name: $name
+nameVi: $nameVi
+nameEn: $nameEn
+orderBy: $orderBy
+    ) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...ClientFocusInfo
+            }
+        }
+    }
+}
+
+query getCoreBusinessCount {
+  profile {
+    ... on SupplierNode {
+      suppliercategorySet {
+        totalCount
+      }
+    }
+  }
+}
+

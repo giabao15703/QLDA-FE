@@ -1,0 +1,276 @@
+query getProfileFeaturesBuyer($before: String, $after: String, $first: Int, $last: Int, $id: String, $orderBy: String) {
+    profileFeaturesBuyer(before: $before, after: $after, first: $first, last: $last, id: $id, orderBy: $orderBy) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...ProfileFeaturesBuyerInfo
+            }
+        }
+    }
+}
+mutation updateProfileFeaturesBuyer($id: String!, $input: ProfileFeaturesBuyerInput!) {
+    profileFeaturesBuyerUpdate(id: $id, input: $input) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+query getProfileFeaturesSupplier(
+    $id: String
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $orderBy: String
+) {
+    profileFeaturesSupplier(before: $before, after: $after, first: $first, last: $last, id: $id, orderBy: $orderBy) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...ProfileFeaturesSupplierInfo
+            }
+        }
+    }
+}
+mutation updateProfileFeaturesSupplier($id: String!, $input: ProfileFeaturesSupplierInput!) {
+    profileFeaturesSupplierUpdate(id: $id, input: $input) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+query getSicpRegistration($before: String, $after: String, $first: Int, $last: Int, $id: String, $orderBy: String) {
+    sicpRegistration(before: $before, after: $after, first: $first, last: $last, id: $id, orderBy: $orderBy) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...SicpRegistrationInfo
+            }
+        }
+    }
+}
+mutation updateSicpRegistration($id: String!, $input: SICPRegistrationInput!) {
+    sicpRegistrationUpdate(id: $id, input: $input) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+query getAuctionFee($id: ID!) {
+    auctionFee(id: $id) {
+        ...AuctionFeeInfo
+    }
+}
+
+query getAuctionFees(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $minValue: Float
+    $maxValue: Float
+    $percentage: Float
+    $orderBy: String
+) {
+    auctionFees(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        minValue: $minValue
+        maxValue: $maxValue
+        percentage: $percentage
+        orderBy: $orderBy
+    ) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...AuctionFeeInfo
+            }
+        }
+    }
+}
+
+mutation createAuctionFee($auctionFee: AuctionFeeInput!) {
+    auctionFeeCreate(auctionFee: $auctionFee) {
+        status
+        auctionFee {
+            ...AuctionFeeInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateAuctionFee($id: String!, $input: AuctionFeeInput!) {
+    auctionFeeUpdate(id: $id, input: $input) {
+        status
+        auctionFee {
+            ...AuctionFeeInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+query getPlatformFee($id: ID!) {
+    platformFee(id: $id) {
+        ...PlatformFeeBuyerInfo
+    }
+}
+
+query getPlatformFees(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $title_Icontains: String
+    $fee: Float
+    $orderBy: String
+) {
+    platformFees(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        title_Icontains: $title_Icontains
+        fee: $fee
+        orderBy: $orderBy
+    ) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...PlatformFeeBuyerInfo
+            }
+        }
+    }
+}
+
+mutation updatePlatformFee($id: String!, $fee: Float!, $title: String!) {
+    platformFeeUpdate(id: $id, fee: $fee, title: $title) {
+        status
+        platformFee {
+            ...PlatformFeeBuyerInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+query getUserDiamondSponsorFee($id: ID!) {
+    userDiamondSponsorFee(id: $id) {
+        ...UserDiamonSponsorFeeInfo
+    }
+}
+
+query getUserDiamondSponsorFees(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $title: String
+    $fee: Float
+    $orderBy: String
+) {
+    userDiamondSponsorFees(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        title: $title
+        fee: $fee
+        orderBy: $orderBy
+    ) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...UserDiamonSponsorFeeInfo
+            }
+        }
+    }
+}
+
+mutation createUserDiamondSponsorFee($input: UserDiamondSponsorFeeInput!) {
+    userDiamondSponsorFeeCreate(input: $input) {
+        status
+        userDiamondSponsorFee {
+            ...UserDiamonSponsorFeeInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateUserDiamondSponsorFee($id: String!, $input: UserDiamondSponsorFeeInput!) {
+    userDiamondSponsorFeeUpdate(id: $id, input: $input) {
+        status
+        userDiamondSponsorFee {
+            ...UserDiamonSponsorFeeInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+query getSupplierSicpTextEditor(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $sicpTypeFilter: String
+    $orderBy: String
+) {
+    userSupplierSicpTextEditor(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        sicpTypeFilter: $sicpTypeFilter
+        orderBy: $orderBy
+    ) {
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...SicpTextEditorInfo
+            }
+        }
+    }
+}

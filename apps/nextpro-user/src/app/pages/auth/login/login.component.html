@@ -1,0 +1,8 @@
+<div class="bg-opacity-25 bg-gray-500 w-full min-h-[360px] px-4 pt-8">
+    <app-form [form]="form" [attr.name]="form.name" />
+    <div class="mt-10 flex justify-center">
+        <button mat-raised-button class="!bg-[#15677F] w-[280px]" (click)="onSubmit()">
+            <div class="text-white pt-[2px]">{{ 'auth.login.login-btn' | translate }}</div>
+        </button>
+    </div>
+</div>

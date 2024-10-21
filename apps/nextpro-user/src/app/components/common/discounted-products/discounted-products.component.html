@@ -1,0 +1,51 @@
+<div class="h-96">
+    <div class="lg:px-28 lg:pt-4 py-10 px-3">
+        <owl-carousel-o [options]="customOptions">
+            @for (product of productsList; track product) {
+                <ng-container>
+                    <ng-template carouselSlide>
+                        <div class="flex flex-col justify-center">
+                            <div
+                                [id]="product.id"
+                                class="flex flex-col h-80 justify-between lg:w-[190px] w-full bg-white mx-auto pb-3 text-[13px] shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px]"
+                            >
+                                <img class="min-h-[190px]" [src]="product.picture" alt="" />
+                                <div class="text-center px-2 font-semibold">
+                                    <div class="text-base">{{ product.brand }}</div>
+                                    <div class="my-1 line-clamp-2">{{ product.description }}</div>
+                                </div>
+                                <div class="flex justify-between px-2 bg-black">
+                                    @if (product.initialPrice && product.discountedPrice) {
+                                        <div class="text-[#F80808] text-[14px]">
+                                            Giảm
+                                            {{
+                                                ((product.initialPrice - product.discountedPrice) /
+                                                    product.initialPrice) *
+                                                    100 | number: '1.0-2'
+                                            }}%
+                                        </div>
+                                    }
+                                    <div class="text-[#fff] line-through">
+                                        {{ product.initialPrice | currency: '' : '' : '1.0-0' }}
+                                    </div>
+                                </div>
+                                <div class="mt-1 text-[15px] text-[#F80808] font-semibold text-center">
+                                    {{ product.discountedPrice | currency: '' : '' : '1.0-0' }}&ensp;VND
+                                </div>
+                            </div>
+                            <button
+                                mat-raised-button
+                                class="!bg-[#F80808] -mt-3 mx-auto w-auto !h-[30px]"
+                                (click)="openBuyNowDialog()"
+                            >
+                                <div class="text-white text-[13px]">
+                                    {{ 'product.buy-now-btn' | translate }}
+                                </div>
+                            </button>
+                        </div>
+                    </ng-template>
+                </ng-container>
+            }
+        </owl-carousel-o>
+    </div>
+</div>

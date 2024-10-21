@@ -1,0 +1,55 @@
+version: '3'
+services:
+    prod.admin:
+        build:
+            context: .
+            dockerfile: ./Dockerfile.admin.prod
+            args:
+                ARG_API_URL: $PROD_API_URL
+                ARG_WS_URL: $PROD_WS_URL
+        image: $PROD_ADMIN_IMAGENAME
+        container_name: $PROD_ADMIN_CONTAINERNAME
+        env_file: .env
+        ports:
+            - '8000:80'
+
+    prod.user:
+        build:
+            context: .
+            dockerfile: ./Dockerfile.user.prod
+            args:
+                ARG_API_URL: $PROD_API_URL
+                ARG_WS_URL: $PROD_WS_URL
+        image: $PROD_USER_IMAGENAME
+        container_name: $PROD_USER_CONTAINERNAME
+        env_file: .env
+        ports:
+            - '8001:80'
+
+    uat.admin:
+        build:
+            context: .
+            dockerfile: ./Dockerfile.admin.uat
+            args:
+                ARG_API_URL: $UAT_API_URL
+                ARG_WS_URL: $UAT_WS_URL
+        image: $UAT_ADMIN_IMAGENAME
+        container_name: $UAT_ADMIN_CONTAINERNAME
+        env_file: .env
+        platform: linux/amd64
+        ports:
+            - '8002:80'
+
+    uat.user:
+        build:
+            context: .
+            dockerfile: ./Dockerfile.user.uat
+            args:
+                ARG_API_URL: $UAT_API_URL
+                ARG_WS_URL: $UAT_WS_URL
+        image: $UAT_USER_IMAGENAME
+        container_name: $UAT_USER_CONTAINERNAME
+        env_file: .env
+        platform: linux/amd64
+        ports:
+            - '8003:80'

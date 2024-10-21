@@ -1,0 +1,52 @@
+<mat-nav-list>
+    <div class="mb-5 flex justify-between items-center">
+        <div class="text-lg font-semibold">{{ 'products-listing.filter.filter-by' | translate }}</div>
+        <button type="button" (click)="closeBottomSheet()">
+            <img src="/assets/icons/close-svgrepo-com.svg" alt="" class="w-5" />
+        </button>
+    </div>
+    <div>
+        <div class="text-sm font-semibold">{{ 'supplier-listing.filter.staff.title' | translate }}</div>
+        <app-form [form]="staffForm" [attr.name]="staffForm.name" class="text-filter" formClass="flex flex-col" />
+    </div>
+    <div>
+        <div class="text-sm font-semibold">
+            {{ 'supplier-listing.filter.customer-segmentation.title' | translate }}
+        </div>
+        <app-form [form]="segmentForm" [attr.name]="segmentForm.name" class="text-filter" formClass="flex flex-col" />
+    </div>
+    <div>
+        <div class="text-sm font-semibold">
+            {{ 'supplier-listing.filter.supplier-areas-of-interest.title' | translate }}
+        </div>
+        <app-form [form]="industryForm" [attr.name]="industryForm.name" class="text-filter" formClass="flex flex-col" />
+    </div>
+    <div>
+        <div class="text-sm font-semibold">{{ 'supplier-listing.filter.payment.title' | translate }}</div>
+        <app-form [form]="paymentForm" [attr.name]="paymentForm.name" class="text-filter" formClass="flex flex-col" />
+    </div>
+    <div>
+        <div class="text-sm font-semibold">{{ 'supplier-listing.filter.country.title' | translate }}</div>
+        <app-form [form]="countryForm" [attr.name]="countryForm.name" class="text-filter" formClass="flex flex-col" />
+    </div>
+    <mat-divider class="!w-full" />
+    <div class="my-5">
+        <div class="text-sm font-semibold">{{ 'supplier-listing.filter.sort-by.title' | translate }}</div>
+        <app-form [form]="sortForm" [attr.name]="sortForm.name" class="text-filter" formClass="flex flex-col" />
+    </div>
+    <div class="font-semibold my-5">{{ 'products-listing.filter.related-industry' | translate }}</div>
+    <mat-divider class="!w-full" />
+    <div class="flex gap-x-4 justify-center mt-4">
+        <button mat-stroked-button (click)="clearFilters()" class="!border-[#15677F] !text-[#15677F] w-[170px]">
+            {{ 'products-listing.filter.reset-btn' | translate }}
+        </button>
+
+        <button
+            mat-raised-button
+            (click)="onSubmit()"
+            class="!bg-gradient-to-l !from-[#0B3440] !to-[#15677F] !text-[#ffffff] w-[170px]"
+        >
+            {{ 'products-listing.filter.search-btn' | translate }}
+        </button>
+    </div>
+</mat-nav-list>

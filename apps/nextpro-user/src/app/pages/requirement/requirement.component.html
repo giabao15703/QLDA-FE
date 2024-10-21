@@ -1,0 +1,48 @@
+<section>
+    <nextpro-user-navbar />
+</section>
+
+<section class="lg:px-8 px-4 my-5">
+    @if (loadingService.checkLoading(['getCity'])) {
+        <app-loading [backdrop]="true" />
+    }
+    @if (detail) {
+        <nextpro-admin-city-detail
+            [mode]="detail.mode"
+            [data]="detail.data"
+            [onCloseDrawer]="handleCloseDetailDrawer"
+            [refetch]="table.refetch"
+        />
+    }
+    <button type="button" mat-raised-button color="secondary" (click)="toggleFilter()">
+        <div class="flex items-center gap-x-2.5">
+            <img src="/assets/icons/filter-horizontal-svgrepo-com.svg" alt="" class="size-6" />
+            <div>{{ 'rfx.listing.advanced-search' | translate }}</div>
+        </div>
+    </button>
+    <div
+        [class.max-h-0]="!filterVisible"
+        [class.max-h-screen]="filterVisible"
+        class="overflow-hidden transition-all duration-300 ease-in-out"
+    >
+        <app-filter
+            class="!items-stretch"
+            formClass="grid grid-cols-4 gap-x-8 mt-3"
+            [onFilter]="table.handleFilter"
+            [formConfig]="table.config.filterForm"
+            [showClose]="false"
+        />
+    </div>
+    <app-table
+        class="mt-7"
+        [attr.name]="table.name"
+        [isLoading]="loadingService.checkLoading(['getCities'])"
+        [extendHeight]="180"
+        [columns]="table.config.columns"
+        [data]="table.state.data"
+        [pagination]="table.state.pagination"
+        [onSelectionInit]="table.onSelectionInit"
+        [onSort]="table.handleSort"
+        [onPageChange]="table.handlePageChange"
+    />
+</section>

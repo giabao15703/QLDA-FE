@@ -1,0 +1,96 @@
+@if (showMainInfo) {
+    <div class="flex lg:flex-row flex-col gap-4 justify-between lg:p-3 p-2">
+        <div class="flex items-center lg:gap-10">
+            <div class="text-[16px] min-w-[150px]">
+                {{ 'auth.register.become-supplier.supplier-number-label' | translate }}
+            </div>
+            <input
+                type="text"
+                [value]="supplierNumber ?? '---:---'"
+                class="text-center text-[#15677f] font-bold border-2 border-[#15677f] w-full"
+                readonly
+            />
+        </div>
+        <div class="flex items-center lg:gap-10">
+            <div class="text-[16px] min-w-[150px]">
+                {{ 'auth.register.become-supplier.profile-label' | translate }}
+            </div>
+            <input
+                type="text"
+                [value]="profile ?? '---:---'"
+                class="text-center text-[#15677f] font-bold border-2 border-[#15677f] w-full"
+                readonly
+            />
+        </div>
+        <div class="flex items-center lg:gap-10">
+            <div class="text-[16px] min-w-[150px]">
+                {{ 'auth.register.become-supplier.verification-label' | translate }}
+            </div>
+            <input
+                type="text"
+                value="---:---"
+                class="text-center text-[#dc3545] font-bold border-2 border-[#15677f] w-[150px]"
+                readonly
+            />
+        </div>
+        <div class="flex items-center lg:gap-10">
+            <div class="text-[16px] min-w-[150px]">
+                {{ 'account.buyer-accounts.create-detail.registerDate' | translate }}
+            </div>
+            <div class="text-center text-[#15677f] font-bold border-2 border-[#15677f] w-full lg:w-[193px]">
+                {{ registerDate | date: 'dd-MM-yyyy' : '+0700' }}
+            </div>
+        </div>
+    </div>
+}
+<app-form [form]="form" [attr.name]="form.name" formClass="my-8" />
+@if (showTerms) {
+    <div class="mt-2 flex items-center">
+        <mat-checkbox (change)="onIsReadChange($event)">
+            <div class="lg:text-[17px] text-[14px]" [ngClass]="{ disabled: !isRead }">
+                {{ 'auth.register.become-supplier.agreeToAccept' | translate }}
+                <a
+                    href="https://discovery.nextpro.io/chinh-sach-bao-mat-quy-dinh-quyen-va-nghia-vu/"
+                    target="_blank"
+                    class="no-underline text-[#15677f] font-semibold cursor-pointer"
+                >
+                    {{ 'auth.register.become-supplier.privacyPolicy' | translate }}
+                </a>
+                {{ 'auth.register.become-supplier.and' | translate }}
+                <a
+                    href="https://discovery.nextpro.io/dieu-khoan-dich-vu/"
+                    target="_blank"
+                    class="no-underline text-[#15677f] font-semibold cursor-pointer"
+                >
+                    {{ 'auth.register.become-supplier.termsOfService' | translate }}
+                </a>
+            </div>
+        </mat-checkbox>
+    </div>
+
+    <div class="mt-2 flex items-center">
+        <mat-checkbox [checked]="isTermAccept" [disabled]="!isRead" (change)="onIsTermAcceptChange($event)">
+            <div class="lg:text-[17px] text-[14px] text-[#000]" [ngClass]="{ disabled: !isRead }">
+                {{ 'auth.register.become-supplier.readAndAccept' | translate }}
+                <span
+                    class="text-[#15677f] font-semibold"
+                    [ngClass]="{ disabled: !isRead }"
+                    (click)="onClickContract()"
+                >
+                    {{ 'auth.register.become-supplier.contractWithNextPro' | translate }}
+                </span>
+            </div>
+        </mat-checkbox>
+    </div>
+}
+<div class="my-6 flex justify-end">
+    <button
+        class="m-1 w-48"
+        mat-raised-button
+        color="primary"
+        (click)="handleSave()"
+        [disabled]="isLoading || (showTerms && !isTermAccept)"
+    >
+        {{ buttonText | translate | uppercase }}
+    </button>
+</div>

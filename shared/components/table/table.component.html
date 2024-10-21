@@ -1,0 +1,254 @@
+<div class="relative table-wrapper" [class]="tableClass" [ngStyle]="{ height: 'calc(100vh - ' + extendHeight + 'px)' }">
+    @if (isLoading) {
+        <app-loading [backdrop]="true" />
+    }
+    @if (onShowFilter) {
+        <button class="sticky left-0" mat-raised-button color="primary" (click)="onShowFilter()">
+            <mat-icon class="!mr-0">search</mat-icon>
+        </button>
+    }
+    <table
+        class="table"
+        mat-table
+        matSort
+        multiTemplateDataRows
+        [dataSource]="tableData"
+        (matSortChange)="handleSort($event)"
+    >
+        @for (column of getAllColumns(); track column; let iCol = $index) {
+            <ng-container
+                [matColumnDef]="column.name"
+                [sticky]="column.sticky === 'left'"
+                [stickyEnd]="column.sticky === 'right'"
+            >
+                @if (column.sort) {
+                    <th
+                        mat-header-cell
+                        *matHeaderCellDef
+                        [mat-sort-header]="column.sort"
+                        [style]="column.headerStyle ?? null"
+                    >
+                        <ng-container *ngTemplateOutlet="headerCellTemplate" />
+                    </th>
+                } @else {
+                    <th mat-header-cell *matHeaderCellDef [style]="column.headerStyle ?? null">
+                        <ng-container *ngTemplateOutlet="headerCellTemplate" />
+                    </th>
+                }
+                <ng-template #headerCellTemplate>
+                    @switch (column.type) {
+                        @case ('selection') {
+                            @if (selection) {
+                                <mat-checkbox
+                                    (click)="$event.stopPropagation()"
+                                    (change)="toogleSelectAll($event)"
+                                    [checked]="selection.hasValue() && isAllSelected()"
+                                    [indeterminate]="selection.hasValue() && !isAllSelected()"
+                                />
+                            }
+                        }
+                        @case ('expand') {
+                            <button
+                                mat-icon-button
+                                color="primary"
+                                (click)="$event.stopPropagation(); toogleExpandAll()"
+                            >
+                                @if (expand.hasValue() && isAllExpanded()) {
+                                    <mat-icon>keyboard_double_arrow_up</mat-icon>
+                                } @else {
+                                    <mat-icon>keyboard_double_arrow_down</mat-icon>
+                                }
+                            </button>
+                        }
+                    }
+                    <div class="flex justify-center items-center">
+                        <span>{{ column.label | translate }}</span>
+                        <ng-container *ngIf="column.directive">
+                            <img
+                                [src]="column.directive.iconSrc"
+                                [matTooltip]="column.directive.tooltip | translate"
+                                class="ml-2 cursor-pointer size-4"
+                            />
+                        </ng-container>
+                    </div>
+                </ng-template>
+                <td
+                    mat-cell
+                    *matCellDef="let row; let iData = dataIndex; let iRender = renderIndex"
+                    [style]="column.cellStyle ?? null"
+                >
+                    <div [style]="column.cellContentStyle ?? null">
+                        @switch (column.type) {
+                            @case ('selection') {
+                                @if (selection) {
+                                    <mat-checkbox
+                                        (click)="$event.stopPropagation()"
+                                        (change)="toogleSelect(row)"
+                                        [checked]="selection.isSelected(row)"
+                                    >
+                                    </mat-checkbox>
+                                }
+                            }
+                            @case ('expand') {
+                                <button
+                                    mat-icon-button
+                                    color="primary"
+                                    (click)="$event.stopPropagation(); toogleExpand(row)"
+                                >
+                                    @if (expand.isSelected(row)) {
+                                        <mat-icon>keyboard_arrow_up</mat-icon>
+                                    } @else {
+                                        <mat-icon>keyboard_arrow_down</mat-icon>
+                                    }
+                                </button>
+                            }
+                        }
+                        <ng-container
+                            *ngTemplateOutlet="cellTemplate; context: { cell: row | nestedValue: column.name }"
+                        />
+                        <ng-template #cellTemplate let-cell="cell">
+                            @switch (column.type) {
+                                @case ('image') {
+                                    <img [src]="cell" />
+                                }
+                                @case ('html') {
+                                    <div [innerHTML]="column.render(cell, iData, row)"></div>
+                                }
+                                @case ('form') {
+                                    <app-table-form
+                                        [formClass]="column.form.class"
+                                        [name]="column.form.name"
+                                        [config]="column.form.config"
+                                        [data]="row"
+                                        [index]="iData"
+                                    />
+                                }
+                                @case ('upload') {
+                                    <div class="app-file-upload">
+                                        <mat-form-field [appearance]="column?.upload?.appearance" class="w-full">
+                                            @if (column?.upload?.label) {
+                                                <mat-label>{{ column?.upload?.label | translate }}</mat-label>
+                                            }
+                                            <ngx-mat-file-input [accept]="column?.upload?.accept">
+                                                <mat-icon>upload</mat-icon>
+                                            </ngx-mat-file-input>
+                                        </mat-form-field>
+                                    </div>
+                                }
+                                @case ('action') {
+                                    {{ column.render ? column.render(cell, iData, row) : cell }}
+                                    @for (cta of column.ctas; track cta) {
+                                        @if (!cta.shouldShow || cta.shouldShow(row, iData, config)) {
+                                            <button
+                                                mat-icon-button
+                                                [color]="cta?.color ?? 'primary'"
+                                                (click)="$event.stopPropagation(); cta.onClick(row, iData, config)"
+                                            >
+                                                @if (cta.icon) {
+                                                    <mat-icon>{{ cta.icon }}</mat-icon>
+                                                }
+                                                @if (cta.text) {
+                                                    <span>{{ cta.text | translate }}</span>
+                                                }
+                                            </button>
+                                        }
+                                    }
+                                }
+                                @default {
+                                    {{ column.render ? column.render(cell, iData, row) : cell }}
+                                }
+                            }
+                        </ng-template>
+                    </div>
+                </td>
+                <td mat-footer-cell *matFooterCellDef [style]="column?.footer?.cellStyle ?? null">
+                    <ng-container
+                        *ngTemplateOutlet="footerCellTemplate; context: { footer: column.footer }"
+                    ></ng-container>
+                    <ng-template #footerCellTemplate let-footer="footer">
+                        @if (footer) {
+                            @switch (footer.type) {
+                                @case ('form') {
+                                    <app-table-form
+                                        [formClass]="footer.form.class"
+                                        [name]="footer.form.name"
+                                        [config]="footer.form.config"
+                                    />
+                                }
+                            }
+                            <span>{{ footer.label | translate }}</span>
+                        }
+                    </ng-template>
+                </td>
+            </ng-container>
+        }
+        @if (dataNested) {
+            <ng-container matColumnDef="spacer">
+                <td
+                    mat-cell
+                    *matCellDef="let row"
+                    [attr.colspan]="getAllColumns().length - getExpandColumns().length - 2"
+                    class="!border-t-0 !border-b-0"
+                ></td>
+            </ng-container>
+            <ng-container matColumnDef="expandedDetail">
+                <td mat-cell *matCellDef="let row" [attr.colspan]="getExpandColumns().length" class="!p-0">
+                    <div [@detailExpand]="expand.isSelected(row) ? 'expanded' : 'collapsed'">
+                        <table mat-table [dataSource]="row | nestedValue: dataNested">
+                            @for (column of getExpandColumns(); track column.name; let iCol = $index) {
+                                <ng-container [matColumnDef]="column.name">
+                                    <td
+                                        mat-cell
+                                        *matCellDef="let nestedRow; let iNestedRow = index"
+                                        [style]="column.cellStyle ?? null"
+                                    >
+                                        <div [style]="column.cellContentStyle ?? null">
+                                            @switch (column.expand.type) {
+                                                @case ('html') {
+                                                    <div
+                                                        [innerHTML]="column.expand.render(nestedRow, iNestedRow)"
+                                                    ></div>
+                                                }
+                                                @default {
+                                                    {{ column.expand.render(nestedRow, iNestedRow) }}
+                                                }
+                                            }
+                                        </div>
+                                    </td>
+                                </ng-container>
+                            }
+                            <tr mat-row *matRowDef="let row; columns: getExpandColumnsName()"></tr>
+                        </table>
+                    </div>
+                </td>
+            </ng-container>
+        }
+        <tr mat-header-row *matHeaderRowDef="getAllColumnsName(); sticky: true"></tr>
+        <tr
+            mat-row
+            *matRowDef="let row; columns: getAllColumnsName()"
+            (click)="$event.stopPropagation(); toogleSelect(row)"
+        ></tr>
+        @if (dataNested) {
+            <tr mat-row *matRowDef="let row; columns: ['spacer', 'expandedDetail']" class="!h-0"></tr>
+        }
+        <tr mat-footer-row *matFooterRowDef="getAllColumnsName()"></tr>
+    </table>
+</div>
+@if (config?.table?.createButton) {
+    <div class="mt-4 flex justify-end">
+        <button mat-flat-button color="primary" (click)="handleFormCreateRow($event)">
+            + {{ config.table.createButton.text | translate | uppercase }}
+        </button>
+    </div>
+}
+@if (pagination) {
+    <mat-paginator
+        class="table-paginator"
+        showFirstLastButtons
+        [pageSizeOptions]="[10, 20, 50, 100]"
+        [pageIndex]="pagination.page - 1"
+        [length]="pagination.totalCount"
+        (page)="onPageChange($event)"
+    />
+}

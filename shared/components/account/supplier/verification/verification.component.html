@@ -1,0 +1,10 @@
+<div class="my-8 overflow-hidden">
+    <app-form [form]="form" [attr.name]="form.name" />
+    <ng-container>
+        @for (key of keys; track key; let i = $index) {
+            <div class="text-xl font-bold">{{ 'supplier-profile.tabs.verification.' + key | translate }}</div>
+            <p [innerHTML]="getFormattedText('supplier-profile.tabs.verification.' + key)" class="mt-4"></p>
+            <mat-divider class="!my-7" />
+        }
+    </ng-container>
+</div>

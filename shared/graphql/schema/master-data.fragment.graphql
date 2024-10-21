@@ -1,0 +1,500 @@
+fragment CountryInfo on CountryNode {
+    id
+    itemCode
+    name
+    status
+    translations {
+        id
+        languageCode
+        name
+    }
+}
+
+fragment CityInfo on CountryStateNode {
+    id
+    name
+    stateCode
+    country {
+        ...CountryInfo
+    }
+    status
+    translations {
+        id
+        languageCode
+        name
+    }
+}
+
+fragment CurrencyInfo on CurrencyNode {
+    id
+    name
+    itemCode
+    status
+    translations {
+        id
+        languageCode
+        name
+    }
+}
+
+fragment DeliveryTermInfo on DeliveryTermNode {
+    id
+    name
+    status
+    translations {
+        id
+        languageCode
+        name
+    }
+}
+
+fragment PaymentTermInfo on PaymentTermNode {
+    id
+    name
+    status
+    translations {
+        id
+        languageCode
+        name
+    }
+}
+
+fragment ReasonInfo on ReasonNode {
+    id
+    name
+    itemCode
+    status
+    translations {
+        id
+        languageCode
+        name
+    }
+}
+
+fragment GenderInfo on GenderNode {
+    id
+    name
+    status
+    translations {
+        id
+        languageCode
+        name
+    }
+}
+
+fragment PositionInfo on PositionNode {
+    id
+    name
+    status
+    translations {
+        id
+        languageCode
+        name
+    }
+}
+
+fragment LanguageInfo on LanguageNode {
+    id
+    name
+    itemCode
+    status
+    translations {
+        id
+        languageCode
+        name
+    }
+}
+
+fragment NumberOfEmployeeInfo on NumberofEmployeeNode {
+    id
+    name
+    status
+}
+
+fragment IndustryInfo on IndustryNode {
+    id
+    itemCode
+    name
+    status
+    translations {
+        id
+        languageCode
+        name
+    }
+}
+
+fragment IndustryWithIndustryClusterInfo on IndustryNode {
+    id
+    itemCode
+    name
+    status
+    translations {
+        id
+        languageCode
+        name
+    }
+    industryCluster {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...IndustryClusterInfo
+            }
+        }
+    }
+}
+
+fragment IndustryClusterInfo on IndustryClusterNode {
+    id
+    itemCode
+    name
+    status
+    translations {
+        id
+        languageCode
+        name
+    }
+}
+
+fragment IndustryClusterWithIndustryInfo on IndustryClusterNode {
+    ...IndustryClusterInfo
+    industry {
+        ...IndustryInfo
+    }
+}
+
+fragment IndustryClusterWithIndustrySectorsInfo on IndustryClusterNode {
+    ...IndustryClusterInfo
+    industrySectors {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...IndustrySectorsInfo
+            }
+        }
+    }
+}
+
+fragment IndustrySectorsInfo on IndustrySectorsNode {
+    id
+    itemCode
+    name
+    status
+    translations {
+        id
+        languageCode
+        name
+    }
+}
+
+fragment IndustrySectorsWithIndustryClusterInfo on IndustrySectorsNode {
+    ...IndustrySectorsInfo
+    industryCluster {
+        ...IndustryClusterInfo
+    }
+}
+
+fragment IndustrySectorsWithIndustrySubSectorsInfo on IndustrySectorsNode {
+    ...IndustrySectorsInfo
+    industrySubSectors {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...IndustrySubSectorsInfo
+            }
+        }
+    }
+}
+
+fragment IndustrySubSectorsInfo on IndustrySubSectorsNode {
+    id
+    itemCode
+    name
+    status
+    translations {
+        id
+        languageCode
+        name
+    }
+}
+
+fragment IndustrySubSectorsWithIndustrySectorsInfo on IndustrySubSectorsNode {
+    ...IndustrySubSectorsInfo
+    industrySectors {
+        ...IndustrySectorsInfo
+    }
+}
+
+fragment UnitOfMeasureInfo on UnitofMeasureNode {
+    id
+    name
+    itemCode
+    status
+    translations {
+        id
+        languageCode
+        name
+    }
+}
+
+fragment FamilyCodeInfo on FamilyCodeNode {
+    id
+    itemCode
+    name
+    status
+    translations {
+        id
+        languageCode
+        name
+    }
+}
+
+fragment FamilyCodeWithClusterCodeInfo on FamilyCodeNode {
+    ...FamilyCodeInfo
+    clusterCode {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...ClusterCodeInfo
+            }
+        }
+    }
+}
+
+fragment ClusterCodeInfo on ClusterCodeNode {
+    id
+    itemCode
+    name
+    status
+    translations {
+        id
+        languageCode
+        name
+    }
+    supplierNumber
+}
+
+fragment ClusterCodeWithFamilyCodeInfo on ClusterCodeNode {
+    ...ClusterCodeInfo
+    familyCode {
+        ...FamilyCodeInfo
+    }
+}
+
+fragment ClusterCodeWithSubClusterCodeInfo on ClusterCodeNode {
+    ...ClusterCodeInfo
+    subClusterCode {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...SubClusterCodeInfo
+            }
+        }
+    }
+}
+
+fragment SubClusterCodeInfo on SubClusterCodeNode {
+    id
+    itemCode
+    name
+    status
+    translations {
+        id
+        languageCode
+        name
+    }
+}
+
+fragment SubClusterCodeWithClusterCodeInfo on SubClusterCodeNode {
+    ...SubClusterCodeInfo
+    clusterCode {
+        ...ClusterCodeInfo
+    }
+}
+
+fragment SubClusterCodeWithCategoryInfo on SubClusterCodeNode {
+    ...SubClusterCodeInfo
+    category {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...CategoryInfo
+            }
+        }
+    }
+}
+
+fragment CategoryInfo on CategoryNode {
+    id
+    itemCode
+    name
+    status
+    translations {
+        id
+        languageCode
+        name
+    }
+}
+
+fragment CategoryWithSubClusterCodeInfo on CategoryNode {
+    ...CategoryInfo
+    subClusterCode {
+        ...SubClusterCodeInfo
+    }
+}
+
+fragment EmailTemplateInfo on EmailTemplatesNode {
+    id
+    itemCode
+    title
+    content
+    variables
+    status
+    created
+    updated
+    translations {
+        id
+        languageCode
+        title
+        content
+    }
+}
+
+fragment PromotionUser on PromotionUserUsedNodeConnection {
+    edges {
+        node {
+            id
+            userUsed
+            userUsedEmail
+        }
+    }
+}
+
+fragment PromotionInfo on PromotionNode {
+    id
+    name
+    description
+    discount
+    validFrom
+    validTo
+    status
+    applyForBuyer
+    applyForSupplier
+    applyForAdvertisement
+    visible
+    userGiven
+    userGivenEmail
+    commission
+    applyScope
+    translations {
+        id
+        languageCode
+        name
+        description
+    }
+    descriptionDefault
+}
+
+fragment PromotionUserUsedInfo on PromotionUserUsedNode {
+    id
+    title
+    userName
+    userUsed
+    userUsedEmail
+    dateUsed
+    realAmount
+    amountAfterDiscount
+    promotion {
+        id
+        name
+        validFrom
+        validTo
+        visible
+        commission
+        userGiven
+        userGivenEmail
+        status
+        discount
+    }
+}
+
+fragment ClientFocusInfo on ClientFocusNode {
+    id
+    name
+    status
+    translations {
+        id
+        languageCode
+        name
+    }
+}
+fragment VoucherInfo on VoucherNode {
+    id
+    voucherCode
+    name
+    status
+    discount
+    label
+    translations {
+        id
+        languageCode
+        name
+    }
+}
+fragment WarrantyTermInfo on WarrantyTermNode {
+    id
+    warrantyCode
+    name
+    status
+    translations {
+        id
+        languageCode
+        name
+    }
+}
+fragment BuyerClubVoucherInfo on BuyerClubVoucherNode {
+    id
+    voucherCode
+    description
+    status
+    standard
+    gold
+    platinum
+    diamond
+    label
+    translations {
+        id
+        languageCode
+        description
+    }
+}
+
+fragment SetProductAdvertisementInfo on SetProductAdvertisementNode {
+    id
+    description
+    status
+    duration
+    serviceFee
+    translations {
+        id
+        languageCode
+        description
+    }
+}

@@ -1,0 +1,10 @@
+<div class="flex justify-center items-center h-[64px]">
+    <a [routerLink]="['/']" mat-button>
+        <img class="w-[180px] h-[40px]" src="/assets/images/sv_logo_dashboard.png" />
+    </a>
+</div>
+<mat-nav-list>
+    @for (navItem of navItems; track navItem) {
+        <nextpro-admin-layout-dashboard-nav-item [navItem]="navItem" />
+    }
+</mat-nav-list>

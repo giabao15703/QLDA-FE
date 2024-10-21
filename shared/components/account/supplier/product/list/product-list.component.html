@@ -1,0 +1,68 @@
+<div class="my-4 overflow-hidden">
+    @if (loadingService.checkLoading(['getSupplierProduct'])) {
+        <app-loading [backdrop]="true" />
+    }
+    <mat-drawer-container [hasBackdrop]="false">
+        <mat-drawer [disableClose]="true" [opened]="!!detail" mode="over" position="end" class="!w-full">
+            @if (detail) {
+                <app-supplier-product-form
+                    [type]="detail.type"
+                    [mode]="detail.mode"
+                    [data]="detail.data"
+                    [onCloseDrawer]="handleCloseDetailDrawer"
+                    [refetch]="table.refetch"
+                />
+            }
+        </mat-drawer>
+        <mat-drawer-content>
+            <app-filter
+                class="flex items-center justify-between w-full"
+                formClass="flex gap-x-5"
+                [onFilter]="handleFilter"
+                [showClose]="false"
+                [formConfig]="table.config.filterForm"
+            />
+            <app-table
+                [attr.name]="table.name"
+                [isLoading]="loadingService.checkLoading(['getSupplierProductList'])"
+                [extendHeight]="180"
+                [columns]="table.config.columns"
+                [data]="table.state.data"
+                [pagination]="table.state.pagination"
+                [onSelectionInit]="table.onSelectionInit"
+                [onSort]="table.handleSort"
+                [onPageChange]="table.handlePageChange"
+            />
+            <div class="mt-7 flex gap-x-4 justify-end">
+                @if (table.state.selection) {
+                    <button
+                        mat-raised-button
+                        color="primary"
+                        (click)="handleUpdateStatus('APPROVED')"
+                        [disabled]="!table.state.selection.hasValue()"
+                    >
+                        <mat-icon>check</mat-icon>
+                        {{ 'button.approve' | translate | uppercase }}
+                    </button>
+                    <button
+                        mat-raised-button
+                        color="warn"
+                        (click)="handleUpdateStatus('REJECTED')"
+                        [disabled]="!table.state.selection.hasValue()"
+                    >
+                        <mat-icon>close</mat-icon>
+                        {{ 'button.reject' | translate | uppercase }}
+                    </button>
+                }
+                <button
+                    mat-raised-button
+                    color="primary"
+                    class="lg:w-[150px] w-full font-semibold"
+                    (click)="handleCreateProduct()"
+                >
+                    {{ 'button.create' | translate }}
+                </button>
+            </div>
+        </mat-drawer-content>
+    </mat-drawer-container>
+</div>

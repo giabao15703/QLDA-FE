@@ -1,0 +1,68 @@
+<div class="relative">
+    @if (
+        loadingService.checkLoading([
+            'getIndustries',
+            'getIndustryWithIndustryCluster',
+            'getIndustryClusterWithIndustrySectors',
+            'getIndustrySectorWithIndustrySubSectors',
+        ])
+    ) {
+        <app-loading [backdrop]="true" />
+    }
+    <app-filter
+        class="flex items-center justify-between w-full"
+        formClass="flex gap-x-5"
+        [onFilter]="handleFilter"
+        [formConfig]="filterFormConfig"
+        [showClose]="false"
+    />
+    <cdk-tree class="nextpro-user-tree-wrapper" [dataSource]="dataSource" [treeControl]="treeControl">
+        <cdk-nested-tree-node *cdkTreeNodeDef="let industry" class="nextpro-user-tree-node">
+            <div class="nextpro-user-tree-node-selectable">
+                @if (industry.fetchChildren) {
+                    <div class="cursor-pointer" (click)="industry.fetchChildren()">
+                        <button mat-icon-button>
+                            <mat-icon class="text-[#15677f] mat-icon-rtl-mirror"> folder_open </mat-icon>
+                        </button>
+                        {{ industry.name }}
+                    </div>
+                } @else {
+                    <mat-checkbox
+                        class="pb-1 ml-auto overflow-x-hidden"
+                        [checked]="isSelected(industry.id)"
+                        (change)="select(industry)"
+                    >
+                        {{ industry.name }}
+                    </mat-checkbox>
+                }
+            </div>
+        </cdk-nested-tree-node>
+        <cdk-nested-tree-node *cdkTreeNodeDef="let industry; when: hasChild" class="nextpro-user-tree-node">
+            <button mat-icon-button cdkTreeNodeToggle>
+                <mat-icon class="text-[#15677f] mat-icon-rtl-mirror">
+                    {{ treeControl.isExpanded(industry) ? 'folder_open' : 'folder' }}
+                </mat-icon>
+            </button>
+            {{ industry.name }}
+            <div [class.nextpro-user-tree-invisible]="!treeControl.isExpanded(industry)">
+                <ng-container cdkTreeNodeOutlet />
+            </div>
+        </cdk-nested-tree-node>
+    </cdk-tree>
+    <mat-form-field appearance="outline" class="mt-5 w-full">
+        <mat-label>
+            {{ 'shared.search-industry.selectedIndustry' | translate }}
+        </mat-label>
+        <mat-chip-grid #industryGrid>
+            @for (industry of industriesSelected; track industry) {
+                <mat-chip-row (removed)="remove(industry)">
+                    {{ industry.name }}
+                    <button matChipRemove>
+                        <mat-icon>cancel</mat-icon>
+                    </button>
+                </mat-chip-row>
+            }
+            <input [matChipInputFor]="industryGrid" />
+        </mat-chip-grid>
+    </mat-form-field>
+</div>

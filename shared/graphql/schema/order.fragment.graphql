@@ -1,0 +1,73 @@
+fragment OrderInfo on OrderNode {
+    id
+    orderType
+    orderCode
+    orderStatus
+    taxCode
+    createdAt
+    updatedAt
+    address
+    totalAmount
+    orderDeliveryTimelines {
+        ...OrderDeliveryTimelineInfo
+    }
+    voucherCodeOrder {
+        ...VoucherInfo
+    }
+    buyer {
+        ...BuyerInfo
+    }
+    supplier {
+        ...SupplierInfo
+    }
+    city {
+        ...CityInfo
+    }
+    orderItems {
+        ...OrderItemsInfo
+    }
+}
+
+fragment OrderDeliveryTimelineInfo on OrderDeliveryTimelineNode {
+    id
+    time
+    orderDate
+    date
+}
+
+fragment OrderItemsInfo on OrderItemsNode {
+    product {
+        ...ProductInfo
+    }
+    taxGTGT
+    createdAt
+    updatedAt
+    refund
+    amount
+    order {
+        id
+        orderCode
+    }
+}
+fragment GroupStudentInfo on GroupStudentType {
+    id
+    nameGroup
+    members {
+        id
+        fullName
+    }
+    giangVien {
+        id
+        nameGiangVien
+    }
+}
+
+fragment GiangVienInfo on GiangVienType {
+    id
+    nameGiangVien
+    detai
+    groupStudents {
+        id
+        nameGroup
+    }
+}

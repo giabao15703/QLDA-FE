@@ -1,0 +1,42 @@
+@import '../../../shared/styles/global.scss';
+@import '../../../shared/styles/material-palette-admin.scss';
+
+:root {
+    --mat-toolbar-container-background-color: #ffffff;
+    --mat-sidenav-container-width: 240px;
+    --mdc-filled-text-field-disabled-label-text-color: --mdc-filled-text-field-label-text-color;
+    --mdc-filled-text-field-disabled-input-text-color: --mdc-filled-text-field-input-text-color;
+    --mdc-outlined-text-field-disabled-label-text-color: --mdc-outlined-text-field-label-text-color;
+    --mdc-outlined-text-field-disabled-input-text-color: --mdc-outlined-text-field-input-text-color;
+    --mat-select-disabled-trigger-text-color: --mat-select-trigger-text-color;
+    --mat-tab-header-active-label-text-color: $color-primary-admin;
+}
+
+.footer-fixed {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    justify-content: flex-end;
+    min-height: 50px;
+    padding: 0.5rem 30px;
+    flex-wrap: wrap-reverse;
+    width: 100%;
+    z-index: 1;
+    background-color: #ffffff;
+}
+
+.xng-breadcrumb-root {
+    padding: 2px 8px;
+    border-radius: 4px;
+    color: whitesmoke;
+    background-color: $color-primary-admin;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.cdk-overlay-pane {
+    min-width: fit-content;
+}

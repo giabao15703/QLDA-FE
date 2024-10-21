@@ -1,0 +1,12 @@
+.like-button,
+.dislike-button {
+    @apply bg-transparent;
+}
+
+.liked {
+    @apply bg-blue-500; // Change color to blue
+}
+
+.disliked {
+    @apply bg-red-400; // Change color to blue
+}

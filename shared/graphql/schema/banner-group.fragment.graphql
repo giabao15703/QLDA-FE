@@ -1,0 +1,9 @@
+fragment BannerGroupInfo on BannerGroupNode {
+    id
+    itemCode
+    name
+    description
+    bannerList {
+        ...BannerInfo
+    }
+}

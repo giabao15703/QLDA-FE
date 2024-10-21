@@ -1,0 +1,33 @@
+query getBannerList(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $name: String
+    $sortOrder: Int
+    $groupId: String
+    $siteId: String
+    $orderBy: String
+) {
+    bannerList(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        name: $name
+        sortOrder: $sortOrder
+        groupId: $groupId
+        siteId: $siteId
+        orderBy: $orderBy
+    ) {
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...BannerInfo
+            }
+        }
+        totalCount
+    }
+}

@@ -1,0 +1,197 @@
+<div>
+    <section>
+        <nextpro-user-navbar />
+    </section>
+    <div class="min-h-screen">
+        <div class="flex gap-x-4 bg-gray-50 rounded-xl lg:p-5 p-3 lg:mx-10 mx-4 lg:my-6 my-2 shadow-lg">
+            <img src="assets/icons/avatar.svg" alt="Avatar" class="size-16 rounded-md" />
+            <div class="flex flex-col justify-between">
+                <div class="lg:text-lg text-sm font-semibold">Công ty TNHH Dịch vụ thương mại Mỹ phẩm ABC</div>
+                <div class="flex lg:mt-0 mt-1 lg:gap-x-8 gap-x-20 lg:text-sm text-xs font-extralight">
+                    <span>STANDARD</span>
+                    <span>{{ 'buyerClub.points' | translate }}: 40.000</span>
+                    <span class="lg:block hidden">{{ 'buyerClub.registrationDate' | translate }}: 15/10/2023</span>
+                </div>
+                <div class="lg:hidden block mt-2 text-xs font-extralight">
+                    {{ 'buyerClub.registrationDate' | translate }}: 15/10/2023
+                </div>
+            </div>
+        </div>
+        <img src="assets/icons/BUYER-CLUB.svg" alt="Buyer-Club" />
+        <div class="gradient lg:px-20 px-6 lg:py-12 py-6">
+            <div class="lg:text-xl text-lg text-[#FCF8F8] font-semibold tracking-wider">
+                {{ 'buyerClub.title' | translate }}
+            </div>
+            <div class="mt-8 lg:block hidden w-full">
+                <table class="min-w-full divide-y divide-[#707070] text-white">
+                    <thead>
+                        <tr>
+                            <th class="py-3 text-left text-lg font-semibold tracking-wider">
+                                {{ 'buyerClub.memberBenefits' | translate }}
+                            </th>
+                            <th class="py-3 px-6 text-center text-lg font-medium uppercase tracking-wider bg-[#6E569A]">
+                                GOLD
+                            </th>
+                            <th class="py-3 px-6 text-center text-lg font-medium uppercase tracking-wider bg-[#FBA435]">
+                                PLATINUM
+                            </th>
+                            <th class="py-3 px-6 text-center text-lg font-medium uppercase tracking-wider bg-[#F86B63]">
+                                DIAMOND
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-[#707070]">
+                        <tr>
+                            <td class="py-4 font-extralight whitespace-nowrap">Tặng voucher 2.500.000 VND</td>
+                            <td class="py-4 font-extralight whitespace-nowrap text-center bg-[#6E569A] px-6">
+                                1 Voucher
+                            </td>
+                            <td class="py-4 font-extralight whitespace-nowrap text-center bg-[#FBA435] px-6">
+                                2 Voucher
+                            </td>
+                            <td class="py-4 font-extralight whitespace-nowrap text-center bg-[#F86B63] px-6">
+                                3 Voucher
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 font-extralight whitespace-nowrap">
+                                Tăng giá trị hoàn tiền lên đến 25,000,000 VND
+                            </td>
+                            <td class="py-4 font-extralight whitespace-nowrap text-center bg-[#6E569A] px-6">Có</td>
+                            <td class="py-4 font-extralight whitespace-nowrap text-center bg-[#FBA435] px-6">Có</td>
+                            <td class="py-4 font-extralight whitespace-nowrap text-center bg-[#F86B63] px-6">Có</td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 font-extralight whitespace-nowrap">
+                                Áp dụng giá ưu đãi riêng biệt cho mỗi cấp độ thành viên (sản phẩm được chọn)
+                            </td>
+                            <td class="py-4 font-extralight whitespace-nowrap text-center bg-[#6E569A] px-6">Có</td>
+                            <td class="py-4 font-extralight whitespace-nowrap text-center bg-[#FBA435] px-6">Có</td>
+                            <td class="py-4 font-extralight whitespace-nowrap text-center bg-[#F86B63] px-6">Có</td>
+                        </tr>
+                        <tr>
+                            <th class="py-16 pb-3 text-left text-lg font-semibold tracking-wider">
+                                {{ 'buyerClub.conditions' | translate }}
+                            </th>
+                            <th class="py-3 bg-[#6E569A]"></th>
+                            <th class="py-3 bg-[#FBA435]"></th>
+                            <th class="py-3 bg-[#F86B63]"></th>
+                        </tr>
+                        <tr>
+                            <td class="py-4 font-extralight whitespace-nowrap">
+                                Tổng chi phí mua hàng năm và thanh toán qua Nextpro.io
+                            </td>
+                            <td class="py-4 font-extralight whitespace-nowrap text-center bg-[#6E569A] px-6">
+                                50,000 $US
+                            </td>
+                            <td class="py-4 font-extralight whitespace-nowrap text-center bg-[#FBA435] px-6">
+                                100,000 $US
+                            </td>
+                            <td class="py-4 font-extralight whitespace-nowrap text-center bg-[#F86B63] px-6">
+                                150,000 $US
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 font-extralight whitespace-nowrap">Lượt theo dõi/ tháng</td>
+                            <td class="py-4 font-extralight whitespace-nowrap text-center bg-[#6E569A] px-6">10</td>
+                            <td class="py-4 font-extralight whitespace-nowrap text-center bg-[#FBA435] px-6">10</td>
+                            <td class="py-4 font-extralight whitespace-nowrap text-center bg-[#F86B63] px-6">10</td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 font-extralight whitespace-nowrap">Tổng điểm quy đổi</td>
+                            <td class="py-4 font-extralight whitespace-nowrap text-center bg-[#6E569A] px-6">62,000</td>
+                            <td class="py-4 font-extralight whitespace-nowrap text-center bg-[#FBA435] px-6">
+                                112,000
+                            </td>
+                            <td class="py-4 font-extralight whitespace-nowrap text-center bg-[#F86B63] px-6">
+                                162,000
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="mt-4 lg:hidden flex flex-col gap-y-5 text-white">
+                <div class="font-semibold tracking-wider">
+                    {{ 'buyerClub.memberBenefits' | translate }}
+                </div>
+                <div class="p-4 bg-[#6E569A]">
+                    <div class="font-medium uppercase tracking-wider">GOLD</div>
+                    <mat-divider class="!my-2"></mat-divider>
+                    <div class="px-3">
+                        <div class="py-1 text-sm font-extralight">Tặng 1 voucher 2.500.000 VND</div>
+                        <div class="py-1 text-sm font-extralight">Tăng giá trị hoàn tiền lên đến 25,000,000 VND</div>
+                        <div class="py-1 text-sm font-extralight">
+                            Áp dụng giá ưu đãi riêng biệt cho mỗi cấp độ thành viên (sản phẩm được chọn)
+                        </div>
+                    </div>
+                    <mat-divider class="!my-2"></mat-divider>
+                    <div class="font-semibold tracking-wider">
+                        {{ 'buyerClub.conditions' | translate }}
+                    </div>
+                    <div class="mt-2 px-3">
+                        <div class="py-1 text-sm font-extralight">
+                            Tổng chi phí mua hàng năm và thanh toán qua Nextpro.io là 50,000 $US
+                        </div>
+                        <div class="py-1 text-sm font-extralight">10 Lượt theo dõi/ tháng</div>
+                        <div class="py-1 text-sm font-extralight">62,000 Tổng điểm quy đổi</div>
+                    </div>
+                </div>
+
+                <div class="p-4 bg-[#FBA435]">
+                    <div class="font-medium uppercase tracking-wider">PLATINUM</div>
+                    <mat-divider class="!my-2"></mat-divider>
+                    <div class="px-3">
+                        <div class="py-1 text-sm font-extralight">Tặng 2 voucher 2.500.000 VND</div>
+                        <div class="py-1 text-sm font-extralight">Tăng giá trị hoàn tiền lên đến 25,000,000 VND</div>
+                        <div class="py-1 text-sm font-extralight">
+                            Áp dụng giá ưu đãi riêng biệt cho mỗi cấp độ thành viên (sản phẩm được chọn)
+                        </div>
+                    </div>
+                    <mat-divider class="!my-2"></mat-divider>
+                    <div class="font-semibold tracking-wider">
+                        {{ 'buyerClub.conditions' | translate }}
+                    </div>
+                    <div class="mt-2 px-3">
+                        <div class="py-1 text-sm font-extralight">
+                            Tổng chi phí mua hàng năm và thanh toán qua Nextpro.io là 100,000 $US
+                        </div>
+                        <div class="py-1 text-sm font-extralight">10 Lượt theo dõi/ tháng</div>
+                        <div class="py-1 text-sm font-extralight">112,000 Tổng điểm quy đổi</div>
+                    </div>
+                </div>
+
+                <div class="p-4 bg-[#F86B63]">
+                    <div class="font-medium uppercase tracking-wider">DIAMOND</div>
+                    <mat-divider class="!my-2"></mat-divider>
+                    <div class="px-3">
+                        <div class="py-1 text-sm font-extralight">Tặng 3 voucher 2.500.000 VND</div>
+                        <div class="py-1 text-sm font-extralight">Tăng giá trị hoàn tiền lên đến 25,000,000 VND</div>
+                        <div class="py-1 text-sm font-extralight">
+                            Áp dụng giá ưu đãi riêng biệt cho mỗi cấp độ thành viên (sản phẩm được chọn)
+                        </div>
+                    </div>
+                    <mat-divider class="!my-2"></mat-divider>
+                    <div class="font-semibold tracking-wider">
+                        {{ 'buyerClub.conditions' | translate }}
+                    </div>
+                    <div class="mt-2 px-3">
+                        <div class="py-1 text-sm font-extralight">
+                            Tổng chi phí mua hàng năm và thanh toán qua Nextpro.io là 50,000 $US
+                        </div>
+                        <div class="py-1 text-sm font-extralight">10 Lượt theo dõi/ tháng</div>
+                        <div class="py-1 text-sm font-extralight">162,000 Tổng điểm quy đổi</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex lg:flex-row flex-col justify-between my-6 lg:px-20 px-4 lg:gap-y-0 gap-y-4">
+            <a href="#" class="no-underline italic text-sm text-[#15677F]">{{ 'buyerClub.terms' | translate }}</a>
+            <button mat-raised-button color="primary" class="lg:w-[123px] w-full">
+                {{ 'button.upgrade' | translate }}
+            </button>
+        </div>
+    </div>
+    <section>
+        <nextpro-user-detailed-footer />
+    </section>
+</div>

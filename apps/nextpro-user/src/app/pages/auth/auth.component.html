@@ -1,0 +1,48 @@
+<div class="overflow-hidden">
+    <nextpro-user-navbar-login />
+    <div class="relative">
+        <app-video
+            class="block h-[calc(100vh-76px)] object-cover"
+            contentClass="h-full w-full object-cover"
+            type="video/mp4"
+            src="assets/videos/Clip1_1920x980.mp4"
+            [loop]="true"
+            [muted]="true"
+            [autoplay]="true"
+        />
+        <div class="dark-theme flex items-center">
+            <app-image
+                contentClass="object-contain lg:!w-[65%] !w-[90%] mt-12 ml-6 lg:!h-full !h-[80px]"
+                src="assets/images/title_nextpro.png"
+                alt="Auth title"
+                [fill]="true"
+            />
+            <div class="absolute top-[20%] bottom-[80%] right-0 mr-8 w-96">
+                @if (showForgotPassword) {
+                    <mat-tab-group class="background-auth-tab">
+                        <mat-tab label="{{ 'auth.forgot-password.title' | translate }}">
+                            <nextpro-user-auth-forgot-password [toggleForgotPassword]="toggleForgotPassword" />
+                        </mat-tab>
+                    </mat-tab-group>
+                }
+                @if (!showForgotPassword) {
+                    <mat-tab-group
+                        [selectedIndex]="currentTab"
+                        (selectedTabChange)="changeTab($event)"
+                        class="background-auth-tab"
+                    >
+                        <mat-tab label="{{ 'auth.login.title' | translate }}">
+                            <nextpro-user-auth-login [toggleForgotPassword]="toggleForgotPassword" />
+                        </mat-tab>
+                        <mat-tab label="{{ 'auth.register.title' | translate }}">
+                            <nextpro-user-auth-register />
+                        </mat-tab>
+                        <mat-tab label="{{ 'auth.invite.title' | translate }}">
+                            <nextpro-user-auth-invite />
+                        </mat-tab>
+                    </mat-tab-group>
+                }
+            </div>
+        </div>
+    </div>
+</div>

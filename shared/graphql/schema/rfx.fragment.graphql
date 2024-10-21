@@ -1,0 +1,68 @@
+fragment ContractTypeInfo on ContractTypeNode {
+    id
+    name
+    status
+    translations {
+        id
+        languageCode
+        name
+    }
+}
+
+fragment RfxInfo on RFXNode {
+    id
+    itemCode
+    rfxType
+    title
+    budget
+    currency {
+        ...CurrencyInfo
+    }
+    category {
+        ...CategoryInfo
+    }
+    dueDate
+    contractType {
+        ...ContractTypeInfo
+    }
+    fromDate
+    toDate
+    paymentTerm {
+        ...PaymentTermInfo
+    }
+    deliveryTerm {
+        ...DeliveryTermInfo
+    }
+    deliveryAddress
+    termsAndConditions
+    otherRequirement
+    noteForSupplier
+    status
+    user {
+        ...UserInfo
+    }
+    splitOrder
+    maxSupplier
+    supplierJoinedAmount
+    quoteStatus
+    created
+    emailDate
+    isSend
+    isFull
+    timeViewMinutes
+    autoNegotiation
+    country {
+        ...CountryInfo
+    }
+    countryState {
+        ...CityInfo
+    }
+    isNextRound
+    awardedSuppliers {
+        ...SupplierInfo
+    }
+    subAmount
+    bestBid
+    saving
+    savingPercentage
+}

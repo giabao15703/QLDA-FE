@@ -1,0 +1,105 @@
+#text-scrolling .scrolling-text--inner {
+    font-size: 20px;
+}
+
+#text-scrolling {
+    border-color: #8cc63e;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+.scrolling-text--item span {
+    transition: all 0.25s cubic-bezier(0.104, 0.204, 0.492, 1);
+}
+.scrolling-text {
+    background-color: transparent;
+    color: #f80808;
+    position: relative;
+    background-size: cover;
+}
+
+.scrolling-text:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 5;
+    pointer-events: none;
+    background: transparent;
+}
+
+.scrolling-text-uppercase--true {
+    text-transform: uppercase;
+}
+.scrolling-text--inner {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    font-size: 1.5rem;
+    padding: 10px 0;
+    overflow: hidden;
+    position: relative;
+    z-index: 10;
+}
+.scrolling-text--inner.direction-left > div {
+    animation: scrollText-left var(--marquee-speed) linear infinite;
+}
+.scrolling-text--inner.direction-right > div {
+    animation: scrollText-right var(--marquee-speed) linear infinite;
+}
+.scrolling-text--inner > div {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+.scrolling-text--item {
+    display: inline-flex;
+    align-items: center;
+}
+.scrolling-text--link {
+    display: inline-flex;
+    align-items: center;
+}
+.scrolling-text--link span {
+    transform-origin: left bottom;
+}
+.scrolling-text--link:hover {
+    color: #000;
+}
+.scrolling-text--link:hover span {
+    transform: skew(-10deg, 0);
+}
+.scrolling-text--image {
+    margin-right: 40px;
+    object-fit: cover;
+}
+.scrolling-text--image--small {
+    width: 50px;
+    height: 50px;
+}
+.scrolling-text--image--medium {
+    width: 100px;
+    height: 100px;
+}
+.scrolling-text--image--large {
+    width: 200px;
+    height: 200px;
+}
+@keyframes scrollText-left {
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+@keyframes scrollText-right {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(0%);
+    }
+}

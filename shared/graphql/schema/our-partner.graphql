@@ -1,0 +1,76 @@
+query getOurPartners(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $title_Contains: String
+    $status: Boolean
+    $validTo: DateTime
+    $validFrom: DateTime
+    $orderBy: String
+) {
+    ourPartners(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        title_Contains: $title_Contains
+        status: $status
+        validTo: $validTo
+        validFrom: $validFrom
+        orderBy: $orderBy
+    ) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...OurPartnerInfo
+            }
+        }
+    }
+
+}  
+
+query getOurPartner($id: ID!) {
+    ourPartner(id: $id) {
+        ...OurPartnerInfo
+    }
+}
+
+
+mutation createOurPartner($input: OurPartnerInput!) {
+    ourPartnerCreate(input: $input) {
+        status
+        ourPartner {
+            ...OurPartnerInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateOurPartner($id: String!, $input: OurPartnerUpdateInput!) {
+    ourPartnerUpdate(id: $id, input: $input) {
+        status
+        ourPartner {
+            ...OurPartnerInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateOurPartnerStatus($listStatus: [OurPartnerStatusInput]!) {
+    ourPartnerUpdateStatus(listStatus: $listStatus) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}

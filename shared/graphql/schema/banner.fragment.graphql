@@ -1,0 +1,11 @@
+fragment BannerInfo on BannerNode {
+    created
+    id
+    name
+    file
+    fileMobile
+    link
+    sortOrder
+    description
+    animation
+}

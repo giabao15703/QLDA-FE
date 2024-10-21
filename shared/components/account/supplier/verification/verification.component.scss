@@ -1,0 +1,13 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+
+    tbody tr:nth-child(odd) {
+        background-color: #f8f8f8;
+    }
+
+    th,
+    td {
+        width: 20%;
+    }
+}

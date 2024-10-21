@@ -1,0 +1,69 @@
+@use '@angular/material' as mat;
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+$nextpro-primary: (
+    50: #d0f2ff,
+    100: #acd9ea,
+    200: #8abbd1,
+    300: #659fb7,
+    400: #4889a3,
+    500: #257590,
+    600: $color-primary-admin,
+    700: #005369,
+    800: #004054,
+    900: #002b3d,
+    A100: #8ff3ff,
+    A200: #5cf0ff,
+    A400: #29edff,
+    A700: #10eaff,
+    contrast: (
+        50: #000000,
+        100: #000000,
+        200: #000000,
+        300: #000000,
+        400: #000000,
+        500: #ffffff,
+        600: #ffffff,
+        700: #ffffff,
+        800: #ffffff,
+        900: #ffffff,
+        A100: #000000,
+        A200: #000000,
+        A400: #000000,
+        A700: #000000,
+    ),
+);
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$nextpro-palette-primary: mat.m2-define-palette($nextpro-primary, 600);
+$nextpro-palette-accent: mat.m2-define-palette($nextpro-primary, 500);
+$nextpro-light-theme: mat.m2-define-light-theme(
+    (
+        color: (
+            primary: $nextpro-palette-primary,
+            accent: $nextpro-palette-accent,
+        ),
+    )
+);
+$nextpro-dark-theme: mat.m2-define-dark-theme(
+    (
+        color: (
+            primary: $nextpro-palette-primary,
+            accent: $nextpro-palette-accent,
+        ),
+    )
+);
+
+@include mat.core();
+@include mat.all-component-typographies();
+@include mat.all-component-bases($nextpro-light-theme);
+@include mat.all-component-densities($nextpro-light-theme);
+@include mat.all-component-themes($nextpro-light-theme);
+
+.dark-theme {
+    @include mat.all-component-bases($nextpro-dark-theme);
+    @include mat.all-component-densities($nextpro-dark-theme);
+    @include mat.all-component-colors($nextpro-dark-theme);
+}

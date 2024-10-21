@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" viewBox="0 0 20 20">
+  <defs>
+    <clipPath id="clip-path-tick-green">
+      <circle id="Ellipse_254" data-name="Ellipse 254" cx="10" cy="10" r="10" transform="translate(650 870)" fill="#15677f"/>
+    </clipPath>
+  </defs>
+  <g id="Mask_Group_358" data-name="Mask Group 358" transform="translate(-650 -870)" clip-path="url(#clip-path)">
+    <g id="tick" transform="translate(650 870)">
+      <path id="Path_2219" data-name="Path 2219" d="M10,0A10,10,0,1,1,0,10H0A9.972,9.972,0,0,1,9.943,0Z" fill="#3bb54a"/>
+      <path id="Path_2220" data-name="Path 2220" d="M15.54,7.244l-7.1,7.1L4.46,10.4,6.08,8.807l2.358,2.33L13.92,5.653Z" fill="#d4e1f4"/>
+    </g>
+  </g>
+</svg>

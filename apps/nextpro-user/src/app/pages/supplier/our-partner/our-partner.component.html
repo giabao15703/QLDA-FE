@@ -1,0 +1,26 @@
+<div class="background-discounted-products lg:mt-4 min-h-[316px]">
+    <owl-carousel-o [options]="customOptions">
+        @for (partner of ourPartners; track partner) {
+            <ng-container>
+                <ng-template carouselSlide>
+                    <div
+                        (click)="goToSupplier(partner.id)"
+                        [id]="partner.id"
+                        class="realtive flex flex-col items-center justify-between gap-6 mt-3 mx-auto lg:w-[180px] w-[170px] h-[282px] bg-white text-[13px] pb-2 border hover:shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] cursor-pointer"
+                    >
+                        <img [src]="partner.image" alt="" class="lg:w-[180px] w-[170px]" />
+                        <div
+                            class="absolute lg:bottom-16 bottom-20 max-w-[50px] bg-white p-1 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px]"
+                        >
+                            <img [src]="partner.logo" alt="" />
+                        </div>
+                        <div class="text-center leading-6">
+                            <div class="font-semibold">{{ partner.title }}</div>
+                            <div class="text-[#BCBCBC] font-medium">{{ partner.description }}</div>
+                        </div>
+                    </div>
+                </ng-template>
+            </ng-container>
+        }
+    </owl-carousel-o>
+</div>

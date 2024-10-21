@@ -1,0 +1,86 @@
+@if (loadingService.checkLoading(['getSubClusterCodeWithClusterCode'])) {
+    <app-loading [backdrop]="true" />
+}
+<mat-drawer-container [hasBackdrop]="false">
+    <mat-drawer [disableClose]="true" [opened]="!!detail" mode="over" position="end" class="!w-full">
+        @if (detail) {
+            <nextpro-admin-sub-cluster-code-detail
+                [mode]="detail.mode"
+                [data]="detail.data"
+                [onCloseDrawer]="handleCloseDetailDrawer"
+                [refetch]="table.refetch"
+            />
+        }
+    </mat-drawer>
+    <mat-drawer [disableClose]="true" [opened]="!!import" mode="over" position="end" class="!w-full">
+        <app-import
+            [data]="import?.data"
+            [onCloseDrawer]="handleCloseImportDrawer"
+            [refetch]="table.refetch"
+            importTitle="import.importMasterDataCCCSubClusterCode"
+            entityTitle="Sub Cluster Code"
+            [importUrl]="importUrl"
+        />
+    </mat-drawer>
+    <mat-drawer class="!w-auto" mode="side" position="start" [disableClose]="true" [opened]="table.config.showFilter">
+        <app-filter
+            formClass="grid grid-cols-2 gap-2"
+            [onFilter]="table.handleFilter"
+            [formConfig]="table.config.filterForm"
+            [onCloseDrawer]="table.toggleFilterDrawer"
+        />
+    </mat-drawer>
+    <mat-drawer-content>
+        <app-table
+            [attr.name]="table.name"
+            [isLoading]="loadingService.checkLoading(['getSubClusterCodesWithClusterCode'])"
+            [extendHeight]="228"
+            [columns]="table.config.columns"
+            [data]="table.state.data"
+            [pagination]="table.state.pagination"
+            [onSelectionInit]="table.onSelectionInit"
+            [onShowFilter]="table.toggleFilterDrawer"
+            [onSort]="handleSort"
+            [onPageChange]="table.handlePageChange"
+        />
+        @if (table.state.selection) {
+            <div class="footer-fixed">
+                <button
+                    mat-raised-button
+                    color="primary"
+                    (click)="handleUpdateStatus(true)"
+                    [disabled]="!table.state.selection.hasValue()"
+                >
+                    <mat-icon>check</mat-icon>
+                    {{ 'button.activate' | translate | uppercase }}
+                </button>
+                <button
+                    mat-raised-button
+                    color="warn"
+                    (click)="handleUpdateStatus(false)"
+                    [disabled]="!table.state.selection.hasValue()"
+                >
+                    <mat-icon>close</mat-icon>
+                    {{ 'button.deactivate' | translate | uppercase }}
+                </button>
+                <button
+                    mat-raised-button
+                    color="primary"
+                    (click)="handleCreate()"
+                    [disabled]="table.state.selection.hasValue()"
+                >
+                    <mat-icon>add</mat-icon>
+                    {{ 'button.create' | translate | uppercase }}
+                </button>
+                <button mat-raised-button color="primary" (click)="handleImport()">
+                    <mat-icon>upload</mat-icon>
+                    {{ 'button.import' | translate | uppercase }}
+                </button>
+                <button mat-raised-button color="primary" (click)="handleExport()">
+                    <mat-icon>download</mat-icon>
+                    {{ 'button.export' | translate | uppercase }}
+                </button>
+            </div>
+        }
+    </mat-drawer-content>
+</mat-drawer-container>

@@ -1,0 +1,58 @@
+query getUserPermissions(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $status: String
+    $created: String
+    $username: String
+    $email: String
+    $shortName: String
+    $validFrom: String
+    $validTo: String
+    $role: String
+    $modules: String
+    $emailSubstitution: String
+    $shortNameSubstitution: String
+    $orderBy: String
+) {
+    userPermissions(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        status: $status
+        created: $created
+        username: $username
+        email: $email
+        shortName: $shortName
+        validFrom: $validFrom
+        validTo: $validTo
+        role: $role
+        modules: $modules
+        emailSubstitution: $emailSubstitution
+        shortNameSubstitution: $shortNameSubstitution
+        orderBy: $orderBy
+    ) {
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...UserPermissionInfo
+            }
+        }
+        totalCount
+    }
+}
+
+mutation updateUserPermissionStatus($listStatus: [UsersPermissionUpdateStatusInput]!) {
+    userPermissionStatusUpdate(listStatus: $listStatus) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}

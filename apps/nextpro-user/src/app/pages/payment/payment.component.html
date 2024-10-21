@@ -1,0 +1,30 @@
+<section>
+    <nextpro-user-navbar />
+</section>
+<section class="lg:px-10">
+    <mat-tab-group (selectedTabChange)="onTabChange($event)" mat-stretch-tabs="false" mat-align-tabs="start">
+        <mat-tab label="my-account">
+            <ng-template mat-tab-label>
+                <div class="font-bold text-sm uppercase">
+                    {{ 'payment.myAccount' | translate }}
+                </div>
+            </ng-template>
+            <div>
+                <nextpro-user-my-payment-account />
+            </div>
+        </mat-tab>
+
+        @if (userType === 'buyer') {
+            <mat-tab label="pending-payment">
+                <ng-template mat-tab-label>
+                    <div class="font-bold text-sm uppercase">
+                        {{ 'payment.pendingPayment' | translate }}
+                    </div>
+                </ng-template>
+                <div>
+                    <nextpro-user-pending-payment />
+                </div>
+            </mat-tab>
+        }
+    </mat-tab-group>
+</section>

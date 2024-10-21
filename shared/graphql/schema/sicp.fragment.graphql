@@ -1,0 +1,46 @@
+fragment SupplierSICPInfo on SupplierSICPNode {
+    id
+    sanctionCheck
+    isConfirmed
+    isReviewed
+    createdDate
+    sicpFiles {
+        edges {
+            node {
+                id
+                fileName
+                sicpType
+            }
+        }
+    }
+    supplier {
+        id
+        companyFullName
+        email
+        username
+        sicpRegistration {
+            id
+            name
+        }
+    }
+}
+
+fragment SICPTextEditorNestedInfo on SICPTextEditorNode {
+    id
+    sicpType
+    textEditerEn
+    textEditerVi
+    sicpTextEditorFiles {
+        edges {
+            node {
+                ...SICPTextEditorFileInfo
+            }
+        }
+    }
+}
+
+fragment SICPTextEditorFileInfo on SICPTextEditorFileNode {
+    id
+    fileName
+    fileVersion
+}

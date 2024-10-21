@@ -1,0 +1,100 @@
+<div mat-dialog-title class="text-center lg:text-lg text-base">
+    {{ 'product.create.dialog.paymentGuarantee.header' | translate }}
+</div>
+<mat-dialog-content class="lg:!text-sm lg:!px-14 !text-xs">
+    <p>{{ 'product.create.dialog.paymentGuarantee.descriptions' | translate }}</p>
+
+    <div class="mt-8 hidden lg:flex justify-between items-center relative w-[85%] mx-auto">
+        <div class="absolute bottom-[10px] w-full bg-[#0B3440] h-[1px]"></div>
+
+        <div class="flex flex-col items-center z-10 transform -translate-x-1/2">
+            <div class="text-center lg:text-sm text-xs font-semibold">
+                {{ 'product.create.dialog.paymentGuarantee.request-a-quote' | translate }}
+            </div>
+            <div class="bg-gradient-to-l from-[#0B3440] to-[#15677F] rounded-full h-5 w-5 mt-4"></div>
+        </div>
+
+        <div class="flex flex-col items-center z-10">
+            <div class="text-center lg:text-sm text-xs font-semibold">
+                {{ 'product.create.dialog.paymentGuarantee.choose-a-supplier' | translate }}
+            </div>
+            <div class="bg-gradient-to-l from-[#0B3440] to-[#15677F] rounded-full h-5 w-5 mt-4"></div>
+        </div>
+
+        <div class="flex flex-col items-center z-10">
+            <div class="text-center lg:text-sm text-xs font-semibold">
+                {{ 'product.create.dialog.paymentGuarantee.create-order' | translate }}
+            </div>
+            <div class="bg-gradient-to-l from-[#0B3440] to-[#15677F] rounded-full h-5 w-5 mt-4"></div>
+        </div>
+
+        <div class="flex flex-col items-center z-10 transform translate-x-1/2">
+            <div class="text-center lg:text-sm text-xs font-semibold">
+                {{ 'product.create.dialog.paymentGuarantee.online-payment' | translate }}
+            </div>
+            <div class="bg-gradient-to-l from-[#0B3440] to-[#15677F] rounded-full h-5 w-5 mt-4"></div>
+        </div>
+    </div>
+
+    <div class="mt-8 flex flex-col lg:hidden relative">
+        <div class="flex flex-col gap-y-10 z-10">
+            <div class="flex items-end gap-x-4">
+                <div class="bg-gradient-to-l from-[#0B3440] to-[#15677F] rounded-full h-5 w-5"></div>
+                <div class="mb-0.5 text-center text-xs font-semibold">
+                    {{ 'product.create.dialog.paymentGuarantee.request-a-quote' | translate }}
+                </div>
+            </div>
+            <div class="flex items-end gap-x-4">
+                <div class="bg-gradient-to-l from-[#0B3440] to-[#15677F] rounded-full h-5 w-5"></div>
+                <div class="mb-0.5 text-center text-xs font-semibold">
+                    {{ 'product.create.dialog.paymentGuarantee.choose-a-supplier' | translate }}
+                </div>
+            </div>
+            <div class="flex items-end gap-x-4">
+                <div class="bg-gradient-to-l from-[#0B3440] to-[#15677F] rounded-full h-5 w-5"></div>
+                <div class="mb-0.5 text-center text-xs font-semibold">
+                    {{ 'product.create.dialog.paymentGuarantee.create-order' | translate }}
+                </div>
+            </div>
+            <div class="flex items-end gap-x-4">
+                <div class="bg-gradient-to-l from-[#0B3440] to-[#15677F] rounded-full h-5 w-5"></div>
+                <div class="mb-0.5 text-center text-xs font-semibold">
+                    {{ 'product.create.dialog.paymentGuarantee.online-payment' | translate }}
+                </div>
+            </div>
+        </div>
+        <div class="w-[1px] h-full bg-[#0B3440] absolute ml-2.5"></div>
+    </div>
+
+    <div class="mt-5">
+        <span>
+            <span class="inline align-middle">{{
+                'product.create.dialog.paymentGuarantee.sercurity-order' | translate
+            }}</span>
+            <img src="/assets/icons/voucher.svg" alt="" class="inline align-middle lg:size-6 size-4 ml-1" />
+            <span class="font-semibold text-black ml-2">{{
+                'product.create.dialog.paymentGuarantee.sercurity-payment' | translate
+            }}</span>
+        </span>
+    </div>
+
+    <div class="mt-7">
+        <span class="inline align-middle">
+            {{ 'product.create.dialog.paymentGuarantee.decribe' | translate }}
+        </span>
+        <img src="/assets/icons/voucher.svg" alt="" class="inline align-middle lg:size-6 size-4" />
+    </div>
+    <div class="mt-7">{{ 'product.create.dialog.paymentGuarantee.payment-guarantee' | translate }}</div>
+
+    <div class="mt-7 italic">
+        {{ 'product.create.dialog.paymentGuarantee.note' | translate }}:
+        {{ 'product.create.dialog.paymentGuarantee.note-content' | translate }}
+    </div>
+
+    <div class="mt-7">{{ 'product.create.dialog.paymentGuarantee.content' | translate }}</div>
+    <mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close>
+            {{ 'product.create.dialog.close-btn' | translate }}
+        </button>
+    </mat-dialog-actions>
+</mat-dialog-content>

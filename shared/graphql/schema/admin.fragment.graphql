@@ -1,0 +1,30 @@
+fragment AdminInfo on AdminNode {
+    id
+    user {
+        ...UserWithPermissionAndSubstitutionPermissionInfo
+    }
+    longName
+    picture
+    email
+    shortName
+    fullName
+    username
+    userType
+    created
+    firstName
+    lastName
+    companyWebsite
+    companyLongName
+    companyShortName
+    language {
+        ...LanguageInfo
+    }
+}
+
+fragment GroupPermissionInfo on GroupPermissionNode {
+    id
+    group {
+        ...GroupInfo
+    }
+    role
+}

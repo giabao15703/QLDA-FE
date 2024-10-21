@@ -1,0 +1,79 @@
+query getCoupon($id: ID!) {
+    coupon(id: $id) {
+        ...CouponInfo
+    }
+}
+
+query getCoupons(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $couponProgram_Icontains: String
+    $description_Icontains: String
+    $note_Icontains: String
+    $email_Icontains: String
+    $fullName_Icontains: String
+    $status: Boolean
+    $validTo: String
+    $validFrom: String
+    $orderBy: String
+) {
+    coupons(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        couponProgram_Icontains: $couponProgram_Icontains
+        description_Icontains: $description_Icontains
+        note_Icontains: $note_Icontains
+        email_Icontains: $email_Icontains
+        fullName_Icontains: $fullName_Icontains
+        status: $status
+        validTo: $validTo
+        validFrom: $validFrom
+        orderBy: $orderBy
+    ) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...CouponInfo
+            }
+        }
+    }
+}
+
+mutation createCoupon($coupon: CouponInput!) {
+    couponCreate(coupon: $coupon) {
+        status
+        coupon {
+            ...CouponInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateCoupon($id: String!, $input: CouponInput!) {
+    couponUpdate(id: $id, input: $input) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateCouponStatus($listStatus: [CouponStatusInput]!) {
+    couponUpdateStatus(listStatus: $listStatus) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}

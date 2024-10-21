@@ -1,0 +1,223 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@import '@angular/cdk/overlay-prebuilt.css';
+
+@import './variables.scss';
+@import './mixins.scss';
+
+button {
+    &:before {
+        @include animation('glow linear infinite');
+
+        content: '';
+        // background: linear-gradient(
+        //     45deg,
+        //     #ff0000,
+        //     #ff7300,
+        //     #fffb00,
+        //     #48ff00,
+        //     #00ffd5,
+        //     #002bff,
+        //     #7a00ff,
+        //     #ff00c8,
+        //     #ff0000
+        // );
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        background-size: 400%;
+        z-index: -1;
+        filter: blur(5px);
+        width: calc(100% + 4px);
+        height: calc(100% + 4px);
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+        border-radius: 10px;
+    }
+
+    &:active {
+        color: #000;
+
+        &:after {
+            background: transparent;
+        }
+    }
+
+    &:hover {
+        &:before {
+            opacity: 1;
+        }
+    }
+
+    &:after {
+        z-index: -1;
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        // background: #111;
+        left: 0;
+        top: 0;
+        // border-radius: 10px;
+    }
+}
+
+.background-auth-tab .mat-mdc-tab-label-container {
+    background-image: url('/assets/images/background_header_login.png');
+    height: 90px;
+}
+
+.mdc-notched-outline__notch {
+    border-right: none;
+}
+
+fieldset {
+    font-family: sans-serif;
+    border: 3px solid $color-primary;
+    border-radius: 5px;
+    padding: 15px;
+    margin-top: 15px;
+}
+
+fieldset legend {
+    background: $color-primary;
+    color: #fff;
+    padding: 3px 8px;
+    font-size: 20px;
+    border-radius: 5px;
+    margin-left: 20px;
+}
+
+.shadow-form {
+    --tw-shadow: 1px 2px 12px 0px #00000026;
+    --tw-shadow-colored: 1px 2px 12px 0px var(--tw-shadow-color);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.ks-modal-gallery-backdrop {
+    background: #000 !important;
+    opacity: 0.85 !important;
+}
+
+.ks-modal-gallery-panel {
+    z-index: 90000 !important;
+}
+
+.app-file-upload {
+    mat-form-field.mat-mdc-form-field.mat-form-field-appearance-outline {
+        .mdc-text-field--outlined {
+            label.mat-mdc-floating-label.mdc-floating-label--float-above {
+                mat-label {
+                    color: $color-primary;
+                }
+            }
+
+            ngx-mat-file-input {
+                input.mdc-text-field__input {
+                    color: $color-primary;
+                    font-weight: bold;
+                }
+
+                .mat-mdc-form-field-suffix {
+                    height: 24px;
+
+                    button {
+                        height: auto;
+                        width: auto;
+                        padding: 0;
+                    }
+                }
+            }
+        }
+    }
+
+    ks-plain-gallery {
+        .plain-container {
+            max-width: 100%;
+        }
+    }
+}
+
+.mdc-evolution-chip-set .mat-mdc-standard-chip {
+    .mdc-evolution-chip__cell--primary,
+    .mdc-evolution-chip__action--primary,
+    .mat-mdc-chip-action-label {
+        overflow: hidden;
+    }
+}
+
+.bg-undefined {
+    background-color: black;
+}
+
+.bg-waiting {
+    background-color: #f39c12;
+}
+
+.bg-approved {
+    background-color: #1474e4;
+}
+
+.bg-rejected {
+    background-color: #c90202;
+}
+
+.bg-show,
+.bg-active {
+    background-color: #52adda;
+}
+
+.bg-hide,
+.bg-inactive {
+    background-color: #c90202;
+}
+
+.bg-cancelled {
+    background-color: #a1a1a1;
+}
+
+.bg-pending {
+    background-color: #ff8400;
+}
+
+.text-confirmed {
+    color: #f39c12;
+}
+
+.text-paid {
+    color: #40aa94;
+}
+
+.text-refunding-deposit {
+    color: #f39c12;
+}
+
+.text-request-refunding {
+    color: #40aa94;
+}
+
+.text-refunded {
+    color: #40aa94;
+}
+
+.text-cancelled {
+    color: #c90202;
+}
+
+.text-pending {
+    color: #1474e4;
+}
+
+.text-refunded-deposit {
+    color: #1474e4;
+}
+
+.text-charged-deposit {
+    color: #40aa94;
+}
+
+.text-closed {
+    color: #40aa94;
+}

@@ -1,0 +1,234 @@
+query getBuyer($id: ID!) {
+    buyer(id: $id) {
+        ...BuyerInfo
+    }
+}
+
+query getBuyers(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $created: String
+    $username: String
+    $usernameExact: String
+    $email: String
+    $status: String
+    $validFrom: String
+    $validTo: String
+    $profileFeature: String
+    $auctionsYear: String
+    $rfxCancel: String
+    $changedBy: String
+    $changedDate: String
+    $reasonManual: String
+    $fullName: String
+    $changedState: String
+    $orderBy: String
+) {
+    buyers(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        created: $created
+        username: $username
+        usernameExact: $usernameExact
+        email: $email
+        status: $status
+        validFrom: $validFrom
+        validTo: $validTo
+        profileFeature: $profileFeature
+        auctionsYear: $auctionsYear
+        rfxCancel: $rfxCancel
+        changedBy: $changedBy
+        changedDate: $changedDate
+        reasonManual: $reasonManual
+        fullName: $fullName
+        changedState: $changedState
+        orderBy: $orderBy
+    ) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...BuyerInfo
+            }
+        }
+    }
+}
+
+mutation updateBuyerStatus($listStatus: [BuyerStatusUpdateInput]!, $reasonManual: String) {
+    buyerStatusUpdate(listStatus: $listStatus, reasonManual: $reasonManual) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateBuyerDetail($input: BuyerDetailUpdateInput!) {
+    buyerDetailUpdate(input: $input) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+query getBuyerSubAccount($id: ID!) {
+    buyerSubAccount(id: $id) {
+        ...BuyerSubAccountInfo
+    }
+}
+
+query getBuyerSubAccounts(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $created: String
+    $username: String
+    $email: String
+    $status: String
+    $validFrom: String
+    $validTo: String
+    $changedBy: String
+    $changedDate: String
+    $reasonManual: String
+    $changedState: String
+    $profileFeature: String
+    $auctionsYear: String
+    $rfxCancel: String
+    $orderBy: String
+) {
+    buyerSubAccounts(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        created: $created
+        username: $username
+        email: $email
+        status: $status
+        validFrom: $validFrom
+        validTo: $validTo
+        changedBy: $changedBy
+        changedDate: $changedDate
+        reasonManual: $reasonManual
+        changedState: $changedState
+        profileFeature: $profileFeature
+        auctionsYear: $auctionsYear
+        rfxCancel: $rfxCancel
+        orderBy: $orderBy
+    ) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...BuyerSubAccountInfo
+            }
+        }
+    }
+}
+
+query getBuyerSubAccountWithBuyer($id: ID!) {
+    buyerSubAccount(id: $id) {
+        ...BuyerSubAccountWithBuyerInfo
+    }
+}
+
+query getBuyerSubAccountsWithBuyer(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $created: String
+    $username: String
+    $email: String
+    $status: String
+    $validFrom: String
+    $validTo: String
+    $changedBy: String
+    $changedDate: String
+    $reasonManual: String
+    $changedState: String
+    $profileFeature: String
+    $auctionsYear: String
+    $rfxCancel: String
+    $orderBy: String
+) {
+    buyerSubAccounts(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        created: $created
+        username: $username
+        email: $email
+        status: $status
+        validFrom: $validFrom
+        validTo: $validTo
+        changedBy: $changedBy
+        changedDate: $changedDate
+        reasonManual: $reasonManual
+        changedState: $changedState
+        profileFeature: $profileFeature
+        auctionsYear: $auctionsYear
+        rfxCancel: $rfxCancel
+        orderBy: $orderBy
+    ) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...BuyerSubAccountWithBuyerInfo
+            }
+        }
+    }
+}
+
+mutation createBuyerSubAccount($buyerSubAccounts: BuyerSubAccountsInput!) {
+    buyerSubAccountsCreate(buyerSubAccounts: $buyerSubAccounts) {
+        status
+        error {
+            ...ErrorInfo
+        }
+        buyerSubAccounts {
+            ...BuyerSubAccountInfo
+        }
+    }
+}
+
+mutation updateBuyerSubAccount($input: BuyerSubAccountsUpdateInput!) {
+    buyerSubAccountsUpdate(input: $input) {
+        status
+        error {
+            ...ErrorInfo
+        }
+        buyerSubAccounts {
+            ...BuyerSubAccountInfo
+        }
+    }
+}
+
+mutation updateBuyerSubAccountsStatus($listStatus: [BuyerSubAccountsStatusUpdateInput]!, $reasonManual: String) {
+    buyerSubAccountsStatusUpdate(listStatus: $listStatus, reasonManual: $reasonManual) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}

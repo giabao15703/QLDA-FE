@@ -1,0 +1,18 @@
+<mat-tab-group syncTabsWithAnchor>
+    <mat-tab label="main">
+        <ng-template mat-tab-label>
+            <div class="font-semibold ml-2 text-sm text-[#15677f]">
+                {{ 'account.buyer-accounts.mainAccounts' | translate }}
+            </div>
+        </ng-template>
+        <nextpro-admin-account-buyer-main-account-list />
+    </mat-tab>
+    <mat-tab label="sub">
+        <ng-template mat-tab-label>
+            <div class="font-semibold ml-2 text-sm text-[#15677f]">
+                {{ 'account.buyer-accounts.subAccounts' | translate }}
+            </div>
+        </ng-template>
+        <nextpro-admin-account-buyer-sub-account-list />
+    </mat-tab>
+</mat-tab-group>

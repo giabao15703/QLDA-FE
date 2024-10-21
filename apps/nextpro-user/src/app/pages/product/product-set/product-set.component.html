@@ -1,0 +1,82 @@
+<nextpro-user-navbar />
+<section class="min-h-screen">
+    <div
+        class="flex lg:flex-row flex-col lg:justify-between lg:items-center lg:gap-y-0 gap-y-3 bg-gray-50 rounded-xl lg:p-5 p-3 lg:mx-10 mx-4 lg:my-6 my-2 shadow-lg"
+    >
+        <div class="flex gap-x-4">
+            <img src="assets/icons/avatar.svg" alt="Avatar" class="size-24 rounded-md" />
+            <div class="flex flex-col justify-between">
+                <div class="lg:text-lg text-sm font-semibold">Công ty TNHH Dịch vụ thương mại Mỹ phẩm ABC</div>
+                <div class="text-xs italic font-extralight">
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                </div>
+                <div class="flex lg:mt-0 mt-1 gap-x-4 lg:text-sm text-xs font-extralight">
+                    <span>SPONSOR</span>
+                    <span>4.5k {{ 'productSetAdvertising.view' | translate }}</span>
+                    <span>1.5k+ {{ 'productSetAdvertising.follow' | translate }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="flex justify-between lg:gap-5 gap-x-3">
+            <button mat-stroked-button class="!border-[#15677F] lg:w-auto w-full">
+                <div class="flex items-center gap-x-2">
+                    <img src="/assets/icons/plus-circle-svgrepo-com.svg" alt="" />
+                    <div class="text-[#15677F] text-sm">
+                        {{ 'button.follow' | translate }}
+                    </div>
+                </div>
+            </button>
+            <button mat-raised-button class="!bg-gradient-to-l !from-[#0B3440] !to-[#15677F] lg:w-auto w-full">
+                <div class="text-white pt-[2px] text-sm">
+                    {{ 'button.seeDetails' | translate }}
+                </div>
+            </button>
+        </div>
+    </div>
+    <div>
+        @for (set of productSet; track set) {
+            <img [src]="set.banner" alt="Banner" class="w-full" />
+            <div
+                [ngStyle]="{ 'background-color': set.backgroundColor }"
+                class="py-4 grid lg:grid-cols-4 grid-cols-2 place-items-center"
+            >
+                @for (product of set.products; track product) {
+                    <div
+                        [id]="product.id"
+                        class="lg:mx-2 mx-4 lg:my-4 my-2 border hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)] cursor-pointer transform transition duration-500 hover:scale-105 rounded-sm lg:w-[300px] w-auto bg-white"
+                    >
+                        <img [src]="product.image" alt="" class="w-full" />
+                        <div class="flex flex-col gap-y-1 p-3 text-[15px]">
+                            <div class="lg:line-clamp-2 line-clamp-3 font-extralight lg:text-base text-sm">
+                                {{ product.name }}
+                            </div>
+                            <div class="my-1 flex items-center gap-2 text-[#15677F] font-bold lg:text-xl text-lg">
+                                {{ product.price | currency: '' : '' : '1.0-0' }}
+                            </div>
+                            <div class="font-extralight lg:text-base text-sm">
+                                Tối thiểu:&ensp;{{ product.minimum }}&ensp;cái
+                            </div>
+                            <div class="font-extralight lg:text-base text-sm">{{ product.origin }}</div>
+                        </div>
+                        <div class="flex lg:flex-row flex-col lg:justify-between lg:gap-x-5 gap-y-3 p-3">
+                            <button mat-stroked-button class="!border-[#15677F] lg:w-[150px] w-auto">
+                                <div class="text-[#15677F] text-sm">
+                                    {{ 'button.addToCart' | translate }}
+                                </div>
+                            </button>
+                            <button
+                                mat-raised-button
+                                class="!bg-gradient-to-l !from-[#0B3440] !to-[#15677F] lg:w-[150px] w-auto"
+                            >
+                                <div class="text-white pt-[2px] text-sm">
+                                    {{ 'button.buyNow' | translate }}
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</section>
+<nextpro-user-detailed-footer />

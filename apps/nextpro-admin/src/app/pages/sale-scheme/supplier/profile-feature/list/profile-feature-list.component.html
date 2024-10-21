@@ -1,0 +1,27 @@
+@if (loadingService.checkLoading(['getProfileFeaturesSupplier'])) {
+    <app-loading [backdrop]="true" />
+}
+<mat-drawer-container [hasBackdrop]="false">
+    <mat-drawer [disableClose]="true" [opened]="!!detail" mode="over" position="end" class="!w-full">
+        @if (detail) {
+            <nextpro-admin-sale-scheme-supplier-profile-feature-detail
+                [mode]="detail.mode"
+                [data]="detail.data"
+                [onCloseDrawer]="handleCloseDetailDrawer"
+                [refetch]="table.refetch"
+            />
+        }
+    </mat-drawer>
+    <mat-drawer-content>
+        <app-table
+            [attr.name]="table.name"
+            [isLoading]="loadingService.checkLoading(['getProfileFeaturesSupplier'])"
+            [extendHeight]="184"
+            [columns]="table.config.columns"
+            [data]="table.state.data"
+            [pagination]="table.state.pagination"
+            [onSort]="table.handleSort"
+            [onPageChange]="table.handlePageChange"
+        />
+    </mat-drawer-content>
+</mat-drawer-container>

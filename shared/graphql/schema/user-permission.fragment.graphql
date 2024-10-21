@@ -1,0 +1,63 @@
+fragment GroupInfo on GroupNode {
+    id
+    name
+}
+
+fragment GroupPermissionInfo on GroupPermissionNode {
+    id
+    group {
+        ...GroupInfo
+    }
+    role
+}
+
+fragment UserSubstitutionPermissionInfo on UserSubstitutionPermissionNode {
+    id
+    validFrom
+    validTo
+    status
+    pk
+}
+
+fragment UserSubstitutionPermissionWithUserInfo on UserSubstitutionPermissionNode {
+    ...UserSubstitutionPermissionInfo
+    user {
+        ...UserInfo
+    }
+}
+
+fragment UserPermissionInfo on UsersPermissionNode {
+    id
+    permission {
+        ...GroupPermissionInfo
+    }
+    validFrom
+    validTo
+    status
+    pk
+}
+
+fragment UserPermissionWithUserInfo on UsersPermissionNode {
+    ...UserPermissionInfo
+    user {
+        ...UserInfo
+    }
+    permission {
+        ...GroupPermissionInfo
+    }
+}
+
+fragment UserSubstitutionPermissionInfo on UserSubstitutionPermissionNode {
+    id
+    validFrom
+    validTo
+    status
+    pk
+}
+
+fragment UserSubstitutionPermissionWithUserPermissionInfo on UserSubstitutionPermissionNode {
+    ...UserSubstitutionPermissionInfo
+    userPermission {
+        ...UserPermissionInfo
+    }
+}

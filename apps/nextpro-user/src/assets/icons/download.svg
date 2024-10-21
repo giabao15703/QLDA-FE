@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14" viewBox="0 0 14 14">
+  <defs>
+    <clipPath id="np-download-icon">
+      <rect id="Rectangle_837" data-name="Rectangle 837" width="14" height="14" transform="translate(375 2314)" fill="#448599" stroke="#707070" stroke-width="1"/>
+    </clipPath>
+  </defs>
+  <g id="Mask_Group_149" data-name="Mask Group 149" transform="translate(-375 -2314)" clip-path="url(#clip-path)">
+    <g id="download_1_" data-name="download (1)" transform="translate(375.438 2314)">
+      <g id="Group_658" data-name="Group 658" transform="translate(3.062)">
+        <g id="Group_657" data-name="Group 657">
+          <path id="Path_277" data-name="Path 277" d="M12.961,6.381a.436.436,0,0,0-.4-.256h-1.75V.438A.438.438,0,0,0,10.375,0H8.625a.438.438,0,0,0-.437.438V6.125H6.437a.437.437,0,0,0-.329.725l3.063,3.5a.437.437,0,0,0,.658,0l3.062-3.5A.436.436,0,0,0,12.961,6.381Z" transform="translate(-6)" fill="#448599"/>
+        </g>
+      </g>
+      <g id="Group_660" data-name="Group 660" transform="translate(0 9.625)">
+        <g id="Group_659" data-name="Group 659">
+          <path id="Path_278" data-name="Path 278" d="M12.125,16.5v2.625H2.5V16.5H.75V20a.875.875,0,0,0,.875.875H13A.874.874,0,0,0,13.875,20V16.5Z" transform="translate(-0.75 -16.5)" fill="#448599"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

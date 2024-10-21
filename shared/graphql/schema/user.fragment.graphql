@@ -1,0 +1,70 @@
+fragment UserInfo on UserNode {
+    id
+    password
+    lastLogin
+    isSuperuser
+    created
+    modified
+    username
+    isStaff
+    isActive
+    userType
+    email
+    activateToken
+    activateTime
+    firstName
+    lastName
+    status
+    shortName
+    fullName
+    localTime
+    companyPosition
+    language {
+        id
+        itemCode
+        name
+    }
+    pk
+}
+
+fragment UserWithBuyerInfo on UserNode {
+    ...UserInfo
+    buyer {
+        ...BuyerInfo
+    }
+}
+
+fragment UserWithSupplierInfo on UserNode {
+    ...UserInfo
+    supplier {
+        ...SupplierInfo
+    }
+}
+
+fragment UserWithBuyerAndSupplierInfo on UserNode {
+    ...UserInfo
+    buyer {
+        ...BuyerInfo
+    }
+    supplier {
+        ...SupplierInfo
+    }
+}
+
+fragment UserWithPermissionAndSubstitutionPermissionInfo on UserNode {
+    ...UserInfo
+    userspermissionSet {
+        edges {
+            node {
+                ...UserPermissionInfo
+            }
+        }
+    }
+    # usersubstitutionpermissionSet {
+    #     edges {
+    #         node {
+    #             ...UserSubstitutionPermissionInfo
+    #         }
+    #     }
+    # }
+}

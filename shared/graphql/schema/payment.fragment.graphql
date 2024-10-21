@@ -1,0 +1,108 @@
+fragment UserPaymentInfo on UserPaymentNode {
+    id
+    user {
+        ...UserWithBuyerAndSupplierInfo
+    }
+    onePay
+    bankTransfer
+}
+
+fragment BankTransferPaymentOrderAttachedInfo on BankTransferPaymentOrderAttachedNode {
+    id
+    file
+}
+
+fragment BankTransferInfo on BankTransferNode {
+    id
+    bankInformation
+    orderNumber
+    bankAccountNumber
+    dayOfPayment
+    amount
+    auctionNumber
+    paymentsOrderAttached {
+        edges {
+            node {
+                ...BankTransferPaymentOrderAttachedInfo
+            }
+        }
+    }
+}
+
+fragment BankTransferHistoryInfo on BankTransferHistoryNode {
+    id
+    bankTransfer {
+        ...BankTransferInfo
+    }
+    isPending
+}
+
+fragment PaymentAuctionInfo on PaymentAuctionNode {
+    id
+    auction {
+        id
+        status
+    }
+    chargeAmount
+    refundAmount
+    walletType
+}
+
+fragment HistoryPaymentInfo on HistoryNode {
+    id
+    userPayment {
+        ...UserPaymentInfo
+    }
+    orderNo
+    date
+    type
+    transactionDescription
+    balance
+    status
+    invoiceReceipt
+    requestDraftInvoice
+    notes
+    methodPayment
+    amount
+    adminBalance
+    isParent
+    bankTransferHistory {
+        ...BankTransferHistoryInfo
+    }
+    paymentAuction {
+        ...PaymentAuctionInfo
+    }
+    historyPending {
+        totalPending
+    }
+    pk
+    remainAmount
+    supplierStatus
+}
+
+fragment HistoryPendingInfo on HistoryPendingNode {
+    id
+    userPayment {
+        ...UserPaymentInfo
+    }
+    orderNo
+    date
+    type
+    transactionDescription
+    balance
+    status
+    invoiceReceipt
+    requestDraftInvoice
+    notes
+    methodPayment
+    amount
+    adminBalance
+    isParent
+    bankTransferHistory {
+        ...BankTransferHistoryInfo
+    }
+    paymentAuction {
+        ...PaymentAuctionInfo
+    }
+    pk
+}

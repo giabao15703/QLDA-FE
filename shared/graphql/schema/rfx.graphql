@@ -1,0 +1,67 @@
+query getRfx($id: ID!) {
+    rfx(id: $id) {
+        ...RfxInfo
+    }
+}
+
+query getRfxes(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $itemCode_Icontains: String
+    $rfxType: String
+    $title_Icontains: String
+    $budget_Gte: Float
+    $budget_Lte: Float
+    $status: String
+    $rfxSuppliers_SeatAvailable: String
+    $awardedSupplier: String
+    $purchasingOrganization: String
+    $quoteSubmitedStatus: String
+    $generalSearch: String
+    $category: String
+    $dateCreated: Date
+    $quoteStatus: String
+    $dueDateFrom: Date
+    $dueDateTo: Date
+    $dueDate: Date
+    $orderBy: String
+) {
+    rfxes(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        itemCode_Icontains: $itemCode_Icontains
+        rfxType: $rfxType
+        title_Icontains: $title_Icontains
+        budget_Gte: $budget_Gte
+        budget_Lte: $budget_Lte
+        status: $status
+        rfxSuppliers_SeatAvailable: $rfxSuppliers_SeatAvailable
+        awardedSupplier: $awardedSupplier
+        purchasingOrganization: $purchasingOrganization
+        quoteSubmitedStatus: $quoteSubmitedStatus
+        generalSearch: $generalSearch
+        category: $category
+        dateCreated: $dateCreated
+        quoteStatus: $quoteStatus
+        dueDateFrom: $dueDateFrom
+        dueDateTo: $dueDateTo
+        dueDate: $dueDate
+        orderBy: $orderBy
+    ) {
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...RfxInfo
+            }
+        }
+        totalCount
+    }
+}

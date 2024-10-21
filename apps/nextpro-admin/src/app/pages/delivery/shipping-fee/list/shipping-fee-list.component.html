@@ -1,0 +1,41 @@
+@if (loadingService.checkLoading(['getShippingFee'])) {
+    <app-loading [backdrop]="true" />
+}
+<mat-drawer-container [hasBackdrop]="false">
+    <mat-drawer [disableClose]="true" [opened]="!!detail" mode="over" position="end" class="!w-full">
+        @if (detail) {
+            <nextpro-admin-shipping-fee-detail
+                [mode]="detail.mode"
+                [data]="detail.data"
+                [onCloseDrawer]="handleCloseDetailDrawer"
+                [refetch]="table.refetch"
+            />
+        }
+    </mat-drawer>
+    <mat-drawer class="!w-auto" mode="side" position="start" [disableClose]="true" [opened]="table.config.showFilter">
+        <app-filter
+            formClass="grid grid-cols-2 gap-2"
+            [onFilter]="table.handleFilter"
+            [formConfig]="table.config.filterForm"
+            [onCloseDrawer]="table.toggleFilterDrawer"
+        />
+    </mat-drawer>
+    <mat-drawer-content>
+        <app-table
+            [attr.name]="table.name"
+            [isLoading]="loadingService.checkLoading(['getShippingFees'])"
+            [extendHeight]="180"
+            [columns]="table.config.columns"
+            [data]="table.state.data"
+            [pagination]="table.state.pagination"
+            [onShowFilter]="table.toggleFilterDrawer"
+            [onPageChange]="table.handlePageChange"
+        />
+        <div class="footer-fixed">
+            <button mat-raised-button color="primary" (click)="handleCreate()">
+                <mat-icon>add</mat-icon>
+                {{ 'button.create' | translate | uppercase }}
+            </button>
+        </div>
+    </mat-drawer-content>
+</mat-drawer-container>

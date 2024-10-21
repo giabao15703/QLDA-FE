@@ -1,0 +1,24 @@
+<div [class]="class">
+    @if (showClose) {
+        <mat-icon class="!absolute right-[5px] top-[5px] !mr-0 text-[#ff0000] cursor-pointer" (click)="onCloseDrawer()"
+            >close</mat-icon
+        >
+    }
+    <div class="max-h-[calc(100%-60px)] overflow-x-hidden overflow-y-auto p-4">
+        <app-form [form]="form" [attr.name]="form.name" [formClass]="formClass" />
+    </div>
+    <div class="sticky bottom-0 flex justify-end gap-x-5">
+        @if (showExportButton) {
+            <button type="button" (click)="handleExport()" mat-raised-button color="secondary">
+                {{ 'button.export' | translate }}
+            </button>
+        }
+        <button type="button" (click)="handleReset()" mat-raised-button color="secondary">
+            {{ 'button.clearAll' | translate }}
+        </button>
+        <button type="button" (click)="handleFilter()" mat-raised-button color="primary" [disabled]="!isFormHasValue()">
+            <mat-icon>search</mat-icon>
+            {{ 'button.search' | translate }}
+        </button>
+    </div>
+</div>

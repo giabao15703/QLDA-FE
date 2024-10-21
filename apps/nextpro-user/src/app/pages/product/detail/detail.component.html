@@ -1,0 +1,304 @@
+<div>
+    @if (loadingService.checkLoading(['getSupplierProduct'])) {
+    <app-loading [backdrop]="true" />
+    }
+    <div>
+        <div class="lg:mx-32 mx-4 lg:my-12 mb-6 mt-3">
+            <section class="flex lg:flex-row flex-col lg:gap-10">
+                <div class="lg:w-[30%]">
+                    <div class="flex flex-col items-center justify-center">
+                        <div class="relative">
+                            <img [src]="productImagesNodes[currentPicIndex]?.image"
+                                class="w-[356px] h-[356px] object-cover object-center rounded-b-2xl" alt="" />
+                            <div
+                                class="absolute bottom-0 bg-black bg-opacity-70 w-full min-h-[57px] text-[#F3F3F3] flex justify-between px-3 rounded-b-2xl">
+                                <div class="flex items-center text-[13px] gap-2">
+                                    <img src="/assets/icons/Eye.svg" alt="" class="w-7" />
+                                    <div class="text-[14px]">{{ product?.clickNumber }}</div>
+                                    <div>{{ 'product.product-detail.viewed' | translate }}</div>
+                                </div>
+                                <div class="flex items-center gap-1">
+                                    <img src="/assets/icons/verify.svg" alt="" class="w-[25px]" />
+                                    <img src="/assets/icons/icon-sercurity.svg" alt="" class="w-[25px]" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="relative flex items-center mt-4 min-h-[75px]">
+                            @if (product?.productImages?.length < 4) { <button (click)="choosePreviousPic()"
+                                class="absolute left-[-30px] text-[30px] z-10 disabled:opacity-50">
+                                <img src="/assets/icons/pre.svg" alt="" />
+                                </button>
+                                }
+                                <!-- <div class="flex gap-4 overflow-hidden">
+                                @for (let pic of productImagesNodes; track: pic.id) {
+                                    <div
+                                        *ngFor="let pic of productImagesNodes; let index = index; trackBy: trackById"
+                                        class="flex-none cursor-pointer"
+                                        [class.border]="index === currentPicIndex"
+                                        [class.border-[#3BC7C6]]="index === currentPicIndex"
+                                        (click)="selectPic(index)"
+                                    >
+                                        <img
+                                            [src]="pic?.image"
+                                            class="object-cover object-center w-[69px] h-[69px]"
+                                            alt=""
+                                        />
+                                    </div>
+                                }
+                            </div> -->
+
+                                @if (product?.productImages?.length < 4) { <button (click)="chooseNextPic()"
+                                    class="absolute right-[-30px] z-10 text-[30px] disabled:opacity-50">
+                                    <img src="/assets/icons/next.svg" alt="" />
+                                    </button>
+                                    }
+                        </div>
+                    </div>
+
+                    <div class="mt-4 text-[13px] font-semibold">
+                        <div class="flex flex-col gap-[5px] py-3">
+                            <div class="flex gap-3">
+                                <span class="min-w-[91px]">{{ 'product.product-detail.supplier' | translate }}:</span>
+                                <span class="font-normal">{{ product?.userSupplier?.companyFullName }}</span>
+                            </div>
+                            <div class="flex gap-3">
+                                <span class="min-w-[91px]">{{ 'product.product-detail.city' | translate }}:</span>
+                                <span class="font-normal">{{ product?.userSupplier?.companyCountryState?.name }}</span>
+                            </div>
+                            <div class="flex gap-3">
+                                <span class="min-w-[91px]">{{ 'product.product-detail.country' | translate }}:</span>
+                                <span class="font-normal">{{ product?.userSupplier?.companyCountry?.name }}</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 text-[19px]">{{ 'product.product-detail.quick-view' | translate }}</div>
+                        <mat-divider class="!border-[#060606]" />
+                        <div class="flex flex-col gap-[5px] py-3">
+                            <div class="flex gap-3">
+                                <span class="min-w-[91px]">{{ 'product.product-detail.brand' | translate }}:</span>
+                                <span class="font-normal">{{ product?.brand }}</span>
+                            </div>
+                            <div class="flex gap-3">
+                                <span class="min-w-[91px]">{{ 'product.product-detail.made-in' | translate }}:</span>
+                                <span class="font-normal">{{ product?.originOfProduction }}</span>
+                            </div>
+                            <div class="flex gap-3">
+                                <span class="min-w-[91px]">{{ 'product.product-detail.warranty' | translate }}:</span>
+                                <span class="font-normal">{{ product?.guarantee }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:w-[70%]">
+                    <div class="flex flex-col gap-2">
+                        <div class="text-[21px] font-semibold">{{ product?.productName }}</div>
+                        <div [class]="
+                                product?.inventoryStatus === 'STOCKING'
+                                    ? 'border-none bg-[#F24405] text-[#ffffff] w-[90px] h-auto text-[10px] text-center'
+                                    : ''
+                            ">
+                            {{ 'product.product-detail.readyToShip' | translate }}
+                        </div>
+                        <div class="text-[14px]">{{ product?.description }}</div>
+                    </div>
+
+                    <div class="mt-5 border-none bg-[#F0F0F0] p-3 rounded-2xl h-auto w-auto">
+                        @if (product?.productWholesalePriceList) {
+                        <div class="wholesale-list">
+                            <table class="w-full">
+                                <tr>
+                                    <th>{{ 'product.product-detail.quantity' | translate }}</th>
+                                    <th>{{ 'product.product-detail.price' | translate }}</th>
+                                    <th>
+                                        {{ 'product.product-detail.delivery' | translate }} ({{
+                                        'product.product-detail.days' | translate
+                                        }})
+                                    </th>
+                                </tr>
+                                <!-- <ng-container
+                                        *ngFor="let wsPrice of productWholesalePriceNodes; trackBy: trackById"
+                                    >
+                                        <tr class="text-sm">
+                                            <td>{{ wsPrice?.qualityFrom }} - {{ wsPrice?.qualityTo }}</td>
+                                            <td>{{ wsPrice?.priceBracket | currency: '' : '' : '1.0-0' }}</td>
+                                            <td>{{ wsPrice?.deliveryDays }}</td>
+                                        </tr>
+                                    </ng-container> -->
+                            </table>
+                        </div>
+                        }
+                    </div>
+
+                    <div class="mt-5 flex lg:flex-row flex-col gap-2 justify-between text-sm">
+                        <div class="flex gap-5">
+                            <div class="font-semibold">{{ 'product.product-detail.moq' | translate }}:</div>
+                            <div>{{ product?.minimumOrderQuantity }} {{ product?.unitOfMeasure?.name }}</div>
+                        </div>
+                        <div class="flex gap-5">
+                            <div class="font-semibold">{{ 'product.product-detail.capacity' | translate }}:</div>
+                            <div>{{ product?.provideAbility }}</div>
+                        </div>
+                    </div>
+                    <mat-divider class="!mt-1" />
+                    <div *ngIf="product?.size" class="mt-8 text-sm font-semibold">
+                        {{ 'product.product-detail.size' | translate }}
+                    </div>
+                    <div *ngIf="product?.color" class="mt-8 text-sm font-semibold">
+                        {{ 'product.product-detail.color' | translate }}
+                    </div>
+                    <div class="lg:hidden mt-10 flex flex-col gap-y-3">
+                        <div class="flex gap-4">
+                            <button mat-stroked-button class="!border-[#15677F] border py-2 px-3 !w-full">
+                                <a href="" class="no-underline">
+                                    <div class="text-[#15677F] lg:text-base text-xs">
+                                        {{ 'product.product-detail.view-supplier-btn' | translate }}
+                                    </div>
+                                </a>
+                            </button>
+                            <button mat-stroked-button class="!border-[#15677F] border py-2 px-3 !w-full">
+                                <a href="" class="no-underline">
+                                    <div class="text-[#15677F] lg:text-base text-xs">
+                                        {{ 'product.product-detail.rfq-btn' | translate }}
+                                    </div>
+                                </a>
+                            </button>
+                        </div>
+                        <button mat-stroked-button class="!border-[#15677F] border py-2 px-4 w-full"
+                            (click)="addToCart()">
+                            <div class="text-[#15677F] lg:text-base text-xs">
+                                {{ 'product.product-detail.add-to-cart-btn' | translate }}
+                            </div>
+                        </button>
+                        <button mat-raised-button
+                            class="!bg-gradient-to-l !from-[#0B3440] !to-[#15677F] px-4 py-2 w-full"
+                            (click)="openBuyNowDialog()">
+                            <div class="text-white lg:text-base text-xs">
+                                {{ 'product.product-detail.buy-now-btn' | translate }}
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <div class="hidden lg:flex items-center gap-6 justify-end">
+                <button mat-stroked-button class="!border-[#15677F] border py-2 px-4 w-[180px]">
+                    <a href="" class="no-underline">
+                        <div class="text-[#15677F] text-sm">
+                            {{ 'product.product-detail.view-supplier-btn' | translate }}
+                        </div>
+                    </a>
+                </button>
+                <button mat-stroked-button class="!border-[#15677F] border py-2 px-4 w-[180px]">
+                    <a href="" class="no-underline">
+                        <div class="text-[#15677F] text-sm">
+                            {{ 'product.product-detail.rfq-btn' | translate }}
+                        </div>
+                    </a>
+                </button>
+                <button mat-stroked-button class="!border-[#15677F] border py-2 px-4 w-[180px]" (click)="addToCart()">
+                    <div class="text-[#15677F] text-sm">
+                        {{ 'product.product-detail.add-to-cart-btn' | translate }}
+                    </div>
+                </button>
+                <button mat-raised-button
+                    class="!bg-gradient-to-l !from-[#0B3440] !to-[#15677F] px-4 py-2 w-[180px] min-h-[41px]"
+                    (click)="openBuyNowDialog()">
+                    <div class="text-white text-sm">
+                        {{ 'product.product-detail.buy-now-btn' | translate }}
+                    </div>
+                </button>
+            </div>
+
+            <section class="my-8">
+                <div class="hidden lg:flex">
+                    @for (tab of productTabs; track tab.key) {
+                    <div class="cursor-pointer px-4 py-1 text-sm whitespace-nowrap"
+                        [class.bg-[#F24405]]="activeTab === tab.key" [class.text-white]="activeTab === tab.key"
+                        (click)="setActiveTab(tab.key)">
+                        {{ tab.title | translate }}
+                    </div>
+                    }
+                </div>
+                <div class="lg:block hidden border border-[#AAA6A6] h-auto p-4 overflow-scroll">
+                    <div *ngIf="activeTab === 'technical-specification'">
+                        <p class="text-sm text-black">{{ product?.specification }}</p>
+                    </div>
+                    <div *ngIf="activeTab === 'certificate'">
+                        <!-- Content for certificate -->
+                    </div>
+                    <div *ngIf="activeTab === 'other-informations'" [innerHTML]="product?.otherInformation"></div>
+                </div>
+                <div class="lg:hidden block">
+                    <owl-carousel-o [options]="customOptions" (translated)="onSlideChange($event)" class="relative">
+                        <ng-container *ngFor="let tab of productTabs; let i = index">
+                            <ng-template carouselSlide [id]="tab.key">
+                                <div class="cursor-pointer text-sm whitespace-nowrap w-full">
+                                    <div class="font-semibold py-1.5 px-10 w-full"
+                                        [ngClass]="{ 'bg-[#F24405] text-white': activeTab && activeTab === tab.key }">
+                                        {{ tab.title | translate }}
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </ng-container>
+                    </owl-carousel-o>
+                    <div class="border border-[#AAA6A6] p-4 overflow-scroll max-h-[300px]"
+                        [ngClass]="{ 'h-auto': isMobileView(), 'h-96': !isMobileView() }">
+                        <div *ngIf="activeTab === 'technical-specification'">{{ product?.specification }}</div>
+                        <div *ngIf="activeTab === 'certificate'">
+                            <!-- Content for certificate -->
+                        </div>
+                        <div *ngIf="activeTab === 'other-informations'" [innerHTML]="product?.otherInformation"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <div class="flex items-center justify-between">
+                    <div class="text-lg font-semibold">{{ 'product.product-detail.reviews' | translate }}</div>
+                    <a href="#" class="text-[#15677F] hover:text-[#0B3440] text-sm underline">
+                        {{ 'product.product-detail.load-more' | translate }}
+                    </a>
+                </div>
+
+                <div #targetElement class="my-3 border border-[#AAA6A6] p-3 h-auto">
+                    <div class="flex flex-wrap items-center lg:gap-5 gap-3">
+                        <img src="/assets/icons/profile-user.svg" alt="" class="rounded-full max-w-[26px]" />
+                        <app-rating></app-rating>
+                        <div class="text-sm">Hàng đẹp chất lượng như hình, rất hài lòng</div>
+                    </div>
+                </div>
+            </section>
+
+            @if (product?.relatedSupplierProductList.length > 0) {
+            <section class="mt-10">
+                <div class="text-lg font-semibold">{{ 'product.product-detail.related-products' | translate }}</div>
+                <div class="mt-4 grid lg:grid-cols-6 grid-cols-2 gap-3 lg:gap-5">
+                    @for (product of product?.relatedSupplierProductList; track product.id) {
+                    <nextpro-user-product-item [product]="product" />
+                    }
+                </div>
+                <div class="mt-8 flex justify-center">
+                    <a href="#" class="text-[#15677F] hover:text-[#0B3440] text-sm font-semibold underline">
+                        {{ 'product.product-detail.load-more' | translate }}
+                    </a>
+                </div>
+            </section>
+            }
+
+            @if (products?.length > 0) {
+            <section class="mt-10">
+                <div class="text-lg font-semibold">
+                    {{ 'product.product-detail.products-in-the-same-category' | translate }}
+                </div>
+                <nextpro-user-product-same-category [sameProductsCategory]="products" />
+                <div class="mt-8 flex justify-center">
+                    <a href="#" class="text-[#15677F] hover:text-[#0B3440] text-sm font-semibold underline">
+                        {{ 'product.product-detail.load-more' | translate }}
+                    </a>
+                </div>
+            </section>
+            }
+        </div>
+    </div>
+</div>

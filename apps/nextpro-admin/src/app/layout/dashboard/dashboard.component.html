@@ -1,0 +1,19 @@
+<mat-sidenav-container class="min-h-screen">
+    <mat-sidenav mode="side" [opened]="showSidebar">
+        <nextpro-admin-layout-dashboard-nav-list [navItems]="menuData" />
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <mat-toolbar class="flex justify-between border-b border-b-[#d0d0d0]">
+            <div class="flex items-center gap-2">
+                <mat-icon class="cursor-pointer" (click)="toggleSidebar()">menu</mat-icon>
+                <xng-breadcrumb separator=">" />
+            </div>
+            <mat-icon class="cursor-pointer" (click)="logOut()">logout</mat-icon>
+        </mat-toolbar>
+        <main class="bg-[#f2f2f2] p-2">
+            <div class="bg-[#ffffff] rounded-[8px]">
+                <router-outlet />
+            </div>
+        </main>
+    </mat-sidenav-content>
+</mat-sidenav-container>

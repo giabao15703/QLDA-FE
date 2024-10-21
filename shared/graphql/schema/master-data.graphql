@@ -1,0 +1,2375 @@
+query getCountries(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $itemCode_Icontains: String
+    $status: Boolean
+    $name: String
+    $nameVi: String
+    $nameEn: String
+    $orderBy: String
+) {
+    countries(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        itemCode_Icontains: $itemCode_Icontains
+        status: $status
+        name: $name
+        nameVi: $nameVi
+        nameEn: $nameEn
+        orderBy: $orderBy
+    ) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...CountryInfo
+            }
+        }
+    }
+}
+
+query getCountry($id: ID!) {
+    country(id: $id) {
+        ...CountryInfo
+    }
+}
+
+mutation createCountry($input: CountryInput!) {
+    countryCreate(input: $input) {
+        status
+        country {
+            ...CountryInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateCountry($id: String!, $input: CountryInput!) {
+    countryUpdate(id: $id, input: $input) {
+        status
+        country {
+            ...CountryInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateCountryStatus($listStatus: [CountryStatusInput]!) {
+    countryUpdateStatus(listStatus: $listStatus) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+query getCities(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $stateCode: String
+    $status: Boolean
+    $countryId: String
+    $name: String
+    $stateCodeContains: String
+    $countryNameContains: String
+    $orderBy: String
+) {
+    countryStates(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        stateCode: $stateCode
+        status: $status
+        countryId: $countryId
+        name: $name
+        stateCodeContains: $stateCodeContains
+        countryNameContains: $countryNameContains
+        orderBy: $orderBy
+    ) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...CityInfo
+            }
+        }
+    }
+}
+
+query getCity($id: ID!) {
+    countryState(id: $id) {
+        ...CityInfo
+    }
+}
+
+mutation createCity($input: CountryStateInput!) {
+    countryStateCreate(input: $input) {
+        status
+        countryState {
+            ...CityInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateCity($id: String!, $input: CountryStateInput!) {
+    countryStateUpdate(id: $id, input: $input) {
+        status
+        countryState {
+            ...CityInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateCityStatus($listStatus: [CountryStateStatusInput]!) {
+    countryStateUpdateStatus(listStatus: $listStatus) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+query getCurrencies(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $itemCode_Icontains: String
+    $status: Boolean
+    $name: String
+    $nameVi: String
+    $nameEn: String
+    $orderBy: String
+) {
+    currencies(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        itemCode_Icontains: $itemCode_Icontains
+        status: $status
+        name: $name
+        nameVi: $nameVi
+        nameEn: $nameEn
+        orderBy: $orderBy
+    ) {
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...CurrencyInfo
+            }
+        }
+        totalCount
+    }
+}
+
+query getCurrency($id: ID!) {
+    currency(id: $id) {
+        ...CurrencyInfo
+    }
+}
+
+mutation createCurrency($input: CurrencyInput!) {
+    currencyCreate(input: $input) {
+        status
+        currency {
+            ...CurrencyInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateCurrency($id: String!, $input: CurrencyInput!) {
+    currencyUpdate(id: $id, input: $input) {
+        status
+        currency {
+            ...CurrencyInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateCurrencyStatus($listStatus: [CurrencyStatusInput]!) {
+    currencyUpdateStatus(listStatus: $listStatus) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+query getDeliveryTerm($id: ID!) {
+    deliveryTerm(id: $id) {
+        ...DeliveryTermInfo
+    }
+}
+
+query getDeliveryTerms(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $status: Boolean
+    $name: String
+    $nameVi: String
+    $nameEn: String
+    $orderBy: String
+) {
+    deliveryTerms(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        status: $status
+        name: $name
+        nameVi: $nameVi
+        nameEn: $nameEn
+        orderBy: $orderBy
+    ) {
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...DeliveryTermInfo
+            }
+        }
+        totalCount
+    }
+}
+
+mutation createDeliveryTerm($input: DeliveryTermInput!) {
+    deliveryTermCreate(input: $input) {
+        status
+        deliveryTerm {
+            ...DeliveryTermInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateDeliveryTerm($id: String!, $input: DeliveryTermInput!) {
+    deliveryTermUpdate(id: $id, input: $input) {
+        status
+        deliveryTerm {
+            ...DeliveryTermInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateDeliveryTermStatus($listStatus: [DeliveryTermStatusInput]!) {
+    deliveryTermUpdateStatus(listStatus: $listStatus) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+query getPaymentTerms(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $status: Boolean
+    $name: String
+    $nameVi: String
+    $nameEn: String
+    $orderBy: String
+) {
+    paymentTerms(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        status: $status
+        name: $name
+        nameVi: $nameVi
+        nameEn: $nameEn
+        orderBy: $orderBy
+    ) {
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...PaymentTermInfo
+            }
+        }
+        totalCount
+    }
+}
+
+query getPaymentTerm($id: ID!) {
+    paymentTerm(id: $id) {
+        ...PaymentTermInfo
+    }
+}
+
+mutation createPaymentTerm($input: PaymentTermInput!) {
+    paymentTermCreate(input: $input) {
+        status
+        paymentTerm {
+            ...PaymentTermInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updatePaymentTerm($id: String!, $input: PaymentTermInput!) {
+    paymentTermUpdate(id: $id, input: $input) {
+        status
+        paymentTerm {
+            ...PaymentTermInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updatePaymentTermStatus($listStatus: [PaymentTermStatusInput]!) {
+    paymentTermUpdateStatus(listStatus: $listStatus) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+query getReasons(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $itemCode_Icontains: String
+    $status: Boolean
+    $name: String
+    $nameVi: String
+    $nameEn: String
+    $orderBy: String
+) {
+    reasons(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        itemCode_Icontains: $itemCode_Icontains
+        status: $status
+        name: $name
+        nameVi: $nameVi
+        nameEn: $nameEn
+        orderBy: $orderBy
+    ) {
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...ReasonInfo
+            }
+        }
+        totalCount
+    }
+}
+
+query getReason($id: ID!) {
+    reason(id: $id) {
+        ...ReasonInfo
+    }
+}
+
+mutation createReason($input: ReasonInput!) {
+    reasonCreate(input: $input) {
+        status
+        reason {
+            ...ReasonInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateReason($id: String!, $input: ReasonInput!) {
+    reasonUpdate(id: $id, input: $input) {
+        status
+        reason {
+            ...ReasonInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateReasonStatus($listStatus: [ReasonStatusInput]!) {
+    reasonUpdateStatus(listStatus: $listStatus) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+query getGenders(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $status: Boolean
+    $name: String
+    $nameVi: String
+    $nameEn: String
+    $orderBy: String
+) {
+    genders(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        status: $status
+        name: $name
+        nameVi: $nameVi
+        nameEn: $nameEn
+        orderBy: $orderBy
+    ) {
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...GenderInfo
+            }
+        }
+        totalCount
+    }
+}
+
+query getGender($id: ID!) {
+    gender(id: $id) {
+        ...GenderInfo
+    }
+}
+
+mutation createGender($input: GenderInput!) {
+    genderCreate(input: $input) {
+        status
+        gender {
+            ...GenderInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateGender($id: String!, $input: GenderInput!) {
+    genderUpdate(id: $id, input: $input) {
+        status
+        gender {
+            ...GenderInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateGenderStatus($listStatus: [GenderStatusInput]!) {
+    genderUpdateStatus(listStatus: $listStatus) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+query getPositions(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $status: Boolean
+    $name: String
+    $nameVi: String
+    $nameEn: String
+    $orderBy: String
+) {
+    positions(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        status: $status
+        name: $name
+        nameVi: $nameVi
+        nameEn: $nameEn
+        orderBy: $orderBy
+    ) {
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...PositionInfo
+            }
+        }
+        totalCount
+    }
+}
+
+query getPosition($id: ID!) {
+    position(id: $id) {
+        ...PositionInfo
+    }
+}
+
+mutation createPosition($input: PositionInput!) {
+    positionCreate(input: $input) {
+        status
+        position {
+            ...PositionInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updatePosition($id: String!, $input: PositionInput!) {
+    positionUpdate(id: $id, input: $input) {
+        status
+        position {
+            ...PositionInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updatePositionStatus($listStatus: [PositionStatusInput]!) {
+    positionUpdateStatus(listStatus: $listStatus) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+query getLanguages(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $itemCode_Icontains: String
+    $status: Boolean
+    $name: String
+    $nameVi: String
+    $nameEn: String
+    $orderBy: String
+) {
+    languages(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        itemCode_Icontains: $itemCode_Icontains
+        status: $status
+        name: $name
+        nameVi: $nameVi
+        nameEn: $nameEn
+        orderBy: $orderBy
+    ) {
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...LanguageInfo
+            }
+        }
+        totalCount
+    }
+}
+
+query getLanguage($id: ID!) {
+    language(id: $id) {
+        ...LanguageInfo
+    }
+}
+
+mutation createLanguage($input: LanguageInput!) {
+    languageCreate(input: $input) {
+        status
+        language {
+            ...LanguageInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateLanguage($id: String!, $input: LanguageInput!) {
+    languageUpdate(id: $id, input: $input) {
+        status
+        language {
+            ...LanguageInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateLanguageStatus($listStatus: [LanguageStatusInput]!) {
+    languageUpdateStatus(listStatus: $listStatus) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+query getNumberOfEmployees(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $status: Boolean
+    $name: String
+    $nameVi: String
+    $nameEn: String
+    $orderBy: String
+) {
+    numberOfEmployees(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        status: $status
+        name: $name
+        nameVi: $nameVi
+        nameEn: $nameEn
+        orderBy: $orderBy
+    ) {
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...NumberOfEmployeeInfo
+            }
+        }
+        totalCount
+    }
+}
+
+query getNumberOfEmployee($id: ID!) {
+    numberOfEmployee(id: $id) {
+        ...NumberOfEmployeeInfo
+    }
+}
+
+mutation createNumberOfEmployee($input: NumberofEmployeeInput!) {
+    numberOfEmployeeCreate(input: $input) {
+        status
+        numberOfEmployee {
+            ...NumberOfEmployeeInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateNumberOfEmployee($id: String!, $input: NumberofEmployeeInput!) {
+    numberOfEmployeeUpdate(id: $id, input: $input) {
+        status
+        numberOfEmployee {
+            ...NumberOfEmployeeInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateNumberOfEmployeeStatus($listStatus: [NumberofEmployeeStatusInput]!) {
+    numberOfEmployeeUpdateStatus(listStatus: $listStatus) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+query getIndustry($id: ID!) {
+    industry(id: $id) {
+        ...IndustryInfo
+    }
+}
+
+query getIndustryWithIndustryCluster($id: ID!) {
+    industry(id: $id) {
+        ...IndustryWithIndustryClusterInfo
+    }
+}
+
+query getIndustries(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $itemCode_Icontains: String
+    $status: Boolean
+    $name: String
+    $nameVi: String
+    $nameEn: String
+    $orderBy: String
+) {
+    industries(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        itemCode_Icontains: $itemCode_Icontains
+        status: $status
+        name: $name
+        nameVi: $nameVi
+        nameEn: $nameEn
+        orderBy: $orderBy
+    ) {
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...IndustryInfo
+            }
+        }
+        totalCount
+    }
+}
+
+mutation createIndustry($input: IndustryInput!) {
+    industryCreate(input: $input) {
+        status
+        industry {
+            ...IndustryInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateIndustry($id: String!, $input: IndustryInput!) {
+    industryUpdate(id: $id, input: $input) {
+        status
+        industry {
+            ...IndustryInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateIndustryStatus($listStatus: [IndustryStatusInput]!) {
+    industryUpdateStatus(listStatus: $listStatus) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+query getIndustryCluster($id: ID!) {
+    industryCluster(id: $id) {
+        ...IndustryClusterInfo
+    }
+}
+
+query getIndustryClusterWithIndustry($id: ID!) {
+    industryCluster(id: $id) {
+        ...IndustryClusterWithIndustryInfo
+    }
+}
+
+query getIndustryClusterWithIndustrySectors($id: ID!) {
+    industryCluster(id: $id) {
+        ...IndustryClusterWithIndustrySectorsInfo
+    }
+}
+
+query getIndustryClusters(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $itemCode_Icontains: String
+    $status: Boolean
+    $name: String
+    $nameVi: String
+    $nameEn: String
+    $orderBy: String
+) {
+    industryClusters(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        itemCode_Icontains: $itemCode_Icontains
+        status: $status
+        name: $name
+        nameVi: $nameVi
+        nameEn: $nameEn
+        orderBy: $orderBy
+    ) {
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...IndustryClusterInfo
+            }
+        }
+        totalCount
+    }
+}
+
+query getIndustryClustersWithIndustry(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $itemCode_Icontains: String
+    $status: Boolean
+    $name: String
+    $nameVi: String
+    $nameEn: String
+    $orderBy: String
+) {
+    industryClusters(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        itemCode_Icontains: $itemCode_Icontains
+        status: $status
+        name: $name
+        nameVi: $nameVi
+        nameEn: $nameEn
+        orderBy: $orderBy
+    ) {
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...IndustryClusterWithIndustryInfo
+            }
+        }
+        totalCount
+    }
+}
+
+mutation createIndustryCluster($input: IndustryClusterInput!) {
+    industryClusterCreate(input: $input) {
+        status
+        industryCluster {
+            ...IndustryClusterWithIndustryInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateIndustryCluster($id: String!, $input: IndustryClusterInput!) {
+    industryClusterUpdate(id: $id, input: $input) {
+        status
+        industryCluster {
+            ...IndustryClusterWithIndustryInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateIndustryClusterStatus($listStatus: [IndustryClusterStatusInput]!) {
+    industryClusterUpdateStatus(listStatus: $listStatus) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+query getIndustrySector($id: ID!) {
+    industrySector(id: $id) {
+        ...IndustrySectorsInfo
+    }
+}
+
+query getIndustrySectorWithIndustryCluster($id: ID!) {
+    industrySector(id: $id) {
+        ...IndustrySectorsWithIndustryClusterInfo
+    }
+}
+
+query getIndustrySectorWithIndustrySubSectors($id: ID!) {
+    industrySector(id: $id) {
+        ...IndustrySectorsWithIndustrySubSectorsInfo
+    }
+}
+
+query getIndustrySectors(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $itemCode_Icontains: String
+    $status: Boolean
+    $name: String
+    $nameVi: String
+    $nameEn: String
+    $orderBy: String
+) {
+    industrySectors(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        itemCode_Icontains: $itemCode_Icontains
+        status: $status
+        name: $name
+        nameVi: $nameVi
+        nameEn: $nameEn
+        orderBy: $orderBy
+    ) {
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...IndustrySectorsInfo
+            }
+        }
+        totalCount
+    }
+}
+
+query getIndustrySectorsWithIndustryCluster(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $itemCode_Icontains: String
+    $status: Boolean
+    $name: String
+    $nameVi: String
+    $nameEn: String
+    $orderBy: String
+) {
+    industrySectors(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        itemCode_Icontains: $itemCode_Icontains
+        status: $status
+        name: $name
+        nameVi: $nameVi
+        nameEn: $nameEn
+        orderBy: $orderBy
+    ) {
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...IndustrySectorsWithIndustryClusterInfo
+            }
+        }
+        totalCount
+    }
+}
+
+mutation createIndustrySectors($input: IndustrySectorsInput!) {
+    industrySectorsCreate(input: $input) {
+        status
+        industrySector {
+            ...IndustrySectorsWithIndustryClusterInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateIndustrySectors($id: String!, $input: IndustrySectorsInput!) {
+    industrySectorsUpdate(id: $id, input: $input) {
+        status
+        industrySector {
+            ...IndustrySectorsWithIndustryClusterInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateIndustrySectorsStatus($listStatus: [IndustrySectorsStatusInput]!) {
+    industrySectorsUpdateStatus(listStatus: $listStatus) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+query getIndustrySubSector($id: ID!) {
+    industrySubSector(id: $id) {
+        ...IndustrySubSectorsInfo
+    }
+}
+
+query getIndustrySubSectorWithIndustrySectors($id: ID!) {
+    industrySubSector(id: $id) {
+        ...IndustrySubSectorsWithIndustrySectorsInfo
+    }
+}
+
+query getIndustrySubSectors(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $itemCode_Icontains: String
+    $status: Boolean
+    $name: String
+    $nameVi: String
+    $nameEn: String
+    $orderBy: String
+) {
+    industrySubSectors(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        itemCode_Icontains: $itemCode_Icontains
+        status: $status
+        name: $name
+        nameVi: $nameVi
+        nameEn: $nameEn
+        orderBy: $orderBy
+    ) {
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...IndustrySubSectorsInfo
+            }
+        }
+        totalCount
+    }
+}
+
+query getIndustrySubSectorsWithIndustrySectors(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $itemCode_Icontains: String
+    $status: Boolean
+    $name: String
+    $nameVi: String
+    $nameEn: String
+    $orderBy: String
+) {
+    industrySubSectors(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        itemCode_Icontains: $itemCode_Icontains
+        status: $status
+        name: $name
+        nameVi: $nameVi
+        nameEn: $nameEn
+        orderBy: $orderBy
+    ) {
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...IndustrySubSectorsWithIndustrySectorsInfo
+            }
+        }
+        totalCount
+    }
+}
+
+mutation createIndustrySubSectors($input: IndustrySubSectorsInput!) {
+    industrySubSectorsCreate(input: $input) {
+        status
+        industrySubSector {
+            ...IndustrySubSectorsWithIndustrySectorsInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateIndustrySubSectors($id: String!, $input: IndustrySubSectorsInput!) {
+    industrySubSectorsUpdate(id: $id, input: $input) {
+        status
+        industrySubSector {
+            ...IndustrySubSectorsWithIndustrySectorsInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateIndustrySubSectorsStatus($listStatus: [IndustrySubSectorsStatusInput]!) {
+    industrySubSectorsUpdateStatus(listStatus: $listStatus) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+query getUnitOfMeasures(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $itemCode_Icontains: String
+    $status: Boolean
+    $name: String
+    $nameVi: String
+    $nameEn: String
+    $orderBy: String
+) {
+    unitOfMeasures(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        itemCode_Icontains: $itemCode_Icontains
+        status: $status
+        name: $name
+        nameVi: $nameVi
+        nameEn: $nameEn
+        orderBy: $orderBy
+    ) {
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...UnitOfMeasureInfo
+            }
+        }
+        totalCount
+    }
+}
+
+query getUnitOfMeasure($id: ID!) {
+    unitOfMeasure(id: $id) {
+        ...UnitOfMeasureInfo
+    }
+}
+
+mutation createUnitOfMeasure($input: UnitofMeasureInput!) {
+    unitOfMeasureCreate(input: $input) {
+        status
+        unitOfMeasure {
+            ...UnitOfMeasureInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateUnitOfMeasure($id: String!, $input: UnitofMeasureInput!) {
+    unitOfMeasureUpdate(id: $id, input: $input) {
+        status
+        unitOfMeasure {
+            ...UnitOfMeasureInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateUnitOfMeasureStatus($listStatus: [UnitofMeasureStatusInput]!) {
+    unitOfMeasureUpdateStatus(listStatus: $listStatus) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+query getFamilyCode($id: ID!) {
+    familyCode(id: $id) {
+        ...FamilyCodeInfo
+    }
+}
+
+query getFamilyCodeWithClusterCode($id: ID!) {
+    familyCode(id: $id) {
+        ...FamilyCodeWithClusterCodeInfo
+    }
+}
+
+query getFamilyCodes(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $itemCode_Icontains: String
+    $status: Boolean
+    $name: String
+    $nameVi: String
+    $nameEn: String
+    $nameLevelFilter: String
+    $orderBy: String
+) {
+    familyCodes(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        itemCode_Icontains: $itemCode_Icontains
+        status: $status
+        name: $name
+        nameVi: $nameVi
+        nameEn: $nameEn
+        nameLevelFilter: $nameLevelFilter
+        orderBy: $orderBy
+    ) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...FamilyCodeInfo
+            }
+        }
+    }
+}
+
+query getFamilyCodesWithClusterCode(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $itemCode_Icontains: String
+    $status: Boolean
+    $name: String
+    $nameVi: String
+    $nameEn: String
+    $nameLevelFilter: String
+    $orderBy: String
+) {
+    familyCodes(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        itemCode_Icontains: $itemCode_Icontains
+        status: $status
+        name: $name
+        nameVi: $nameVi
+        nameEn: $nameEn
+        nameLevelFilter: $nameLevelFilter
+        orderBy: $orderBy
+    ) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...FamilyCodeWithClusterCodeInfo
+            }
+        }
+    }
+}
+
+mutation createFamilyCode($input: FamilyCodeInput!) {
+    familyCodeCreate(input: $input) {
+        status
+        familyCode {
+            ...FamilyCodeInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateFamilyCode($id: String!, $input: FamilyCodeInput!) {
+    familyCodeUpdate(id: $id, input: $input) {
+        status
+        familyCode {
+            ...FamilyCodeInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateFamilyCodeStatus($listStatus: [FamilyCodeStatusInput]!) {
+    familyCodeUpdateStatus(listStatus: $listStatus) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+query getClusterCode($id: ID!) {
+    clusterCode(id: $id) {
+        ...ClusterCodeInfo
+    }
+}
+
+query getClusterCodeWithFamilyCode($id: ID!) {
+    clusterCode(id: $id) {
+        ...ClusterCodeWithFamilyCodeInfo
+    }
+}
+
+query getClusterCodeWithSubClusterCode($id: ID!) {
+    clusterCode(id: $id) {
+        ...ClusterCodeWithSubClusterCodeInfo
+    }
+}
+
+query getClusterCodes(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $itemCode_Icontains: String
+    $status: Boolean
+    $name: String
+    $nameVi: String
+    $nameEn: String
+    $orderBy: String
+) {
+    clusterCodes(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        itemCode_Icontains: $itemCode_Icontains
+        status: $status
+        name: $name
+        nameVi: $nameVi
+        nameEn: $nameEn
+        orderBy: $orderBy
+    ) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...ClusterCodeInfo
+            }
+        }
+    }
+}
+
+query getClusterCodesWithFamilyCode(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $itemCode_Icontains: String
+    $status: Boolean
+    $name: String
+    $nameVi: String
+    $nameEn: String
+    $orderBy: String
+) {
+    clusterCodes(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        itemCode_Icontains: $itemCode_Icontains
+        status: $status
+        name: $name
+        nameVi: $nameVi
+        nameEn: $nameEn
+        orderBy: $orderBy
+    ) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...ClusterCodeWithFamilyCodeInfo
+            }
+        }
+    }
+}
+
+mutation createClusterCode($input: ClusterCodeInput!) {
+    clusterCodeCreate(input: $input) {
+        status
+        clusterCode {
+            ...ClusterCodeWithFamilyCodeInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateClusterCode($id: String!, $input: ClusterCodeInput!) {
+    clusterCodeUpdate(id: $id, input: $input) {
+        status
+        clusterCode {
+            ...ClusterCodeWithFamilyCodeInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateClusterCodeStatus($listStatus: [ClusterCodeStatusInput]!) {
+    clusterCodeUpdateStatus(listStatus: $listStatus) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+query getSubClusterCode($id: ID!) {
+    subClusterCode(id: $id) {
+        ...SubClusterCodeInfo
+    }
+}
+
+query getSubClusterCodeWithClusterCode($id: ID!) {
+    subClusterCode(id: $id) {
+        ...SubClusterCodeWithClusterCodeInfo
+    }
+}
+
+query getSubClusterCodeWithCategory($id: ID!) {
+    subClusterCode(id: $id) {
+        ...SubClusterCodeWithCategoryInfo
+    }
+}
+
+query getSubClusterCodes(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $itemCode_Icontains: String
+    $status: Boolean
+    $name: String
+    $nameVi: String
+    $nameEn: String
+    $orderBy: String
+) {
+    subClusterCodes(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        itemCode_Icontains: $itemCode_Icontains
+        status: $status
+        name: $name
+        nameVi: $nameVi
+        nameEn: $nameEn
+        orderBy: $orderBy
+    ) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...SubClusterCodeInfo
+            }
+        }
+    }
+}
+
+query getSubClusterCodesWithClusterCode(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $itemCode_Icontains: String
+    $status: Boolean
+    $name: String
+    $nameVi: String
+    $nameEn: String
+    $orderBy: String
+) {
+    subClusterCodes(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        itemCode_Icontains: $itemCode_Icontains
+        status: $status
+        name: $name
+        nameVi: $nameVi
+        nameEn: $nameEn
+        orderBy: $orderBy
+    ) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...SubClusterCodeWithClusterCodeInfo
+            }
+        }
+    }
+}
+
+mutation createSubClusterCode($input: SubClusterCodeInput!) {
+    subClusterCodeCreate(input: $input) {
+        status
+        subClusterCode {
+            ...SubClusterCodeWithClusterCodeInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateSubClusterCode($id: String!, $input: SubClusterCodeInput!) {
+    subClusterCodeUpdate(id: $id, input: $input) {
+        status
+        subClusterCode {
+            ...SubClusterCodeWithClusterCodeInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateSubClusterCodeStatus($listStatus: [SubClusterCodeStatusInput]!) {
+    subClusterCodeUpdateStatus(listStatus: $listStatus) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+query getCategory($id: ID!) {
+    category(id: $id) {
+        ...CategoryInfo
+    }
+}
+
+query getCategoryWithSubClusterCode($id: ID!) {
+    category(id: $id) {
+        ...CategoryWithSubClusterCodeInfo
+    }
+}
+
+query getCategories(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $itemCode_Icontains: String
+    $status: Boolean
+    $pk: String
+    $name: String
+    $nameVi: String
+    $nameEn: String
+    $orderBy: String
+) {
+    categories(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        itemCode_Icontains: $itemCode_Icontains
+        status: $status
+        pk: $pk
+        name: $name
+        nameVi: $nameVi
+        nameEn: $nameEn
+        orderBy: $orderBy
+    ) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...CategoryInfo
+            }
+        }
+    }
+}
+
+query getCategoriesWithSubClusterCode(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $itemCode_Icontains: String
+    $status: Boolean
+    $pk: String
+    $name: String
+    $nameVi: String
+    $nameEn: String
+    $orderBy: String
+) {
+    categories(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        itemCode_Icontains: $itemCode_Icontains
+        status: $status
+        pk: $pk
+        name: $name
+        nameVi: $nameVi
+        nameEn: $nameEn
+        orderBy: $orderBy
+    ) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...CategoryWithSubClusterCodeInfo
+            }
+        }
+    }
+}
+
+mutation createCategory($input: CategoryInput!) {
+    categoryCreate(input: $input) {
+        status
+        category {
+            ...SubClusterCodeInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateCategory($id: String!, $input: CategoryInput!) {
+    categoryUpdate(id: $id, input: $input) {
+        status
+        category {
+            ...CategoryWithSubClusterCodeInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateCategoryStatus($listStatus: [CategoryStatusInput]!) {
+    categoryUpdateStatus(listStatus: $listStatus) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+query getEmailTemplates(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $itemCode_Icontains: String
+    $status: Boolean
+    $title: String
+    $titleVi: String
+    $titleEn: String
+    $orderBy: String
+) {
+    emailTemplates(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        itemCode_Icontains: $itemCode_Icontains
+        status: $status
+        title: $title
+        titleVi: $titleVi
+        titleEn: $titleEn
+        orderBy: $orderBy
+    ) {
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...EmailTemplateInfo
+            }
+        }
+        totalCount
+    }
+}
+
+query getEmailTemplate($id: ID!) {
+    emailTemplate(id: $id) {
+        ...EmailTemplateInfo
+    }
+}
+
+mutation createEmailTemplates($input: EmailTemplatesInput!) {
+    emailTemplatesCreate(input: $input) {
+        status
+        emailTemplates {
+            ...EmailTemplateInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateEmailTemplates($id: String!, $input: EmailTemplatesInput!) {
+    emailTemplatesUpdate(id: $id, input: $input) {
+        status
+        emailTemplates {
+            ...EmailTemplateInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateEmailTemplatesStatus($listStatus: [EmailTemplatesStatusInput]!) {
+    emailTemplatesUpdateStatus(listStatus: $listStatus) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+query getPromotions(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $description_Icontains: String
+    $discount_Icontains: Float
+    $name_Icontains: String
+    $status: Boolean
+    $orderBy: String
+    $isUsed: Boolean
+) {
+    promotions(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        description_Icontains: $description_Icontains
+        discount_Icontains: $discount_Icontains
+        name_Icontains: $name_Icontains
+        status: $status
+        orderBy: $orderBy
+        isUsed: $isUsed
+    ) {
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...PromotionInfo
+            }
+        }
+        totalCount
+    }
+}
+
+query getPromotion($id: ID!) {
+    promotion(id: $id) {
+        ...PromotionInfo
+    }
+}
+
+mutation createPromotion($input: PromotionInput!) {
+    promotionCreate(input: $input) {
+        status
+        promotion {
+            ...PromotionInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updatePromotion($id: String!, $input: PromotionInput!) {
+    promotionUpdate(id: $id, input: $input) {
+        status
+        promotion {
+            ...PromotionInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updatePromotionStatus($listStatus: [PromotionStatusInput]!) {
+    promotionUpdateStatus(listStatus: $listStatus) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+query getPromotionResults(
+    $promotionCode: String!
+    $forSupplierScope: String
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+) {
+    promotionResults(
+        promotionCode: $promotionCode
+        forSupplierScope: $forSupplierScope
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+    ) {
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                promotion {
+                    ...PromotionInfo
+                }
+            }
+        }
+    }
+}
+
+query getPromotionHistory($id: ID!) {
+    promotionHistory(id: $id) {
+        ...PromotionUserUsedInfo
+    }
+}
+
+query getPromotionHistories(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $userUsed_Icontains: String
+    $userUsedEmail_Icontains: String
+    $userName_Icontains: String
+    $title_Icontains: String
+    $promotion_Discount_Gte: Float
+    $promotion_Discount_Lte: Float
+    $promotion_Name_Icontains: String
+    $promotion_Description_Icontains: String
+    $promotion_UserGiven_Icontains: String
+    $promotion_ValidFrom_Gte: DateTime
+    $promotion_ValidTo_Lte: DateTime
+    $promotion_Visible: Boolean
+    $promotion_ApplyForBuyer: Boolean
+    $promotion_ApplyForSupplier: Boolean
+    $isUsed: Boolean
+    $dateFrom: DateTime
+    $dateTo: DateTime
+    $realAmountFrom: Float
+    $realAmountTo: Float
+    $amountAfterDiscountFrom: Float
+    $amountAfterDiscountTo: Float
+    $commissionFrom: Float
+    $commissionTo: Float
+    $orderBy: String
+) {
+    promotionHistories(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        userUsed_Icontains: $userUsed_Icontains
+        userUsedEmail_Icontains: $userUsedEmail_Icontains
+        userName_Icontains: $userName_Icontains
+        title_Icontains: $title_Icontains
+        promotion_Discount_Gte: $promotion_Discount_Gte
+        promotion_Discount_Lte: $promotion_Discount_Lte
+        promotion_Name_Icontains: $promotion_Name_Icontains
+        promotion_Description_Icontains: $promotion_Description_Icontains
+        promotion_UserGiven_Icontains: $promotion_UserGiven_Icontains
+        promotion_ValidFrom_Gte: $promotion_ValidFrom_Gte
+        promotion_ValidTo_Lte: $promotion_ValidTo_Lte
+        promotion_Visible: $promotion_Visible
+        promotion_ApplyForBuyer: $promotion_ApplyForBuyer
+        promotion_ApplyForSupplier: $promotion_ApplyForSupplier
+        isUsed: $isUsed
+        dateFrom: $dateFrom
+        dateTo: $dateTo
+        realAmountFrom: $realAmountFrom
+        realAmountTo: $realAmountTo
+        amountAfterDiscountFrom: $amountAfterDiscountFrom
+        amountAfterDiscountTo: $amountAfterDiscountTo
+        commissionFrom: $commissionFrom
+        commissionTo: $commissionTo
+        orderBy: $orderBy
+    ) {
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...PromotionUserUsedInfo
+            }
+        }
+        totalCount
+    }
+}
+query getVouchers(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $voucherCode_Icontains: String
+    $status: Boolean
+    $pk: String
+    $nameVi: String
+    $nameEn: String
+    $orderBy: String
+) {
+    vouchers(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        voucherCode_Icontains: $voucherCode_Icontains
+        status: $status
+        pk: $pk
+        nameVi: $nameVi
+        nameEn: $nameEn
+        orderBy: $orderBy       
+    ) {
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...VoucherInfo
+            }
+        }
+        totalCount
+    }
+}
+
+query getVoucher($id: ID!) {
+    voucher(id: $id) {
+        ...VoucherInfo
+    }
+}
+
+mutation createVoucher($input: VoucherInput!) {
+    voucherCreate(input: $input) {
+        status
+        voucher {
+            ...VoucherInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateVoucher($id: String!, $input: VoucherInput!) {
+    voucherUpdate(id: $id, input: $input) {
+        status
+        voucher {
+            ...VoucherInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateVoucherStatus($listStatus: [VoucherStatusInput]!) {
+    voucherUpdateStatus(listStatus: $listStatus) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+query getWarrantyTerms(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $warrantyCode_Icontains: String
+    $status: Boolean
+    $pk: String
+    $name: String
+    $nameVi: String
+    $nameEn: String
+    $orderBy: String
+) {
+    warrantyTerms(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        warrantyCode_Icontains: $warrantyCode_Icontains
+        status: $status
+        pk: $pk
+        name: $name
+        nameVi: $nameVi
+        nameEn: $nameEn
+        orderBy: $orderBy
+    ) {
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...WarrantyTermInfo
+            }
+        }
+        totalCount
+    }
+}
+
+query getWarrantyTerm($id: ID!) {
+    warrantyTerm(id: $id) {
+        ...WarrantyTermInfo
+    }
+}
+
+mutation createWarrantyTerm($input: WarrantyTermInput!) {
+    warrantyTermCreate(input: $input) {
+        status
+        warrantyTerm {
+            ...WarrantyTermInfo
+        }
+        error {
+            ...ErrorInfo    
+        }
+    }
+}
+
+mutation updateWarrantyTerm($id: String!, $input: WarrantyTermInput!) {
+    warrantyTermUpdate(id: $id, input: $input) {
+        status
+        warrantyTerm {
+            ...WarrantyTermInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateWarrantyTermStatus($listStatus: [WarrantyTermStatusInput]!) {
+    warrantyTermUpdateStatus(listStatus: $listStatus) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+query getBuyerClubVouchers(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $voucherCode_Icontains: String
+    $status: Boolean
+    $pk: String
+    $description: String
+    $descriptionVi: String
+    $descriptionEn: String
+    $orderBy: String
+) {
+    buyerClubVouchers(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        voucherCode_Icontains: $voucherCode_Icontains
+        status: $status
+        pk: $pk
+        description: $description
+        descriptionVi: $descriptionVi
+        descriptionEn: $descriptionEn
+        orderBy: $orderBy
+    ) {
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...BuyerClubVoucherInfo
+            }
+        }
+        totalCount
+    }
+}
+query getBuyerClubVoucher($id: ID!) {
+    buyerClubVoucher(id: $id) {
+        ...BuyerClubVoucherInfo
+    }
+}
+
+mutation createBuyerClubVoucher($input: BuyerClubVoucherInput!) {
+    buyerClubVoucherCreate(input: $input) {
+        status
+        buyerClubVoucher {
+            ...BuyerClubVoucherInfo
+        }
+        error {
+            ...ErrorInfo    
+        }
+    }
+}
+
+mutation updateBuyerClubVoucher($id: String!, $input: BuyerClubVoucherInput!) {
+    buyerClubVoucherUpdate(id: $id, input: $input) {
+        status
+        buyerClubVoucher {
+            ...BuyerClubVoucherInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateBuyerClubVoucherStatus($listStatus: [BuyerClubVoucherStatusInput]!) {
+    buyerClubVoucherUpdateStatus(listStatus: $listStatus) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+query getSetProductAdvertisements(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $status: Boolean
+    $duration_Icontains: Int
+    $pk: String
+    $description: String
+    $descriptionVi: String
+    $descriptionEn: String
+    $orderBy: String
+) {
+    setProductAdvertisements(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        status: $status
+        duration_Icontains: $duration_Icontains
+        pk: $pk
+        description: $description
+        descriptionVi: $descriptionVi
+        descriptionEn: $descriptionEn
+        orderBy: $orderBy
+    ) {
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...SetProductAdvertisementInfo
+            }
+        }
+        totalCount
+    }
+}
+
+query getSetProductAdvertisement($id: ID!) {
+    setProductAdvertisement(id: $id) {  
+        ...SetProductAdvertisementInfo
+    }
+}
+
+mutation createSetProductAdvertisement($input: SetProductAdvertisementInput!) {
+    setProductAdvertisementCreate(input: $input) {
+        status
+        setProductAdvertisement {
+            ...SetProductAdvertisementInfo
+        }
+        error {
+            ...ErrorInfo    
+        }
+    }
+}
+
+mutation updateSetProductAdvertisement($id: String!, $input: SetProductAdvertisementInput!) {
+    setProductAdvertisementUpdate(id: $id, input: $input) {
+        status
+        setProductAdvertisement {
+            ...SetProductAdvertisementInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateSetProductAdvertisementStatus($listStatus: [SetProductAdvertisementStatusInput]!) {
+    setProductAdvertisementUpdateStatus(listStatus: $listStatus) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}

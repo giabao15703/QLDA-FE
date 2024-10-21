@@ -1,0 +1,198 @@
+query getShippingFees(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $pickUpCityCode: Float
+    $pickUpCityName: String
+    $destinationCityCode: Float
+    $destinationCityName: String
+    $weight: Float
+    $fee: Float
+    $status: Boolean
+) {
+    shippingFees(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        pickUpCityCode: $pickUpCityCode
+        pickUpCityName: $pickUpCityName
+        destinationCityCode: $destinationCityCode
+        destinationCityName: $destinationCityName
+        weight: $weight
+        fee: $fee
+        status: $status
+    ) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...ShippingFeeInfo
+            }
+        }
+    }
+}
+
+query getShippingFee($id: ID!) {
+    shippingFee(id: $id) {
+        ...ShippingFeeInfo
+    }
+}
+
+mutation createShippingFee($input: ShippingFeeInput!) {
+    shippingFeeCreate(input: $input) {
+        status
+        shippingFee {
+            ...ShippingFeeInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateShippingFee($id: String!, $input: ShippingFeeInput!) {
+    shippingFeeUpdate(id: $id, input: $input) {
+        status
+        shippingFee {
+            ...ShippingFeeInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+query getTransporterLists(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $shortName: String
+    $longName: String
+    $code: String
+    $tax: String
+    $phone: String
+    $address: String
+    $email: String
+    $status: Boolean
+) {
+    transporterLists(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        shortName: $shortName
+        longName: $longName
+        code: $code
+        tax: $tax
+        phone: $phone
+        address: $address
+        email: $email
+        status: $status
+    ) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...TransporterListInfo
+            }
+        }
+    }
+}
+
+query getTransporterList($id: ID!) {
+    transporterList(id: $id) {
+        ...TransporterListInfo
+    }
+}
+
+mutation createTransporterList($input: TransporterListInput!) {
+    transporterListCreate(input: $input) {
+        status
+        transporterList {
+            ...TransporterListInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateTransporterList($id: String!, $input: TransporterListInput!) {
+    transporterListUpdate(id: $id, input: $input) {
+        status
+        transporterList {
+            ...TransporterListInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+query getDeliveryResponsibles(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $transporterCode: String
+    $transporterShortName: String
+    $cityCode: String
+    $cityName: String
+) {
+    deliveryResponsibles(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        transporterCode: $transporterCode
+        transporterShortName: $transporterShortName
+        cityCode: $cityCode
+        cityName: $cityName
+    ) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...DeliveryResponsibleInfo
+            }
+        }
+    }
+}
+
+query getDeliveryResponsible($id: ID!) {
+    deliveryResponsible(id: $id) {
+        ...DeliveryResponsibleInfo
+    }
+}
+
+mutation createDeliveryResponsible($input: DeliveryResponsibleInput!) {
+    deliveryResponsibleCreate(input: $input) {
+        status
+        deliveryResponsible {
+            ...DeliveryResponsibleInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateDeliveryResponsible($id: String!, $input: DeliveryResponsibleInput!) {
+    deliveryResponsibleUpdate(id: $id, input: $input) {
+        status
+        deliveryResponsible {
+            ...DeliveryResponsibleInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}

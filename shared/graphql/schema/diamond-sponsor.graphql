@@ -1,0 +1,91 @@
+query getUserDiamondSponsor($id: ID!) {
+    userDiamondSponsor(id: $id) {
+        ...UserDiamondSponsorInfo
+    }
+}
+
+query getUserDiamondSponsors(
+    $familyCode: String
+    $clusterCode: String
+    $subClusterCode: String
+    $category: String
+    $flag: Boolean
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $description_Icontains: String
+    $status: String
+    $isActive: Boolean
+    $isConfirmed: String
+    $validFrom: Date
+    $validTo: Date
+    $companyNameFilter: String
+    $searchCccFilter: String
+    $excludeIdList: String
+    $orderBy: String
+) {
+    userDiamondSponsors(
+        familyCode: $familyCode
+        clusterCode: $clusterCode
+        subClusterCode: $subClusterCode
+        category: $category
+        flag: $flag
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        description_Icontains: $description_Icontains
+        status: $status
+        isActive: $isActive
+        isConfirmed: $isConfirmed
+        validFrom: $validFrom
+        validTo: $validTo
+        companyNameFilter: $companyNameFilter
+        searchCccFilter: $searchCccFilter
+        excludeIdList: $excludeIdList
+        orderBy: $orderBy
+    ) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...UserDiamondSponsorInfo
+            }
+        }
+    }
+}
+
+mutation updateUserDiamondSponsor($id: String!, $input: UserDiamondSponsorUpdateInput!) {
+    userDiamondSponsorUpdate(id: $id, input: $input) {
+        status
+        userDiamondSponsor {
+            ...UserDiamondSponsorInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateUserDiamondSponsorIsConfirmed($listIsConfirmed: [UserDiamondSponsorIsConfirmedUpdateInput]!) {
+    userUserDiamondSponsorIsConfirmedUpdate(listIsConfirmed: $listIsConfirmed) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation createDiamondSponsorTextEditer($textEditer: String!) {
+    userDiamondSponsorCreateTextEditer(textEditer: $textEditer) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}

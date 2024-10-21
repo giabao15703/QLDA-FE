@@ -1,0 +1,114 @@
+<div>
+    <section>
+        <nextpro-user-navbar />
+    </section>
+    <section class="min-h-screen lg:mt-4 lg:mb-6 my-5 lg:px-32 px-4">
+        <div
+            class="text-lg underline decoration-2 decoration-[#15677F] underline-offset-8 font-semibold cursor-pointer"
+        >
+            {{ 'rating.title' | translate }}
+        </div>
+        @for (item of ratingInfo; track item) {
+            <div [id]="item.id" class="my-8 lg:text-base text-sm">
+                <div class="flex lg:flex-row flex-col gap-y-3 lg:justify-between">
+                    <div class="font-semibold">
+                        {{ item.productCode }}
+                    </div>
+                    <div class="flex gap-x-4">
+                        <p>{{ 'customer-support.status' | translate }}:</p>
+                        <p class="font-semibold">{{ item.status }}</p>
+                    </div>
+                </div>
+                <div class="mt-4 lg:line-clamp-2 line-clamp-3">
+                    {{ item.description }}
+                </div>
+            </div>
+        }
+        <div class="font-semibold lg:text-base text-lg">{{ 'rating.general-assessment' | translate }}</div>
+        <div class="mt-4 flex lg:flex-row flex-col gap-y-1 lg:justify-between">
+            <div class="flex lg:gap-x-3 justify-between">
+                <p class="text-sm lg:w-36">{{ 'rating.product-quality' | translate }}:</p>
+                <app-rating class="lg:text-xl text-2xl" />
+            </div>
+            <div class="flex lg:gap-x-3 justify-between">
+                <p class="text-sm lg:w-36">{{ 'rating.delivery-time' | translate }}:</p>
+                <app-rating class="lg:text-xl text-2xl" />
+            </div>
+        </div>
+        <mat-divider class="!my-5" />
+        <!-- /// list product ratings -->
+        <div>
+            <div class="font-semibold">Product name 1</div>
+            <div class="my-4 flex lg:flex-row flex-col lg:justify-between lg:items-center gap-y-6">
+                <img class="lg:size-24 size-16" src="/assets/images/product-rating.png" />
+                <div class="flex flex-col gap-y-1">
+                    <div class="flex lg:gap-x-3 justify-between">
+                        <p class="text-sm lg:w-36">{{ 'rating.product-quality' | translate }}:</p>
+                        <app-rating class="text-xl" />
+                    </div>
+                    <div class="flex lg:gap-x-3 justify-between">
+                        <p class="text-sm lg:w-36">{{ 'rating.delivery-time' | translate }}:</p>
+                        <app-rating class="text-xl" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /// list product ratings -->
+        <div class="mt-8">{{ 'customer-support.opinion' | translate }}</div>
+        <app-form [form]="opinionForm" [attr.name]="opinionForm.name" />
+        <div class="flex lg:justify-end justify-start items-center gap-x-4">
+            <div>{{ 'rating.feedback-rating' | translate }}:</div>
+            <app-interactive />
+        </div>
+        <div class="mt-4 font-bold text-[#15677F]">{{ 'rating.supplier-feedback' | translate }}</div>
+        <div class="mt-6">
+            @for (supplier of supplierInfo; track supplier) {
+                <div class="flex gap-x-2">
+                    <img
+                        [src]="supplier?.supplierAvatar || '/assets/icons/avatar-supplier.svg'"
+                        alt=""
+                        class="size-12"
+                    />
+                    <div class="flex flex-col gap-y-1">
+                        <div class="text-lg font-semibold">{{ supplier.supplierName }}</div>
+                        <div class="flex gap-x-3 italic text-xs text-[#838383]">
+                            <p>{{ supplier.timeFeedback }}</p>
+                            <p>{{ supplier.dateFeedback }}</p>
+                        </div>
+                    </div>
+                </div>
+            }
+            <app-form [form]="supplierResponseForm" [attr.name]="supplierResponseForm.name" />
+        </div>
+        <mat-checkbox (change)="onIsTermAcceptChange($event)">
+            <div class="lg:text-base text-xs" [ngClass]="{ disabled: !isTermAccept }">
+                {{ 'customer-support.confirm' | translate }}
+                <a
+                    href="https://discovery.nextpro.io/chinh-sach-bao-mat-quy-dinh-quyen-va-nghia-vu/"
+                    target="_blank"
+                    class="no-underline text-[#15677f] font-semibold cursor-pointer"
+                    >{{ 'customer-support.review-policy' | translate }}
+                </a>
+                {{ 'customer-support.and' | translate }}
+                <a
+                    href="https://discovery.nextpro.io/chinh-sach-bao-mat-quy-dinh-quyen-va-nghia-vu/"
+                    target="_blank"
+                    class="no-underline text-[#15677f] font-semibold cursor-pointer"
+                    >{{ 'customer-support.rating' | translate }}
+                </a>
+                {{ 'customer-support.nextpro-policy' | translate }}
+            </div>
+        </mat-checkbox>
+        <div class="mt-4 flex lg:justify-end justify-between gap-x-5">
+            <button mat-stroked-button class="lg:w-[150px] w-full">
+                {{ 'rating.cancel-btn' | translate }}
+            </button>
+            <button mat-raised-button color="primary" class="lg:w-32 w-full" [disabled]="!isTermAccept">
+                {{ 'rating.post-btn' | translate }}
+            </button>
+        </div>
+    </section>
+    <section>
+        <nextpro-user-detailed-footer />
+    </section>
+</div>

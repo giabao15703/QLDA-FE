@@ -1,0 +1,230 @@
+<div class="lg:mx-32 mx-6 mt-3 mb-20">
+    <div class="border h-auto rounded-xl shadow-form py-5 lg:px-28 px-5 text-sm">
+        @for (item of orderInformation; track item) {
+            <div [id]="item.id" class="grid grid-cols-1 lg:grid-cols-2 gap-x-20 gap-y-5">
+                <div class="flex flex-col gap-y-2 font-semibold">
+                    <div>
+                        {{ 'order.detail.order-code' | translate }}:
+                        <span class="font-normal ml-3">{{ item.orderCode }}</span>
+                    </div>
+                    <div>
+                        {{ 'order.detail.supplier' | translate }}:<span class="font-normal ml-3">{{
+                            item.supplierFullName
+                        }}</span>
+                    </div>
+                    <div>
+                        {{ 'order.detail.address' | translate }}:<span class="font-normal ml-3">{{
+                            item.companyAddress
+                        }}</span>
+                    </div>
+                    <div>
+                        {{ 'order.detail.shipping-information' | translate }}:<span class="font-normal ml-3">{{
+                            item.state
+                        }}</span>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-y-2 font-semibold">
+                    <div class="flex gap-x-6">
+                        <div class="min-w-24">{{ 'order.detail.status' | translate }}:</div>
+                        <div class="font-normal">{{ item.status }}</div>
+                    </div>
+                    <div class="flex gap-x-6">
+                        <div class="min-w-24">{{ 'order.detail.contact' | translate }}:</div>
+                        <div class="font-normal">{{ item.contactFullName }}</div>
+                    </div>
+                    <div class="flex gap-x-6">
+                        <div class="min-w-24">{{ 'order.detail.phone' | translate }}:</div>
+                        <div class="font-normal">{{ item.phone }}</div>
+                    </div>
+                    <div class="flex gap-x-6">
+                        <div class="min-w-24">{{ 'order.detail.email' | translate }}:</div>
+                        <div class="font-normal">{{ item.email }}</div>
+                    </div>
+                    <div class="flex gap-x-6">
+                        <div class="min-w-24">{{ 'order.detail.tax-code' | translate }}:</div>
+                        <div class="font-normal">{{ item.taxCode }}</div>
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="lg:mx-16">
+            <nextpro-user-timeline [timelineStatuses]="orderTimeline" />
+        </div>
+        @for (item of receiveInformation; track item) {
+            <div [id]="item.id" class="flex flex-col gap-y-1.5 font-semibold">
+                <div class="flex gap-x-6">
+                    <div class="min-w-32">{{ 'order.detail.delivery-address' | translate }} {{ item.id }}:</div>
+                    <div class="font-normal">{{ item.deliveryAddress }}</div>
+                </div>
+                <div class="flex gap-x-6">
+                    <div class="min-w-32">{{ 'order.detail.city' | translate }}:</div>
+                    <div class="font-normal">{{ item.city }}</div>
+                </div>
+                <div class="flex gap-x-6">
+                    <div class="min-w-32">{{ 'order.detail.country' | translate }}:</div>
+                    <div class="font-normal">{{ item.country }}</div>
+                </div>
+            </div>
+        }
+        <div class="mt-8 font-semibold text-base">{{ 'order.detail.general-info.title' | translate }}:</div>
+        <mat-divider class="border border-black" />
+        <div class="mt-10 lg:flex items-center">
+            <div class="hidden lg:flex flex-col mt-3 gap-y-[19px] text-base">
+                <div class="w-32">{{ 'order.detail.general-info.product-name' | translate }}</div>
+                <div class="w-32">{{ 'order.detail.general-info.product-image' | translate }}</div>
+                <div class="w-32">{{ 'order.detail.general-info.product-specification' | translate }}</div>
+                <div class="w-32">{{ 'order.detail.general-info.product-amount' | translate }}</div>
+                <div class="w-32">{{ 'order.detail.general-info.product-unit-price' | translate }}</div>
+                <div class="w-32">{{ 'order.detail.general-info.product-vat' | translate }}</div>
+                <div class="w-32">{{ 'order.detail.general-info.product-voucher' | translate }}</div>
+                <div class="w-32">{{ 'order.detail.general-info.product-club-buyer' | translate }}</div>
+                <div class="w-32">{{ 'order.detail.general-info.product-refund' | translate }}</div>
+                <div class="w-32">{{ 'order.detail.general-info.product-total' | translate }}</div>
+            </div>
+            @for (group of inputGroups; track group; let i = $index) {
+                <div>
+                    <div class="text-center text-base font-semibold lg:mt-[-20px] mt-6 mb-3">{{ group.title }}</div>
+                    <div class="flex flex-col gap-y-2.5 lg:mx-5">
+                        <div class="lg:hidden block text-sm w-32">
+                            {{ 'order.detail.general-info.product-name' | translate }}
+                        </div>
+                        <input
+                            [(ngModel)]="group.productName"
+                            type="text"
+                            class="border border-[#A9A5A5] lg:w-60 w-full h-8"
+                        />
+                        <div class="lg:hidden block text-sm w-32">
+                            {{ 'order.detail.general-info.product-image' | translate }}
+                        </div>
+                        <label class="custom-file-upload lg:w-60">
+                            <input type="file" (change)="fileChanged($event, group)" hidden />
+                            @if (!group.file) {
+                                <img src="assets/icons/upload.svg" alt="Upload" class="mx-auto pt-2" />
+                            }
+
+                            @if (group.file) {
+                                <span>{{ group.file }}</span>
+                            }
+                        </label>
+                        <div class="lg:hidden block text-sm w-32">
+                            {{ 'order.detail.general-info.product-specification' | translate }}
+                        </div>
+                        <input
+                            [(ngModel)]="group.specifications"
+                            type="text"
+                            class="border border-[#A9A5A5] lg:w-60 w-full h-8"
+                        />
+
+                        <div class="lg:hidden block text-sm w-32">
+                            {{ 'order.detail.general-info.product-amount' | translate }}
+                        </div>
+                        <input type="text" class="border border-[#A9A5A5] lg:w-60 w-full h-8" />
+
+                        <div class="lg:hidden block text-sm w-32">
+                            {{ 'order.detail.general-info.product-unit-price' | translate }}
+                        </div>
+                        <input type="text" class="border border-[#A9A5A5] lg:w-60 w-full h-8" />
+
+                        <div class="lg:hidden block text-sm w-32">
+                            {{ 'order.detail.general-info.product-vat' | translate }}
+                        </div>
+                        <input [(ngModel)]="group.tax" type="text" class="border border-[#A9A5A5] lg:w-60 w-full h-8" />
+
+                        <div class="lg:hidden block text-sm w-32">
+                            {{ 'order.detail.general-info.product-voucher' | translate }}
+                        </div>
+                        <input
+                            [(ngModel)]="group.voucherCodeOrder"
+                            type="text"
+                            class="border border-[#A9A5A5] lg:w-60 w-full h-8"
+                        />
+
+                        <div class="lg:hidden block text-sm w-32">
+                            {{ 'order.detail.general-info.product-club-buyer' | translate }}
+                        </div>
+                        <input type="text" class="border border-[#A9A5A5] lg:w-60 w-full h-8" />
+
+                        <div class="lg:hidden block text-sm w-32">
+                            {{ 'order.detail.general-info.product-refund' | translate }}
+                        </div>
+                        <input
+                            [(ngModel)]="group.repay"
+                            type="text"
+                            class="border border-[#A9A5A5] lg:w-60 w-full h-8"
+                        />
+
+                        <div class="lg:hidden block text-sm w-32">
+                            {{ 'order.detail.general-info.product-total' | translate }}
+                        </div>
+                        <input type="text" class="border border-[#A9A5A5] lg:w-60 w-full h-8" />
+                    </div>
+                </div>
+            }
+            <button
+                mat-icon-button
+                matTooltip="Thêm sản phẩm"
+                (click)="addInputGroup()"
+                [disabled]="inputGroups.length >= 2"
+                [class.opacity-50]="inputGroups.length >= 2"
+                [class.pointer-events-none]="inputGroups.length >= 2"
+            >
+                <img src="assets/icons/add.svg" alt="Add" [class.grayscale]="inputGroups.length >= 2" class="size-5" />
+            </button>
+        </div>
+        <mat-divider class="!mt-4 border border-black" />
+        @for (group of inputGroups; track group; let i = $index) {
+            <div class="mt-8">
+                <div class="mb-4 flex items-center">
+                    <div class="lg:text-base text-xs w-[150px]">{{ 'order.detail.delivery-fee' | translate }}</div>
+                    <input type="text" class="border border-[#A9A5A5] lg:w-60 w-full h-8" />
+                </div>
+                <div class="mb-4 flex items-center">
+                    <div class="lg:text-base text-xs w-[150px]">{{ 'order.detail.total-payment' | translate }}</div>
+                    <input
+                        type="text"
+                        [(ngModel)]="group.currency"
+                        class="border border-[#A9A5A5] lg:w-60 w-full h-8"
+                    />
+                </div>
+                <div class="flex lg:text-base text-xs">
+                    <div class="w-[150px]">{{ 'order.detail.currency' | translate }}:</div>
+                    <p class="font-semibold">VND</p>
+                </div>
+                <div class="mt-2 flex lg:text-base text-xs">
+                    <div class="w-[150px]">{{ 'order.detail.payment-method' | translate }}:</div>
+                    <p class="font-semibold">Thanh toán khi nhận hàng (COD)</p>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="hidden lg:mt-5 lg:flex lg:items-center lg:justify-end lg:gap-4">
+        <button mat-stroked-button class="!border-[#15677F] w-[150px]" disabled>
+            {{ 'order.cancel-btn' | translate }}
+        </button>
+        <button mat-stroked-button class="!border-[#15677F] w-[150px]" disabled>
+            {{ 'order.complain-btn' | translate }}
+        </button>
+        <button mat-stroked-button class="!border-[#15677F] w-[150px]" disabled>
+            {{ 'order.feedback-btn' | translate }}
+        </button>
+        <button mat-stroked-button class="!border-[#15677F] w-[150px]">{{ 'order.invoice-btn' | translate }}</button>
+        <button mat-raised-button color="primary" class="w-[150px]">
+            {{ 'order.re-order-btn' | translate }}
+        </button>
+    </div>
+    <div class="lg:hidden mt-6 flex flex-col gap-y-3">
+        <div class="flex gap-4">
+            <button mat-stroked-button class="!border-[#15677F] w-full" disabled>
+                {{ 'order.cancel-btn' | translate }}
+            </button>
+            <button mat-stroked-button class="!border-[#15677F] w-full">{{ 'order.complain-btn' | translate }}</button>
+        </div>
+        <div class="flex gap-4">
+            <button mat-stroked-button class="!border-[#15677F] w-full">{{ 'order.feedback-btn' | translate }}</button>
+            <button mat-stroked-button class="!border-[#15677F] w-full">{{ 'order.invoice-btn' | translate }}</button>
+        </div>
+        <button mat-raised-button color="primary" class="w-full">
+            {{ 'order.re-order-btn' | translate }}
+        </button>
+    </div>
+</div>

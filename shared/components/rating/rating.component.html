@@ -1,0 +1,7 @@
+<div class="rating-wrapper" [ngClass]="{ disabled: disabled === true }">
+    <ng-container *ngFor="let star of stars; let i = index; trackBy: trackByIndex">
+        <span (click)="onRate(i + (star ? (value > i + 1 ? 1 : 0) : 1))">
+            <mat-icon [ngClass]="star ? 'filled' : 'outlined'">star</mat-icon>
+        </span>
+    </ng-container>
+</div>

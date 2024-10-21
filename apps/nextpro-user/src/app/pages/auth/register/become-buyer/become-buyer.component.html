@@ -1,0 +1,24 @@
+<div>
+    <nextpro-user-navbar-login />
+    <div class="p-6">
+        <div class="text-[30px] font-bold">{{ 'auth.register.become-buyer.header' | translate }}</div>
+
+        <mat-tab-group mat-stretch-tabs="false">
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <img src="/assets/icons/Information.svg" alt="" class="w-6" />
+                    <div class="font-semibold ml-2 text-[14px] text-[#15677f]">
+                        {{ 'account.buyer-accounts.create-detail.basicInformation' | translate | uppercase }}
+                    </div>
+                </ng-template>
+                <app-account-buyer-basic-information-form
+                    [mode]="mode"
+                    [showTerms]="true"
+                    [showMainInfo]="true"
+                    [onSave]="onSubmit"
+                    [isLoading]="loadingService.checkLoading(['getBuyer', 'registerBuyer'])"
+                />
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>

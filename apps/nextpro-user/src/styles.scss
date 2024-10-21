@@ -1,0 +1,43 @@
+@import '../../../shared/styles/global.scss';
+@import '../../../shared/styles/material-palette-user.scss';
+
+@import 'ngx-owl-carousel-o/lib/styles/scss/owl.carousel';
+@import 'ngx-owl-carousel-o/lib/styles/scss/owl.theme.default';
+
+:root {
+    --mdc-filled-text-field-container-color: transparent;
+    --mat-form-field-state-layer-color: transparent;
+}
+
+.field-transparent.mat-mdc-form-field .mat-mdc-text-field-wrapper.mdc-text-field {
+    background-color: transparent;
+
+    &:hover {
+        label {
+            color: white;
+        }
+
+        input {
+            color: white;
+        }
+    }
+
+    .mat-mdc-form-field-focus-overlay {
+        background-color: transparent;
+    }
+
+    label {
+        color: white;
+        font-size: 14px;
+    }
+
+    input {
+        color: white;
+        font-size: 14px;
+    }
+}
+
+.mat-bottom-sheet-container {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}

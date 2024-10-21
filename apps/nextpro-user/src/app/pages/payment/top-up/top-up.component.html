@@ -1,0 +1,163 @@
+<section>
+    <nextpro-user-navbar />
+</section>
+<section class="lg:px-10">
+    <mat-stepper labelPosition="bottom" #stepper>
+        <mat-step [stepControl]="firstFormGroup">
+            <form [formGroup]="firstFormGroup">
+                <ng-template matStepLabel>
+                    {{ 'payment.pages.top-up.topUpInformationConfirmation' | translate }}
+                </ng-template>
+                <div class="mt-5">
+                    <div class="text-2xl font-bold mb-6">
+                        {{
+                            'payment.components.top-up-information-confirmation.paymentInformationConfirmation'
+                                | translate
+                        }}
+                    </div>
+                    <div class="text-2xl font-bold mb-6">
+                        {{ 'payment.components.top-up-information-confirmation.orderConfirmation' | translate }}
+                    </div>
+                </div>
+                <app-table
+                    class="my-4"
+                    [attr.name]="table.name"
+                    [extendHeight]="700"
+                    [columns]="table.config.columns"
+                    [data]="table.state.data"
+                    [pagination]="table.state.pagination"
+                    [onPageChange]="table.handlePageChange"
+                />
+                <div class="my-5">
+                    <div class="text-2xl font-bold">
+                        {{ 'paymentAccount.firstStep.form.title' | translate }}
+                    </div>
+                    <app-form [form]="invoiceInfoSupplierForm" [attr.name]="invoiceInfoSupplierForm.name" />
+                    <div class="mt-4">
+                        <div class="text-2xl font-semibold">
+                            {{ 'paymentAccount.firstStep.notes' | translate }}
+                        </div>
+                        <div class="mt-2 text-sm">
+                            <p>{{ 'paymentAccount.firstStep.noteLine1' | translate }}</p>
+                            <p>{{ 'paymentAccount.firstStep.noteLine2' | translate }}</p>
+                        </div>
+                        <div class="mt-4 flex items-center">
+                            <mat-checkbox (change)="onTermAcceptChange($event)">
+                                <div class="lg:text-[17px] text-[14px]" [ngClass]="{ disabled: !isTermAccept }">
+                                    {{ 'auth.register.become-buyer.agreeToAccept' | translate }}
+                                    <a
+                                        href="https://discovery.nextpro.io/chinh-sach-bao-mat-quy-dinh-quyen-va-nghia-vu/"
+                                        target="_blank"
+                                        class="no-underline text-[#15677f] font-semibold cursor-pointer"
+                                        >{{ 'auth.register.become-buyer.privacyPolicy' | translate }}</a
+                                    >,
+                                    <a
+                                        href="https://discovery.nextpro.io/dieu-khoan-dich-vu/"
+                                        target="_blank"
+                                        class="no-underline text-[#15677f] font-semibold cursor-pointer"
+                                    >
+                                        {{ 'auth.register.become-buyer.termsOfService' | translate }}</a
+                                    >
+                                </div>
+                            </mat-checkbox>
+                        </div>
+                    </div>
+                    <div class="flex justify-end gap-x-4">
+                        <button mat-raised-button color="primary" class="w-[130px]">
+                            <div class="font-semibold">
+                                {{ 'button.confirm' | translate }}
+                            </div>
+                        </button>
+                        <button mat-stroked-button mat-dialog-close class="!border-[#15677F] w-[130px]">
+                            <div class="font-semibold text-[#15677F]">
+                                {{ 'button.close' | translate }}
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </mat-step>
+        <mat-step [stepControl]="secondFormGroup">
+            <form [formGroup]="secondFormGroup">
+                <ng-template matStepLabel>{{ 'paymentAccount.secondStep.paymentMethod' | translate }}</ng-template>
+                <div class="text-2xl font-semibold">
+                    {{ 'paymentAccount.secondStep.paymentMethod' | translate }}
+                </div>
+                <div class="mt-5 grid grid-cols-4 justify-center">
+                    <div
+                        (click)="selectPaymentMethod('accountBalance')"
+                        [class.selected]="selectedPaymentMethod === 'accountBalance'"
+                        class="payment-option w-[300px] h-[180px] flex flex-col justify-center items-center gap-y-3 bg-[#DBDBDB] hover:bg-[#15677F] hover:text-white cursor-pointer shadow-xl transition-transform duration-500 transform hover:scale-110 focus:bg-[#15677F] focus:text-white focus:scale-110 active:bg-[#15677F] active:text-white active:scale-110"
+                    >
+                        <div class="font-semibold text-center h-12 px-5">
+                            {{ 'paymentAccount.secondStep.paymentAccountBalance.titleCard' | translate }}
+                        </div>
+                        <img src="/assets/icons/payment/wallet-svgrepo-com.svg" alt="" class="size-20" />
+                    </div>
+                    <a href="https://mtf.onepay.vn/paygate/?id=INV-GPJ7FNCNUV47N783&locale=vi" target="_blank">
+                        <div
+                            class="payment-option w-[300px] h-[180px] flex flex-col justify-center items-center gap-y-3 bg-[#DBDBDB] hover:bg-[#15677F] hover:text-white cursor-pointer shadow-xl transition-transform duration-500 transform hover:scale-110 focus:bg-[#15677F] focus:text-white focus:scale-110 active:bg-[#15677F] active:text-white active:scale-110"
+                        >
+                            <div class="font-semibold text-center px-5">
+                                {{ 'paymentAccount.secondStep.creditCard' | translate }}
+                            </div>
+                            <div class="flex items-end gap-x-4 h-auto">
+                                <img src="/assets/icons/payment/card-visa-svgrepo-com.svg" alt="" class="w-24" />
+                                <img src="/assets/icons/payment/mastercard-svgrepo-com.svg" alt="" class="w-24" />
+                            </div>
+                        </div>
+                    </a>
+                    <div
+                        (click)="selectPaymentMethod('localATM')"
+                        [class.selected]="selectedPaymentMethod === 'localATM'"
+                        class="payment-option w-[300px] h-[180px] flex flex-col justify-center items-center gap-y-3 bg-[#DBDBDB] hover:bg-[#15677F] hover:text-white cursor-pointer shadow-xl transition-transform duration-500 transform hover:scale-110 focus:bg-[#15677F] focus:text-white focus:scale-110 active:bg-[#15677F] active:text-white active:scale-110"
+                    >
+                        <div class="font-semibold text-center px-5">
+                            {{ 'paymentAccount.secondStep.localATM' | translate }}
+                        </div>
+                        <img src="/assets/icons/payment/credit-card-svgrepo-com.svg" alt="" class="size-24" />
+                    </div>
+                    <div
+                        (click)="selectPaymentMethod('bankTransfer')"
+                        [class.selected]="selectedPaymentMethod === 'bankTransfer'"
+                        class="payment-option w-[300px] h-[180px] flex flex-col justify-center items-center gap-y-3 bg-[#DBDBDB] hover:bg-[#15677F] hover:text-white cursor-pointer shadow-xl transition-transform duration-500 transform hover:scale-110 focus:bg-[#15677F] focus:text-white focus:scale-110 active:bg-[#15677F] active:text-white active:scale-110"
+                    >
+                        <div class="font-semibold text-center h-12 px-5">
+                            {{ 'paymentAccount.secondStep.bankTransfer.titleCard' | translate }}
+                        </div>
+                        <img src="/assets/icons/payment/bank-svgrepo-com.svg" alt="" class="size-20" />
+                    </div>
+                </div>
+                <mat-divider class="!mt-8"></mat-divider>
+                <div *ngIf="selectedPaymentMethod">
+                    <ng-container [ngSwitch]="selectedPaymentMethod">
+                        <div *ngSwitchCase="'accountBalance'">
+                            <div class="text-xl font-semibold my-4">
+                                {{ 'paymentAccount.secondStep.paymentAccountBalance.header' | translate }}
+                            </div>
+                            <app-supplier-payment-account-balance />
+                        </div>
+                        <div *ngSwitchCase="'localATM'">
+                            {{ 'Nội dung cho ATM' }}
+                        </div>
+                        <div *ngSwitchCase="'bankTransfer'">
+                            <div class="text-xl font-semibold my-4">
+                                {{ 'paymentAccount.secondStep.bankTransfer.header' | translate }}
+                            </div>
+                            <app-supplier-payment-bank-transfer />
+                        </div>
+                    </ng-container>
+                </div>
+            </form>
+        </mat-step>
+
+        <mat-step>
+            <ng-template matStepLabel>{{ 'paymentAccount.payment' | translate }}</ng-template>
+            <p>You are now done.</p>
+            <div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button (click)="stepper.reset()">Reset</button>
+            </div>
+        </mat-step>
+    </mat-stepper>
+</section>

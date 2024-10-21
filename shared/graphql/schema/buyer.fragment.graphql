@@ -1,0 +1,164 @@
+fragment ProfileFeaturesBuyerInfo on ProfileFeaturesBuyerNode {
+    id
+    name
+    marketResearch
+    rfxYear
+    noEauctionYear
+    helpDesk
+    reportYear
+    subUserAccounts
+    feeEauction
+    totalFeeYear
+    profileFeaturesType
+    status
+    rfxAutoNego
+}
+
+fragment BuyerIndustryInfo on BuyerIndustryNode {
+    id
+    industry {
+        ...IndustrySubSectorsInfo
+    }
+}
+
+fragment BuyerActivityInfo on BuyerActivityNode {
+    changedBy {
+        ...UserInfo
+    }
+    changedDate
+    reasonManual
+    changedState
+    pk
+}
+
+fragment BuyerInfo on BuyerNode {
+    id
+    user {
+        ...UserInfo
+    }
+    companyFullName
+    companyShortName
+    companyLongName
+    companyLogo
+    companyTax
+    companyAddress
+    companyCity
+    companyCountry {
+        ...CountryInfo
+    }
+    companyCountryState {
+        ...CityInfo
+    }
+    companyNumberOfEmployee {
+        ...NumberOfEmployeeInfo
+    }
+    companyWebsite
+    companyReferralCode
+    companyEmail
+    gender {
+        ...GenderInfo
+    }
+    picture
+    phone
+    position {
+        ...PositionInfo
+    }
+    language {
+        ...LanguageInfo
+    }
+    profileFeatures {
+        ...ProfileFeaturesBuyerInfo
+    }
+    currency {
+        ...CurrencyInfo
+    }
+    validFrom
+    validTo
+    sendMail30Day
+    sendMail15Day
+    sendMail7Day
+    sendMailExpire
+    buyerActivity {
+        edges {
+            node {
+                ...BuyerActivityInfo
+            }
+        }
+    }
+    buyerIndustry {
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...BuyerIndustryInfo
+            }
+        }
+        totalCount
+    }
+    email
+    shortName
+    fullName
+    username
+    userType
+    created
+    firstName
+    lastName
+    pk
+}
+
+fragment BuyerSubAccountsActivityInfo on BuyerSubAccountsActivityNode {
+    changedBy {
+        ...UserInfo
+    }
+    changedDate
+    reasonManual
+    changedState
+    pk
+}
+
+fragment BuyerSubAccountInfo on BuyerSubAccountsNode {
+    id
+    user {
+        ...UserInfo
+    }
+    gender {
+        ...GenderInfo
+    }
+    phone
+    language {
+        ...LanguageInfo
+    }
+    position {
+        ...PositionInfo
+    }
+    picture
+    currency {
+        ...CurrencyInfo
+    }
+    buyerSubAccountsActivity {
+        edges {
+            node {
+                ...BuyerSubAccountsActivityInfo
+            }
+        }
+    }
+    email
+    shortName
+    fullName
+    username
+    userType
+    created
+    firstName
+    lastName
+    companyWebsite
+    companyLongName
+    companyShortName
+}
+
+fragment BuyerSubAccountWithBuyerInfo on BuyerSubAccountsNode {
+    ...BuyerSubAccountInfo
+    buyer {
+        ...BuyerInfo
+    }
+}

@@ -1,0 +1,72 @@
+fragment ProfileFeaturesBuyerInfo on ProfileFeaturesBuyerNode {
+    id
+    name
+    marketResearch
+    rfxYear
+    noEauctionYear
+    helpDesk
+    reportYear
+    subUserAccounts
+    feeEauction
+    totalFeeYear
+    profileFeaturesType
+    status
+    rfxAutoNego
+}
+
+fragment ProfileFeaturesSupplierInfo on ProfileFeaturesSupplierNode {
+    id
+    name
+    freeRegistration
+    quoteSubmiting
+    rfxrReceivingPriority
+    subUserAccounts
+    helpDesk
+    flashSale
+    product
+    reportYear
+    baseRateMonth
+    baseRateFullYear
+    profileFeaturesType
+    status
+}
+
+fragment SicpRegistrationInfo on SICPRegistrationNode {
+    id
+    name
+    legalStatus
+    bankAccount
+    sanctionCheck
+    certificateManagement
+    dueDiligence
+    financialRisk
+    totalAmount
+    sicpType
+    status
+}
+
+fragment AuctionFeeInfo on AuctionFeeNode {
+    id
+    minValue
+    maxValue
+    percentage
+}
+
+fragment PlatformFeeBuyerInfo on PlatformFeeNode {
+    id
+    title
+    fee
+}
+
+fragment UserDiamonSponsorFeeInfo on UserDiamondSponsorFeeNode {
+    id
+    title
+    fee
+}
+
+fragment SicpTextEditorInfo on SICPTextEditorNode {
+    id
+    textEditerEn
+    textEditerVi
+    sicpType
+}

@@ -1,0 +1,24 @@
+<mat-list-item
+    class="nav-item hover:bg-[#FFFFFF33] cursor-pointer"
+    [class.active]="isActive"
+    (click)="handleItemClick(navItem)"
+>
+    <div class="flex justify-between">
+        <div class="flex flex-row justify-between items-center gap-x-3 text-white font-light text-[15px]">
+            @if (navItem.icon) {
+                <img src="{{ navItem.icon }}" alt="icon" class="icon-style" />
+            }
+            <span>{{ navItem.name }}</span>
+        </div>
+        @if (navItem.children) {
+            <div class="text-white font-light">
+                <mat-icon>{{ isExpanded ? 'expand_less' : 'expand_more' }}</mat-icon>
+            </div>
+        }
+    </div>
+</mat-list-item>
+<div class="nav-children ml-4" [class.expanded]="isExpanded">
+    @for (childItem of navItem.children; track childItem) {
+        <nextpro-admin-layout-dashboard-nav-item [navParent]="navItem" [navItem]="childItem" />
+    }
+</div>

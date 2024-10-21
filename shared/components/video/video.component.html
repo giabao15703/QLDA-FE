@@ -1,0 +1,10 @@
+<video
+    #video
+    [class]="contentClass"
+    [loop]="loop"
+    [muted]="muted"
+    [autoplay]="autoplay"
+    (canplay)="handleCanPlay(video)"
+>
+    <source [type]="type" [src]="src" />
+</video>

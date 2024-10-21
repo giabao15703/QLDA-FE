@@ -1,0 +1,31 @@
+<div class="flex flex-row gap-4 p-1 px-3">
+    <!-- success message -->
+    @if (data.type === 'success') {
+        <div class="notification-wrapper">
+            <mat-icon class="success" aria-hidden="false" aria-label="success icon" fontIcon="check_circle" />
+            @if (data.message) {
+                <span> {{ data.message }} </span>
+            }
+        </div>
+    }
+
+    <!-- error message -->
+    @if (data.type === 'error') {
+        <div class="notification-wrapper">
+            <mat-icon class="error" aria-hidden="false" aria-label="error icon" fontIcon="error" />
+            @if (data.message) {
+                <span> {{ data.message }} </span>
+            }
+        </div>
+    }
+
+    <!-- warn message -->
+    @if (data.type === 'warn') {
+        <div class="notification-wrapper">
+            <mat-icon class="warn" aria-hidden="false" aria-label="warning icon" fontIcon="warning" />
+            @if (data.message) {
+                <span> {{ data.message }} </span>
+            }
+        </div>
+    }
+</div>

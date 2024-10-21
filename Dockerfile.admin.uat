@@ -1,0 +1,26 @@
+# The builder from node image
+FROM node:18-alpine as builder
+
+RUN apk update && apk add --no-cache make git
+
+ARG ARG_API_URL
+ARG ARG_WS_URL
+ENV NX_APP_API_URL=$ARG_API_URL
+ENV NX_APP_WS_URL=$ARG_WS_URL
+
+# Move our files into directory name "app"
+WORKDIR /app
+COPY package.json package-lock.json /app/
+RUN cd /app && npm install --legacy-peer-deps
+COPY .  /app
+
+# Build with $env variable from outside
+RUN cd /app && npm run generate && npm run build:admin:prod
+
+# Build a small nginx image with static website
+FROM nginx:alpine
+RUN rm -rf /usr/share/nginx/html/*
+COPY nginx/nginx.conf /etc/nginx/nginx.conf
+COPY --from=builder /app/dist/apps/nextpro-admin /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

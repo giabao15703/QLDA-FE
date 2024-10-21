@@ -1,0 +1,33 @@
+<mat-tab-group syncTabsWithAnchor>
+    <mat-tab label="main">
+        <ng-template mat-tab-label>
+            <div class="font-semibold ml-2 text-sm text-[#15677f]">
+                {{ 'masterData.industry' | translate }}
+            </div>
+        </ng-template>
+        <nextpro-admin-industry-list />
+    </mat-tab>
+    <mat-tab label="cluster"
+        ><ng-template mat-tab-label>
+            <div class="font-semibold ml-2 text-sm text-[#15677f]">
+                {{ 'masterData.industryCluster' | translate }}
+            </div>
+        </ng-template>
+        <nextpro-admin-industry-cluster-list />
+    </mat-tab>
+    <mat-tab label="sector">
+        <ng-template mat-tab-label>
+            <div class="font-semibold ml-2 text-sm text-[#15677f]">
+                {{ 'masterData.industrySector' | translate }}
+            </div>
+        </ng-template>
+        <nextpro-admin-industry-sector-list />
+    </mat-tab>
+    <mat-tab label="subsector"
+        ><ng-template mat-tab-label>
+            <div class="font-semibold ml-2 text-sm text-[#15677f]">
+                {{ 'masterData.industrySubSector' | translate }}
+            </div> </ng-template
+        ><nextpro-admin-industry-sub-sector-list />
+    </mat-tab>
+</mat-tab-group>

@@ -1,0 +1,25 @@
+.nav-item {
+    &.active {
+        background-color: #ffffff33;
+    }
+
+    .icon-style {
+        width: 20px;
+        height: auto;
+        vertical-align: middle;
+    }
+}
+
+.nav-children {
+    overflow: hidden;
+    max-height: 0;
+    transition:
+        max-height 0.5s ease,
+        opacity 0.5s ease;
+    opacity: 0;
+
+    &.expanded {
+        max-height: 1300px;
+        opacity: 1;
+    }
+}

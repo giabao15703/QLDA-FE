@@ -1,0 +1,129 @@
+query getModules(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $name_Icontains: String
+    $role: String
+    $orderBy: String
+) {
+    modules(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        name_Icontains: $name_Icontains
+        role: $role
+        orderBy: $orderBy
+    ) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...ModuleInfo
+            }
+        }
+    }
+}
+
+query getModule($id: ID!) {
+    module(id: $id) {
+        ...ModuleInfo
+    }
+}
+
+mutation createModule($modules: ModulesInput!) {
+    modulesCreate(modules: $modules) {
+        status
+        modules {
+            ...ModuleInfo
+        }
+    }
+}
+
+mutation updateModule($id: String!, $modules: ModulesInput!) {
+    modulesUpdate(id: $id, modules: $modules) {
+        status
+        modules {
+            ...ModuleInfo
+        }
+    }
+}
+
+mutation updateModuleStatus($listStatus: [ModulesStatusInput]!) {
+    modulesUpdateStatus(listStatus: $listStatus) {
+        status
+    }
+}
+
+query getCourses(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+    $name_Icontains: String
+    $role: String
+    $modulesName: String
+    $profileFeaturesBuyer: String
+    $profileFeaturesSupplier: String
+    $orderBy: String
+) {
+    courses(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        name_Icontains: $name_Icontains
+        role: $role
+        modulesName: $modulesName
+        profileFeaturesBuyer: $profileFeaturesBuyer
+        profileFeaturesSupplier: $profileFeaturesSupplier
+        orderBy: $orderBy
+    ) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...CourseInfo
+            }
+        }
+    }
+}
+
+query getCourse($id: ID!) {
+    course(id: $id) {
+        ...CourseInfo
+    }
+}
+
+mutation createCourse($courses: CoursesInput!) {
+    coursesCreate(courses: $courses) {
+        status
+        courses {
+            ...CourseInfo
+        }
+    }
+}
+
+mutation updateCourse($id: String!, $courses: CoursesInput!, $isDelete: Boolean!) {
+    coursesUpdate(id: $id, courses: $courses, isDelete: $isDelete) {
+        status
+        courses {
+            ...CourseInfo
+        }
+    }
+}
+
+mutation updateCourseStatus($listStatus: [CoursesStatusInput]!) {
+    coursesUpdateStatus(listStatus: $listStatus) {
+        status
+    }
+}

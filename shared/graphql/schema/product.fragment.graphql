@@ -1,0 +1,168 @@
+fragment ProductInfoSimple on SupplierProductNode {
+    id
+    skuNumber
+    description
+    type
+    initialPrice
+    discountedPrice
+    userSupplier {
+        id
+        username
+        companyFullName
+        companyCountryState {
+            name
+        }
+        companyCountry {
+            name
+        }
+    }
+    isVisibility
+    confirmedStatus
+    picture
+    productName
+    unitOfMeasure {
+        id
+        name
+        itemCode
+        status
+        translations {
+            id
+            languageCode
+            name
+        }
+    }
+    specification
+    minimumOrderQuantity
+    reachNumber
+    clickNumber
+}
+
+fragment ProductInfo on SupplierProductNode {
+    ...ProductInfoSimple
+    paymentTerm {
+        name
+    }
+    discountProgramForm
+    status
+    country {
+        id
+        itemCode
+        name
+        status
+        translations {
+            id
+            languageCode
+            name
+        }
+    }
+    state {
+        id
+        name
+        stateCode
+        country {
+            id
+            itemCode
+            name
+            status
+            translations {
+                id
+                languageCode
+                name
+            }
+        }
+        status
+        translations {
+            id
+            languageCode
+            name
+        }
+    }
+    regularProduct
+    greenProduct
+    officialProduct
+    currency {
+        id
+        name
+        itemCode
+        status
+        translations {
+            id
+            languageCode
+            name
+        }
+    }
+    specifications {
+        color
+        size
+        weight
+        height
+        images
+    }
+    inventoryStatus
+    provideAbility
+    support
+    brand
+    originOfProduction
+    originOfProductionCountry {
+        ...CountryInfo
+    }
+    guarantee
+    otherInformation
+    urlPath
+    weight
+    createDate
+    color
+    size
+    height
+    format
+    productImages {
+        edges {
+            node {
+                id
+                image
+            }
+        }
+    }
+    productFlashSales {
+        edges {
+            node {
+                id
+                initialPrice
+                discountedPrice
+            }
+        }
+    }
+    productWholesalePriceList {
+        edges {
+            node {
+                id
+                qualityFrom
+                qualityTo
+                priceBracket
+                deliveryDays
+            }
+        }
+    }
+    categoryList {
+        id
+        itemCode
+        name
+        status
+    }
+    relatedSupplierProductList {
+        ...ProductInfoSimple
+    }
+    wholeSalePrice {
+        qualityFrom
+        qualityTo
+        priceBracket
+        deliveryDays
+    }
+}
+fragment SupplierSubClusterCodeInfo on SupplierSubClusterCodeNode {
+    subClusterCode {
+        ...SubClusterCodeInfo
+    }
+    minimumOfValue
+    percentage
+}

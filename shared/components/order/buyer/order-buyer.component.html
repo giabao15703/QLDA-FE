@@ -1,0 +1,30 @@
+<section>
+    <nextpro-user-navbar />
+</section>
+<section class="lg:px-10 flex flex-col gap-5">
+    <div class="flex justify-center items-center gap-2 w-full">
+        <nextpro-user-global-search />
+    </div>
+    <app-form [form]="orderForm" [attr.name]="orderForm.name" />
+    <div class="flex justify-end items-center gap-2 w-full">
+        <button mat-raised-button class="font-semibold !uppercase !rounded-2xl !border-primary" (click)="onSubmit()">
+            {{ 'button.export' | translate }}
+        </button>
+        <button mat-raised-button class="font-semibold !uppercase !rounded-2xl !border-primary" (click)="onSubmit()">
+            {{ 'button.resetAll' | translate }}
+        </button>
+        <button mat-raised-button color="primary" class="font-semibold !uppercase !rounded-2xl" (click)="onSubmit()">
+            {{ 'button.apply' | translate }}
+        </button>
+    </div>
+</section>
+<section class="lg:px-10 mt-10">
+    <app-table
+        [attr.name]="table.name"
+        [extendHeight]="180"
+        [columns]="table.config.columns"
+        [data]="table.state.data"
+        [pagination]="table.state.pagination"
+        [onPageChange]="table.handlePageChange"
+    />
+</section>

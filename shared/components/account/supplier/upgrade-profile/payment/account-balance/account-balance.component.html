@@ -1,0 +1,13 @@
+<app-form [form]="form" [attr.name]="form.name" />
+<div class="mt-10 flex justify-end gap-x-4">
+    <button mat-raised-button color="primary" class="lg:w-[180px] w-full pt-[2px] font-semibold" matStepperNext>
+        {{ 'button.payment' | translate }}
+    </button>
+    <button
+        mat-raised-button
+        class="lg:w-[180px] w-full pt-[2px] font-semibold !text-[#15667f] !bg-[#E7EFF2]"
+        (click)="handleClose()"
+    >
+        {{ 'button.close' | translate }}
+    </button>
+</div>

@@ -1,0 +1,5 @@
+<div class="mt-20 grid lg:grid-cols-6 grid-cols-2 gap-3 lg:gap-5">
+    @for (product of productList; track product.id) {
+        <nextpro-user-product-item [product]="product" />
+    }
+</div>

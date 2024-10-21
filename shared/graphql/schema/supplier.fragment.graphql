@@ -1,0 +1,330 @@
+fragment SupplierProductInfo on SupplierProductNode {
+    id
+    productName
+    productImages {
+        edges {
+            node {
+                id
+                image
+            }
+        }
+    }
+    initialPrice
+    discountedPrice
+    minimumOrderQuantity
+    originOfProductionCountry {
+        id
+        name
+        itemCode
+        status
+    }
+}
+
+fragment SupplierCategoryInfo on SupplierCategoryNode {
+    id
+    category {
+        ...CategoryWithSubClusterCodeInfo
+    }
+    percentage
+    minimumOfValue
+}
+
+fragment SupplierIndustryInfo on SupplierIndustryNode {
+    id
+    industrySubSectors {
+        ...IndustrySubSectorsInfo
+    }
+    percentage
+}
+
+fragment SupplierClientFocusSetInfo on SupplierClientFocusNode {
+    id
+    clientFocus {
+        ...ClientFocusInfo
+    }
+    percentage
+}
+fragment SupplierSubClusterCodeInfo on SupplierSubClusterCodeNode {
+    subClusterCode {
+        ...SubClusterCodeInfo
+    }
+    minimumOfValue
+    percentage
+}
+
+fragment SupplierActivityInfo on SupplierActivityNode {
+    changedBy {
+        ...UserInfo
+    }
+    changedDate
+    reasonManual
+    changedState
+    pk
+}
+
+fragment LevelInfo on LevelNode {
+    id
+    name
+    status
+    translations {
+        id
+        languageCode
+        name
+    }
+}
+
+fragment PortfolioInfo on PortfolioNode {
+    id
+    company
+    projectName
+    value
+    projectDescription
+    image
+}
+
+fragment SupplierInfo on SupplierNode {
+    id
+    user {
+        ...UserInfo
+    }
+    companyFullName
+    companyShortName
+    companyLongName
+    companyTax
+    companyLogo
+    companyAddress
+    companyCity
+    companyCountry {
+        ...CountryInfo
+    }
+    companyCountryState {
+        ...CityInfo
+    }
+    companyCeoOwnerName
+    companyCeoOwnerEmail
+    companyNumberOfEmployee {
+        ...NumberOfEmployeeInfo
+    }
+    companyWebsite
+    companyCredentialProfile
+    companyReferralCode
+    companyTagLine
+    companyDescription
+    companyEstablishedSince
+    companyAnniversaryDate
+    gender {
+        ...GenderInfo
+    }
+    phone
+    position {
+        ...PositionInfo
+    }
+    level {
+        ...LevelInfo
+    }
+    picture
+    imageBanner
+    language {
+        ...LanguageInfo
+    }
+    currency {
+        ...CurrencyInfo
+    }
+    bankName
+    bankCode
+    bankAddress
+    beneficiaryName
+    switchBicCode
+    bankAccountNumber
+    bankCurrency {
+        ...CurrencyInfo
+    }
+    internationalBank
+    supplierFormRegistration
+    bankCertification
+    qualityCertification
+    businessLicense
+    taxCertification
+    others
+    profileFeatures {
+        ...ProfileFeaturesSupplierInfo
+    }
+    sicpRegistration {
+        ...SicpRegistrationInfo
+    }
+    promotion {
+        ...PromotionInfo
+    }
+    validFrom
+    validTo
+    sendMail30Day
+    sendMail15Day
+    sendMail7Day
+    sendMailExpire
+    viewed
+    order
+    supplierActivity {
+        edges {
+            node {
+                ...SupplierActivityInfo
+            }
+        }
+    }
+    suppliercategorySet {
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...SupplierCategoryInfo
+            }
+        }
+        totalCount
+    }
+    supplierindustrySet {
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...SupplierIndustryInfo
+            }
+        }
+        totalCount
+    }
+    supplierclientfocusSet {
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...SupplierClientFocusSetInfo
+            }
+        }
+        totalCount
+    }
+    supplierPortfolio {
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...PortfolioInfo
+            }
+        }
+        totalCount
+    }
+    certificate {
+        created
+        id
+        file
+        name
+        type
+        size
+    }
+    email
+    shortName
+    fullName
+    username
+    userType
+    created
+    firstName
+    lastName
+    pk
+    isFollowed
+}
+
+fragment SupplierWithProductsInfo on SupplierNode {
+    ...SupplierInfo
+    supplierProducts(first: 6, after: "0") {
+        edges {
+            node {
+                ...SupplierProductInfo
+            }
+        }
+    }
+}
+
+fragment SupplierSubAccountsActivityInfo on SupplierSubAccountActivityNode {
+    changedBy {
+        ...UserInfo
+    }
+    changedDate
+    reasonManual
+    changedState
+    pk
+}
+
+fragment SupplierSubAccountInfo on SupplierSubAccountNode {
+    id
+    user {
+        ...UserInfo
+    }
+    gender {
+        ...GenderInfo
+    }
+    phone
+    language {
+        ...LanguageInfo
+    }
+    position {
+        ...PositionInfo
+    }
+    picture
+    currency {
+        ...CurrencyInfo
+    }
+    supplierSubAccountsActivity {
+        edges {
+            node {
+                ...SupplierSubAccountsActivityInfo
+            }
+        }
+    }
+    email
+    shortName
+    fullName
+    username
+    userType
+    created
+    firstName
+    lastName
+    companyWebsite
+    companyLongName
+    companyShortName
+}
+
+fragment SupplierSubAccountWithSupplierInfo on SupplierSubAccountNode {
+    ...SupplierSubAccountInfo
+    supplier {
+        ...SupplierInfo
+    }
+}
+
+fragment SupplierProfileInfo on UserInterface {
+    ... on SupplierNode {
+        supplier {
+            totalCount
+            pageInfo {
+                startCursor
+                endCursor
+            }
+            edges {
+                node {
+                    ...SupplierSubAccountInfo
+                }
+            }
+        }
+    }
+}
+
+fragment ClientFocusInfo on ClientFocusNode {
+    id
+    name
+    status
+    translations {
+        id
+        languageCode
+        name
+    }
+}

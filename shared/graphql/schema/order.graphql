@@ -1,0 +1,135 @@
+query getOrders(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: Float
+    $orderStatus: String
+    $buyerName: String
+    $supplierName: String
+    $cityPickUpId: Float
+    $destinationCityId: Float
+) {
+    orders(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        orderStatus: $orderStatus
+        buyerName: $buyerName
+        supplierName: $supplierName
+        cityPickUpId: $cityPickUpId
+        destinationCityId: $destinationCityId
+    ) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...OrderInfo
+            }
+        }
+    }
+}
+mutation createOrder($buyerId: Int!, $items: [OrderItemsInput]!, $type: OrderType!) {
+    createOrder(buyerId: $buyerId, items: $items, type: $type) {
+        status
+        order {
+            ...OrderInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+mutation updateOrder($id: ID!, $order: OrderUpdateInput!, $orderItems: [OrderItemsInput]) {
+    updateOrder(id: $id, order: $order, orderItems: $orderItems) {
+        status
+        order {
+            ...OrderInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+mutation updateOrderStatus($id: ID!, $orderStatus: String!) {
+    updateOrderStatus(id: $id, orderStatus: $orderStatus) {
+        status
+        order {
+            ...OrderInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+query getGiangVien($id: ID!) {
+  giangVien(id: $id) {
+    id
+    nameGiangVien
+    detai
+  }
+}
+query getGiangViens {
+  giangViens {
+    id
+    nameGiangVien
+    detai
+  }
+}
+query getGroupStudents {
+  groups {
+    id
+    nameGroup
+    giangVien {
+      id
+      nameGiangVien
+    }
+    members {
+      id
+      fullName
+    }
+  }
+}
+
+query getGroupStudent($id: ID!) {
+  group(id: $id) {
+    id
+    nameGroup
+    giangVien {
+      id
+      nameGiangVien
+    }
+    members {
+      id
+      fullName
+    }
+  }
+}
+
+mutation createGroupStudent($input: GroupStudentInput!, $userId: ID!) {
+    createGroupStudent(input: $input, userId: $userId) {
+        status
+        group {
+            ...GroupStudentInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation createGiangVien($input: GiangVienInput!) {
+    createGiangVien(input: $input) {
+        status
+        giangVien {
+            ...GiangVienInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}

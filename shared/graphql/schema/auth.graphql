@@ -1,0 +1,144 @@
+mutation login($user: LoginInput!) {
+    login(user: $user) {
+        token
+        status
+        user {
+            ...UserWithBuyerAndSupplierInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation logout($token: String!) {
+    logout(token: $token) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation registerBuyer($input: BuyerBasicInput!) {
+    buyerRegister(input: $input) {
+        status
+        buyer {
+            ...BuyerInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation registerSupplier($input: SupplierBasicInput!) {
+    supplierRegister(input: $input) {
+        status
+        supplier {
+            ...SupplierInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation invite($email: String!, $fullName: String!, $referralCode: String, $userType: Int!) {
+    inviteRegister(email: $email, fullName: $fullName, referralCode: $referralCode, userType: $userType) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation supplierDetailUpdate($input: SupplierDetailUpdateInput!) {
+    supplierDetailUpdate(input: $input) {
+        status
+        supplier {
+            ...SupplierInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+        clientMutationId
+    }
+}
+
+mutation buyerDetailUpdate($input: BuyerDetailUpdateInput!) {
+    buyerDetailUpdate(input: $input) {
+        status
+        buyer {
+            ...BuyerInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+        clientMutationId
+    }
+}
+
+query profile {
+    profile {
+        email
+        shortName
+        fullName
+        username
+        userType
+        firstName
+        lastName
+        ... on AdminNode {
+            id
+            longName
+            language {
+                id
+                itemCode
+                name
+            }
+        }
+        ... on BuyerNode {
+            id
+            companyShortName
+            companyLongName
+            companyFullName
+            companyLogo
+            picture
+            language {
+                id
+                itemCode
+                name
+            }
+        }
+        ... on BuyerSubAccountsNode {
+            picture
+            language {
+                id
+                itemCode
+                name
+            }
+        }
+        ... on SupplierNode {
+            id
+            companyShortName
+            companyLongName
+            companyFullName
+            companyLogo
+            picture
+            language {
+                id
+                itemCode
+                name
+            }
+        }
+        ... on SupplierSubAccountNode {
+            fullName
+            picture
+            language {
+                id
+                itemCode
+                name
+            }
+        }
+    }
+}

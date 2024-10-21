@@ -1,0 +1,19 @@
+fragment UserDiamondSponsorInfo on UserDiamondSponsorNode {
+    id
+    image
+    productName
+    description
+    validFrom
+    validTo
+    user {
+        ...UserWithSupplierInfo
+    }
+    reachNumberCount
+    reachNumber
+    clickNumber
+    icon
+    status
+    isActive
+    isConfirmed
+    textEditer
+}

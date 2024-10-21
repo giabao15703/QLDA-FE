@@ -1,0 +1,79 @@
+<div class="px-6">
+    <div mat-dialog-title class="lg:text-lg text-base">
+        {{ 'product.create.dialog.relatedProduct.header' | translate }}
+    </div>
+    <mat-divider></mat-divider>
+
+    <input
+        placeholder="{{ 'input.productSearch' | translate }}"
+        class="my-4 w-full h-14 rounded-md border-[1px] border-[#e0e0e0] focus:outline-none pl-3 placeholder:text-xs lg:placeholder:text-base"
+    />
+
+    <mat-dialog-content class="lg:!text-sm !text-xs">
+        <div class="flex flex-col space-y-4">
+            <!-- <ng-container *ngIf="hasRelatedProducts; else noProducts">
+                <div *ngFor="let relatedProduct of product?.relatedSupplierProductList; trackBy: trackByProductId">
+                    <mat-checkbox>
+                        <div class="flex items-center w-full space-x-4">
+                            <img [src]="relatedProduct.picture" alt="" class="size-14 object-cover" />
+                            <div class="flex justify-between w-full items-center text-base">
+                                <div class="flex-grow">{{ relatedProduct.productName }}</div>
+                                <div class="text-right w-32">
+                                    {{ relatedProduct.initialPrice | currency: 'VND' : 'code' }}
+                                </div>
+                            </div>
+                        </div>
+                    </mat-checkbox>
+                </div>
+            </ng-container> -->
+
+            <!-- @if (hasRelatedProducts) {
+                @for (relatedProduct of product.relatedSupplierProductList; track relatedProduct.id) {
+                    <mat-checkbox>
+                        <div class="flex items-center w-full space-x-4">
+                            <img [src]="relatedProduct.picture" alt="" class="size-14 object-cover" />
+                            <div class="flex justify-between w-full items-center text-base">
+                                <div class="flex-grow">{{ relatedProduct.productName }}</div>
+                                <div class="text-right w-32">
+                                    {{ relatedProduct.initialPrice | currency: 'VND' : 'code' }}
+                                </div>
+                            </div>
+                        </div>
+                    </mat-checkbox>
+                }
+            } -->
+
+            <!-- @if (product?.relatedSupplierProductList.length > 0) {
+                <div>
+                    @for (product of product?.relatedSupplierProductList; track product.id) {
+                        <div>
+                            {{ product.productName }}
+                        </div>
+                    }
+                </div>
+            } -->
+
+            <!-- <ng-template #noProducts>
+                <div class="text-center">
+                    <p>No related products available.</p>
+                </div>
+            </ng-template> -->
+        </div>
+
+        <mat-dialog-actions align="end">
+            <div class="mt-10 flex justify-end gap-4 px-6">
+                <button mat-stroked-button mat-dialog-close class="!border-[#15677F] w-[130px]">
+                    <div class="pt-[2px] font-semibold text-[#15677F] relative z-10">
+                        {{ 'button.close' | translate }}
+                    </div>
+                </button>
+
+                <button mat-raised-button color="primary" class="w-[130px]">
+                    <div class="pt-[2px] font-semibold relative z-10">
+                        {{ 'button.confirm' | translate }}
+                    </div>
+                </button>
+            </div>
+        </mat-dialog-actions>
+    </mat-dialog-content>
+</div>

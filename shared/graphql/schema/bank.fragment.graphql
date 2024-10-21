@@ -1,0 +1,6 @@
+fragment BankInfo on BankNode {
+    id
+    itemCode
+    name
+    status
+}

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14" viewBox="0 0 14 14">
+  <defs>
+    <clipPath id="np-person-icon-white">
+      <rect id="Rectangle_115" data-name="Rectangle 115" width="14" height="14" transform="translate(875 314)" fill="#fff" stroke="#707070" stroke-width="1"/>
+    </clipPath>
+  </defs>
+  <g id="Mask_Group_14" data-name="Mask Group 14" transform="translate(-875 -314)" clip-path="url(#clip-path)">
+    <g id="user_1_" data-name="user (1)" transform="translate(875.002 314)">
+      <g id="Group_109" data-name="Group 109" transform="translate(6.486 8.193)">
+        <g id="Group_108" data-name="Group 108">
+          <path id="Path_44" data-name="Path 44" d="M25.234,23.409l-3.8,4.23L19.291,25.6l-.754.792L21.5,29.207l4.551-5.067Z" transform="translate(-18.537 -23.409)" fill="#fff"/>
+        </g>
+      </g>
+      <g id="Group_111" data-name="Group 111">
+        <g id="Group_110" data-name="Group 110">
+          <path id="Path_45" data-name="Path 45" d="M9.294,7.382a4.047,4.047,0,1,0-4.579,0A7.011,7.011,0,0,0,0,14H1.1a5.9,5.9,0,0,1,9.565-4.633L11.4,8.55A6.942,6.942,0,0,0,9.294,7.382ZM7,7A2.953,2.953,0,1,1,9.958,4.047,2.956,2.956,0,0,1,7,7Z" transform="translate(-0.005)" fill="#fff"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

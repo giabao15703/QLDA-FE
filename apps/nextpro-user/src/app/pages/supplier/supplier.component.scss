@@ -1,0 +1,14 @@
+.background-homepage {
+    background-image: linear-gradient(to right, #15677f 0%, #2ba7b0 25%, #3ecdca 50%, #2aa4ae 75%, #15677f 100%);
+}
+
+.marquee-text {
+    display: inline-block;
+    // animation: marqueeAnimation 40s linear infinite;
+}
+
+@keyframes marqueeAnimation {
+    to {
+        transform: translateX(-100%);
+    }
+}

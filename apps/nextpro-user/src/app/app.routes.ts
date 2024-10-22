@@ -33,6 +33,9 @@ import { SupplierProfilePage } from '#user/pages/supplier/profile/profile.compon
 import { SupplierSearchPage } from '#user/pages/supplier/search/supplier-search.component';
 import { HomepageSupplierPage } from '#user/pages/supplier/supplier.component';
 import { SupplierPaymentAccountPage } from 'shared/components/account/supplier/upgrade-profile/payment/payment.component';
+import { DashboardComponent } from '#user/pages/dashboard/dashboard.component';
+import { ProjectRegistrationComponent } from '#user/pages/project-registration/project-registration.component';
+import {GroupComponent} from '#user/pages/group/group.component';
 
 export const appRoutes: Routes = [
     { path: '', redirectTo: ROUTES.USER.PRODUCT.ROOT, pathMatch: 'full' },
@@ -54,6 +57,21 @@ export const appRoutes: Routes = [
         component: BecomeSupplierPage,
     },
     // #endregion
+
+    {
+        path:ROUTES.USER.DASHBOARD.ROOT,
+        component: DashboardComponent,
+    },
+
+    {
+        path: ROUTES.USER.GROUP.ROOT,
+        component: GroupComponent,
+    },
+
+    {
+        path: ROUTES.USER.PROJECT_REGISTER.ROOT,
+        component: ProjectRegistrationComponent,
+    },
 
     // #region PRODUCT
     {

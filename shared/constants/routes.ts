@@ -14,6 +14,17 @@ export const ROUTES = {
                 BECOME_SUPPLIER: 'auth/register/become-supplier',
             },
         },
+
+        PROJECT_REGISTER: {
+            ROOT: 'project-registration',
+        },
+
+        DASHBOARD: {
+            ROOT: 'dashboard',
+        },
+        GROUP: {
+            ROOT: 'group',
+        },
         PRODUCT: {
             ROOT: 'product',
             SEARCH: 'product/search',

@@ -76,7 +76,6 @@ export class EmailTemplateDetailComponent {
     }
 
     ngOnChanges(changes) {
-        /* debugger; */
         if (changes?.mode?.currentValue === E_Form_Mode.CREATE) {
             this.form.reset();
         } else {

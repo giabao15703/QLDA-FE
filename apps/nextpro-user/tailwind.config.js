@@ -8,10 +8,17 @@ module.exports = {
         ...createGlobPatternsForDependencies(__dirname),
     ],
     theme: {
-        extend: {},
-        screens: {
-            lg: '1024px',
+        container: {
+            center: true,
+            screens: {
+                sm: '640px',
+                md: '768px',
+                lg: '1024px',
+                xl: '1280px',
+                '2xl': '1380px', // Correct syntax for "2xl"
+            },
         },
+        extend: {},
     },
     plugins: [],
 };

@@ -47,7 +47,8 @@ import { SicpPage } from '#admin/pages/sicp/sicp.component';
 import { UserGuideBuyerPage } from '#admin/pages/user-guide/buyer/buyer.component';
 import { UserGuideSupplierPage } from '#admin/pages/user-guide/supplier/supplier.component';
 import { WarrantyTermListPage } from './pages/master-data/warranty-term/list/warranty-term-list.component';
-import { GroupListComponent } from './pages/group/list/group-list.component';
+/* import { GroupListComponent } from './pages/group/list/group-list.component'; */
+import { GiangVienListPage } from './pages/giangVien/list/giangVien-list.component';
 
 export const appRoutes: Routes = [
     { path: '', redirectTo: 'admin/home', pathMatch: 'full' },
@@ -238,10 +239,10 @@ export const appRoutes: Routes = [
                 path: 'product',
                 children: [{ path: '', component: ProductListPage, data: { breadcrumb: 'Product' } }],
             },
-            {
+            /* {
                 path: 'group',
                 children: [{ path: '', component: GroupListComponent, data: { breadcrumb: 'Group' } }],
-            },
+            }, */
             {
                 path: 'diamond-sponsor',
                 children: [{ path: '', component: DiamondSponsorListPage, data: { breadcrumb: 'Diamond Sponsor' } }],
@@ -280,6 +281,10 @@ export const appRoutes: Routes = [
             {
                 path: 'coupon',
                 children: [{ path: '', component: CouponListPage, data: { breadcrumb: 'Coupon' } }],
+            },
+            {
+                path: 'giangVien',
+                children: [{ path: '', component: GiangVienListPage, data: { breadcrumb: 'Giảng Viên' } }],
             },
             {
                 path: 'our-partner',

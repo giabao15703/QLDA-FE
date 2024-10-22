@@ -53,15 +53,3 @@ export interface I_Order {
     city?: I_City;
     totalAmount: number;
 }
-export interface I_GroupStudent {
-    id?: string;
-    nameGroup?: string;
-    members: I_User;
-    giangVien: I_GiangVien;
-}
-export interface I_GiangVien {
-    id?: string;
-    nameGiangVien: string;
-    detai?: string;
-    groupStudent: I_GroupStudent;
-}

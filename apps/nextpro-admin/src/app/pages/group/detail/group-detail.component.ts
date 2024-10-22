@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+/* import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -169,4 +169,4 @@ export class GroupDetailComponent {
             this.refetch();
         }, FORM_NAME);
     };
-}
+} */

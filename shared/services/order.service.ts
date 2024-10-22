@@ -2,27 +2,10 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import {
-    CreateGiangVienGQL,
-    CreateGiangVienMutation,
-    CreateGiangVienMutationVariables,
-    CreateGroupStudentGQL,
-    CreateGroupStudentMutation,
-    CreateGroupStudentMutationVariables,
     CreateOrderGQL,
     CreateOrderMutation,
     CreateOrderMutationVariables,
     GetGiangVienGQL,
-    GetGiangVienQuery,
-    GetGiangVienQueryVariables,
-    GetGiangViensGQL,
-    GetGiangViensQuery,
-    GetGiangViensQueryVariables,
-    GetGroupStudentGQL,
-    GetGroupStudentQuery,
-    GetGroupStudentQueryVariables,
-    GetGroupStudentsGQL,
-    GetGroupStudentsQuery,
-    GetGroupStudentsQueryVariables,
     GetOrdersGQL,
     GetOrdersQuery,
     GetOrdersQueryVariables,
@@ -36,9 +19,7 @@ import {
 import { GraphqlService } from '#shared/services';
 import {
     E_OrderStatus,
-    I_GiangVien,
     I_GraphQLOptions,
-    I_GroupStudent,
     I_MutationResponse,
     I_NormalizeExtra,
     I_Order,
@@ -56,12 +37,6 @@ export class OrderService {
         private createOrderGQL: CreateOrderGQL,
         private updateOrderGQL: UpdateOrderGQL,
         private updateOrderStatusGQL: UpdateOrderStatusGQL,
-        private getGiangViensGQL: GetGiangViensGQL,
-        private getGiangVienGQL: GetGiangVienGQL,
-        private createGiangVienGQL: CreateGiangVienGQL,
-        private getGroupStudentsGQL: GetGroupStudentsGQL,
-        private getGroupStudentGQL: GetGroupStudentGQL,
-        private createGroupStudentGQL: CreateGroupStudentGQL,
     ) {}
 
     get error(): Observable<string> {
@@ -116,85 +91,5 @@ export class OrderService {
             UpdateOrderStatusMutationVariables,
             { updateOrderStatus: I_MutationResponse }
         >(this.updateOrderStatusGQL, variables, options);
-    };
-
-    private normalizeGiangVien = (data: GetGiangViensQuery, extra?: any): I_TableState<I_GiangVien> => {
-        return normalizeWithPagination<I_GiangVien>(data.giangViens, extra);
-    };
-
-    getGiangViens = (
-        variables?: GetGiangViensQueryVariables,
-        options?: I_GraphQLOptions<GetGiangViensQuery, I_TableState<I_GiangVien>>,
-    ) => {
-        return this.graphqlService.query<GetGiangViensQuery, GetGiangViensQueryVariables, I_TableState<I_GiangVien>>(
-            this.getGiangViensGQL,
-            variables,
-            {
-                normalize: (data) => this.normalizeGiangVien(data, options?.extra),
-                ...options,
-            },
-        ) as Promise<I_TableState<I_GiangVien>>;
-    };
-
-    getGiangVien = (
-        variables?: GetGiangVienQueryVariables,
-        options?: I_GraphQLOptions<GetGiangVienQuery, I_GiangVien>,
-    ) => {
-        return this.graphqlService.query<GetGiangVienQuery, GetGiangVienQueryVariables, I_GiangVien>(
-            this.getGiangVienGQL,
-            variables,
-            options,
-        );
-    };
-
-    createGiangVien = (
-        variables?: CreateGiangVienMutationVariables,
-        options?: I_GraphQLOptions<CreateGiangVienMutation, { createGiangVien: I_MutationResponse }>,
-    ) => {
-        return this.graphqlService.mutate<
-            CreateGiangVienMutation,
-            CreateGiangVienMutationVariables,
-            { createGiangVien: I_MutationResponse }
-        >(this.createGiangVienGQL, variables, options);
-    };
-
-    private normalizeGroupStudent = (data: GetGroupStudentsQuery, extra?: any): I_TableState<I_GroupStudent> => {
-        return normalizeWithPagination<I_GroupStudent>(data.groups, extra);
-    };
-
-    getGroupStudents = (
-        variables?: GetGroupStudentsQueryVariables,
-        options?: I_GraphQLOptions<GetGroupStudentsQuery, I_TableState<I_GroupStudent>>,
-    ) => {
-        return this.graphqlService.query<
-            GetGroupStudentsQuery,
-            GetGroupStudentsQueryVariables,
-            I_TableState<I_GroupStudent>
-        >(this.getGroupStudentsGQL, variables, {
-            normalize: (data) => this.normalizeGroupStudent(data, options?.extra),
-            ...options,
-        }) as Promise<I_TableState<I_GroupStudent>>;
-    };
-
-    getGroupStudent = (
-        variables?: GetGroupStudentQueryVariables,
-        options?: I_GraphQLOptions<GetGroupStudentQuery, I_GroupStudent>,
-    ) => {
-        return this.graphqlService.query<GetGroupStudentQuery, GetGroupStudentQueryVariables, I_GroupStudent>(
-            this.getGroupStudentGQL,
-            variables,
-            options,
-        );
-    };
-
-    createGroupStudent = (
-        variables?: CreateGroupStudentMutationVariables,
-        options?: I_GraphQLOptions<CreateGroupStudentMutation, { createGroupStudent: I_MutationResponse }>,
-    ) => {
-        return this.graphqlService.mutate<
-            CreateGroupStudentMutation,
-            CreateGroupStudentMutationVariables,
-            { createGroupStudent: I_MutationResponse }
-        >(this.createGroupStudentGQL, variables, options);
     };
 }

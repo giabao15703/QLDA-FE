@@ -3117,20 +3117,6 @@ export type CoursesUpdatesStatus = {
   status?: Maybe<Scalars['Boolean']['output']>;
 };
 
-export type CreateGiangVien = {
-  __typename?: 'CreateGiangVien';
-  error?: Maybe<Error>;
-  giangVien?: Maybe<GiangVienType>;
-  status?: Maybe<Scalars['Boolean']['output']>;
-};
-
-export type CreateGroupStudent = {
-  __typename?: 'CreateGroupStudent';
-  error?: Maybe<Error>;
-  group?: Maybe<GroupStudentType>;
-  status?: Maybe<Scalars['Boolean']['output']>;
-};
-
 export type CreateNewPassword = {
   __typename?: 'CreateNewPassword';
   error?: Maybe<Error>;
@@ -4297,18 +4283,49 @@ export type GeneralInformationType = {
   unit?: Maybe<Scalars['String']['output']>;
 };
 
-export type GiangVienInput = {
-  detai?: InputMaybe<Scalars['String']['input']>;
-  nameGiangVien: Scalars['String']['input'];
+export type GiangVienCreate = {
+  __typename?: 'GiangVienCreate';
+  error?: Maybe<Error>;
+  giangVien?: Maybe<GiangVienNode>;
+  status?: Maybe<Scalars['Boolean']['output']>;
 };
 
-export type GiangVienType = CustomizeInterface & {
-  __typename?: 'GiangVienType';
-  detai?: Maybe<Scalars['String']['output']>;
-  groupStudents: Array<GroupStudentType>;
+export type GiangVienInput = {
+  deTai: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+};
+
+export type GiangVienNode = CustomNode & {
+  __typename?: 'GiangVienNode';
+  deTai: Scalars['String']['output'];
   /** The ID of the object. */
   id: Scalars['ID']['output'];
-  nameGiangVien: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+};
+
+export type GiangVienNodeConnection = {
+  __typename?: 'GiangVienNodeConnection';
+  /** Contains the nodes in this connection. */
+  edges: Array<Maybe<GiangVienNodeEdge>>;
+  /** Pagination data for this connection. */
+  pageInfo: PageInfo;
+  totalCount?: Maybe<Scalars['Int']['output']>;
+};
+
+/** A Relay edge containing a `GiangVienNode` and its cursor. */
+export type GiangVienNodeEdge = {
+  __typename?: 'GiangVienNodeEdge';
+  /** A cursor for use in pagination */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge */
+  node?: Maybe<GiangVienNode>;
+};
+
+export type GiangVienUpdate = {
+  __typename?: 'GiangVienUpdate';
+  error?: Maybe<Error>;
+  giangVien?: Maybe<GiangVienNode>;
+  status?: Maybe<Scalars['Boolean']['output']>;
 };
 
 export type GroupCreate = {
@@ -4419,19 +4436,6 @@ export type GroupPermissionNodeEdge = {
   cursor: Scalars['String']['output'];
   /** The item at the end of the edge */
   node?: Maybe<GroupPermissionNode>;
-};
-
-export type GroupStudentInput = {
-  giangVienId: Scalars['ID']['input'];
-  nameGroup: Scalars['String']['input'];
-};
-
-export type GroupStudentType = {
-  __typename?: 'GroupStudentType';
-  giangVien: GiangVienType;
-  id: Scalars['ID']['output'];
-  members?: Maybe<UserNode>;
-  nameGroup: Scalars['String']['output'];
 };
 
 export type HistoryNode = CustomNode & {
@@ -5643,8 +5647,6 @@ export type Mutation = {
   coursesDelete?: Maybe<CoursesDelete>;
   coursesUpdate?: Maybe<CoursesUpdate>;
   coursesUpdateStatus?: Maybe<CoursesUpdatesStatus>;
-  createGiangVien?: Maybe<CreateGiangVien>;
-  createGroupStudent?: Maybe<CreateGroupStudent>;
   createMasterAdmin?: Maybe<AdminSuperCreate>;
   createNewPassword?: Maybe<CreateNewPassword>;
   createOrder?: Maybe<OrderCreateMutation>;
@@ -5684,6 +5686,8 @@ export type Mutation = {
   genderDelete?: Maybe<GenderDelete>;
   genderUpdate?: Maybe<GenderUpdate>;
   genderUpdateStatus?: Maybe<GenderUpdateStatus>;
+  giangVienCreate?: Maybe<GiangVienCreate>;
+  giangVienUpdate?: Maybe<GiangVienUpdate>;
   groupCreate?: Maybe<GroupCreate>;
   groupDelete?: Maybe<GroupDelete>;
   groupPermissionCreate?: Maybe<GroupPermissionCreate>;
@@ -5833,7 +5837,6 @@ export type Mutation = {
   unitOfMeasureDelete?: Maybe<UnitofMeasureDelete>;
   unitOfMeasureUpdate?: Maybe<UnitofMeasureUpdate>;
   unitOfMeasureUpdateStatus?: Maybe<UnitofMeasureUpdateStatus>;
-  updateGroupStudent?: Maybe<UpdateGroupStudent>;
   updateOrder?: Maybe<OrderUpdateMutation>;
   updateOrderStatus?: Maybe<OrderUpdateStatusMutation>;
   userDiamondSponsorClickCount?: Maybe<UserDiamondSponsorClickCount>;
@@ -6300,17 +6303,6 @@ export type MutationCoursesUpdateStatusArgs = {
 };
 
 
-export type MutationCreateGiangVienArgs = {
-  input: GiangVienInput;
-};
-
-
-export type MutationCreateGroupStudentArgs = {
-  input: GroupStudentInput;
-  userId: Scalars['ID']['input'];
-};
-
-
 export type MutationCreateNewPasswordArgs = {
   confirmPassword: Scalars['String']['input'];
   password: Scalars['String']['input'];
@@ -6501,6 +6493,17 @@ export type MutationGenderUpdateArgs = {
 
 export type MutationGenderUpdateStatusArgs = {
   listStatus: Array<InputMaybe<GenderStatusInput>>;
+};
+
+
+export type MutationGiangVienCreateArgs = {
+  input: GiangVienInput;
+};
+
+
+export type MutationGiangVienUpdateArgs = {
+  id: Scalars['ID']['input'];
+  input: GiangVienInput;
 };
 
 
@@ -7272,12 +7275,6 @@ export type MutationUnitOfMeasureUpdateArgs = {
 
 export type MutationUnitOfMeasureUpdateStatusArgs = {
   listStatus: Array<InputMaybe<UnitofMeasureStatusInput>>;
-};
-
-
-export type MutationUpdateGroupStudentArgs = {
-  groupId: Scalars['ID']['input'];
-  userId: Scalars['ID']['input'];
 };
 
 
@@ -9319,13 +9316,15 @@ export type Query = {
   /** The ID of the object */
   gender?: Maybe<GenderNode>;
   genders?: Maybe<GenderNodeConnection>;
-  giangVien?: Maybe<GiangVienType>;
-  giangViens?: Maybe<Array<Maybe<GiangVienType>>>;
-  group?: Maybe<GroupStudentType>;
+  /** The ID of the object */
+  giangVien?: Maybe<GiangVienNode>;
+  giangViens?: Maybe<GiangVienNodeConnection>;
+  /** The ID of the object */
+  group?: Maybe<GroupNode>;
   /** The ID of the object */
   groupPermission?: Maybe<GroupPermissionNode>;
   groupPermissions?: Maybe<GroupPermissionNodeConnection>;
-  groups?: Maybe<Array<Maybe<GroupStudentType>>>;
+  groups?: Maybe<GroupNodeConnection>;
   historiesPending?: Maybe<HistoryPendingNodeConnection>;
   /** The ID of the object */
   historyPayment?: Maybe<HistoryNode>;
@@ -10222,6 +10221,17 @@ export type QueryGiangVienArgs = {
 };
 
 
+export type QueryGiangViensArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  deTai?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+};
+
+
 export type QueryGroupArgs = {
   id: Scalars['ID']['input'];
 };
@@ -10233,6 +10243,15 @@ export type QueryGroupPermissionArgs = {
 
 
 export type QueryGroupPermissionsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type QueryGroupsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -14787,13 +14806,6 @@ export type UnitofMeasureUpdateStatus = {
   status?: Maybe<Scalars['Boolean']['output']>;
 };
 
-export type UpdateGroupStudent = {
-  __typename?: 'UpdateGroupStudent';
-  error?: Maybe<Error>;
-  group?: Maybe<GroupStudentType>;
-  status?: Maybe<Scalars['Boolean']['output']>;
-};
-
 export type UserAdminInput = {
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
@@ -15150,7 +15162,6 @@ export type UserNode = CustomNode & {
   firstName?: Maybe<Scalars['String']['output']>;
   fullName?: Maybe<Scalars['String']['output']>;
   gallery: GalleryNodeConnection;
-  groupMembersQlda: Array<GroupStudentType>;
   /** The groups this user belongs to. A user will get all permissions granted to each of their groups. */
   groups: GroupNodeConnection;
   /** The ID of the object. */
@@ -16532,6 +16543,35 @@ export type CreateDiamondSponsorTextEditerMutationVariables = Exact<{
 
 
 export type CreateDiamondSponsorTextEditerMutation = { __typename?: 'Mutation', userDiamondSponsorCreateTextEditer?: { __typename?: 'UserDiamondSponsorTextEditer', status?: boolean | null, error?: { __typename?: 'Error', code?: string | null, message?: string | null, field?: string | null } | null } | null };
+
+export type GiangVienInfoFragment = { __typename?: 'GiangVienNode', id: string, name: string, deTai: string };
+
+export type GetGiangViensQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  deTai?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type GetGiangViensQuery = { __typename?: 'Query', giangViens?: { __typename?: 'GiangVienNodeConnection', totalCount?: number | null, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'GiangVienNodeEdge', node?: { __typename?: 'GiangVienNode', id: string, name: string, deTai: string } | null } | null> } | null };
+
+export type GetGiangVienQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type GetGiangVienQuery = { __typename?: 'Query', giangVien?: { __typename?: 'GiangVienNode', id: string, name: string, deTai: string } | null };
+
+export type CreateGiangVienMutationVariables = Exact<{
+  input: GiangVienInput;
+}>;
+
+
+export type CreateGiangVienMutation = { __typename?: 'Mutation', giangVienCreate?: { __typename?: 'GiangVienCreate', status?: boolean | null, giangVien?: { __typename?: 'GiangVienNode', id: string, name: string, deTai: string } | null, error?: { __typename?: 'Error', code?: string | null, message?: string | null, field?: string | null } | null } | null };
 
 export type CountryInfoFragment = { __typename?: 'CountryNode', id: string, itemCode: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'CountryTranslationNode', id: string, languageCode: string, name: string }> };
 
@@ -18029,10 +18069,6 @@ export type OrderDeliveryTimelineInfoFragment = { __typename?: 'OrderDeliveryTim
 
 export type OrderItemsInfoFragment = { __typename?: 'OrderItemsNode', taxGTGT?: number | null, createdAt: any, updatedAt: any, refund?: number | null, amount: number, product: { __typename?: 'SupplierProductNode', discountProgramForm?: string | null, status: string, regularProduct: boolean, greenProduct: boolean, officialProduct: boolean, inventoryStatus?: SupplierProductInventoryStatus | null, provideAbility?: string | null, support?: string | null, brand?: string | null, originOfProduction?: string | null, guarantee?: string | null, otherInformation?: string | null, urlPath?: string | null, weight?: number | null, createDate?: any | null, color?: string | null, size?: string | null, height?: number | null, format?: string | null, id: string, skuNumber?: string | null, description: string, type: SupplierProductType, initialPrice?: number | null, discountedPrice?: number | null, isVisibility: boolean, confirmedStatus?: SupplierProductConfirmedStatus | null, picture?: string | null, productName?: string | null, specification?: string | null, minimumOrderQuantity?: string | null, reachNumber: number, clickNumber: number, paymentTerm?: { __typename?: 'PaymentTermNode', name: string } | null, country: { __typename?: 'CountryNode', id: string, itemCode: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'CountryTranslationNode', id: string, languageCode: string, name: string }> }, state: { __typename?: 'CountryStateNode', id: string, name: string, stateCode: string, status?: boolean | null, country: { __typename?: 'CountryNode', id: string, itemCode: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'CountryTranslationNode', id: string, languageCode: string, name: string }> }, translations: Array<{ __typename?: 'CountryStateTranslationNode', id: string, languageCode: string, name: string }> }, currency: { __typename?: 'CurrencyNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'CurrencyTranslationNode', id: string, languageCode: string, name: string }> }, specifications?: { __typename?: 'SpecificationsType', color?: string | null, size?: string | null, weight?: string | null, height?: string | null, images?: Array<string | null> | null } | null, originOfProductionCountry?: { __typename?: 'CountryNode', id: string, itemCode: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'CountryTranslationNode', id: string, languageCode: string, name: string }> } | null, productImages: { __typename?: 'OrderItemSupplierProductImageNodeConnection', edges: Array<{ __typename?: 'OrderItemSupplierProductImageNodeEdge', node?: { __typename?: 'OrderItemSupplierProductImageNode', id: string, image?: string | null } | null } | null> }, productFlashSales: { __typename?: 'OrderItemSupplierProductFlashSaleNodeConnection', edges: Array<{ __typename?: 'OrderItemSupplierProductFlashSaleNodeEdge', node?: { __typename?: 'OrderItemSupplierProductFlashSaleNode', id: string, initialPrice?: number | null, discountedPrice?: number | null } | null } | null> }, productWholesalePriceList: { __typename?: 'OrderItemSupplierProductWholesalePriceNodeConnection', edges: Array<{ __typename?: 'OrderItemSupplierProductWholesalePriceNodeEdge', node?: { __typename?: 'OrderItemSupplierProductWholesalePriceNode', id: string, qualityFrom?: number | null, qualityTo?: number | null, priceBracket?: number | null, deliveryDays?: number | null } | null } | null> }, categoryList?: Array<{ __typename?: 'CategoryNode', id: string, itemCode: string, name: string, status?: boolean | null } | null> | null, relatedSupplierProductList?: Array<{ __typename?: 'SupplierProductNode', id: string, skuNumber?: string | null, description: string, type: SupplierProductType, initialPrice?: number | null, discountedPrice?: number | null, isVisibility: boolean, confirmedStatus?: SupplierProductConfirmedStatus | null, picture?: string | null, productName?: string | null, specification?: string | null, minimumOrderQuantity?: string | null, reachNumber: number, clickNumber: number, userSupplier: { __typename?: 'SupplierNode', id: string, username?: string | null, companyFullName?: string | null, companyCountryState: { __typename?: 'CountryStateNode', name: string }, companyCountry: { __typename?: 'CountryNode', name: string } }, unitOfMeasure?: { __typename?: 'UnitofMeasureNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'UnitofMeasureTranslationNode', id: string, languageCode: string, name: string }> } | null } | null> | null, wholeSalePrice?: Array<{ __typename?: 'WholeSalePriceType', qualityFrom?: number | null, qualityTo?: number | null, priceBracket?: string | null, deliveryDays?: number | null } | null> | null, userSupplier: { __typename?: 'SupplierNode', id: string, username?: string | null, companyFullName?: string | null, companyCountryState: { __typename?: 'CountryStateNode', name: string }, companyCountry: { __typename?: 'CountryNode', name: string } }, unitOfMeasure?: { __typename?: 'UnitofMeasureNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'UnitofMeasureTranslationNode', id: string, languageCode: string, name: string }> } | null }, order: { __typename?: 'OrderNode', id: string, orderCode: string } };
 
-export type GroupStudentInfoFragment = { __typename?: 'GroupStudentType', id: string, nameGroup: string, members?: { __typename?: 'UserNode', id: string, fullName?: string | null } | null, giangVien: { __typename?: 'GiangVienType', id: string, nameGiangVien: string } };
-
-export type GiangVienInfoFragment = { __typename?: 'GiangVienType', id: string, nameGiangVien: string, detai?: string | null, groupStudents: Array<{ __typename?: 'GroupStudentType', id: string, nameGroup: string }> };
-
 export type GetOrdersQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
   after?: InputMaybe<Scalars['String']['input']>;
@@ -18074,45 +18110,6 @@ export type UpdateOrderStatusMutationVariables = Exact<{
 
 
 export type UpdateOrderStatusMutation = { __typename?: 'Mutation', updateOrderStatus?: { __typename?: 'OrderUpdateStatusMutation', status?: boolean | null, order?: { __typename?: 'OrderNode', id: string, orderType: OrderOrderType, orderCode: string, orderStatus: OrderOrderStatus, taxCode: string, createdAt: any, updatedAt: any, address?: string | null, totalAmount: number, orderDeliveryTimelines?: Array<{ __typename?: 'OrderDeliveryTimelineNode', id: string, time: string, orderDate: any, date: any } | null> | null, voucherCodeOrder?: { __typename?: 'VoucherNode', id: string, voucherCode: string, name: string, status: boolean, discount: number, label: string, translations: Array<{ __typename?: 'VoucherTranslationNode', id: string, languageCode: string, name: string }> } | null, buyer: { __typename?: 'BuyerNode', id: string, companyFullName?: string | null, companyShortName?: string | null, companyLongName?: string | null, companyLogo?: string | null, companyTax: string, companyAddress: string, companyCity: string, companyWebsite?: string | null, companyReferralCode?: string | null, companyEmail?: string | null, picture?: string | null, phone: string, validFrom: any, validTo: any, sendMail30Day?: any | null, sendMail15Day?: any | null, sendMail7Day?: any | null, sendMailExpire?: any | null, email?: string | null, shortName?: string | null, fullName?: string | null, username?: string | null, userType?: number | null, created?: any | null, firstName?: string | null, lastName?: string | null, pk?: number | null, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, companyCountry: { __typename?: 'CountryNode', id: string, itemCode: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'CountryTranslationNode', id: string, languageCode: string, name: string }> }, companyCountryState: { __typename?: 'CountryStateNode', id: string, name: string, stateCode: string, status?: boolean | null, country: { __typename?: 'CountryNode', id: string, itemCode: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'CountryTranslationNode', id: string, languageCode: string, name: string }> }, translations: Array<{ __typename?: 'CountryStateTranslationNode', id: string, languageCode: string, name: string }> }, companyNumberOfEmployee: { __typename?: 'NumberofEmployeeNode', id: string, name: string, status?: boolean | null }, gender: { __typename?: 'GenderNode', id: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'GenderTranslationNode', id: string, languageCode: string, name: string }> }, position: { __typename?: 'PositionNode', id: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'PositionTranslationNode', id: string, languageCode: string, name: string }> }, language?: { __typename?: 'LanguageNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'LanguageTranslationNode', id: string, languageCode: string, name: string }> } | null, profileFeatures?: { __typename?: 'ProfileFeaturesBuyerNode', id: string, name: string, marketResearch: string, rfxYear: number, noEauctionYear: number, helpDesk: string, reportYear: number, subUserAccounts: number, feeEauction?: number | null, totalFeeYear?: number | null, profileFeaturesType: number, status?: boolean | null, rfxAutoNego: boolean } | null, currency?: { __typename?: 'CurrencyNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'CurrencyTranslationNode', id: string, languageCode: string, name: string }> } | null, buyerActivity: { __typename?: 'BuyerActivityNodeConnection', edges: Array<{ __typename?: 'BuyerActivityNodeEdge', node?: { __typename?: 'BuyerActivityNode', changedDate: any, reasonManual?: string | null, changedState: number, pk?: number | null, changedBy?: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } } | null } | null } | null> }, buyerIndustry: { __typename?: 'BuyerIndustryNodeConnection', totalCount?: number | null, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'BuyerIndustryNodeEdge', node?: { __typename?: 'BuyerIndustryNode', id: string, industry: { __typename?: 'IndustrySubSectorsNode', id: string, itemCode: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'IndustrySubSectorsTranslationNode', id: string, languageCode: string, name: string }> } } | null } | null> } }, supplier?: { __typename?: 'SupplierNode', id: string, companyFullName?: string | null, companyShortName?: string | null, companyLongName?: string | null, companyTax: string, companyLogo?: string | null, companyAddress: string, companyCity: string, companyCeoOwnerName?: string | null, companyCeoOwnerEmail?: string | null, companyWebsite?: string | null, companyCredentialProfile?: string | null, companyReferralCode?: string | null, companyTagLine?: string | null, companyDescription?: string | null, companyEstablishedSince?: number | null, companyAnniversaryDate?: any | null, phone: string, picture?: string | null, imageBanner?: string | null, bankName?: string | null, bankCode?: string | null, bankAddress?: string | null, beneficiaryName?: string | null, switchBicCode?: string | null, bankAccountNumber?: string | null, internationalBank?: string | null, supplierFormRegistration?: string | null, bankCertification?: string | null, qualityCertification?: string | null, businessLicense?: string | null, taxCertification?: string | null, others?: string | null, validFrom: any, validTo: any, sendMail30Day?: any | null, sendMail15Day?: any | null, sendMail7Day?: any | null, sendMailExpire?: any | null, viewed: number, order: number, email?: string | null, shortName?: string | null, fullName?: string | null, username?: string | null, userType?: number | null, created?: any | null, firstName?: string | null, lastName?: string | null, pk?: number | null, isFollowed?: boolean | null, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, companyCountry: { __typename?: 'CountryNode', id: string, itemCode: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'CountryTranslationNode', id: string, languageCode: string, name: string }> }, companyCountryState: { __typename?: 'CountryStateNode', id: string, name: string, stateCode: string, status?: boolean | null, country: { __typename?: 'CountryNode', id: string, itemCode: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'CountryTranslationNode', id: string, languageCode: string, name: string }> }, translations: Array<{ __typename?: 'CountryStateTranslationNode', id: string, languageCode: string, name: string }> }, companyNumberOfEmployee: { __typename?: 'NumberofEmployeeNode', id: string, name: string, status?: boolean | null }, gender: { __typename?: 'GenderNode', id: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'GenderTranslationNode', id: string, languageCode: string, name: string }> }, position: { __typename?: 'PositionNode', id: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'PositionTranslationNode', id: string, languageCode: string, name: string }> }, level?: { __typename?: 'LevelNode', id: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'LevelTranslationNode', id: string, languageCode: string, name: string }> } | null, language?: { __typename?: 'LanguageNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'LanguageTranslationNode', id: string, languageCode: string, name: string }> } | null, currency?: { __typename?: 'CurrencyNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'CurrencyTranslationNode', id: string, languageCode: string, name: string }> } | null, bankCurrency?: { __typename?: 'CurrencyNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'CurrencyTranslationNode', id: string, languageCode: string, name: string }> } | null, profileFeatures?: { __typename?: 'ProfileFeaturesSupplierNode', id: string, name: string, freeRegistration: string, quoteSubmiting: string, rfxrReceivingPriority?: number | null, subUserAccounts: number, helpDesk: string, flashSale: number, product: number, reportYear: number, baseRateMonth?: number | null, baseRateFullYear?: number | null, profileFeaturesType: number, status?: boolean | null } | null, sicpRegistration?: { __typename?: 'SICPRegistrationNode', id: string, name: string, legalStatus?: number | null, bankAccount?: number | null, sanctionCheck?: number | null, certificateManagement?: number | null, dueDiligence?: number | null, financialRisk?: number | null, totalAmount?: number | null, sicpType: number, status?: boolean | null } | null, promotion?: { __typename?: 'PromotionNode', id: string, name: string, description: string, discount: number, validFrom: any, validTo: any, status?: boolean | null, applyForBuyer: boolean, applyForSupplier: boolean, applyForAdvertisement: boolean, visible: boolean, userGiven?: string | null, userGivenEmail?: string | null, commission?: number | null, applyScope?: PromotionApplyScope | null, descriptionDefault?: string | null, translations: Array<{ __typename?: 'PromotionTranslationNode', id: string, languageCode: string, name: string, description: string }> } | null, supplierActivity: { __typename?: 'SupplierActivityNodeConnection', edges: Array<{ __typename?: 'SupplierActivityNodeEdge', node?: { __typename?: 'SupplierActivityNode', changedDate: any, reasonManual?: string | null, changedState: number, pk?: number | null, changedBy?: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } } | null } | null } | null> }, suppliercategorySet: { __typename?: 'SupplierCategoryNodeConnection', totalCount?: number | null, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'SupplierCategoryNodeEdge', node?: { __typename?: 'SupplierCategoryNode', id: string, percentage: number, minimumOfValue: number, category: { __typename?: 'CategoryNode', id: string, itemCode: string, name: string, status?: boolean | null, subClusterCode: { __typename?: 'SubClusterCodeNode', id: string, itemCode: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'SubClusterCodeTranslationNode', id: string, languageCode: string, name: string }> }, translations: Array<{ __typename?: 'CategoryTranslationNode', id: string, languageCode: string, name: string }> } } | null } | null> }, supplierindustrySet: { __typename?: 'SupplierIndustryNodeConnection', totalCount?: number | null, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'SupplierIndustryNodeEdge', node?: { __typename?: 'SupplierIndustryNode', id: string, percentage: number, industrySubSectors: { __typename?: 'IndustrySubSectorsNode', id: string, itemCode: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'IndustrySubSectorsTranslationNode', id: string, languageCode: string, name: string }> } } | null } | null> }, supplierclientfocusSet: { __typename?: 'SupplierClientFocusNodeConnection', totalCount?: number | null, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'SupplierClientFocusNodeEdge', node?: { __typename?: 'SupplierClientFocusNode', id: string, percentage: number, clientFocus: { __typename?: 'ClientFocusNode', id: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'ClientFocusTranslationNode', id: string, languageCode: string, name: string }> } } | null } | null> }, supplierPortfolio: { __typename?: 'PortfolioNodeConnection', totalCount?: number | null, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'PortfolioNodeEdge', node?: { __typename?: 'PortfolioNode', id: string, company: string, projectName: string, value: number, projectDescription: string, image?: string | null } | null } | null> }, certificate: Array<{ __typename?: 'SupplierCertificateNode', created: any, id: string, file: string, name?: string | null, type?: SupplierCertificateType | null, size?: string | null }> } | null, city?: { __typename?: 'CountryStateNode', id: string, name: string, stateCode: string, status?: boolean | null, country: { __typename?: 'CountryNode', id: string, itemCode: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'CountryTranslationNode', id: string, languageCode: string, name: string }> }, translations: Array<{ __typename?: 'CountryStateTranslationNode', id: string, languageCode: string, name: string }> } | null, orderItems?: Array<{ __typename?: 'OrderItemsNode', taxGTGT?: number | null, createdAt: any, updatedAt: any, refund?: number | null, amount: number, product: { __typename?: 'SupplierProductNode', discountProgramForm?: string | null, status: string, regularProduct: boolean, greenProduct: boolean, officialProduct: boolean, inventoryStatus?: SupplierProductInventoryStatus | null, provideAbility?: string | null, support?: string | null, brand?: string | null, originOfProduction?: string | null, guarantee?: string | null, otherInformation?: string | null, urlPath?: string | null, weight?: number | null, createDate?: any | null, color?: string | null, size?: string | null, height?: number | null, format?: string | null, id: string, skuNumber?: string | null, description: string, type: SupplierProductType, initialPrice?: number | null, discountedPrice?: number | null, isVisibility: boolean, confirmedStatus?: SupplierProductConfirmedStatus | null, picture?: string | null, productName?: string | null, specification?: string | null, minimumOrderQuantity?: string | null, reachNumber: number, clickNumber: number, paymentTerm?: { __typename?: 'PaymentTermNode', name: string } | null, country: { __typename?: 'CountryNode', id: string, itemCode: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'CountryTranslationNode', id: string, languageCode: string, name: string }> }, state: { __typename?: 'CountryStateNode', id: string, name: string, stateCode: string, status?: boolean | null, country: { __typename?: 'CountryNode', id: string, itemCode: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'CountryTranslationNode', id: string, languageCode: string, name: string }> }, translations: Array<{ __typename?: 'CountryStateTranslationNode', id: string, languageCode: string, name: string }> }, currency: { __typename?: 'CurrencyNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'CurrencyTranslationNode', id: string, languageCode: string, name: string }> }, specifications?: { __typename?: 'SpecificationsType', color?: string | null, size?: string | null, weight?: string | null, height?: string | null, images?: Array<string | null> | null } | null, originOfProductionCountry?: { __typename?: 'CountryNode', id: string, itemCode: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'CountryTranslationNode', id: string, languageCode: string, name: string }> } | null, productImages: { __typename?: 'OrderItemSupplierProductImageNodeConnection', edges: Array<{ __typename?: 'OrderItemSupplierProductImageNodeEdge', node?: { __typename?: 'OrderItemSupplierProductImageNode', id: string, image?: string | null } | null } | null> }, productFlashSales: { __typename?: 'OrderItemSupplierProductFlashSaleNodeConnection', edges: Array<{ __typename?: 'OrderItemSupplierProductFlashSaleNodeEdge', node?: { __typename?: 'OrderItemSupplierProductFlashSaleNode', id: string, initialPrice?: number | null, discountedPrice?: number | null } | null } | null> }, productWholesalePriceList: { __typename?: 'OrderItemSupplierProductWholesalePriceNodeConnection', edges: Array<{ __typename?: 'OrderItemSupplierProductWholesalePriceNodeEdge', node?: { __typename?: 'OrderItemSupplierProductWholesalePriceNode', id: string, qualityFrom?: number | null, qualityTo?: number | null, priceBracket?: number | null, deliveryDays?: number | null } | null } | null> }, categoryList?: Array<{ __typename?: 'CategoryNode', id: string, itemCode: string, name: string, status?: boolean | null } | null> | null, relatedSupplierProductList?: Array<{ __typename?: 'SupplierProductNode', id: string, skuNumber?: string | null, description: string, type: SupplierProductType, initialPrice?: number | null, discountedPrice?: number | null, isVisibility: boolean, confirmedStatus?: SupplierProductConfirmedStatus | null, picture?: string | null, productName?: string | null, specification?: string | null, minimumOrderQuantity?: string | null, reachNumber: number, clickNumber: number, userSupplier: { __typename?: 'SupplierNode', id: string, username?: string | null, companyFullName?: string | null, companyCountryState: { __typename?: 'CountryStateNode', name: string }, companyCountry: { __typename?: 'CountryNode', name: string } }, unitOfMeasure?: { __typename?: 'UnitofMeasureNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'UnitofMeasureTranslationNode', id: string, languageCode: string, name: string }> } | null } | null> | null, wholeSalePrice?: Array<{ __typename?: 'WholeSalePriceType', qualityFrom?: number | null, qualityTo?: number | null, priceBracket?: string | null, deliveryDays?: number | null } | null> | null, userSupplier: { __typename?: 'SupplierNode', id: string, username?: string | null, companyFullName?: string | null, companyCountryState: { __typename?: 'CountryStateNode', name: string }, companyCountry: { __typename?: 'CountryNode', name: string } }, unitOfMeasure?: { __typename?: 'UnitofMeasureNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'UnitofMeasureTranslationNode', id: string, languageCode: string, name: string }> } | null }, order: { __typename?: 'OrderNode', id: string, orderCode: string } } | null> | null } | null, error?: { __typename?: 'Error', code?: string | null, message?: string | null, field?: string | null } | null } | null };
-
-export type GetGiangVienQueryVariables = Exact<{
-  id: Scalars['ID']['input'];
-}>;
-
-
-export type GetGiangVienQuery = { __typename?: 'Query', giangVien?: { __typename?: 'GiangVienType', id: string, nameGiangVien: string, detai?: string | null } | null };
-
-export type GetGiangViensQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetGiangViensQuery = { __typename?: 'Query', giangViens?: Array<{ __typename?: 'GiangVienType', id: string, nameGiangVien: string, detai?: string | null } | null> | null };
-
-export type GetGroupStudentsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetGroupStudentsQuery = { __typename?: 'Query', groups?: Array<{ __typename?: 'GroupStudentType', id: string, nameGroup: string, giangVien: { __typename?: 'GiangVienType', id: string, nameGiangVien: string }, members?: { __typename?: 'UserNode', id: string, fullName?: string | null } | null } | null> | null };
-
-export type GetGroupStudentQueryVariables = Exact<{
-  id: Scalars['ID']['input'];
-}>;
-
-
-export type GetGroupStudentQuery = { __typename?: 'Query', group?: { __typename?: 'GroupStudentType', id: string, nameGroup: string, giangVien: { __typename?: 'GiangVienType', id: string, nameGiangVien: string }, members?: { __typename?: 'UserNode', id: string, fullName?: string | null } | null } | null };
-
-export type CreateGroupStudentMutationVariables = Exact<{
-  input: GroupStudentInput;
-  userId: Scalars['ID']['input'];
-}>;
-
-
-export type CreateGroupStudentMutation = { __typename?: 'Mutation', createGroupStudent?: { __typename?: 'CreateGroupStudent', status?: boolean | null, group?: { __typename?: 'GroupStudentType', id: string, nameGroup: string, members?: { __typename?: 'UserNode', id: string, fullName?: string | null } | null, giangVien: { __typename?: 'GiangVienType', id: string, nameGiangVien: string } } | null, error?: { __typename?: 'Error', code?: string | null, message?: string | null, field?: string | null } | null } | null };
-
-export type CreateGiangVienMutationVariables = Exact<{
-  input: GiangVienInput;
-}>;
-
-
-export type CreateGiangVienMutation = { __typename?: 'Mutation', createGiangVien?: { __typename?: 'CreateGiangVien', status?: boolean | null, giangVien?: { __typename?: 'GiangVienType', id: string, nameGiangVien: string, detai?: string | null, groupStudents: Array<{ __typename?: 'GroupStudentType', id: string, nameGroup: string }> } | null, error?: { __typename?: 'Error', code?: string | null, message?: string | null, field?: string | null } | null } | null };
 
 export type OurPartnerInfoFragment = { __typename?: 'OurPartnerNode', id: string, title: string, image: string, validFrom: any, validTo: any, status: boolean, logo?: string | null, link?: string | null, description?: string | null };
 
@@ -19975,6 +19972,13 @@ export const UserDiamondSponsorInfoFragmentDoc = gql`
   textEditer
 }
     ${UserWithSupplierInfoFragmentDoc}`;
+export const GiangVienInfoFragmentDoc = gql`
+    fragment GiangVienInfo on GiangVienNode {
+  id
+  name
+  deTai
+}
+    `;
 export const ReasonInfoFragmentDoc = gql`
     fragment ReasonInfo on ReasonNode {
   id
@@ -20565,31 +20569,6 @@ ${BuyerInfoFragmentDoc}
 ${SupplierInfoFragmentDoc}
 ${CityInfoFragmentDoc}
 ${OrderItemsInfoFragmentDoc}`;
-export const GroupStudentInfoFragmentDoc = gql`
-    fragment GroupStudentInfo on GroupStudentType {
-  id
-  nameGroup
-  members {
-    id
-    fullName
-  }
-  giangVien {
-    id
-    nameGiangVien
-  }
-}
-    `;
-export const GiangVienInfoFragmentDoc = gql`
-    fragment GiangVienInfo on GiangVienType {
-  id
-  nameGiangVien
-  detai
-  groupStudents {
-    id
-    nameGroup
-  }
-}
-    `;
 export const OurPartnerInfoFragmentDoc = gql`
     fragment OurPartnerInfo on OurPartnerNode {
   id
@@ -22619,6 +22598,84 @@ export const CreateDiamondSponsorTextEditerDocument = gql`
   })
   export class CreateDiamondSponsorTextEditerGQL extends Apollo.Mutation<CreateDiamondSponsorTextEditerMutation, CreateDiamondSponsorTextEditerMutationVariables> {
     override document = CreateDiamondSponsorTextEditerDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetGiangViensDocument = gql`
+    query getGiangViens($before: String, $after: String, $first: Int, $last: Int, $id: String, $name: String, $deTai: String) {
+  giangViens(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    id: $id
+    name: $name
+    deTai: $deTai
+  ) {
+    totalCount
+    pageInfo {
+      ...PageInfo
+    }
+    edges {
+      node {
+        ...GiangVienInfo
+      }
+    }
+  }
+}
+    ${PageInfoFragmentDoc}
+${GiangVienInfoFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetGiangViensGQL extends Apollo.Query<GetGiangViensQuery, GetGiangViensQueryVariables> {
+    override document = GetGiangViensDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetGiangVienDocument = gql`
+    query getGiangVien($id: ID!) {
+  giangVien(id: $id) {
+    ...GiangVienInfo
+  }
+}
+    ${GiangVienInfoFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetGiangVienGQL extends Apollo.Query<GetGiangVienQuery, GetGiangVienQueryVariables> {
+    override document = GetGiangVienDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const CreateGiangVienDocument = gql`
+    mutation createGiangVien($input: GiangVienInput!) {
+  giangVienCreate(input: $input) {
+    status
+    giangVien {
+      ...GiangVienInfo
+    }
+    error {
+      ...ErrorInfo
+    }
+  }
+}
+    ${GiangVienInfoFragmentDoc}
+${ErrorInfoFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class CreateGiangVienGQL extends Apollo.Mutation<CreateGiangVienMutation, CreateGiangVienMutationVariables> {
+    override document = CreateGiangVienDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
@@ -26534,150 +26591,6 @@ ${ErrorInfoFragmentDoc}`;
   })
   export class UpdateOrderStatusGQL extends Apollo.Mutation<UpdateOrderStatusMutation, UpdateOrderStatusMutationVariables> {
     override document = UpdateOrderStatusDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const GetGiangVienDocument = gql`
-    query getGiangVien($id: ID!) {
-  giangVien(id: $id) {
-    id
-    nameGiangVien
-    detai
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class GetGiangVienGQL extends Apollo.Query<GetGiangVienQuery, GetGiangVienQueryVariables> {
-    override document = GetGiangVienDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const GetGiangViensDocument = gql`
-    query getGiangViens {
-  giangViens {
-    id
-    nameGiangVien
-    detai
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class GetGiangViensGQL extends Apollo.Query<GetGiangViensQuery, GetGiangViensQueryVariables> {
-    override document = GetGiangViensDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const GetGroupStudentsDocument = gql`
-    query getGroupStudents {
-  groups {
-    id
-    nameGroup
-    giangVien {
-      id
-      nameGiangVien
-    }
-    members {
-      id
-      fullName
-    }
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class GetGroupStudentsGQL extends Apollo.Query<GetGroupStudentsQuery, GetGroupStudentsQueryVariables> {
-    override document = GetGroupStudentsDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const GetGroupStudentDocument = gql`
-    query getGroupStudent($id: ID!) {
-  group(id: $id) {
-    id
-    nameGroup
-    giangVien {
-      id
-      nameGiangVien
-    }
-    members {
-      id
-      fullName
-    }
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class GetGroupStudentGQL extends Apollo.Query<GetGroupStudentQuery, GetGroupStudentQueryVariables> {
-    override document = GetGroupStudentDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const CreateGroupStudentDocument = gql`
-    mutation createGroupStudent($input: GroupStudentInput!, $userId: ID!) {
-  createGroupStudent(input: $input, userId: $userId) {
-    status
-    group {
-      ...GroupStudentInfo
-    }
-    error {
-      ...ErrorInfo
-    }
-  }
-}
-    ${GroupStudentInfoFragmentDoc}
-${ErrorInfoFragmentDoc}`;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class CreateGroupStudentGQL extends Apollo.Mutation<CreateGroupStudentMutation, CreateGroupStudentMutationVariables> {
-    override document = CreateGroupStudentDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const CreateGiangVienDocument = gql`
-    mutation createGiangVien($input: GiangVienInput!) {
-  createGiangVien(input: $input) {
-    status
-    giangVien {
-      ...GiangVienInfo
-    }
-    error {
-      ...ErrorInfo
-    }
-  }
-}
-    ${GiangVienInfoFragmentDoc}
-${ErrorInfoFragmentDoc}`;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class CreateGiangVienGQL extends Apollo.Mutation<CreateGiangVienMutation, CreateGiangVienMutationVariables> {
-    override document = CreateGiangVienDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

@@ -257,6 +257,11 @@ export class LayoutDashboard {
             icon: '/assets/icons/setting-3-svgrepo-com.svg',
             href: '/admin/group',
         },
+        {
+            name: 'Giảng Viên',
+            icon: '/assets/icons/setting-3-svgrepo-com.svg',
+            href: '/admin/giangVien',
+        },
         /* {
             name: 'Delivery',
             icon: '/assets/icons/setting-3-svgrepo-com.svg',

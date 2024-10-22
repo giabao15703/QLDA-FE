@@ -18,3 +18,4 @@ export * from './user-guide';
 export * from './rfx';
 export * from './delivery';
 export * from './order';
+export * from './giangvien';

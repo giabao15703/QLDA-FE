@@ -49,25 +49,3 @@ fragment OrderItemsInfo on OrderItemsNode {
         orderCode
     }
 }
-fragment GroupStudentInfo on GroupStudentType {
-    id
-    nameGroup
-    members {
-        id
-        fullName
-    }
-    giangVien {
-        id
-        nameGiangVien
-    }
-}
-
-fragment GiangVienInfo on GiangVienType {
-    id
-    nameGiangVien
-    detai
-    groupStudents {
-        id
-        nameGroup
-    }
-}

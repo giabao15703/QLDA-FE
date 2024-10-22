@@ -1,0 +1,50 @@
+query getGiangViens(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: String
+    $name: String
+    $deTai: String
+
+) {
+    giangViens(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+        name: $name
+        deTai: $deTai
+
+    ) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...GiangVienInfo
+            }
+        }
+    }
+}  
+
+query getGiangVien($id: ID!) {
+    giangVien(id: $id) {
+        ...GiangVienInfo
+    }
+}
+
+
+mutation createGiangVien($input: GiangVienInput!) {
+    giangVienCreate(input: $input) {
+        status
+        giangVien {
+            ...GiangVienInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}

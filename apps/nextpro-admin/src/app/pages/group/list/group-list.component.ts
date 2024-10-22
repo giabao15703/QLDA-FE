@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+/* /* import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
@@ -137,7 +137,7 @@ export class GroupListComponent {
             },
         ];
 
-        /* this.table.config.refetch = this.getGroupStudents; */
+        this.table.config.refetch = this.getGroupStudents; 
 
         this.routeService.onChange(({ hash }) => {
             this.getGroupStudent(hash);
@@ -148,7 +148,7 @@ export class GroupListComponent {
 
     ngOnInit() {
         this.getGroupStudent();
-        /* this.getGroupStudents(); */
+        this.getGroupStudents(); 
     }
 
     getGroupStudent = async (hash?: string) => {
@@ -160,17 +160,17 @@ export class GroupListComponent {
                 }),
         });
     };
-    /* getGroupStudents = async (nameGroup?: string, members?: string, giangVienName?: string, status?: boolean) => {
+     getGroupStudents = async (nameGroup?: string, members?: string, giangVienName?: string, status?: boolean) => {
         const groupStudents = {
-            nameGroup: nameGroup || null, // Nếu không có giá trị thì truyền null
-            members: members || [], // Giả sử `members` là một mảng
+            nameGroup: nameGroup || null, 
+            members: members || [],
             giangVien: giangVienName || null,
             status: status || null,
         };
 
-        this.table.state.data = [groupStudents]; // Thay đổi để data là một mảng chứa groupStudents
-        this.table.state.pagination = { totalCount: 1 }; // Nếu cần phân trang, bạn có thể tùy chỉnh
-    }; */
+        this.table.state.data = [groupStudents]; // Thay
+        this.table.state.pagination = { totalCount: 1 };
+    }; 
 
     handleSort = (values) => {
         this.table.handleSort({
@@ -186,4 +186,4 @@ export class GroupListComponent {
         this.routeService.removeHash();
         this.detail = null;
     };
-}
+} */

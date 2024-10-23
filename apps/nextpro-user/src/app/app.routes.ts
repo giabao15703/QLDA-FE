@@ -36,6 +36,7 @@ import { SupplierPaymentAccountPage } from 'shared/components/account/supplier/u
 import { DashboardComponent } from '#user/pages/dashboard/dashboard.component';
 import { ProjectRegistrationComponent } from '#user/pages/project-registration/project-registration.component';
 import {GroupComponent} from '#user/pages/group/group.component';
+import {GroupRegistrationComponent} from '#user/pages/group-registration/group-registration.component';
 
 export const appRoutes: Routes = [
     { path: '', redirectTo: ROUTES.USER.PRODUCT.ROOT, pathMatch: 'full' },
@@ -67,9 +68,13 @@ export const appRoutes: Routes = [
         path: ROUTES.USER.GROUP.ROOT,
         component: GroupComponent,
     },
+    {
+        path: ROUTES.USER.GROUP_REGISTRATION.ROOT,
+        component: GroupRegistrationComponent,
+    },
 
     {
-        path: ROUTES.USER.PROJECT_REGISTER.ROOT,
+        path: ROUTES.USER.PROJECT_REGISTRATION.ROOT,
         component: ProjectRegistrationComponent,
     },
 

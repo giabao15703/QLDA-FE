@@ -15,7 +15,7 @@ export const ROUTES = {
             },
         },
 
-        PROJECT_REGISTER: {
+        PROJECT_REGISTRATION: {
             ROOT: 'project-registration',
         },
 
@@ -24,6 +24,9 @@ export const ROUTES = {
         },
         GROUP: {
             ROOT: 'group',
+        },
+        GROUP_REGISTRATION: {
+            ROOT: 'group-registration',
         },
         PRODUCT: {
             ROOT: 'product',

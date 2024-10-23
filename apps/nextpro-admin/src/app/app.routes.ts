@@ -65,11 +65,11 @@ export const appRoutes: Routes = [
             { path: 'home', component: HomePage, data: { breadcrumb: 'Home' } },
             {
                 path: 'account/buyer',
-                children: [{ path: '', component: AccountBuyerPage, data: { breadcrumb: 'Account - Buyer' } }],
+                children: [{ path: '', component: AccountSupplierPage, data: { breadcrumb: 'Account - Buyer' } }],
             },
             {
                 path: 'account',
-                children: [{ path: '', component: AccountSupplierPage, data: { breadcrumb: 'Account - Supplier' } }],
+                children: [{ path: '', component: AccountBuyerPage, data: { breadcrumb: 'Account' } }],
             },
             {
                 path: 'account/admin',

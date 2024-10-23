@@ -61,6 +61,14 @@ query getBuyers(
         }
     }
 }
+mutation createBuyer($user: UserInput!) {
+    buyerCreate(user: $user) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}
 
 mutation updateBuyerStatus($listStatus: [BuyerStatusUpdateInput]!, $reasonManual: String) {
     buyerStatusUpdate(listStatus: $listStatus, reasonManual: $reasonManual) {

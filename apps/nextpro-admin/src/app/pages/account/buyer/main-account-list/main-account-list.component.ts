@@ -195,42 +195,6 @@ export class AccountBuyerMainAccountListComponent {
                 render: formatDate,
             },
             {
-                sort: 'valid_from',
-                name: 'validFrom',
-                label: 'account.buyer-accounts.buyer-accounts-list.validFrom',
-                render: formatDate,
-            },
-            {
-                sort: 'valid_to',
-                name: 'validTo',
-                label: 'account.buyer-accounts.buyer-accounts-list.validTo',
-                render: formatDate,
-            },
-            {
-                sort: 'profile_features',
-                name: 'profileFeatures',
-                label: 'account.buyer-accounts.buyer-accounts-list.profileFeatures',
-                render: (_, __, row) => {
-                    return row.profileFeatures.name;
-                },
-            },
-            {
-                sort: 'auctions_year',
-                name: 'auctionsYear',
-                label: 'account.buyer-accounts.buyer-accounts-list.auctionsYear',
-                render: (_, __, row) => {
-                    return row.profileFeatures.noEauctionYear;
-                },
-            },
-            {
-                sort: 'rfx_cancel',
-                name: 'rfxCancellation',
-                label: 'account.buyer-accounts.buyer-accounts-list.rfxCancellation',
-                render: (_, __, row) => {
-                    return row.profileFeatures.rfxYear;
-                },
-            },
-            {
                 cellStyle: { width: '80px' },
                 type: E_TableColumnType.HTML,
                 sort: 'status',
@@ -249,23 +213,7 @@ export class AccountBuyerMainAccountListComponent {
                             status = 'inactive';
                             statusText = 'account.buyer-accounts.buyer-accounts-list.inactive';
                             break;
-                        case 3:
-                            status = 'cancelled';
-                            statusText = 'account.buyer-accounts.buyer-accounts-list.cancelled';
-                            break;
-                        case 4:
-                            status = 'pending';
-                            statusText = 'account.buyer-accounts.buyer-accounts-list.pending';
-                            break;
-                        default:
-                            status = 'undefined';
-                            statusText = 'account.buyer-accounts.buyer-accounts-list.undefined';
-                            break;
                     }
-
-                    return `<div class="text-white text-center p-[10px] bg-${status}">
-                        ${this.translateService.instant(statusText)}
-                    </div>`;
                 },
                 expand: {
                     type: E_TableColumnType.HTML,
@@ -282,14 +230,6 @@ export class AccountBuyerMainAccountListComponent {
                                 status = 'inactive';
                                 statusText = 'account.buyer-accounts.buyer-accounts-list.inactive';
                                 break;
-                            case 3:
-                                status = 'cancelled';
-                                statusText = 'account.buyer-accounts.buyer-accounts-list.cancelled';
-                                break;
-                            case 4:
-                                status = 'pending';
-                                statusText = 'account.buyer-accounts.buyer-accounts-list.pending';
-                                break;
                             default:
                                 status = 'undefined';
                                 statusText = 'account.buyer-accounts.buyer-accounts-list.undefined';
@@ -299,45 +239,6 @@ export class AccountBuyerMainAccountListComponent {
                         return `<div class="text-white text-center p-[10px] bg-${status}">
                             ${this.translateService.instant(statusText)}
                         </div>`;
-                    },
-                },
-            },
-            {
-                cellStyle: { width: '90px' },
-                name: 'changedBy',
-                label: 'account.buyer-accounts.buyer-accounts-list.changedBy',
-                render(_, __, row) {
-                    return row?.buyerActivity?.edges?.[0]?.node?.changedBy?.username;
-                },
-                expand: {
-                    render: (row) => {
-                        return row.node.changedBy.username;
-                    },
-                },
-            },
-            {
-                cellStyle: { width: '80px' },
-                name: 'changeDate',
-                label: 'account.buyer-accounts.buyer-accounts-list.changeDate',
-                render(_, __, row) {
-                    return formatDate(row?.buyerActivity?.edges?.[0]?.node?.changedDate);
-                },
-                expand: {
-                    render: (row) => {
-                        return formatDate(row.node.changedDate);
-                    },
-                },
-            },
-            {
-                cellStyle: { width: '100px' },
-                name: 'reasonInManual',
-                label: 'account.buyer-accounts.buyer-accounts-list.reasonInManual',
-                render(_, __, row) {
-                    return row?.buyerActivity?.edges?.[0]?.node?.reasonManual;
-                },
-                expand: {
-                    render: (row) => {
-                        return row.node.reasonManual;
                     },
                 },
             },
@@ -363,7 +264,7 @@ export class AccountBuyerMainAccountListComponent {
                 ],
             },
         ];
-        this.table.config.refetch = this.getBuyers;
+        this.table.config.refetch = this.getUsers;
 
         this.routeService.onChange(({ hash }) => {
             this.getBuyer(hash);
@@ -375,7 +276,7 @@ export class AccountBuyerMainAccountListComponent {
 
     ngOnInit() {
         this.getBuyer();
-        this.getBuyers();
+        this.getUsers();
     }
 
     getBuyer = async (hash?: string) => {
@@ -389,16 +290,16 @@ export class AccountBuyerMainAccountListComponent {
         });
     };
 
-    getBuyers = async (variables?: I_QueryVariables) => {
-        const buyers = await this.accountService.getBuyers(
+    getUsers = async (variables?: I_QueryVariables) => {
+        const users = await this.accountService.getUsers(
             {
                 ...getQueryVariables({ variables }),
             },
             { extra: { variables } },
         );
-
-        this.table.state.data = buyers.data;
-        this.table.state.pagination = buyers.pagination;
+        console.log('Buyers data:', users.data);
+        this.table.state.data = users.data;
+        this.table.state.pagination = users.pagination;
         this.table.state.selection?.clear();
         this.table.state.expand.clear();
     };

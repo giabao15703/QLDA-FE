@@ -1,0 +1,31 @@
+query getUsers(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $id: ID
+) {
+    users(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        id: $id
+    ) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...UserInfo
+            }
+        }
+    }
+}
+
+query getUser($id: ID!) {
+    user(id: $id) {
+        ...UserInfo
+    }
+}

@@ -41,7 +41,18 @@ export class LayoutDashboard {
         {
             name: 'Account',
             icon: '/assets/icons/account.svg',
-            href: '/admin/account/admin',
+            children: [
+                {
+                    name: 'Account',
+                    icon: '/assets/icons/buyer.svg',
+                    href: '/admin/account/',
+                },
+                {
+                    name: 'Admin Account',
+                    icon: '/assets/icons/admin.svg',
+                    href: '/admin/account/admin',
+                },
+            ],
         },
         /* {
             name: 'Master Data',

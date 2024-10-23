@@ -1,4 +1,4 @@
-@if (loadingService.checkLoading(['getBuyer'])) {
+@if (loadingService.checkLoading(['getUser'])) {
     <app-loading [backdrop]="true" />
 }
 <mat-drawer-container [hasBackdrop]="false">
@@ -23,7 +23,7 @@
     <mat-drawer-content>
         <app-table
             [attr.name]="table.name"
-            [isLoading]="loadingService.checkLoading(['getBuyers'])"
+            [isLoading]="loadingService.checkLoading(['getUsers'])"
             [extendHeight]="228"
             [columns]="table.config.columns"
             [data]="table.state.data"

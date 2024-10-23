@@ -18,7 +18,7 @@ import { MaterialModules } from '#shared/modules';
         MaterialModules,
         SyncTabsWithAnchorDirective,
         AccountSupplierMainAccountListComponent,
-        AccountSupplierSubAccountListComponent,
+        /* AccountSupplierSubAccountListComponent, */
     ],
 })
 export class AccountSupplierPage {}

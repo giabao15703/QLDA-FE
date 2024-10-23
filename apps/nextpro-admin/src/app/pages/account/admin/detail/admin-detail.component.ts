@@ -61,11 +61,6 @@ export class AccountAdminDetailComponent {
                 name: 'email',
             },
             {
-                label: 'account.admin-accounts.picture',
-                name: 'picture',
-                fieldType: E_FieldType.UPLOAD,
-            },
-            {
                 label: 'account.admin-accounts.password',
                 name: 'password',
                 inputType: E_InputType.PASSWORD,
@@ -143,20 +138,6 @@ export class AccountAdminDetailComponent {
                     },
                 ],
             },
-            {
-                label: 'account.admin-accounts.modules',
-                name: 'modules',
-                loadingName: 'getGroupPermissions',
-                fieldType: E_FieldType.SELECT,
-                getOptions: () =>
-                    this.accountService
-                        .getGroupPermissions()
-                        .then((res) => res.data.filter((groupPermission) => Boolean(groupPermission.group))),
-                mapOption: (item: I_GroupPermission) => ({
-                    label: item.group.name,
-                    value: item.group.id,
-                }),
-            },
         ];
     }
 
@@ -189,7 +170,6 @@ export class AccountAdminDetailComponent {
                     shortName,
                     longName,
                     email,
-                    picture,
                     user: { status, userspermissionSet },
                 } = this.data;
 
@@ -198,12 +178,10 @@ export class AccountAdminDetailComponent {
                     shortName,
                     longName,
                     email,
-                    picture: await getFile(picture),
                     status,
                     validFrom: userspermissionSet?.edges?.[0]?.node?.validFrom,
                     validTo: userspermissionSet?.edges?.[0]?.node?.validTo,
                     role: userspermissionSet?.edges?.[0]?.node?.permission?.role,
-                    modules: userspermissionSet?.edges?.[0]?.node?.permission?.group?.id,
                 });
             }
         }
@@ -219,13 +197,12 @@ export class AccountAdminDetailComponent {
                     ...(this.mode === E_Form_Mode.CREATE && { password: values.password }),
                 },
                 longName: values.longName,
-                picture: values.picture,
                 permissions: [
                     {
                         validFrom: toPythonDate(values.validFrom),
                         validTo: toPythonDate(values.validTo),
                         role: parseInt(values.role),
-                        modules: values.modules,
+                        modules: values.modules || [],
                     },
                 ],
             };

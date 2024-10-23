@@ -1388,7 +1388,7 @@ export type BuyerClubVoucherUpdate = {
 
 export type BuyerCreate = {
   __typename?: 'BuyerCreate';
-  buyer?: Maybe<BuyerNode>;
+  error?: Maybe<Error>;
   status?: Maybe<Scalars['Boolean']['output']>;
 };
 
@@ -1454,31 +1454,6 @@ export type BuyerIndustryNodeEdge = {
   cursor: Scalars['String']['output'];
   /** The item at the end of the edge */
   node?: Maybe<BuyerIndustryNode>;
-};
-
-export type BuyerInput = {
-  companyAddress: Scalars['String']['input'];
-  companyCity: Scalars['String']['input'];
-  companyCountry: Scalars['String']['input'];
-  companyCountryState: Scalars['String']['input'];
-  companyEmail: Scalars['String']['input'];
-  companyLogo?: InputMaybe<Scalars['Upload']['input']>;
-  companyLongName: Scalars['String']['input'];
-  companyNumberOfEmployee: Scalars['String']['input'];
-  companyReferralCode?: InputMaybe<Scalars['String']['input']>;
-  companyShortName: Scalars['String']['input'];
-  companyTax: Scalars['String']['input'];
-  companyWebsite?: InputMaybe<Scalars['String']['input']>;
-  currency: Scalars['String']['input'];
-  gender: Scalars['String']['input'];
-  industries: Array<InputMaybe<Scalars['String']['input']>>;
-  language?: InputMaybe<Scalars['String']['input']>;
-  phone: Scalars['String']['input'];
-  picture?: InputMaybe<Scalars['Upload']['input']>;
-  position: Scalars['String']['input'];
-  profileFeatures: Scalars['String']['input'];
-  promotion?: InputMaybe<Scalars['String']['input']>;
-  user: UserInput;
 };
 
 export type BuyerNode = CustomNode & UserInterface & {
@@ -6060,7 +6035,7 @@ export type MutationBuyerClubVoucherUpdateStatusArgs = {
 
 
 export type MutationBuyerCreateArgs = {
-  buyer: BuyerInput;
+  user: UserInput;
 };
 
 
@@ -16210,6 +16185,13 @@ export type GetBuyersQueryVariables = Exact<{
 
 export type GetBuyersQuery = { __typename?: 'Query', buyers?: { __typename?: 'BuyerNodeConnection', totalCount?: number | null, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'BuyerNodeEdge', node?: { __typename?: 'BuyerNode', id: string, companyFullName?: string | null, companyShortName?: string | null, companyLongName?: string | null, companyLogo?: string | null, companyTax: string, companyAddress: string, companyCity: string, companyWebsite?: string | null, companyReferralCode?: string | null, companyEmail?: string | null, picture?: string | null, phone: string, validFrom: any, validTo: any, sendMail30Day?: any | null, sendMail15Day?: any | null, sendMail7Day?: any | null, sendMailExpire?: any | null, email?: string | null, shortName?: string | null, fullName?: string | null, username?: string | null, userType?: number | null, created?: any | null, firstName?: string | null, lastName?: string | null, pk?: number | null, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, companyCountry: { __typename?: 'CountryNode', id: string, itemCode: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'CountryTranslationNode', id: string, languageCode: string, name: string }> }, companyCountryState: { __typename?: 'CountryStateNode', id: string, name: string, stateCode: string, status?: boolean | null, country: { __typename?: 'CountryNode', id: string, itemCode: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'CountryTranslationNode', id: string, languageCode: string, name: string }> }, translations: Array<{ __typename?: 'CountryStateTranslationNode', id: string, languageCode: string, name: string }> }, companyNumberOfEmployee: { __typename?: 'NumberofEmployeeNode', id: string, name: string, status?: boolean | null }, gender: { __typename?: 'GenderNode', id: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'GenderTranslationNode', id: string, languageCode: string, name: string }> }, position: { __typename?: 'PositionNode', id: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'PositionTranslationNode', id: string, languageCode: string, name: string }> }, language?: { __typename?: 'LanguageNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'LanguageTranslationNode', id: string, languageCode: string, name: string }> } | null, profileFeatures?: { __typename?: 'ProfileFeaturesBuyerNode', id: string, name: string, marketResearch: string, rfxYear: number, noEauctionYear: number, helpDesk: string, reportYear: number, subUserAccounts: number, feeEauction?: number | null, totalFeeYear?: number | null, profileFeaturesType: number, status?: boolean | null, rfxAutoNego: boolean } | null, currency?: { __typename?: 'CurrencyNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'CurrencyTranslationNode', id: string, languageCode: string, name: string }> } | null, buyerActivity: { __typename?: 'BuyerActivityNodeConnection', edges: Array<{ __typename?: 'BuyerActivityNodeEdge', node?: { __typename?: 'BuyerActivityNode', changedDate: any, reasonManual?: string | null, changedState: number, pk?: number | null, changedBy?: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } } | null } | null } | null> }, buyerIndustry: { __typename?: 'BuyerIndustryNodeConnection', totalCount?: number | null, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'BuyerIndustryNodeEdge', node?: { __typename?: 'BuyerIndustryNode', id: string, industry: { __typename?: 'IndustrySubSectorsNode', id: string, itemCode: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'IndustrySubSectorsTranslationNode', id: string, languageCode: string, name: string }> } } | null } | null> } } | null } | null> } | null };
 
+export type CreateBuyerMutationVariables = Exact<{
+  user: UserInput;
+}>;
+
+
+export type CreateBuyerMutation = { __typename?: 'Mutation', buyerCreate?: { __typename?: 'BuyerCreate', status?: boolean | null, error?: { __typename?: 'Error', code?: string | null, message?: string | null, field?: string | null } | null } | null };
+
 export type UpdateBuyerStatusMutationVariables = Exact<{
   listStatus: Array<InputMaybe<BuyerStatusUpdateInput>> | InputMaybe<BuyerStatusUpdateInput>;
   reasonManual?: InputMaybe<Scalars['String']['input']>;
@@ -19120,6 +19102,24 @@ export type UserWithBuyerAndSupplierInfoFragment = { __typename?: 'UserNode', id
 
 export type UserWithPermissionAndSubstitutionPermissionInfoFragment = { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, userspermissionSet: { __typename?: 'UsersPermissionNodeConnection', edges: Array<{ __typename?: 'UsersPermissionNodeEdge', node?: { __typename?: 'UsersPermissionNode', id: string, validFrom?: any | null, validTo?: any | null, status: number, pk?: number | null, permission: { __typename?: 'GroupPermissionNode', id: string, role: number, group?: { __typename?: 'GroupNode', id: string, name: string } | null } } | null } | null> }, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } };
 
+export type GetUsersQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+}>;
+
+
+export type GetUsersQuery = { __typename?: 'Query', users?: { __typename?: 'UserNodeConnection', totalCount?: number | null, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'UserNodeEdge', node?: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } } | null } | null> } | null };
+
+export type GetUserQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type GetUserQuery = { __typename?: 'Query', user?: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } } | null };
+
 export const UserInfoFragmentDoc = gql`
     fragment UserInfo on UserNode {
   id
@@ -21773,6 +21773,27 @@ ${BuyerInfoFragmentDoc}`;
   })
   export class GetBuyersGQL extends Apollo.Query<GetBuyersQuery, GetBuyersQueryVariables> {
     override document = GetBuyersDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const CreateBuyerDocument = gql`
+    mutation createBuyer($user: UserInput!) {
+  buyerCreate(user: $user) {
+    status
+    error {
+      ...ErrorInfo
+    }
+  }
+}
+    ${ErrorInfoFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class CreateBuyerGQL extends Apollo.Mutation<CreateBuyerMutation, CreateBuyerMutationVariables> {
+    override document = CreateBuyerDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
@@ -28729,6 +28750,51 @@ export const UpdateUserPermissionStatusDocument = gql`
   })
   export class UpdateUserPermissionStatusGQL extends Apollo.Mutation<UpdateUserPermissionStatusMutation, UpdateUserPermissionStatusMutationVariables> {
     override document = UpdateUserPermissionStatusDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetUsersDocument = gql`
+    query getUsers($before: String, $after: String, $first: Int, $last: Int, $id: ID) {
+  users(before: $before, after: $after, first: $first, last: $last, id: $id) {
+    totalCount
+    pageInfo {
+      ...PageInfo
+    }
+    edges {
+      node {
+        ...UserInfo
+      }
+    }
+  }
+}
+    ${PageInfoFragmentDoc}
+${UserInfoFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetUsersGQL extends Apollo.Query<GetUsersQuery, GetUsersQueryVariables> {
+    override document = GetUsersDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetUserDocument = gql`
+    query getUser($id: ID!) {
+  user(id: $id) {
+    ...UserInfo
+  }
+}
+    ${UserInfoFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetUserGQL extends Apollo.Query<GetUserQuery, GetUserQueryVariables> {
+    override document = GetUserDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

@@ -5,6 +5,9 @@ import {
     CreateAdminGQL,
     CreateAdminMutation,
     CreateAdminMutationVariables,
+    CreateBuyerGQL,
+    CreateBuyerMutation,
+    CreateBuyerMutationVariables,
     CreateBuyerSubAccountGQL,
     CreateBuyerSubAccountMutation,
     CreateBuyerSubAccountMutationVariables,
@@ -71,9 +74,15 @@ import {
     GetSuppliersWithProductsGQL,
     GetSuppliersWithProductsQuery,
     GetSuppliersWithProductsQueryVariables,
+    GetUserGQL,
     GetUserPermissionsGQL,
     GetUserPermissionsQuery,
     GetUserPermissionsQueryVariables,
+    GetUserQuery,
+    GetUserQueryVariables,
+    GetUsersGQL,
+    GetUsersQuery,
+    GetUsersQueryVariables,
     UpdateAdminGQL,
     UpdateAdminMutation,
     UpdateAdminMutationVariables,
@@ -124,6 +133,7 @@ import {
     I_SupplierProfile,
     I_SupplierSubAccount,
     I_TableState,
+    I_User,
     I_UserPermission,
 } from '#shared/types';
 import { normalizeWithPagination } from '#shared/utils';
@@ -177,6 +187,10 @@ export class AccountService {
         private updateAdminStatusGQL: UpdateAdminStatusGQL,
 
         private getclientFocusesGQL: GetClientFocusesGQL,
+        private createBuyerGQL: CreateBuyerGQL,
+
+        private getUsersGQL: GetUsersGQL,
+        private getUserGQL: GetUserGQL,
     ) {}
 
     get error(): Observable<string> {
@@ -198,7 +212,6 @@ export class AccountService {
         }) as Promise<I_TableState<I_SupplierLists>>;
     };
 
-    // #region BUYER MAIN ACCOUNT
     private normalizeBuyerList = (data: GetBuyersQuery, extra?: I_NormalizeExtra): I_TableState<I_Buyer> => {
         return normalizeWithPagination<I_Buyer>(data.buyers, extra);
     };
@@ -222,6 +235,32 @@ export class AccountService {
                 ...options,
             },
         ) as Promise<I_TableState<I_Buyer>>;
+    };
+
+    // #region BUYER MAIN ACCOUNT
+    private normalizeUserList = (data: GetUsersQuery, extra?: I_NormalizeExtra): I_TableState<I_User> => {
+        return normalizeWithPagination<I_User>(data.users, extra);
+    };
+
+    getUser = (variables?: GetUserQueryVariables, options?: I_GraphQLOptions<GetUserQuery, I_User>) => {
+        return this.graphqlService.query<GetUserQuery, GetUserQueryVariables, I_User>(this.getUserGQL, variables, {
+            normalize: (data) => data.user,
+            ...options,
+        }) as Promise<I_User>;
+    };
+
+    getUsers = (
+        variables?: GetUsersQueryVariables,
+        options?: I_GraphQLOptions<GetUsersQuery, I_TableState<I_User>>,
+    ) => {
+        return this.graphqlService.query<GetUsersQuery, GetUsersQueryVariables, I_TableState<I_User>>(
+            this.getUsersGQL,
+            variables,
+            {
+                normalize: (data) => this.normalizeUserList(data, options?.extra),
+                ...options,
+            },
+        ) as Promise<I_TableState<I_User>>;
     };
 
     updateBuyerDetail = (
@@ -650,7 +689,16 @@ export class AccountService {
             { adminCreate: I_MutationResponse }
         >(this.createAdminGQL, variables, options);
     };
-
+    createBuyer = (
+        variables?: CreateBuyerMutationVariables,
+        options?: I_GraphQLOptions<CreateBuyerMutation, { buyerCreate: I_MutationResponse }>,
+    ) => {
+        return this.graphqlService.mutate<
+            CreateBuyerMutation,
+            CreateBuyerMutationVariables,
+            { buyerCreate: I_MutationResponse }
+        >(this.createBuyerGQL, variables, options);
+    };
     updateAdmin = (
         variables?: UpdateAdminMutationVariables,
         options?: I_GraphQLOptions<UpdateAdminMutation, { adminUpdate: I_MutationResponse }>,

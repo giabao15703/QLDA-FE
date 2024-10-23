@@ -64,171 +64,6 @@ export class BuyerBasicInformationFormComponent {
         this.translateService.use(JSON.parse(localStorage.getItem('languageCode') || 'en') === 'vi' ? 'vi' : 'en');
         this.form.config = [
             {
-                name: 'companyInfoContainer',
-                class: 'grid gap-2 grid-cols-1 lg:grid-cols-3',
-                fieldType: E_FieldType.CONTAINER,
-                containerType: E_ContainerType.FIELDSET,
-                label: 'auth.register.become-buyer.form-buyer.companyInformation',
-                children: [
-                    {
-                        label: 'auth.register.become-buyer.form-buyer.fullName',
-                        placeholder: 'auth.register.become-buyer.form-buyer.fullName',
-                        name: 'companyFullName',
-                        loadingName: 'getBuyers',
-                        inputType: E_InputType.AUTOCOMPLETE,
-                        maxLength: 255,
-                        getOptions: (text: string) =>
-                            this.accountService.getBuyers({ first: 100, usernameExact: text }).then((res) => res.data),
-                        mapOption: (item: I_Buyer) => ({
-                            label: item.companyFullName,
-                            value: item.id,
-                        }),
-                        validate: [
-                            {
-                                rule: Validators.required,
-                                message: 'VALIDATE_DESCRIPTION.companyFullName.required',
-                            },
-                        ],
-                    },
-                    {
-                        label: 'auth.register.become-buyer.form-buyer.address',
-                        placeholder: 'auth.register.become-buyer.form-buyer.address',
-                        name: 'companyAddress',
-                        maxLength: 255,
-                        validate: [
-                            {
-                                rule: Validators.required,
-                                message: 'VALIDATE_DESCRIPTION.companyAddress.required',
-                            },
-                            {
-                                rule: Validators.pattern(REGEX_NO_NUMBERS_SPECIAL),
-                                message: 'VALIDATE_DESCRIPTION.companyAddress.pattern',
-                            },
-                        ],
-                    },
-                    {
-                        label: 'auth.register.become-buyer.form-buyer.industry',
-                        placeholder: 'auth.register.become-buyer.form-buyer.industry',
-                        name: 'industries',
-                        loadingName: 'getIndustries',
-                        inputType: E_InputType.CHIP,
-                        suffix: {
-                            icon: 'search',
-                            onClick: (e) => {
-                                e.preventDefault();
-                                this.openIndustryDialog();
-                            },
-                        },
-                        validate: [
-                            {
-                                rule: Validators.required,
-                                message: 'notification.selectIndustry',
-                            },
-                        ],
-                    },
-                    {
-                        label: 'auth.register.become-buyer.form-buyer.logo',
-                        name: 'companyLogo',
-                        fieldType: E_FieldType.UPLOAD,
-                        uploadType: 'single',
-                    },
-                    {
-                        label: 'auth.register.become-buyer.form-buyer.country',
-                        placeholder: 'auth.register.become-buyer.form-buyer.country',
-                        name: 'companyCountry',
-                        loadingName: 'getCountries',
-                        fieldType: E_FieldType.SELECT,
-                        getOptions: () => this.masterDataService.getCountries().then((res) => res.data),
-                        mapOption: (item: I_Country) => ({
-                            label: item.name,
-                            value: item.id,
-                        }),
-                        validate: [
-                            {
-                                rule: Validators.required,
-                                message: 'VALIDATE_DESCRIPTION.companyCountry.required',
-                            },
-                        ],
-                    },
-                    {
-                        label: 'auth.register.become-buyer.form-buyer.city',
-                        placeholder: 'auth.register.become-buyer.form-buyer.city',
-                        name: 'companyCountryState',
-                        loadingName: 'getCities',
-                        fieldType: E_FieldType.SELECT,
-                        listenChangeFrom: 'companyCountry',
-                        getOptions: (countryId) =>
-                            this.masterDataService.getCities({ countryId }).then((res) => res.data),
-                        mapOption: (item: I_City) => ({
-                            label: item.name,
-                            value: item.id,
-                        }),
-                        validate: [
-                            {
-                                rule: Validators.required,
-                                message: 'VALIDATE_DESCRIPTION.companyCity.required',
-                            },
-                            {
-                                rule: Validators.pattern(REGEX_NO_NUMBERS_SPECIAL),
-                                message: 'VALIDATE_DESCRIPTION.companyCity.pattern',
-                            },
-                        ],
-                    },
-                    {
-                        label: 'auth.register.become-buyer.form-buyer.taxCode',
-                        placeholder: 'auth.register.become-buyer.form-buyer.taxCode',
-                        name: 'companyTax',
-                        validate: [
-                            {
-                                rule: Validators.required,
-                                message: 'VALIDATE_DESCRIPTION.companyTax.required',
-                            },
-                            {
-                                rule: Validators.pattern(REGEX_ALPHANUMERIC),
-                                message: 'VALIDATE_DESCRIPTION.companyTax.pattern',
-                            },
-                        ],
-                    },
-                    {
-                        label: 'auth.register.become-buyer.form-buyer.noEmployee',
-                        placeholder: 'auth.register.become-buyer.form-buyer.noEmployee',
-                        name: 'companyNumberOfEmployee',
-                        loadingName: 'getNumberOfEmployees',
-                        fieldType: E_FieldType.SELECT,
-                        getOptions: () => this.masterDataService.getNumberOfEmployees().then((res) => res.data),
-                        mapOption: (item: I_NumberOfEmployee) => ({
-                            label: item.name,
-                            value: item.id,
-                        }),
-                        validate: [
-                            {
-                                rule: Validators.required,
-                                message: 'VALIDATE_DESCRIPTION.companyNumberOfEmployee.required',
-                            },
-                        ],
-                    },
-                    {
-                        label: 'auth.register.become-buyer.form-buyer.currency',
-                        placeholder: 'auth.register.become-buyer.form-buyer.currency',
-                        name: 'currency',
-                        loadingName: 'getCurrencies',
-                        fieldType: E_FieldType.SELECT,
-                        getOptions: () => this.masterDataService.getCurrencies().then((res) => res.data),
-                        mapOption: (item: I_Currency) => ({
-                            label: translateData(item, this.localStorageService.get('languageCode'), 'name'),
-                            value: item.id,
-                        }),
-                        translateOptions: true,
-                        validate: [
-                            {
-                                rule: Validators.required,
-                                message: 'VALIDATE_DESCRIPTION.currency.required',
-                            },
-                        ],
-                    },
-                ],
-            },
-            {
                 name: 'contactPersonContainer',
                 class: 'grid gap-2 grid-cols-1 lg:grid-cols-3',
                 fieldType: E_FieldType.CONTAINER,
@@ -248,44 +83,6 @@ export class BuyerBasicInformationFormComponent {
                             {
                                 rule: Validators.pattern(REGEX_NO_NUMBERS_SPECIAL),
                                 message: 'VALIDATE_DESCRIPTION.fullName.pattern',
-                            },
-                        ],
-                    },
-                    {
-                        label: 'auth.register.become-buyer.form-buyer.gender',
-                        placeholder: 'auth.register.become-buyer.form-buyer.gender',
-                        name: 'gender',
-                        loadingName: 'getGenders',
-                        fieldType: E_FieldType.SELECT,
-                        getOptions: () => this.masterDataService.getGenders().then((res) => res.data),
-                        mapOption: (item: I_Gender) => ({
-                            label: translateData(item, this.localStorageService.get('languageCode'), 'name'),
-                            value: item.id,
-                        }),
-                        translateOptions: true,
-                        validate: [
-                            {
-                                rule: Validators.required,
-                                message: 'VALIDATE_DESCRIPTION.gender.required',
-                            },
-                        ],
-                    },
-                    {
-                        label: 'auth.register.become-buyer.form-buyer.position',
-                        placeholder: 'auth.register.become-buyer.form-buyer.position',
-                        name: 'position',
-                        loadingName: 'getPositions',
-                        fieldType: E_FieldType.SELECT,
-                        getOptions: () => this.masterDataService.getPositions().then((res) => res.data),
-                        mapOption: (item: I_Gender) => ({
-                            label: translateData(item, this.localStorageService.get('languageCode'), 'name'),
-                            value: item.id,
-                        }),
-                        translateOptions: true,
-                        validate: [
-                            {
-                                rule: Validators.required,
-                                message: 'VALIDATE_DESCRIPTION.position.required',
                             },
                         ],
                     },
@@ -320,12 +117,6 @@ export class BuyerBasicInformationFormComponent {
                         ],
                     },
                     {
-                        label: 'auth.register.become-buyer.form-buyer.picture',
-                        name: 'picture',
-                        fieldType: E_FieldType.UPLOAD,
-                        uploadType: 'single',
-                    },
-                    {
                         label: 'auth.register.become-buyer.form-buyer.password',
                         placeholder: 'auth.register.become-buyer.form-buyer.password',
                         name: 'password',
@@ -348,24 +139,6 @@ export class BuyerBasicInformationFormComponent {
                                 message: 'VALIDATE_DESCRIPTION.confirmPassword.required',
                             },
                         ],
-                    },
-                    {
-                        label: 'auth.register.become-buyer.form-buyer.referralCode',
-                        placeholder: 'auth.register.become-buyer.form-buyer.referralCode',
-                        name: 'companyReferralCode',
-                        maxLength: 100,
-                        onBlur: async (event) => {
-                            const result = await this.promotionService.checkValidReferral({
-                                referralCode: event.target.value,
-                            });
-
-                            if (!result) {
-                                this.form.setFieldError(
-                                    'referralCode',
-                                    'VALIDATE_DESCRIPTION.referralCode.doesNotExist',
-                                );
-                            }
-                        },
                     },
                 ],
             },
@@ -537,61 +310,43 @@ export class BuyerBasicInformationFormComponent {
     };
 
     handleSave = () => {
-        this.form.submit(
-            async ({
-                confirmPassword,
-                companyFullName,
-                companyTax,
-                companyAddress,
-                companyCountry,
-                companyCountryState,
-                companyNumberOfEmployee,
-                companyWebsite,
-                companyReferralCode,
-                gender,
-                phone,
-                position,
-                currency,
-                email,
-                password,
-                fullName,
-                companyLogo,
-                picture,
-                industries,
-            }) => {
-                if (password !== confirmPassword) {
-                    this.form.setFieldError('confirmPassword', 'VALIDATE_DESCRIPTION.password.notMatch');
-                    return;
-                }
+        this.form.submit(async ({ confirmPassword, email, password }) => {
+            // Kiểm tra xác thực mật khẩu
+            if (password !== confirmPassword) {
+                this.form.setFieldError('confirmPassword', 'VALIDATE_DESCRIPTION.password.notMatch');
+                return;
+            }
 
-                const submitData = {
-                    companyFullName,
-                    companyTax,
-                    companyAddress,
-                    companyCountry,
-                    companyCity: companyCountryState,
-                    companyCountryState,
-                    companyNumberOfEmployee,
-                    companyWebsite: companyWebsite ?? '',
-                    companyReferralCode: companyReferralCode ?? '',
-                    gender,
-                    phone,
-                    position,
-                    currency,
-                    language: this.language,
-                    email,
-                    password,
-                    fullName,
-                    companyLogo,
-                    picture,
-                    industries: industries.map((industry) => industry.value),
-                };
+            // Chuẩn bị dữ liệu để gửi
+            const submitData = {
+                user: {
+                    email: email ?? '',
+                    password: password ?? '',
+                    status: 1, // Giá trị mặc định cho status
+                },
+            };
 
-                this.onSave(submitData, () => {
-                    this.localStorageService.remove(FORM_NAME);
+            // Gọi hàm createBuyer từ AccountService để gửi mutation và sử dụng then/catch để xử lý Promise
+            this.accountService
+                .createBuyer(submitData)
+                .then((response: any) => {
+                    const data = response.data;
+                    // Kiểm tra phản hồi từ mutation
+                    if (data?.buyerCreate?.status) {
+                        // Thành công
+                        this.localStorageService.remove(FORM_NAME);
+                        console.log('Buyer created successfully:', data.buyerCreate.buyer); // Log dữ liệu buyer vừa tạo
+
+                        // Nếu bạn cần hiển thị dữ liệu vừa tạo, có thể lưu lại trong state hoặc render ra UI
+                    } else {
+                        // Xử lý lỗi từ response
+                        this.form.setFieldError('general', data?.buyerCreate?.error?.message || 'Unknown error');
+                    }
+                })
+                .catch((error) => {
+                    // Xử lý lỗi khi gửi request đến server
+                    this.form.setFieldError('general', error.message || 'Error occurred while creating buyer');
                 });
-            },
-            FORM_NAME,
-        );
+        }, FORM_NAME);
     };
 }

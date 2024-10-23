@@ -18,7 +18,6 @@ import { AccountBuyerSubAccountListComponent } from './sub-account-list/sub-acco
         MaterialModules,
         SyncTabsWithAnchorDirective,
         AccountBuyerMainAccountListComponent,
-        AccountBuyerSubAccountListComponent,
     ],
 })
 export class AccountBuyerPage {}

@@ -6,15 +6,10 @@ import { NavbarComponent } from '#user/layout';
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.scss'], // Nếu bạn có tệp CSS cho trang này
-    imports: [
-        SidebarComponent,
-        NavbarComponent
-    ]
-    ,
+    imports: [SidebarComponent, NavbarComponent],
 })
 export class DashboardComponent {
     constructor() {
-        
         // Khởi tạo các biến hoặc dịch vụ cần thiết
     }
 

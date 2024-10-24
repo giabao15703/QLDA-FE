@@ -7,10 +7,7 @@ import { NavbarComponent } from '#user/layout';
     selector: 'app-group',
     templateUrl: './group.component.html',
     styleUrls: ['./group.component.scss'],
-    imports: [
-        SidebarComponent,
-        NavbarComponent
-    ],
+    imports: [SidebarComponent, NavbarComponent],
 })
 export class GroupComponent {
     constructor() {

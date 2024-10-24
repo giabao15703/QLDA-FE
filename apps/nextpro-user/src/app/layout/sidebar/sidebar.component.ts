@@ -11,6 +11,4 @@ import { MaterialModules } from '#shared/modules';
     styleUrl: './sidebar.component.scss',
     imports: [MaterialModules, LanguageSwitchComponent, TranslateModule, RouterModule],
 })
-export class SidebarComponent {
-
-}
+export class SidebarComponent {}

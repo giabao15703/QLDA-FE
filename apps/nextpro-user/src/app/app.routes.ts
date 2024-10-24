@@ -37,6 +37,7 @@ import { DashboardComponent } from '#user/pages/dashboard/dashboard.component';
 import { ProjectRegistrationComponent } from '#user/pages/project-registration/project-registration.component';
 import { GroupComponent } from '#user/pages/group/group.component';
 import { GroupRegistrationComponent } from '#user/pages/group-registration/group-registration.component';
+import { NotificationComponent } from '#user/pages/notification/notification.component';
 
 export const appRoutes: Routes = [
     { path: '', redirectTo: ROUTES.USER.DASHBOARD.ROOT, pathMatch: 'full' },
@@ -67,6 +68,10 @@ export const appRoutes: Routes = [
     {
         path: ROUTES.USER.GROUP.ROOT,
         component: GroupComponent,
+    },
+    {
+        path: ROUTES.USER.NOTIFICATION.ROOT,
+        component: NotificationComponent,
     },
     {
         path: ROUTES.USER.GROUP_REGISTRATION.ROOT,

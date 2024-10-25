@@ -1,0 +1,51 @@
+query getGroupQldas(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $name: String
+    $deTai: String
+    $status: Boolean
+) {
+    groupQldas(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        name: $name
+        deTai: $deTai
+        status: $status
+    ) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...GroupQLDAInfo
+            }
+        }
+    }
+}
+
+
+query getGroupQlda($id: ID!) {
+    groupQlda(id: $id) {
+        ...GroupQLDAInfo
+    }
+}
+
+
+
+mutation createGroupQlda($input: GroupQLDAInput!) {
+    groupQldaCreate(input: $input) {
+        status
+        groupQlda {
+            ...GroupQLDAInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+

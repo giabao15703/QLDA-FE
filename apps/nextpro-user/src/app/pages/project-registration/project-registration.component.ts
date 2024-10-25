@@ -6,14 +6,9 @@ import { NavbarComponent } from '#user/layout';
     selector: 'app-project-registration',
     templateUrl: './project-registration.component.html',
     styleUrls: ['./project-registration.component.scss'], // Nếu bạn có tệp CSS cho trang này
-    imports: [
-        SidebarComponent,
-        NavbarComponent
-    ]
-    ,
+    imports: [SidebarComponent, NavbarComponent],
 })
 export class ProjectRegistrationComponent {
-    
     constructor() {
         // Khởi tạo các biến hoặc dịch vụ cần thiết
     }

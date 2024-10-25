@@ -8,17 +8,58 @@
         <div class="container mx-auto p-4">
             <!-- Form đăng ký nhóm -->
             <div class="bg-white shadow-md rounded-lg p-4 mb-4">
-                <h2 class="text-xl font-bold mb-2">Đăng ký Nhóm</h2>
+                <h2 class="text-2xl font-bold mb-2">Đăng ký Nhóm</h2>
                 <form (ngSubmit)="onSubmit()">
                     <div class="mb-4">
                         <label for="tenNhom" class="block text-sm font-medium text-gray-700">Tên Nhóm</label>
-                        <input type="text" id="tenNhom"  name="tenNhom" required
-                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                        <input
+                            type="text"
+                            id="tenNhom"
+                            name="tenNhom"
+                            [(ngModel)]="tenNhom"
+                            required
+                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        />
                     </div>
                     <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
                         Đăng ký
                     </button>
                 </form>
+            </div>
+            <div class="bg-white shadow-md rounded-lg p-4 mb-4">
+                <h2 class="text-2xl font-bold mb-4">Tham gia nhóm</h2>
+
+                <!-- Bảng danh sách đồ án -->
+                <table class="min-w-full bg-white shadow-md rounded-lg">
+                    <thead>
+                        <tr class="[&_th]:text-nowrap">
+                            <th class="py-2 px-4 border-b">Mã nhóm</th>
+                            <th class="py-2 px-4 border-b">Tên nhóm</th>
+                            <th class="py-2 px-4 border-b">Số lượng thành viên</th>
+                            <th class="py-2 px-4 border-b">Trạng thái</th>
+                            <th class="py-2 px-4 border-b">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="groupData?.data?.length > 0">
+                        <tr *ngFor="let group of groupData.data">
+                            <td class="py-2 px-4 border-b">{{ group.maNhom }}</td>
+                            <td class="py-2 px-4 border-b">{{ group.name }}</td>
+                            <td class="py-2 px-4 border-b">
+                                1
+                            </td>
+                            <td class="py-2 px-4 border-b">{{ group.status }}</td>
+                            <td class="py-2 px-4 border-b text-center">
+                                <button
+                                    class="bg-blue-500 text-white text-sm px-4 py-2 rounded hover:bg-blue-600"
+                                    (click)="joinGroup(group.id)"
+                                >
+                                    Gia nhập
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                    
+                </table>
             </div>
         </div>
     </div>

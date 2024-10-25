@@ -35,11 +35,12 @@ import { HomepageSupplierPage } from '#user/pages/supplier/supplier.component';
 import { SupplierPaymentAccountPage } from 'shared/components/account/supplier/upgrade-profile/payment/payment.component';
 import { DashboardComponent } from '#user/pages/dashboard/dashboard.component';
 import { ProjectRegistrationComponent } from '#user/pages/project-registration/project-registration.component';
-import {GroupComponent} from '#user/pages/group/group.component';
-import {GroupRegistrationComponent} from '#user/pages/group-registration/group-registration.component';
+import { GroupComponent } from '#user/pages/group/group.component';
+import { GroupRegistrationComponent } from '#user/pages/group-registration/group-registration.component';
+import { NotificationComponent } from '#user/pages/notification/notification.component';
 
 export const appRoutes: Routes = [
-    { path: '', redirectTo: ROUTES.USER.PRODUCT.ROOT, pathMatch: 'full' },
+    { path: '', redirectTo: ROUTES.USER.DASHBOARD.ROOT, pathMatch: 'full' },
     // #region AUTHENTICATION
     {
         path: ROUTES.USER.AUTH.ROOT,
@@ -60,13 +61,17 @@ export const appRoutes: Routes = [
     // #endregion
 
     {
-        path:ROUTES.USER.DASHBOARD.ROOT,
+        path: ROUTES.USER.DASHBOARD.ROOT,
         component: DashboardComponent,
     },
 
     {
         path: ROUTES.USER.GROUP.ROOT,
         component: GroupComponent,
+    },
+    {
+        path: ROUTES.USER.NOTIFICATION.ROOT,
+        component: NotificationComponent,
     },
     {
         path: ROUTES.USER.GROUP_REGISTRATION.ROOT,

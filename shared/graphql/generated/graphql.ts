@@ -4413,6 +4413,46 @@ export type GroupPermissionNodeEdge = {
   node?: Maybe<GroupPermissionNode>;
 };
 
+export type GroupQldaCreate = {
+  __typename?: 'GroupQLDACreate';
+  error?: Maybe<Error>;
+  groupQlda?: Maybe<GroupQldaNode>;
+  status?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type GroupQldaInput = {
+  name: Scalars['String']['input'];
+};
+
+export type GroupQldaNode = CustomNode & {
+  __typename?: 'GroupQLDANode';
+  deTai: Scalars['String']['output'];
+  /** The ID of the object. */
+  id: Scalars['ID']['output'];
+  maNhom: Scalars['String']['output'];
+  membersCount?: Maybe<Scalars['Int']['output']>;
+  name: Scalars['String']['output'];
+  status: Scalars['Boolean']['output'];
+};
+
+export type GroupQldaNodeConnection = {
+  __typename?: 'GroupQLDANodeConnection';
+  /** Contains the nodes in this connection. */
+  edges: Array<Maybe<GroupQldaNodeEdge>>;
+  /** Pagination data for this connection. */
+  pageInfo: PageInfo;
+  totalCount?: Maybe<Scalars['Int']['output']>;
+};
+
+/** A Relay edge containing a `GroupQLDANode` and its cursor. */
+export type GroupQldaNodeEdge = {
+  __typename?: 'GroupQLDANodeEdge';
+  /** A cursor for use in pagination */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge */
+  node?: Maybe<GroupQldaNode>;
+};
+
 export type HistoryNode = CustomNode & {
   __typename?: 'HistoryNode';
   adminBalance?: Maybe<Scalars['Float']['output']>;
@@ -5666,6 +5706,7 @@ export type Mutation = {
   groupCreate?: Maybe<GroupCreate>;
   groupDelete?: Maybe<GroupDelete>;
   groupPermissionCreate?: Maybe<GroupPermissionCreate>;
+  groupQldaCreate?: Maybe<GroupQldaCreate>;
   historyUpdateDeposit?: Maybe<HistoryUpdateDeposit>;
   historyUpdateStatus?: Maybe<HistoryUpdateStatus>;
   industryClusterCreate?: Maybe<IndustryClusterCreate>;
@@ -6495,6 +6536,11 @@ export type MutationGroupDeleteArgs = {
 export type MutationGroupPermissionCreateArgs = {
   group: Scalars['String']['input'];
   role: Scalars['Int']['input'];
+};
+
+
+export type MutationGroupQldaCreateArgs = {
+  input: GroupQldaInput;
 };
 
 
@@ -9299,6 +9345,9 @@ export type Query = {
   /** The ID of the object */
   groupPermission?: Maybe<GroupPermissionNode>;
   groupPermissions?: Maybe<GroupPermissionNodeConnection>;
+  /** The ID of the object */
+  groupQlda?: Maybe<GroupQldaNode>;
+  groupQldas?: Maybe<GroupQldaNodeConnection>;
   groups?: Maybe<GroupNodeConnection>;
   historiesPending?: Maybe<HistoryPendingNodeConnection>;
   /** The ID of the object */
@@ -10223,6 +10272,22 @@ export type QueryGroupPermissionsArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type QueryGroupQldaArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryGroupQldasArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  deTai?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  status?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 
@@ -15102,6 +15167,7 @@ export type UserInput = {
   password: Scalars['String']['input'];
   shortName?: InputMaybe<Scalars['String']['input']>;
   status?: InputMaybe<Scalars['Int']['input']>;
+  username?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type UserInterface = {
@@ -16554,6 +16620,35 @@ export type CreateGiangVienMutationVariables = Exact<{
 
 
 export type CreateGiangVienMutation = { __typename?: 'Mutation', giangVienCreate?: { __typename?: 'GiangVienCreate', status?: boolean | null, giangVien?: { __typename?: 'GiangVienNode', id: string, name: string, deTai: string } | null, error?: { __typename?: 'Error', code?: string | null, message?: string | null, field?: string | null } | null } | null };
+
+export type GroupQldaInfoFragment = { __typename?: 'GroupQLDANode', id: string, maNhom: string, name: string, deTai: string, status: boolean };
+
+export type GetGroupQldasQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  deTai?: InputMaybe<Scalars['String']['input']>;
+  status?: InputMaybe<Scalars['Boolean']['input']>;
+}>;
+
+
+export type GetGroupQldasQuery = { __typename?: 'Query', groupQldas?: { __typename?: 'GroupQLDANodeConnection', totalCount?: number | null, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'GroupQLDANodeEdge', node?: { __typename?: 'GroupQLDANode', id: string, maNhom: string, name: string, deTai: string, status: boolean } | null } | null> } | null };
+
+export type GetGroupQldaQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type GetGroupQldaQuery = { __typename?: 'Query', groupQlda?: { __typename?: 'GroupQLDANode', id: string, maNhom: string, name: string, deTai: string, status: boolean } | null };
+
+export type CreateGroupQldaMutationVariables = Exact<{
+  input: GroupQldaInput;
+}>;
+
+
+export type CreateGroupQldaMutation = { __typename?: 'Mutation', groupQldaCreate?: { __typename?: 'GroupQLDACreate', status?: boolean | null, groupQlda?: { __typename?: 'GroupQLDANode', id: string, maNhom: string, name: string, deTai: string, status: boolean } | null, error?: { __typename?: 'Error', code?: string | null, message?: string | null, field?: string | null } | null } | null };
 
 export type CountryInfoFragment = { __typename?: 'CountryNode', id: string, itemCode: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'CountryTranslationNode', id: string, languageCode: string, name: string }> };
 
@@ -19979,6 +20074,15 @@ export const GiangVienInfoFragmentDoc = gql`
   deTai
 }
     `;
+export const GroupQldaInfoFragmentDoc = gql`
+    fragment GroupQLDAInfo on GroupQLDANode {
+  id
+  maNhom
+  name
+  deTai
+  status
+}
+    `;
 export const ReasonInfoFragmentDoc = gql`
     fragment ReasonInfo on ReasonNode {
   id
@@ -22697,6 +22801,84 @@ ${ErrorInfoFragmentDoc}`;
   })
   export class CreateGiangVienGQL extends Apollo.Mutation<CreateGiangVienMutation, CreateGiangVienMutationVariables> {
     override document = CreateGiangVienDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetGroupQldasDocument = gql`
+    query getGroupQldas($before: String, $after: String, $first: Int, $last: Int, $name: String, $deTai: String, $status: Boolean) {
+  groupQldas(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    name: $name
+    deTai: $deTai
+    status: $status
+  ) {
+    totalCount
+    pageInfo {
+      ...PageInfo
+    }
+    edges {
+      node {
+        ...GroupQLDAInfo
+      }
+    }
+  }
+}
+    ${PageInfoFragmentDoc}
+${GroupQldaInfoFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetGroupQldasGQL extends Apollo.Query<GetGroupQldasQuery, GetGroupQldasQueryVariables> {
+    override document = GetGroupQldasDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetGroupQldaDocument = gql`
+    query getGroupQlda($id: ID!) {
+  groupQlda(id: $id) {
+    ...GroupQLDAInfo
+  }
+}
+    ${GroupQldaInfoFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetGroupQldaGQL extends Apollo.Query<GetGroupQldaQuery, GetGroupQldaQueryVariables> {
+    override document = GetGroupQldaDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const CreateGroupQldaDocument = gql`
+    mutation createGroupQlda($input: GroupQLDAInput!) {
+  groupQldaCreate(input: $input) {
+    status
+    groupQlda {
+      ...GroupQLDAInfo
+    }
+    error {
+      ...ErrorInfo
+    }
+  }
+}
+    ${GroupQldaInfoFragmentDoc}
+${ErrorInfoFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class CreateGroupQldaGQL extends Apollo.Mutation<CreateGroupQldaMutation, CreateGroupQldaMutationVariables> {
+    override document = CreateGroupQldaDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

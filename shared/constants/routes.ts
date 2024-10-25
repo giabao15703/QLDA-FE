@@ -28,6 +28,9 @@ export const ROUTES = {
         GROUP_REGISTRATION: {
             ROOT: 'group-registration',
         },
+        NOTIFICATION: {
+            ROOT: 'notification',
+        },
         PRODUCT: {
             ROOT: 'product',
             SEARCH: 'product/search',

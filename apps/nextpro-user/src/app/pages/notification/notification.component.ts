@@ -4,12 +4,12 @@ import { NavbarComponent } from '#user/layout';
 
 @Component({
     standalone: true,
-    selector: 'app-group',
-    templateUrl: './group.component.html',
-    styleUrls: ['./group.component.scss'],
+    selector: 'app-notification',
+    templateUrl: './notification.component.html',
+    styleUrls: ['./notification.component.scss'],
     imports: [SidebarComponent, NavbarComponent],
 })
-export class GroupComponent {
+export class NotificationComponent {
     constructor() {
         // Khởi tạo các biến hoặc dịch vụ cần thiết
     }

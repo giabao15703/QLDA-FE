@@ -318,34 +318,32 @@ export class BuyerBasicInformationFormComponent {
             }
 
             // Chuẩn bị dữ liệu để gửi
+            // Điều chỉnh dữ liệu submit để phù hợp với cấu trúc của mutation GraphQL
             const submitData = {
                 user: {
                     email: email ?? '',
                     password: password ?? '',
-                    status: 1, // Giá trị mặc định cho status
+                    // Thêm các trường khác nếu cần cho mutation
                 },
             };
 
-            // Gọi hàm createBuyer từ AccountService để gửi mutation và sử dụng then/catch để xử lý Promise
+            // Sửa đổi phần gọi AccountService để sử dụng mutation GraphQL
             this.accountService
-                .createBuyer(submitData)
+                .createBuyer(submitData) // Gọi mutation GraphQL
                 .then((response: any) => {
                     const data = response.data;
-                    // Kiểm tra phản hồi từ mutation
                     if (data?.buyerCreate?.status) {
-                        // Thành công
+                        // Tạo buyer thành công, xử lý trường hợp thành công
                         this.localStorageService.remove(FORM_NAME);
-                        console.log('Buyer created successfully:', data.buyerCreate.buyer); // Log dữ liệu buyer vừa tạo
-
-                        // Nếu bạn cần hiển thị dữ liệu vừa tạo, có thể lưu lại trong state hoặc render ra UI
+                        console.log('Buyer được tạo thành công:', data.buyerCreate);
                     } else {
-                        // Xử lý lỗi từ response
-                        this.form.setFieldError('general', data?.buyerCreate?.error?.message || 'Unknown error');
+                        // Xử lý lỗi từ phản hồi mutation
+                        this.form.setFieldError('general', data?.buyerCreate?.error?.message || 'Lỗi không xác định');
                     }
                 })
                 .catch((error) => {
-                    // Xử lý lỗi khi gửi request đến server
-                    this.form.setFieldError('general', error.message || 'Error occurred while creating buyer');
+                    // Xử lý lỗi khi gửi request
+                    this.form.setFieldError('general', error.message || 'Đã xảy ra lỗi khi tạo buyer');
                 });
         }, FORM_NAME);
     };

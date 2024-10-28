@@ -30,5 +30,5 @@ export * from './sale-scheme.service';
 export * from './sicp.service';
 export * from './user-guide.service';
 export * from './delivery.service';
-export * from './giangvien.service';
+export * from './deTai.service';
 export * from './groupQlda.service';

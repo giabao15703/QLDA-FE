@@ -45,13 +45,13 @@
                             <td class="py-2 px-4 border-b">{{ group.maNhom }}</td>
                             <td class="py-2 px-4 border-b">{{ group.name }}</td>
                             <td class="py-2 px-4 border-b">
-                                1
+                                {{ group.memberCount }}
                             </td>
                             <td class="py-2 px-4 border-b">{{ group.status }}</td>
                             <td class="py-2 px-4 border-b text-center">
                                 <button
                                     class="bg-blue-500 text-white text-sm px-4 py-2 rounded hover:bg-blue-600"
-                                    (click)="joinGroup(group.id)"
+                                    (click)="onSubmitJoin()"
                                 >
                                     Gia nhập
                                 </button>

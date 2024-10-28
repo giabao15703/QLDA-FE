@@ -4,7 +4,7 @@ import { NavbarComponent } from '#user/layout';
 import { I_TableState } from '#shared/types';
 import { I_GroupQLDA } from 'shared/types/group';
 import { FormsModule } from '@angular/forms'; // For ngModel binding
-import { GroupQLDAService } from '#shared/services';
+import { GroupQLDAService, NotificationService } from '#shared/services';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router'; // Import Router để điều hướng
 @Component({
@@ -24,6 +24,7 @@ export class GroupRegistrationComponent implements OnInit {
     constructor(
         private groupQLDAService: GroupQLDAService,
         private router: Router, // Sử dụng Router để điều hướng
+        private notification: NotificationService,
     ) {}
 
     ngOnInit() {
@@ -32,17 +33,27 @@ export class GroupRegistrationComponent implements OnInit {
 
     async onSubmit() {
         try {
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            console.log('User từ localStorage:', user); // Thêm dòng này để kiểm tra
+
+            if (!user || !user.id) {
+                this.errorMessage = 'Thông tin người dùng không tồn tại';
+                return;
+            }
+
+            // Gửi yêu cầu tạo nhóm với id người dùng
             await this.groupQLDAService.createGroupQlda({
                 input: {
-                    name: this.tenNhom, // Gửi dữ liệu tên nhóm đã được nhập từ form
+                    name: this.tenNhom,
                 },
+                userEmail: String(user.email),
             });
             this.notificationService.success('Bạn đã tạo nhóm thành công');
         } catch (error) {
             console.error('Lỗi khi tạo nhóm:', error);
             this.errorMessage = 'Có lỗi xảy ra khi tạo nhóm.';
         }
-        window.location.reload(); // Reload lại trang sau khi tạo thành công
+        window.location.reload();
     }
 
     getData() {
@@ -62,8 +73,24 @@ export class GroupRegistrationComponent implements OnInit {
             });
     }
 
-    joinGroup(groupId: string) {
-        // Implement your logic to join the group here
-        console.log('Joining group with ID:', groupId);
+    async onSubmitJoin() {
+        try {
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            console.log('User từ localStorage:', user);
+
+            if (!user || !user.id) {
+                this.errorMessage = 'Thông tin người dùng không tồn tại';
+                return;
+            }
+
+            await this.groupQLDAService.getGroupQldaJoin({
+                groupId: this.groupData.data[0].id,
+                userEmail: String(user.email),
+            });
+            this.notificationService.success('Bạn đã tạo nhóm thành công');
+        } catch (error) {
+            console.error('Lỗi khi tạo nhóm:', error);
+            this.errorMessage = 'Có lỗi xảy ra khi tạo nhóm.';
+        }
     }
 }

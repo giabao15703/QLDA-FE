@@ -1,5 +1,0 @@
-fragment GiangVienInfo on GiangVienNode {
-    id
-    name
-    deTai
-}

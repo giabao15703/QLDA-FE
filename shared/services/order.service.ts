@@ -5,7 +5,6 @@ import {
     CreateOrderGQL,
     CreateOrderMutation,
     CreateOrderMutationVariables,
-    GetGiangVienGQL,
     GetOrdersGQL,
     GetOrdersQuery,
     GetOrdersQueryVariables,

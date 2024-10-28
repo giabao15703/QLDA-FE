@@ -1,21 +1,23 @@
-query getGiangViens(
+query getDeTais(
     $before: String
     $after: String
     $first: Int
     $last: Int
     $id: String
-    $name: String
-    $deTai: String
+    $giangVien: String 
+    $tenDeTai: String
+    $moTa: String
 
 ) {
-    giangViens(
+    deTais(
         before: $before
         after: $after
         first: $first
         last: $last
         id: $id
-        name: $name
-        deTai: $deTai
+        giangVien: $giangVien
+        tenDeTai: $tenDeTai
+        moTa: $moTa
 
     ) {
         totalCount
@@ -24,24 +26,24 @@ query getGiangViens(
         }
         edges {
             node {
-                ...GiangVienInfo
+                ...DeTaiInfo
             }
         }
     }
 }  
 
-query getGiangVien($id: ID!) {
-    giangVien(id: $id) {
-        ...GiangVienInfo
+query getDeTai($id: ID!) {
+    deTai(id: $id) {
+        ...DeTaiInfo
     }
 }
 
 
-mutation createGiangVien($input: GiangVienInput!) {
-    giangVienCreate(input: $input) {
+mutation createDeTai($input: DeTaiInput!) {
+    deTaiCreate(input: $input) {
         status
-        giangVien {
-            ...GiangVienInfo
+        deTai {
+            ...DeTaiInfo
         }
         error {
             ...ErrorInfo

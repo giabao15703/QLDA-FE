@@ -269,9 +269,9 @@ export class LayoutDashboard {
             href: '/admin/group',
         },
         {
-            name: 'Giảng Viên',
+            name: 'Đề Tài',
             icon: '/assets/icons/setting-3-svgrepo-com.svg',
-            href: '/admin/giangVien',
+            href: '/admin/deTai',
         },
         /* {
             name: 'Delivery',

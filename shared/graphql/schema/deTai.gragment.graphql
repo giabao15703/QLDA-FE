@@ -1,0 +1,9 @@
+fragment DeTaiInfo on DeTaiNode {
+    id
+    giangVien{
+        ...UserInfo
+    }
+    tenDeTai
+    moTa
+    giangVienFullName
+}

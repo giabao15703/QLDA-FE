@@ -2,6 +2,16 @@ fragment GroupQLDAInfo on GroupQLDANode {
     id
     maNhom  # Mã nhóm
     name    # Tên nhóm
-    deTai   # Đề tài của nhóm
-    status   # Trạng thái của nhóm (mở hoặc đóng)
+    status 
+    memberCount  # Trạng thái của nhóm (mở hoặc đóng)
+}
+fragment JoinGroupInfo on JoinGroupNode {
+    id
+    user{
+        ...UserInfo
+    }
+    group{
+        ...GroupQLDAInfo
+    }
+    membersCount
 }

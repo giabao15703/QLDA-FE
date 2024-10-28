@@ -4,7 +4,6 @@ query getGroupQldas(
     $first: Int
     $last: Int
     $name: String
-    $deTai: String
     $status: Boolean
 ) {
     groupQldas(
@@ -13,7 +12,6 @@ query getGroupQldas(
         first: $first
         last: $last
         name: $name
-        deTai: $deTai
         status: $status
     ) {
         totalCount
@@ -35,10 +33,19 @@ query getGroupQlda($id: ID!) {
     }
 }
 
+mutation getGroupQldaJoin($groupId: ID!, $userEmail: String!) {
+    groupQldaJoin(groupId: $groupId, userEmail: $userEmail) {
+        status
+        error {
+            code
+            message
+        }
+    }
+}
 
 
-mutation createGroupQlda($input: GroupQLDAInput!) {
-    groupQldaCreate(input: $input) {
+mutation createGroupQlda($input: GroupQLDAInput!, $userEmail: String!) {
+    groupQldaCreate(input: $input, userEmail: $userEmail) {
         status
         groupQlda {
             ...GroupQLDAInfo

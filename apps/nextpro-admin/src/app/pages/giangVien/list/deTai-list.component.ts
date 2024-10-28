@@ -4,13 +4,11 @@ import { RouterModule } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import * as FileSaver from 'file-saver';
 
-import { CouponDetailComponent } from '#admin/pages/coupon/detail/coupon-detail.component';
 import { FilterComponent, LoadingComponent, TableComponent } from '#shared/components';
 import { REST_API_ADMIN_ENDPOINTS } from '#shared/constants';
 import { MaterialModules } from '#shared/modules';
 import {
-    CouponDataService,
-    GiangVienService,
+    DeTaiService, // Thay đổi từ GiangVienService sang DeTaiService
     LoadingService,
     LocalStorageService,
     NotificationService,
@@ -18,15 +16,14 @@ import {
     RouteService,
     TableService,
 } from '#shared/services';
-import { E_FieldType, E_Form_Mode, E_TableColumnType, I_Coupon, I_GiangVien, I_QueryVariables } from '#shared/types';
+import { E_FieldType, E_Form_Mode, E_TableColumnType, I_DeTai, I_QueryVariables } from '#shared/types'; // Sử dụng I_DeTai thay vì I_GiangVien
 import { formatDate, getQueryVariables } from '#shared/utils';
-import { GiangVienDetailComponent } from '../detail/giangVien-detail.component';
-
+import { DeTaiDetailComponent } from '../detail/deTai-detail.component';
 @Component({
     standalone: true,
-    selector: 'nextpro-admin-giangVien-list',
-    templateUrl: './giangVien-list.component.html',
-    styleUrl: './giangVien-list.component.scss',
+    selector: 'nextpro-admin-deTai-list', // Thay đổi tên selector
+    templateUrl: './deTai-list.component.html', // Thay đổi đường dẫn file HTML
+    styleUrl: './deTai-list.component.scss', // Thay đổi đường dẫn file SCSS
     providers: [TableService],
     imports: [
         CommonModule,
@@ -35,29 +32,30 @@ import { GiangVienDetailComponent } from '../detail/giangVien-detail.component';
         LoadingComponent,
         TableComponent,
         FilterComponent,
-        GiangVienDetailComponent,
+        DeTaiDetailComponent, // Thay đổi sang DeTaiDetailComponent
         RouterModule,
     ],
 })
-export class GiangVienListPage {
+export class DeTaiListPage {
+    // Đổi tên class từ GiangVienListPage sang DeTaiListPage
     constructor(
         public loadingService: LoadingService,
-        public table: TableService<I_GiangVien>,
+        public table: TableService<I_DeTai>, // Thay đổi từ I_GiangVien sang I_DeTai
         private routeService: RouteService,
         private notificationService: NotificationService,
         private translateService: TranslateService,
-        private giangVienService: GiangVienService,
+        private deTaiService: DeTaiService, // Thay đổi sang DeTaiService
         private restApiService: RestApiService,
         private localStorageService: LocalStorageService,
     ) {
         this.table.config.filterForm = [
             {
-                label: 'Tên',
-                name: 'name',
+                label: 'Tên đề tài', // Thay đổi label cho phù hợp
+                name: 'tenDeTai', // Sử dụng tenDeTai thay vì name
             },
             {
-                label: 'Đề tài',
-                name: 'deTai',
+                label: 'Mô tả', // Thay đổi label cho phù hợp
+                name: 'moTa', // Sử dụng moTa thay vì deTai
             },
         ];
         this.table.config.columns = [
@@ -77,14 +75,19 @@ export class GiangVienListPage {
                 },
             },
             {
-                sort: 'name',
-                name: 'name',
-                label: 'Tên',
+                sort: 'tenDeTai', // Thay đổi key sorting thành tenDeTai
+                name: 'tenDeTai', // Đổi name thành tenDeTai
+                label: 'Tên đề tài', // Thay đổi label phù hợp
             },
             {
-                sort: 'deTai',
-                name: 'deTai',
-                label: 'Đề tài',
+                sort: 'moTa', // Sử dụng moTa để sort
+                name: 'moTa', // Đổi name thành moTa
+                label: 'Mô tả', // Thay đổi label phù hợp
+            },
+            {
+                sort: 'giangVienFullName', // Sử dụng moTa để sort
+                name: 'giangVienFullName', // Đổi name thành moTa
+                label: 'Giảng Viên', // Thay đổi label phù hợp
             },
             {
                 cellStyle: { width: '50px' },
@@ -95,17 +98,17 @@ export class GiangVienListPage {
                 ctas: [
                     {
                         icon: 'edit',
-                        onClick: (row: I_GiangVien) => {
+                        onClick: (row: I_DeTai) => {
                             this.routeService.goTo({ mode: E_Form_Mode.UPDATE, id: row.id });
                         },
                     },
                 ],
             },
         ];
-        this.table.config.refetch = this.getGiangViens;
+        this.table.config.refetch = this.getDeTais; // Thay đổi hàm refetch
 
         this.routeService.onChange(({ hash }) => {
-            this.getGiangVien(hash);
+            this.getDeTai(hash);
         });
     }
 
@@ -113,64 +116,32 @@ export class GiangVienListPage {
     exportUrl = REST_API_ADMIN_ENDPOINTS.COUPON.EXPORT;
 
     ngOnInit() {
-        this.getGiangVien();
-        this.getGiangViens();
+        this.getDeTai();
+        this.getDeTais();
     }
 
-    getGiangVien = async (hash?: string) => {
+    getDeTai = async (hash?: string) => {
         this.detail = await this.routeService.getDetail({
             hash,
             detail: ({ id }) =>
-                this.giangVienService.getGiangVien({
+                this.deTaiService.getDeTai({
                     id,
                 }),
         });
     };
 
-    getGiangViens = async (variables?: I_QueryVariables) => {
-        const giangViens = await this.giangVienService.getGiangViens(
+    getDeTais = async (variables?: I_QueryVariables) => {
+        const deTais = await this.deTaiService.getDeTais(
             {
                 ...getQueryVariables({ variables }),
             },
             { extra: { variables } },
         );
 
-        this.table.state.data = giangViens.data;
-        this.table.state.pagination = giangViens.pagination;
+        this.table.state.data = deTais.data;
+        this.table.state.pagination = deTais.pagination;
         this.table.state.selection?.clear();
     };
-
-    /* handleUpdateStatus = async (status) => {
-        const selectedCoupons = this.table.state.selection.selected;
-
-        const { couponUpdateStatus } = await this.couponDataService.updateCouponStatus({
-            listStatus: selectedCoupons.map((coupon) => ({
-                couponId: coupon.id,
-                status,
-            })),
-        });
-
-        if (couponUpdateStatus.status) {
-            await this.table.refetch();
-            this.notificationService.success('notification.updateSuccessfully');
-        } else {
-            this.notificationService.error(couponUpdateStatus.error?.message);
-        }
-    }; */
-
-    /* handleExport = async () => {
-        const result = await this.restApiService.get(this.exportUrl, {
-            responseType: 'blob',
-            observe: 'response',
-            headers: {
-                Authorization: `Token ${this.localStorageService.get('token')}`,
-            },
-        });
-
-        if (result.status === 200) {
-            FileSaver.saveAs(result.body, 'CouponData.xlsx');
-        }
-    }; */
 
     handleCreate = () => {
         this.routeService.goTo({ mode: E_Form_Mode.CREATE });

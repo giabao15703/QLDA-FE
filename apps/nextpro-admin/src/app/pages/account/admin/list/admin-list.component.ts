@@ -101,20 +101,16 @@ export class AccountAdminListPage {
                 fieldType: E_FieldType.SELECT,
                 options: [
                     {
-                        label: 'account.admin-accounts.master',
+                        label: 'trưởng khoa',
                         value: 1,
                     },
                     {
-                        label: 'account.admin-accounts.levelTwo',
+                        label: 'giáo vụ',
                         value: 2,
                     },
                     {
-                        label: 'account.admin-accounts.levelThree',
+                        label: 'giảng viên',
                         value: 3,
-                    },
-                    {
-                        label: 'account.admin-accounts.levelFour',
-                        value: 4,
                     },
                 ],
             },
@@ -214,16 +210,13 @@ export class AccountAdminListPage {
 
                     switch (cell) {
                         case 1:
-                            roleText = 'account.admin-accounts.master';
+                            roleText = 'trưởng khoa';
                             break;
                         case 2:
-                            roleText = 'account.admin-accounts.levelTwo';
+                            roleText = 'giáo vụ';
                             break;
                         case 3:
-                            roleText = 'account.admin-accounts.levelThree';
-                            break;
-                        case 4:
-                            roleText = 'account.admin-accounts.levelFour';
+                            roleText = 'giảng viên';
                             break;
                     }
 

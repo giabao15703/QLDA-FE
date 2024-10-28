@@ -3450,6 +3450,47 @@ export type DatabaseDelete = {
   status?: Maybe<Scalars['Boolean']['output']>;
 };
 
+export type DeTaiCreate = {
+  __typename?: 'DeTaiCreate';
+  deTai?: Maybe<DeTaiNode>;
+  error?: Maybe<Error>;
+  status?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type DeTaiInput = {
+  giangVienFullName: Scalars['String']['input'];
+  moTa: Scalars['String']['input'];
+  tenDeTai: Scalars['String']['input'];
+};
+
+export type DeTaiNode = CustomNode & {
+  __typename?: 'DeTaiNode';
+  giangVien: UserNode;
+  giangVienFullName?: Maybe<Scalars['String']['output']>;
+  /** The ID of the object. */
+  id: Scalars['ID']['output'];
+  moTa: Scalars['String']['output'];
+  tenDeTai: Scalars['String']['output'];
+};
+
+export type DeTaiNodeConnection = {
+  __typename?: 'DeTaiNodeConnection';
+  /** Contains the nodes in this connection. */
+  edges: Array<Maybe<DeTaiNodeEdge>>;
+  /** Pagination data for this connection. */
+  pageInfo: PageInfo;
+  totalCount?: Maybe<Scalars['Int']['output']>;
+};
+
+/** A Relay edge containing a `DeTaiNode` and its cursor. */
+export type DeTaiNodeEdge = {
+  __typename?: 'DeTaiNodeEdge';
+  /** A cursor for use in pagination */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge */
+  node?: Maybe<DeTaiNode>;
+};
+
 export type DeliveryResponsibleCreate = {
   __typename?: 'DeliveryResponsibleCreate';
   deliveryResponsible?: Maybe<DeliveryResponsibleNode>;
@@ -4258,51 +4299,6 @@ export type GeneralInformationType = {
   unit?: Maybe<Scalars['String']['output']>;
 };
 
-export type GiangVienCreate = {
-  __typename?: 'GiangVienCreate';
-  error?: Maybe<Error>;
-  giangVien?: Maybe<GiangVienNode>;
-  status?: Maybe<Scalars['Boolean']['output']>;
-};
-
-export type GiangVienInput = {
-  deTai: Scalars['String']['input'];
-  name: Scalars['String']['input'];
-};
-
-export type GiangVienNode = CustomNode & {
-  __typename?: 'GiangVienNode';
-  deTai: Scalars['String']['output'];
-  /** The ID of the object. */
-  id: Scalars['ID']['output'];
-  name: Scalars['String']['output'];
-};
-
-export type GiangVienNodeConnection = {
-  __typename?: 'GiangVienNodeConnection';
-  /** Contains the nodes in this connection. */
-  edges: Array<Maybe<GiangVienNodeEdge>>;
-  /** Pagination data for this connection. */
-  pageInfo: PageInfo;
-  totalCount?: Maybe<Scalars['Int']['output']>;
-};
-
-/** A Relay edge containing a `GiangVienNode` and its cursor. */
-export type GiangVienNodeEdge = {
-  __typename?: 'GiangVienNodeEdge';
-  /** A cursor for use in pagination */
-  cursor: Scalars['String']['output'];
-  /** The item at the end of the edge */
-  node?: Maybe<GiangVienNode>;
-};
-
-export type GiangVienUpdate = {
-  __typename?: 'GiangVienUpdate';
-  error?: Maybe<Error>;
-  giangVien?: Maybe<GiangVienNode>;
-  status?: Maybe<Scalars['Boolean']['output']>;
-};
-
 export type GroupCreate = {
   __typename?: 'GroupCreate';
   group?: Maybe<GroupNode>;
@@ -4424,15 +4420,33 @@ export type GroupQldaInput = {
   name: Scalars['String']['input'];
 };
 
+export type GroupQldaJoin = {
+  __typename?: 'GroupQLDAJoin';
+  error?: Maybe<Error>;
+  status?: Maybe<Scalars['Boolean']['output']>;
+};
+
 export type GroupQldaNode = CustomNode & {
   __typename?: 'GroupQLDANode';
   deTai: Scalars['String']['output'];
   /** The ID of the object. */
   id: Scalars['ID']['output'];
+  joinGroups: JoinGroupNodeConnection;
   maNhom: Scalars['String']['output'];
+  memberCount: Scalars['Int']['output'];
   membersCount?: Maybe<Scalars['Int']['output']>;
   name: Scalars['String']['output'];
   status: Scalars['Boolean']['output'];
+};
+
+
+export type GroupQldaNodeJoinGroupsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  status?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type GroupQldaNodeConnection = {
@@ -5104,6 +5118,33 @@ export type ItemSupplierInput = {
   user: Scalars['String']['input'];
 };
 
+export type JoinGroupNode = CustomNode & {
+  __typename?: 'JoinGroupNode';
+  group: GroupQldaNode;
+  /** The ID of the object. */
+  id: Scalars['ID']['output'];
+  membersCount?: Maybe<Scalars['Int']['output']>;
+  user: UserNode;
+};
+
+export type JoinGroupNodeConnection = {
+  __typename?: 'JoinGroupNodeConnection';
+  /** Contains the nodes in this connection. */
+  edges: Array<Maybe<JoinGroupNodeEdge>>;
+  /** Pagination data for this connection. */
+  pageInfo: PageInfo;
+  totalCount?: Maybe<Scalars['Int']['output']>;
+};
+
+/** A Relay edge containing a `JoinGroupNode` and its cursor. */
+export type JoinGroupNodeEdge = {
+  __typename?: 'JoinGroupNodeEdge';
+  /** A cursor for use in pagination */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge */
+  node?: Maybe<JoinGroupNode>;
+};
+
 export type LanguageCreate = {
   __typename?: 'LanguageCreate';
   error?: Maybe<Error>;
@@ -5670,6 +5711,7 @@ export type Mutation = {
   currencyUpdate?: Maybe<CurrencyUpdate>;
   currencyUpdateStatus?: Maybe<CurrencyUpdateStatus>;
   databaseDelete?: Maybe<DatabaseDelete>;
+  deTaiCreate?: Maybe<DeTaiCreate>;
   deleteOrder?: Maybe<OrderDeleteMutation>;
   deliveryResponsibleCreate?: Maybe<DeliveryResponsibleCreate>;
   deliveryResponsibleDelete?: Maybe<DeliveryResponsibleDelete>;
@@ -5701,12 +5743,11 @@ export type Mutation = {
   genderDelete?: Maybe<GenderDelete>;
   genderUpdate?: Maybe<GenderUpdate>;
   genderUpdateStatus?: Maybe<GenderUpdateStatus>;
-  giangVienCreate?: Maybe<GiangVienCreate>;
-  giangVienUpdate?: Maybe<GiangVienUpdate>;
   groupCreate?: Maybe<GroupCreate>;
   groupDelete?: Maybe<GroupDelete>;
   groupPermissionCreate?: Maybe<GroupPermissionCreate>;
   groupQldaCreate?: Maybe<GroupQldaCreate>;
+  groupQldaJoin?: Maybe<GroupQldaJoin>;
   historyUpdateDeposit?: Maybe<HistoryUpdateDeposit>;
   historyUpdateStatus?: Maybe<HistoryUpdateStatus>;
   industryClusterCreate?: Maybe<IndustryClusterCreate>;
@@ -6354,6 +6395,11 @@ export type MutationCurrencyUpdateStatusArgs = {
 };
 
 
+export type MutationDeTaiCreateArgs = {
+  input: DeTaiInput;
+};
+
+
 export type MutationDeleteOrderArgs = {
   id: Scalars['ID']['input'];
 };
@@ -6512,17 +6558,6 @@ export type MutationGenderUpdateStatusArgs = {
 };
 
 
-export type MutationGiangVienCreateArgs = {
-  input: GiangVienInput;
-};
-
-
-export type MutationGiangVienUpdateArgs = {
-  id: Scalars['ID']['input'];
-  input: GiangVienInput;
-};
-
-
 export type MutationGroupCreateArgs = {
   name: Scalars['String']['input'];
 };
@@ -6541,6 +6576,13 @@ export type MutationGroupPermissionCreateArgs = {
 
 export type MutationGroupQldaCreateArgs = {
   input: GroupQldaInput;
+  userEmail: Scalars['String']['input'];
+};
+
+
+export type MutationGroupQldaJoinArgs = {
+  groupId: Scalars['ID']['input'];
+  userEmail: Scalars['String']['input'];
 };
 
 
@@ -9318,6 +9360,9 @@ export type Query = {
   /** The ID of the object */
   currency?: Maybe<CurrencyNode>;
   /** The ID of the object */
+  deTai?: Maybe<DeTaiNode>;
+  deTais?: Maybe<DeTaiNodeConnection>;
+  /** The ID of the object */
   deliveryResponsible?: Maybe<DeliveryResponsibleNode>;
   deliveryResponsibles?: Maybe<DeliveryResponsibleNodeConnection>;
   /** The ID of the object */
@@ -9337,9 +9382,6 @@ export type Query = {
   /** The ID of the object */
   gender?: Maybe<GenderNode>;
   genders?: Maybe<GenderNodeConnection>;
-  /** The ID of the object */
-  giangVien?: Maybe<GiangVienNode>;
-  giangViens?: Maybe<GiangVienNodeConnection>;
   /** The ID of the object */
   group?: Maybe<GroupNode>;
   /** The ID of the object */
@@ -9367,6 +9409,8 @@ export type Query = {
   /** The ID of the object */
   industrySubSector?: Maybe<IndustrySubSectorsNode>;
   industrySubSectors?: Maybe<IndustrySubSectorsNodeConnection>;
+  /** The ID of the object */
+  joinGroup?: Maybe<JoinGroupNode>;
   /** The ID of the object */
   language?: Maybe<LanguageNode>;
   languages?: Maybe<LanguageNodeConnection>;
@@ -10108,6 +10152,23 @@ export type QueryCurrencyArgs = {
 };
 
 
+export type QueryDeTaiArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryDeTaisArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  giangVien?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  moTa?: InputMaybe<Scalars['String']['input']>;
+  tenDeTai?: InputMaybe<Scalars['String']['input']>;
+};
+
+
 export type QueryDeliveryResponsibleArgs = {
   id: Scalars['ID']['input'];
 };
@@ -10240,22 +10301,6 @@ export type QueryGendersArgs = {
 };
 
 
-export type QueryGiangVienArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-export type QueryGiangViensArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  deTai?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  id?: InputMaybe<Scalars['String']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
-};
-
-
 export type QueryGroupArgs = {
   id: Scalars['ID']['input'];
 };
@@ -10283,7 +10328,6 @@ export type QueryGroupQldaArgs = {
 export type QueryGroupQldasArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
-  deTai?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
@@ -10439,6 +10483,11 @@ export type QueryIndustrySubSectorsArgs = {
   nameVi?: InputMaybe<Scalars['String']['input']>;
   orderBy?: InputMaybe<Scalars['String']['input']>;
   status?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryJoinGroupArgs = {
+  id: Scalars['ID']['input'];
 };
 
 
@@ -15199,6 +15248,7 @@ export type UserNode = CustomNode & {
   buyersubaccountsactivitySet: BuyerSubAccountsActivityNodeConnection;
   companyPosition: Scalars['Int']['output'];
   created: Scalars['DateTime']['output'];
+  detaiSet: DeTaiNodeConnection;
   email: Scalars['String']['output'];
   firstName?: Maybe<Scalars['String']['output']>;
   fullName?: Maybe<Scalars['String']['output']>;
@@ -15213,6 +15263,7 @@ export type UserNode = CustomNode & {
   isStaff: Scalars['Boolean']['output'];
   /** Designates that this user has all permissions without explicitly assigning them. */
   isSuperuser: Scalars['Boolean']['output'];
+  joinGroups: JoinGroupNodeConnection;
   language: LanguageNode;
   lastLogin?: Maybe<Scalars['DateTime']['output']>;
   lastName?: Maybe<Scalars['String']['output']>;
@@ -15339,6 +15390,18 @@ export type UserNodeBuyersubaccountsactivitySetArgs = {
 };
 
 
+export type UserNodeDetaiSetArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  giangVien?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  moTa?: InputMaybe<Scalars['String']['input']>;
+  tenDeTai?: InputMaybe<Scalars['String']['input']>;
+};
+
+
 export type UserNodeGalleryArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -15357,6 +15420,16 @@ export type UserNodeGroupsArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type UserNodeJoinGroupsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  status?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 
@@ -16414,6 +16487,36 @@ export type UpdateCouponStatusMutationVariables = Exact<{
 
 export type UpdateCouponStatusMutation = { __typename?: 'Mutation', couponUpdateStatus?: { __typename?: 'CouponUpdateStatus', status?: boolean | null, error?: { __typename?: 'Error', code?: string | null, message?: string | null, field?: string | null } | null } | null };
 
+export type DeTaiInfoFragment = { __typename?: 'DeTaiNode', id: string, tenDeTai: string, moTa: string, giangVienFullName?: string | null, giangVien: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } } };
+
+export type GetDeTaisQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  giangVien?: InputMaybe<Scalars['String']['input']>;
+  tenDeTai?: InputMaybe<Scalars['String']['input']>;
+  moTa?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type GetDeTaisQuery = { __typename?: 'Query', deTais?: { __typename?: 'DeTaiNodeConnection', totalCount?: number | null, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'DeTaiNodeEdge', node?: { __typename?: 'DeTaiNode', id: string, tenDeTai: string, moTa: string, giangVienFullName?: string | null, giangVien: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } } } | null } | null> } | null };
+
+export type GetDeTaiQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type GetDeTaiQuery = { __typename?: 'Query', deTai?: { __typename?: 'DeTaiNode', id: string, tenDeTai: string, moTa: string, giangVienFullName?: string | null, giangVien: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } } } | null };
+
+export type CreateDeTaiMutationVariables = Exact<{
+  input: DeTaiInput;
+}>;
+
+
+export type CreateDeTaiMutation = { __typename?: 'Mutation', deTaiCreate?: { __typename?: 'DeTaiCreate', status?: boolean | null, deTai?: { __typename?: 'DeTaiNode', id: string, tenDeTai: string, moTa: string, giangVienFullName?: string | null, giangVien: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } } } | null, error?: { __typename?: 'Error', code?: string | null, message?: string | null, field?: string | null } | null } | null };
+
 export type ShippingFeeInfoFragment = { __typename?: 'ShippingFeeNode', id: string, weight: number, fee: number, status: boolean, pickUpCity: { __typename?: 'CountryStateNode', id: string, name: string, stateCode: string, status?: boolean | null, country: { __typename?: 'CountryNode', id: string, itemCode: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'CountryTranslationNode', id: string, languageCode: string, name: string }> }, translations: Array<{ __typename?: 'CountryStateTranslationNode', id: string, languageCode: string, name: string }> }, destinationCity: { __typename?: 'CountryStateNode', id: string, name: string, stateCode: string, status?: boolean | null, country: { __typename?: 'CountryNode', id: string, itemCode: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'CountryTranslationNode', id: string, languageCode: string, name: string }> }, translations: Array<{ __typename?: 'CountryStateTranslationNode', id: string, languageCode: string, name: string }> } };
 
 export type TransporterListInfoFragment = { __typename?: 'TransporterListNode', id: string, shortName: string, longName: string, code: string, tax: string, phone: string, address: string, email: string, status: boolean };
@@ -16592,36 +16695,9 @@ export type CreateDiamondSponsorTextEditerMutationVariables = Exact<{
 
 export type CreateDiamondSponsorTextEditerMutation = { __typename?: 'Mutation', userDiamondSponsorCreateTextEditer?: { __typename?: 'UserDiamondSponsorTextEditer', status?: boolean | null, error?: { __typename?: 'Error', code?: string | null, message?: string | null, field?: string | null } | null } | null };
 
-export type GiangVienInfoFragment = { __typename?: 'GiangVienNode', id: string, name: string, deTai: string };
+export type GroupQldaInfoFragment = { __typename?: 'GroupQLDANode', id: string, maNhom: string, name: string, status: boolean, memberCount: number };
 
-export type GetGiangViensQueryVariables = Exact<{
-  before?: InputMaybe<Scalars['String']['input']>;
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  id?: InputMaybe<Scalars['String']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
-  deTai?: InputMaybe<Scalars['String']['input']>;
-}>;
-
-
-export type GetGiangViensQuery = { __typename?: 'Query', giangViens?: { __typename?: 'GiangVienNodeConnection', totalCount?: number | null, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'GiangVienNodeEdge', node?: { __typename?: 'GiangVienNode', id: string, name: string, deTai: string } | null } | null> } | null };
-
-export type GetGiangVienQueryVariables = Exact<{
-  id: Scalars['ID']['input'];
-}>;
-
-
-export type GetGiangVienQuery = { __typename?: 'Query', giangVien?: { __typename?: 'GiangVienNode', id: string, name: string, deTai: string } | null };
-
-export type CreateGiangVienMutationVariables = Exact<{
-  input: GiangVienInput;
-}>;
-
-
-export type CreateGiangVienMutation = { __typename?: 'Mutation', giangVienCreate?: { __typename?: 'GiangVienCreate', status?: boolean | null, giangVien?: { __typename?: 'GiangVienNode', id: string, name: string, deTai: string } | null, error?: { __typename?: 'Error', code?: string | null, message?: string | null, field?: string | null } | null } | null };
-
-export type GroupQldaInfoFragment = { __typename?: 'GroupQLDANode', id: string, maNhom: string, name: string, deTai: string, status: boolean };
+export type JoinGroupInfoFragment = { __typename?: 'JoinGroupNode', id: string, membersCount?: number | null, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, group: { __typename?: 'GroupQLDANode', id: string, maNhom: string, name: string, status: boolean, memberCount: number } };
 
 export type GetGroupQldasQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -16629,26 +16705,34 @@ export type GetGroupQldasQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
-  deTai?: InputMaybe<Scalars['String']['input']>;
   status?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
 
-export type GetGroupQldasQuery = { __typename?: 'Query', groupQldas?: { __typename?: 'GroupQLDANodeConnection', totalCount?: number | null, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'GroupQLDANodeEdge', node?: { __typename?: 'GroupQLDANode', id: string, maNhom: string, name: string, deTai: string, status: boolean } | null } | null> } | null };
+export type GetGroupQldasQuery = { __typename?: 'Query', groupQldas?: { __typename?: 'GroupQLDANodeConnection', totalCount?: number | null, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'GroupQLDANodeEdge', node?: { __typename?: 'GroupQLDANode', id: string, maNhom: string, name: string, status: boolean, memberCount: number } | null } | null> } | null };
 
 export type GetGroupQldaQueryVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
 
 
-export type GetGroupQldaQuery = { __typename?: 'Query', groupQlda?: { __typename?: 'GroupQLDANode', id: string, maNhom: string, name: string, deTai: string, status: boolean } | null };
+export type GetGroupQldaQuery = { __typename?: 'Query', groupQlda?: { __typename?: 'GroupQLDANode', id: string, maNhom: string, name: string, status: boolean, memberCount: number } | null };
 
-export type CreateGroupQldaMutationVariables = Exact<{
-  input: GroupQldaInput;
+export type GetGroupQldaJoinMutationVariables = Exact<{
+  groupId: Scalars['ID']['input'];
+  userEmail: Scalars['String']['input'];
 }>;
 
 
-export type CreateGroupQldaMutation = { __typename?: 'Mutation', groupQldaCreate?: { __typename?: 'GroupQLDACreate', status?: boolean | null, groupQlda?: { __typename?: 'GroupQLDANode', id: string, maNhom: string, name: string, deTai: string, status: boolean } | null, error?: { __typename?: 'Error', code?: string | null, message?: string | null, field?: string | null } | null } | null };
+export type GetGroupQldaJoinMutation = { __typename?: 'Mutation', groupQldaJoin?: { __typename?: 'GroupQLDAJoin', status?: boolean | null, error?: { __typename?: 'Error', code?: string | null, message?: string | null } | null } | null };
+
+export type CreateGroupQldaMutationVariables = Exact<{
+  input: GroupQldaInput;
+  userEmail: Scalars['String']['input'];
+}>;
+
+
+export type CreateGroupQldaMutation = { __typename?: 'Mutation', groupQldaCreate?: { __typename?: 'GroupQLDACreate', status?: boolean | null, groupQlda?: { __typename?: 'GroupQLDANode', id: string, maNhom: string, name: string, status: boolean, memberCount: number } | null, error?: { __typename?: 'Error', code?: string | null, message?: string | null, field?: string | null } | null } | null };
 
 export type CountryInfoFragment = { __typename?: 'CountryNode', id: string, itemCode: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'CountryTranslationNode', id: string, languageCode: string, name: string }> };
 
@@ -19659,6 +19743,17 @@ export const CouponInfoFragmentDoc = gql`
   status
 }
     `;
+export const DeTaiInfoFragmentDoc = gql`
+    fragment DeTaiInfo on DeTaiNode {
+  id
+  giangVien {
+    ...UserInfo
+  }
+  tenDeTai
+  moTa
+  giangVienFullName
+}
+    ${UserInfoFragmentDoc}`;
 export const ShippingFeeInfoFragmentDoc = gql`
     fragment ShippingFeeInfo on ShippingFeeNode {
   id
@@ -20067,22 +20162,28 @@ export const UserDiamondSponsorInfoFragmentDoc = gql`
   textEditer
 }
     ${UserWithSupplierInfoFragmentDoc}`;
-export const GiangVienInfoFragmentDoc = gql`
-    fragment GiangVienInfo on GiangVienNode {
-  id
-  name
-  deTai
-}
-    `;
 export const GroupQldaInfoFragmentDoc = gql`
     fragment GroupQLDAInfo on GroupQLDANode {
   id
   maNhom
   name
-  deTai
   status
+  memberCount
 }
     `;
+export const JoinGroupInfoFragmentDoc = gql`
+    fragment JoinGroupInfo on JoinGroupNode {
+  id
+  user {
+    ...UserInfo
+  }
+  group {
+    ...GroupQLDAInfo
+  }
+  membersCount
+}
+    ${UserInfoFragmentDoc}
+${GroupQldaInfoFragmentDoc}`;
 export const ReasonInfoFragmentDoc = gql`
     fragment ReasonInfo on ReasonNode {
   id
@@ -22276,6 +22377,85 @@ export const UpdateCouponStatusDocument = gql`
       super(apollo);
     }
   }
+export const GetDeTaisDocument = gql`
+    query getDeTais($before: String, $after: String, $first: Int, $last: Int, $id: String, $giangVien: String, $tenDeTai: String, $moTa: String) {
+  deTais(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    id: $id
+    giangVien: $giangVien
+    tenDeTai: $tenDeTai
+    moTa: $moTa
+  ) {
+    totalCount
+    pageInfo {
+      ...PageInfo
+    }
+    edges {
+      node {
+        ...DeTaiInfo
+      }
+    }
+  }
+}
+    ${PageInfoFragmentDoc}
+${DeTaiInfoFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetDeTaisGQL extends Apollo.Query<GetDeTaisQuery, GetDeTaisQueryVariables> {
+    override document = GetDeTaisDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetDeTaiDocument = gql`
+    query getDeTai($id: ID!) {
+  deTai(id: $id) {
+    ...DeTaiInfo
+  }
+}
+    ${DeTaiInfoFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetDeTaiGQL extends Apollo.Query<GetDeTaiQuery, GetDeTaiQueryVariables> {
+    override document = GetDeTaiDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const CreateDeTaiDocument = gql`
+    mutation createDeTai($input: DeTaiInput!) {
+  deTaiCreate(input: $input) {
+    status
+    deTai {
+      ...DeTaiInfo
+    }
+    error {
+      ...ErrorInfo
+    }
+  }
+}
+    ${DeTaiInfoFragmentDoc}
+${ErrorInfoFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class CreateDeTaiGQL extends Apollo.Mutation<CreateDeTaiMutation, CreateDeTaiMutationVariables> {
+    override document = CreateDeTaiDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const GetShippingFeesDocument = gql`
     query getShippingFees($before: String, $after: String, $first: Int, $last: Int, $pickUpCityCode: Float, $pickUpCityName: String, $destinationCityCode: Float, $destinationCityName: String, $weight: Float, $fee: Float, $status: Boolean) {
   shippingFees(
@@ -22728,93 +22908,14 @@ export const CreateDiamondSponsorTextEditerDocument = gql`
       super(apollo);
     }
   }
-export const GetGiangViensDocument = gql`
-    query getGiangViens($before: String, $after: String, $first: Int, $last: Int, $id: String, $name: String, $deTai: String) {
-  giangViens(
-    before: $before
-    after: $after
-    first: $first
-    last: $last
-    id: $id
-    name: $name
-    deTai: $deTai
-  ) {
-    totalCount
-    pageInfo {
-      ...PageInfo
-    }
-    edges {
-      node {
-        ...GiangVienInfo
-      }
-    }
-  }
-}
-    ${PageInfoFragmentDoc}
-${GiangVienInfoFragmentDoc}`;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class GetGiangViensGQL extends Apollo.Query<GetGiangViensQuery, GetGiangViensQueryVariables> {
-    override document = GetGiangViensDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const GetGiangVienDocument = gql`
-    query getGiangVien($id: ID!) {
-  giangVien(id: $id) {
-    ...GiangVienInfo
-  }
-}
-    ${GiangVienInfoFragmentDoc}`;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class GetGiangVienGQL extends Apollo.Query<GetGiangVienQuery, GetGiangVienQueryVariables> {
-    override document = GetGiangVienDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const CreateGiangVienDocument = gql`
-    mutation createGiangVien($input: GiangVienInput!) {
-  giangVienCreate(input: $input) {
-    status
-    giangVien {
-      ...GiangVienInfo
-    }
-    error {
-      ...ErrorInfo
-    }
-  }
-}
-    ${GiangVienInfoFragmentDoc}
-${ErrorInfoFragmentDoc}`;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class CreateGiangVienGQL extends Apollo.Mutation<CreateGiangVienMutation, CreateGiangVienMutationVariables> {
-    override document = CreateGiangVienDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
 export const GetGroupQldasDocument = gql`
-    query getGroupQldas($before: String, $after: String, $first: Int, $last: Int, $name: String, $deTai: String, $status: Boolean) {
+    query getGroupQldas($before: String, $after: String, $first: Int, $last: Int, $name: String, $status: Boolean) {
   groupQldas(
     before: $before
     after: $after
     first: $first
     last: $last
     name: $name
-    deTai: $deTai
     status: $status
   ) {
     totalCount
@@ -22859,9 +22960,31 @@ export const GetGroupQldaDocument = gql`
       super(apollo);
     }
   }
+export const GetGroupQldaJoinDocument = gql`
+    mutation getGroupQldaJoin($groupId: ID!, $userEmail: String!) {
+  groupQldaJoin(groupId: $groupId, userEmail: $userEmail) {
+    status
+    error {
+      code
+      message
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetGroupQldaJoinGQL extends Apollo.Mutation<GetGroupQldaJoinMutation, GetGroupQldaJoinMutationVariables> {
+    override document = GetGroupQldaJoinDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const CreateGroupQldaDocument = gql`
-    mutation createGroupQlda($input: GroupQLDAInput!) {
-  groupQldaCreate(input: $input) {
+    mutation createGroupQlda($input: GroupQLDAInput!, $userEmail: String!) {
+  groupQldaCreate(input: $input, userEmail: $userEmail) {
     status
     groupQlda {
       ...GroupQLDAInfo

@@ -48,7 +48,7 @@ import { UserGuideBuyerPage } from '#admin/pages/user-guide/buyer/buyer.componen
 import { UserGuideSupplierPage } from '#admin/pages/user-guide/supplier/supplier.component';
 import { WarrantyTermListPage } from './pages/master-data/warranty-term/list/warranty-term-list.component';
 /* import { GroupListComponent } from './pages/group/list/group-list.component'; */
-import { GiangVienListPage } from './pages/giangVien/list/giangVien-list.component';
+import { DeTaiListPage } from './pages/giangVien/list/deTai-list.component';
 
 export const appRoutes: Routes = [
     { path: '', redirectTo: 'admin/home', pathMatch: 'full' },
@@ -283,8 +283,8 @@ export const appRoutes: Routes = [
                 children: [{ path: '', component: CouponListPage, data: { breadcrumb: 'Coupon' } }],
             },
             {
-                path: 'giangVien',
-                children: [{ path: '', component: GiangVienListPage, data: { breadcrumb: 'Giảng Viên' } }],
+                path: 'deTai',
+                children: [{ path: '', component: DeTaiListPage, data: { breadcrumb: 'Giảng Viên' } }],
             },
             {
                 path: 'our-partner',

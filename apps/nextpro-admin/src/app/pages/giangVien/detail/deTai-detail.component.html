@@ -3,7 +3,7 @@
         <mat-icon class="!mr-0">close</mat-icon>
     </button>
     <div class="flex-1 text-center font-bold text-[20px]">
-        {{ (mode === 'CREATE' ? 'giangVien.createGiangVien' : 'giangVien.updateGiangVien') | translate | uppercase }}
+        {{ (mode === 'CREATE' ? 'deTai.createDeTai' : 'deTai.updateDeTai') | translate | uppercase }}
     </div>
 </div>
 <app-form [form]="form" [attr.name]="form.name" formClass="grid grid-cols-3 gap-2 mt-4" />
@@ -11,7 +11,7 @@
     mat-raised-button
     color="primary"
     (click)="handleSave()"
-    [disabled]="loadingService.checkLoading(['createGiangVien', 'updateGiangVien'])"
+    [disabled]="loadingService.checkLoading(['createDeTai', 'updateDeTai'])"
 >
     <mat-icon>save</mat-icon>
     {{ (mode === 'CREATE' ? 'button.create' : 'button.update') | translate | uppercase }}

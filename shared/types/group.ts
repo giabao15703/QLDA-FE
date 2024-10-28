@@ -1,10 +1,15 @@
-import { I_GiangVien } from './giangvien';
-import { I_User } from './user'; // Assuming you have a user interface defined
+import { I_User } from './user';
 
 export interface I_GroupQLDA {
     id?: string;
     maNhom?: string;
     name?: string;
-    deTai?: string;
     status?: boolean;
+    memberCount?: number;
+}
+export interface I_JoinGroup {
+    id?: string;
+    user?: I_User;
+    group?: I_GroupQLDA;
+    membersCount?: number;
 }

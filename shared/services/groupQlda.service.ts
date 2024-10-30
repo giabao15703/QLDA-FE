@@ -11,6 +11,9 @@ import {
     GetGroupQldaJoinGQL, // <-- Import thêm mutation này
     GetGroupQldaJoinMutation,
     GetGroupQldaJoinMutationVariables,
+    GetGroupQldaRequestMutation,
+    GetGroupQldaRequestMutationVariables,
+    GetGroupQldaRequestGQL,
 } from '#shared/graphql/types';
 import { I_GraphQLOptions, I_MutationResponse, I_NormalizeExtra, I_TableState } from '#shared/types';
 import { normalizeWithPagination } from '#shared/utils';
@@ -28,7 +31,8 @@ export class GroupQLDAService {
         private getGroupQldasGQL: GetGroupQldasGQL, // Lấy danh sách GroupQLDA
         private getGroupQldaGQL: GetGroupQldaGQL, // Lấy chi tiết GroupQLDA
         private createGroupQldaGQL: CreateGroupQldaGQL, // Tạo GroupQLDA
-        private getGroupQldaJoinGQL: GetGroupQldaJoinGQL, // <-- Thêm mutation để join GroupQLDA
+        private getGroupQldaJoinGQL: GetGroupQldaJoinGQL,
+        private getGroupQldaRequestGQL: GetGroupQldaRequestGQL,
     ) {}
 
     get error(): Observable<string> {
@@ -94,5 +98,15 @@ export class GroupQLDAService {
             GetGroupQldaJoinMutationVariables,
             { groupQldaJoin: I_MutationResponse }
         >(this.getGroupQldaJoinGQL, variables, options);
+    };
+    getGroupQldaRequest = (
+        variables?: GetGroupQldaRequestMutationVariables,
+        options?: I_GraphQLOptions<GetGroupQldaRequestMutation, { groupQldaRequest: I_MutationResponse }>,
+    ) => {
+        return this.graphqlService.mutate<
+            GetGroupQldaRequestMutation,
+            GetGroupQldaRequestMutationVariables,
+            { groupQldaRequest: I_MutationResponse }
+        >(this.getGroupQldaRequestGQL, variables, options);
     };
 }

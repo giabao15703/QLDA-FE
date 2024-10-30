@@ -46,6 +46,12 @@ export type Scalars = {
   UploadType: { input: any; output: any; }
 };
 
+export type AcceptJoinRequest = {
+  __typename?: 'AcceptJoinRequest';
+  error?: Maybe<Error>;
+  status?: Maybe<Scalars['Boolean']['output']>;
+};
+
 export type AdminCreate = {
   __typename?: 'AdminCreate';
   admin?: Maybe<AdminNode>;
@@ -4432,6 +4438,7 @@ export type GroupQldaNode = CustomNode & {
   /** The ID of the object. */
   id: Scalars['ID']['output'];
   joinGroups: JoinGroupNodeConnection;
+  joinRequests: JoinRequestNodeConnection;
   maNhom: Scalars['String']['output'];
   memberCount: Scalars['Int']['output'];
   membersCount?: Maybe<Scalars['Int']['output']>;
@@ -4441,6 +4448,16 @@ export type GroupQldaNode = CustomNode & {
 
 
 export type GroupQldaNodeJoinGroupsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  status?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type GroupQldaNodeJoinRequestsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -5124,6 +5141,7 @@ export type JoinGroupNode = CustomNode & {
   /** The ID of the object. */
   id: Scalars['ID']['output'];
   membersCount?: Maybe<Scalars['Int']['output']>;
+  role: Scalars['String']['output'];
   user: UserNode;
 };
 
@@ -5143,6 +5161,35 @@ export type JoinGroupNodeEdge = {
   cursor: Scalars['String']['output'];
   /** The item at the end of the edge */
   node?: Maybe<JoinGroupNode>;
+};
+
+export type JoinRequestNode = CustomNode & {
+  __typename?: 'JoinRequestNode';
+  createdAt: Scalars['DateTime']['output'];
+  group: GroupQldaNode;
+  /** The ID of the object. */
+  id: Scalars['ID']['output'];
+  isApproved: Scalars['Boolean']['output'];
+  membersCount?: Maybe<Scalars['Int']['output']>;
+  user: UserNode;
+};
+
+export type JoinRequestNodeConnection = {
+  __typename?: 'JoinRequestNodeConnection';
+  /** Contains the nodes in this connection. */
+  edges: Array<Maybe<JoinRequestNodeEdge>>;
+  /** Pagination data for this connection. */
+  pageInfo: PageInfo;
+  totalCount?: Maybe<Scalars['Int']['output']>;
+};
+
+/** A Relay edge containing a `JoinRequestNode` and its cursor. */
+export type JoinRequestNodeEdge = {
+  __typename?: 'JoinRequestNodeEdge';
+  /** A cursor for use in pagination */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge */
+  node?: Maybe<JoinRequestNode>;
 };
 
 export type LanguageCreate = {
@@ -5624,6 +5671,7 @@ export type MoudulesUpdatesStatus = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  acceptJoinRequest?: Maybe<AcceptJoinRequest>;
   adminCreate?: Maybe<AdminCreate>;
   adminDelete?: Maybe<AdminDelete>;
   adminProfileUpdate?: Maybe<AdminProfileUpdate>;
@@ -5927,6 +5975,11 @@ export type Mutation = {
   warrantyTermDelete?: Maybe<WarrantyTermDelete>;
   warrantyTermUpdate?: Maybe<WarrantyTermUpdate>;
   warrantyTermUpdateStatus?: Maybe<WarrantyTermUpdateStatus>;
+};
+
+
+export type MutationAcceptJoinRequestArgs = {
+  joinRequestId: Scalars['ID']['input'];
 };
 
 
@@ -9412,6 +9465,8 @@ export type Query = {
   /** The ID of the object */
   joinGroup?: Maybe<JoinGroupNode>;
   /** The ID of the object */
+  joinRequest?: Maybe<JoinRequestNode>;
+  /** The ID of the object */
   language?: Maybe<LanguageNode>;
   languages?: Maybe<LanguageNodeConnection>;
   /** The ID of the object */
@@ -10487,6 +10542,11 @@ export type QueryIndustrySubSectorsArgs = {
 
 
 export type QueryJoinGroupArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryJoinRequestArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -15264,6 +15324,7 @@ export type UserNode = CustomNode & {
   /** Designates that this user has all permissions without explicitly assigning them. */
   isSuperuser: Scalars['Boolean']['output'];
   joinGroups: JoinGroupNodeConnection;
+  joinRequests: JoinRequestNodeConnection;
   language: LanguageNode;
   lastLogin?: Maybe<Scalars['DateTime']['output']>;
   lastName?: Maybe<Scalars['String']['output']>;
@@ -15424,6 +15485,16 @@ export type UserNodeGroupsArgs = {
 
 
 export type UserNodeJoinGroupsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  status?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type UserNodeJoinRequestsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -16699,6 +16770,8 @@ export type GroupQldaInfoFragment = { __typename?: 'GroupQLDANode', id: string, 
 
 export type JoinGroupInfoFragment = { __typename?: 'JoinGroupNode', id: string, membersCount?: number | null, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, group: { __typename?: 'GroupQLDANode', id: string, maNhom: string, name: string, status: boolean, memberCount: number } };
 
+export type JoinRequestInfoFragment = { __typename?: 'JoinRequestNode', id: string, isApproved: boolean, createdAt: any, membersCount?: number | null, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, group: { __typename?: 'GroupQLDANode', id: string, maNhom: string, name: string, status: boolean, memberCount: number } };
+
 export type GetGroupQldasQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
   after?: InputMaybe<Scalars['String']['input']>;
@@ -16725,6 +16798,13 @@ export type GetGroupQldaJoinMutationVariables = Exact<{
 
 
 export type GetGroupQldaJoinMutation = { __typename?: 'Mutation', groupQldaJoin?: { __typename?: 'GroupQLDAJoin', status?: boolean | null, error?: { __typename?: 'Error', code?: string | null, message?: string | null } | null } | null };
+
+export type GetGroupQldaRequestMutationVariables = Exact<{
+  joinRequestId: Scalars['ID']['input'];
+}>;
+
+
+export type GetGroupQldaRequestMutation = { __typename?: 'Mutation', acceptJoinRequest?: { __typename?: 'AcceptJoinRequest', status?: boolean | null, error?: { __typename?: 'Error', code?: string | null, message?: string | null } | null } | null };
 
 export type CreateGroupQldaMutationVariables = Exact<{
   input: GroupQldaInput;
@@ -20184,6 +20264,21 @@ export const JoinGroupInfoFragmentDoc = gql`
 }
     ${UserInfoFragmentDoc}
 ${GroupQldaInfoFragmentDoc}`;
+export const JoinRequestInfoFragmentDoc = gql`
+    fragment JoinRequestInfo on JoinRequestNode {
+  id
+  user {
+    ...UserInfo
+  }
+  group {
+    ...GroupQLDAInfo
+  }
+  isApproved
+  createdAt
+  membersCount
+}
+    ${UserInfoFragmentDoc}
+${GroupQldaInfoFragmentDoc}`;
 export const ReasonInfoFragmentDoc = gql`
     fragment ReasonInfo on ReasonNode {
   id
@@ -22977,6 +23072,28 @@ export const GetGroupQldaJoinDocument = gql`
   })
   export class GetGroupQldaJoinGQL extends Apollo.Mutation<GetGroupQldaJoinMutation, GetGroupQldaJoinMutationVariables> {
     override document = GetGroupQldaJoinDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetGroupQldaRequestDocument = gql`
+    mutation getGroupQldaRequest($joinRequestId: ID!) {
+  acceptJoinRequest(joinRequestId: $joinRequestId) {
+    status
+    error {
+      code
+      message
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetGroupQldaRequestGQL extends Apollo.Mutation<GetGroupQldaRequestMutation, GetGroupQldaRequestMutationVariables> {
+    override document = GetGroupQldaRequestDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

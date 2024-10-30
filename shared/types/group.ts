@@ -13,3 +13,11 @@ export interface I_JoinGroup {
     group?: I_GroupQLDA;
     membersCount?: number;
 }
+export interface I_JoinRequest {
+    id?: string;
+    user?: I_User;
+    group?: I_GroupQLDA;
+    isApproved?: boolean;
+    createdAt?: string;
+    membersCount?: number;
+}

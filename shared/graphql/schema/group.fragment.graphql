@@ -15,3 +15,15 @@ fragment JoinGroupInfo on JoinGroupNode {
     }
     membersCount
 }
+fragment JoinRequestInfo on JoinRequestNode {
+    id
+    user{
+        ...UserInfo
+    }
+    group{
+        ...GroupQLDAInfo
+    }
+    isApproved
+    createdAt
+    membersCount
+}

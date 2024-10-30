@@ -48,7 +48,7 @@ import { UserGuideBuyerPage } from '#admin/pages/user-guide/buyer/buyer.componen
 import { UserGuideSupplierPage } from '#admin/pages/user-guide/supplier/supplier.component';
 import { WarrantyTermListPage } from './pages/master-data/warranty-term/list/warranty-term-list.component';
 /* import { GroupListComponent } from './pages/group/list/group-list.component'; */
-import { DeTaiListPage } from './pages/giangVien/list/deTai-list.component';
+import { DeTaiListPage } from './pages/deTai/list/deTai-list.component';
 
 export const appRoutes: Routes = [
     { path: '', redirectTo: 'admin/home', pathMatch: 'full' },

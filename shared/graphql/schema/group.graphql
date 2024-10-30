@@ -42,7 +42,15 @@ mutation getGroupQldaJoin($groupId: ID!, $userEmail: String!) {
         }
     }
 }
-
+mutation getGroupQldaRequest($joinRequestId: ID!) {
+    acceptJoinRequest(joinRequestId: $joinRequestId) {
+        status
+        error {
+            code
+            message
+        }
+    }
+}
 
 mutation createGroupQlda($input: GroupQLDAInput!, $userEmail: String!) {
     groupQldaCreate(input: $input, userEmail: $userEmail) {

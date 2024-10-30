@@ -1,0 +1,18 @@
+<div class="flex items-center gap-2 mb-2 sticky top-0 z-[101] bg-[#01313f] text-white rounded-[4px]">
+    <button mat-raised-button color="warn" (click)="onCloseDrawer()">
+        <mat-icon class="!mr-0">close</mat-icon>
+    </button>
+    <div class="flex-1 text-center font-bold text-[20px]">
+        {{ (mode === 'CREATE' ? 'giangVien.createGiangVien' : 'giangVien.updateGiangVien') | translate | uppercase }}
+    </div>
+</div>
+<app-form [form]="form" [attr.name]="form.name" formClass="grid grid-cols-3 gap-2 mt-4" />
+<button
+    mat-raised-button
+    color="primary"
+    (click)="handleSave()"
+    [disabled]="loadingService.checkLoading(['createGiangVien', 'updateGiangVien'])"
+>
+    <mat-icon>save</mat-icon>
+    {{ (mode === 'CREATE' ? 'button.create' : 'button.update') | translate | uppercase }}
+</button>

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -7,6 +7,8 @@ import { ImageComponent, LanguageSwitchComponent } from '#shared/components';
 import { MaterialModules } from '#shared/modules';
 import { AuthService, LocalStorageService } from '#shared/services';
 import { E_UserType, I_Profile } from '#shared/types';
+import { MatMenuTrigger } from '@angular/material/menu';
+
 
 @Component({
     standalone: true,
@@ -84,5 +86,21 @@ export class NavbarComponent {
 
     onLogout() {
         this.authService.logout();
+    }
+
+    notifications = [
+        'Thông báo 1: Lời mời gia nhập nhóm abcxyz',
+        'Thông báo 2',
+        'Thông báo 3',
+        'Thông báo 4',
+        'Thông báo 5',
+        'Thông báo 6',
+        'Thông báo 7',
+    ];
+
+    @ViewChild('notificationTrigger') notificationTrigger: MatMenuTrigger;
+
+    openMenu(trigger: MatMenuTrigger) {
+        trigger.openMenu();
     }
 }

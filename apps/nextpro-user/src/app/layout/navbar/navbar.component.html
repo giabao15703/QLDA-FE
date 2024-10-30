@@ -60,6 +60,31 @@
 
     <div class="flex items-center gap-3">
         <app-language-switch />
+        <!-- <div class="flex items-center gap-3 no-underline text-[#ffffff] !text-[15px] cursor-pointer">
+            <span class="material-symbols-outlined">notifications</span>
+            <div>{{ 'navbar.personal.notification' | translate }}</div>
+        </div> -->
+        <button mat-icon-button [matMenuTriggerFor]="notificationMenu" (mouseenter)="openMenu(notificationTrigger)">
+            <mat-icon>notifications</mat-icon>
+        </button>
+        
+        <!-- Menu thông báo -->
+        <mat-menu #notificationMenu="matMenu" class="!max-w-full !max-h-86 !overflow-x-hidden">
+            <ng-template matMenuContent>
+                <div *ngIf="notifications.length > 0; else noNotifications" class="p-4 bg-white shadow-lg rounded-lg">
+                    <div *ngFor="let notification of notifications" class="flex items-center justify-between mb-2 p-2 border-b gap-2">
+                        <p class="text-gray-800">{{ notification }}</p>
+                        <div class="flex gap-2">
+                            <button class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600">✓</button>
+                            <button class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">✗</button>
+                        </div>
+                    </div>
+                </div>
+                <ng-template #noNotifications>
+                    <p class="text-center text-gray-500">Không có thông báo</p>
+                </ng-template>
+            </ng-template>
+        </mat-menu>
         @if (isLoggedIn()) {
         <div class="flex items-center">
             <button mat-button [matMenuTriggerFor]="menuPersonal">
@@ -119,12 +144,6 @@
                         <span class="material-symbols-outlined">person</span>
                         <div>{{ 'navbar.personal.profile' | translate }}</div>
                     </a>
-                </div>
-                <div mat-menu-item>
-                    <div class="flex items-center gap-3 no-underline text-[#ffffff] !text-[15px]">
-                        <span class="material-symbols-outlined">notifications</span>
-                        <div>{{ 'navbar.personal.notification' | translate }}</div>
-                    </div>
                 </div>
                 <div mat-menu-item>
                     <a [routerLink]="['#']" class="flex items-center gap-3 no-underline text-[#ffffff] !text-[15px]">

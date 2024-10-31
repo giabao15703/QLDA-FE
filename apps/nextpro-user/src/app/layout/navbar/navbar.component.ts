@@ -5,10 +5,9 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { ImageComponent, LanguageSwitchComponent } from '#shared/components';
 import { MaterialModules } from '#shared/modules';
-import { AuthService, LocalStorageService } from '#shared/services';
-import { E_UserType, I_Profile } from '#shared/types';
+import { AuthService, GroupQLDAService, LocalStorageService } from '#shared/services';
+import { E_UserType, I_JoinRequest, I_Profile } from '#shared/types';
 import { MatMenuTrigger } from '@angular/material/menu';
-
 
 @Component({
     standalone: true,
@@ -22,6 +21,7 @@ export class NavbarComponent {
         private router: Router,
         public authService: AuthService,
         private localStorageService: LocalStorageService,
+        private groupQldaService: GroupQLDAService,
     ) {
         this.user = this.localStorageService.get('user');
 
@@ -47,6 +47,25 @@ export class NavbarComponent {
 
     ngOnInit() {
         this.updateMenuPaths();
+        this.user = this.localStorageService.get('user');
+        this.LoadNotifications();
+    }
+    LoadNotifications() {
+        const currentUserId = localStorage.getItem('user');
+
+        if (!currentUserId) {
+            console.error('Không xác định được userId từ localStorage.');
+            return;
+        }
+
+        this.groupQldaService
+            .getGroupQldaRequests()
+            .then((joinRequests: I_JoinRequest[]) => {
+                this.notifications = joinRequests.map(
+                    (request: I_JoinRequest) => `Lời mời tham gia nhóm ${request.group?.id} từ ${request.user?.id}`,
+                );
+            })
+            .catch((error) => console.error('Error loading notifications:', error));
     }
 
     updateMenuPaths() {

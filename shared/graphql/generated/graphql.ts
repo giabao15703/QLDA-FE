@@ -4461,9 +4461,10 @@ export type GroupQldaNodeJoinRequestsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
+  groupId?: InputMaybe<Scalars['Float']['input']>;
+  isApproved?: InputMaybe<Scalars['Boolean']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
-  status?: InputMaybe<Scalars['Boolean']['input']>;
+  userId?: InputMaybe<Scalars['Float']['input']>;
 };
 
 export type GroupQldaNodeConnection = {
@@ -5170,6 +5171,8 @@ export type JoinRequestNode = CustomNode & {
   /** The ID of the object. */
   id: Scalars['ID']['output'];
   isApproved: Scalars['Boolean']['output'];
+  leaderNotification?: Maybe<Scalars['String']['output']>;
+  leaderUserId?: Maybe<Scalars['Int']['output']>;
   membersCount?: Maybe<Scalars['Int']['output']>;
   user: UserNode;
 };
@@ -9466,6 +9469,7 @@ export type Query = {
   joinGroup?: Maybe<JoinGroupNode>;
   /** The ID of the object */
   joinRequest?: Maybe<JoinRequestNode>;
+  joinRequests?: Maybe<JoinRequestNodeConnection>;
   /** The ID of the object */
   language?: Maybe<LanguageNode>;
   languages?: Maybe<LanguageNodeConnection>;
@@ -10548,6 +10552,17 @@ export type QueryJoinGroupArgs = {
 
 export type QueryJoinRequestArgs = {
   id: Scalars['ID']['input'];
+};
+
+
+export type QueryJoinRequestsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  groupId?: InputMaybe<Scalars['Float']['input']>;
+  isApproved?: InputMaybe<Scalars['Boolean']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  userId?: InputMaybe<Scalars['Float']['input']>;
 };
 
 
@@ -15498,9 +15513,10 @@ export type UserNodeJoinRequestsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
+  groupId?: InputMaybe<Scalars['Float']['input']>;
+  isApproved?: InputMaybe<Scalars['Boolean']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
-  status?: InputMaybe<Scalars['Boolean']['input']>;
+  userId?: InputMaybe<Scalars['Float']['input']>;
 };
 
 
@@ -16768,9 +16784,9 @@ export type CreateDiamondSponsorTextEditerMutation = { __typename?: 'Mutation', 
 
 export type GroupQldaInfoFragment = { __typename?: 'GroupQLDANode', id: string, maNhom: string, name: string, status: boolean, memberCount: number };
 
-export type JoinGroupInfoFragment = { __typename?: 'JoinGroupNode', id: string, membersCount?: number | null, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, group: { __typename?: 'GroupQLDANode', id: string, maNhom: string, name: string, status: boolean, memberCount: number } };
+export type JoinGroupInfoFragment = { __typename?: 'JoinGroupNode', id: string, membersCount?: number | null, role: string, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, group: { __typename?: 'GroupQLDANode', id: string, maNhom: string, name: string, status: boolean, memberCount: number } };
 
-export type JoinRequestInfoFragment = { __typename?: 'JoinRequestNode', id: string, isApproved: boolean, createdAt: any, membersCount?: number | null, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, group: { __typename?: 'GroupQLDANode', id: string, maNhom: string, name: string, status: boolean, memberCount: number } };
+export type JoinRequestInfoFragment = { __typename?: 'JoinRequestNode', id: string, isApproved: boolean, createdAt: any, membersCount?: number | null, leaderUserId?: number | null, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, group: { __typename?: 'GroupQLDANode', id: string, maNhom: string, name: string, status: boolean, memberCount: number } };
 
 export type GetGroupQldasQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -16783,6 +16799,19 @@ export type GetGroupQldasQueryVariables = Exact<{
 
 
 export type GetGroupQldasQuery = { __typename?: 'Query', groupQldas?: { __typename?: 'GroupQLDANodeConnection', totalCount?: number | null, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'GroupQLDANodeEdge', node?: { __typename?: 'GroupQLDANode', id: string, maNhom: string, name: string, status: boolean, memberCount: number } | null } | null> } | null };
+
+export type GetGroupQldaRequestsQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  userId?: InputMaybe<Scalars['Float']['input']>;
+  groupId?: InputMaybe<Scalars['Float']['input']>;
+  isApproved?: InputMaybe<Scalars['Boolean']['input']>;
+}>;
+
+
+export type GetGroupQldaRequestsQuery = { __typename?: 'Query', joinRequests?: { __typename?: 'JoinRequestNodeConnection', edges: Array<{ __typename?: 'JoinRequestNodeEdge', node?: { __typename?: 'JoinRequestNode', leaderUserId?: number | null, user: { __typename?: 'UserNode', id: string }, group: { __typename?: 'GroupQLDANode', id: string } } | null } | null> } | null };
 
 export type GetGroupQldaQueryVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -20261,6 +20290,7 @@ export const JoinGroupInfoFragmentDoc = gql`
     ...GroupQLDAInfo
   }
   membersCount
+  role
 }
     ${UserInfoFragmentDoc}
 ${GroupQldaInfoFragmentDoc}`;
@@ -20276,6 +20306,7 @@ export const JoinRequestInfoFragmentDoc = gql`
   isApproved
   createdAt
   membersCount
+  leaderUserId
 }
     ${UserInfoFragmentDoc}
 ${GroupQldaInfoFragmentDoc}`;
@@ -23032,6 +23063,42 @@ ${GroupQldaInfoFragmentDoc}`;
   })
   export class GetGroupQldasGQL extends Apollo.Query<GetGroupQldasQuery, GetGroupQldasQueryVariables> {
     override document = GetGroupQldasDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetGroupQldaRequestsDocument = gql`
+    query getGroupQldaRequests($before: String, $after: String, $first: Int, $last: Int, $userId: Float, $groupId: Float, $isApproved: Boolean) {
+  joinRequests(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    userId: $userId
+    groupId: $groupId
+    isApproved: $isApproved
+  ) {
+    edges {
+      node {
+        user {
+          id
+        }
+        group {
+          id
+        }
+        leaderUserId
+      }
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetGroupQldaRequestsGQL extends Apollo.Query<GetGroupQldaRequestsQuery, GetGroupQldaRequestsQueryVariables> {
+    override document = GetGroupQldaRequestsDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

@@ -20,4 +20,5 @@ export interface I_JoinRequest {
     isApproved?: boolean;
     createdAt?: string;
     membersCount?: number;
+    leaderUserId?: number;
 }

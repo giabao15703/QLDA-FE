@@ -14,13 +14,16 @@ import {
     GetGroupQldaRequestMutation,
     GetGroupQldaRequestMutationVariables,
     GetGroupQldaRequestGQL,
+    GetGroupQldaRequestsQuery,
+    GetGroupQldaRequestsQueryVariables,
+    GetGroupQldaRequestsGQL,
 } from '#shared/graphql/types';
 import { I_GraphQLOptions, I_MutationResponse, I_NormalizeExtra, I_TableState } from '#shared/types';
 import { normalizeWithPagination } from '#shared/utils';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GraphqlService } from './core/graphql.service';
-import { I_GroupQLDA } from 'shared/types/group';
+import { I_GroupQLDA, I_JoinRequest } from 'shared/types/group';
 
 @Injectable({
     providedIn: 'root',
@@ -33,6 +36,7 @@ export class GroupQLDAService {
         private createGroupQldaGQL: CreateGroupQldaGQL, // Tạo GroupQLDA
         private getGroupQldaJoinGQL: GetGroupQldaJoinGQL,
         private getGroupQldaRequestGQL: GetGroupQldaRequestGQL,
+        private getGroupQldaRequestsGQL: GetGroupQldaRequestsGQL,
     ) {}
 
     get error(): Observable<string> {
@@ -108,5 +112,25 @@ export class GroupQLDAService {
             GetGroupQldaRequestMutationVariables,
             { groupQldaRequest: I_MutationResponse }
         >(this.getGroupQldaRequestGQL, variables, options);
+    };
+    private normalizeGroupQldaRequestList = (
+        data: GetGroupQldaRequestsQuery,
+        extra?: I_NormalizeExtra,
+    ): I_JoinRequest[] => {
+        return data.joinRequests.edges.map((edge) => edge.node);
+    };
+
+    getGroupQldaRequests = (
+        variables?: GetGroupQldaRequestsQueryVariables,
+        options?: I_GraphQLOptions<GetGroupQldaRequestsQuery, I_JoinRequest[]>,
+    ) => {
+        return this.graphqlService.query<
+            GetGroupQldaRequestsQuery,
+            GetGroupQldaRequestsQueryVariables,
+            I_JoinRequest[]
+        >(this.getGroupQldaRequestsGQL, variables, {
+            normalize: (data) => this.normalizeGroupQldaRequestList(data, options?.extra),
+            ...options,
+        }) as Promise<I_JoinRequest[]>; // Ensure this returns an array of I_JoinRequest
     };
 }

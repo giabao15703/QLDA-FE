@@ -18,7 +18,7 @@ import {
 } from '#shared/services';
 import { E_FieldType, E_Form_Mode, E_TableColumnType, I_DeTai, I_QueryVariables } from '#shared/types'; // Sử dụng I_DeTai thay vì I_GiangVien
 import { formatDate, getQueryVariables } from '#shared/utils';
-import { DeTaiDetailComponent } from '../detail/de-tai-detail.component';// Thay đổi sang DeTaiDetailComponent
+import { DeTaiDetailComponent } from '../detail/de-tai-detail.component'; // Thay đổi sang DeTaiDetailComponent
 @Component({
     standalone: true,
     selector: 'nextpro-admin-deTai-list', // Thay đổi tên selector

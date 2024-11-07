@@ -14,9 +14,9 @@ import {
     GetGroupQldaRequestMutation,
     GetGroupQldaRequestMutationVariables,
     GetGroupQldaRequestGQL,
+    GetGroupQldaRequestsGQL,
     GetGroupQldaRequestsQuery,
     GetGroupQldaRequestsQueryVariables,
-    GetGroupQldaRequestsGQL,
 } from '#shared/graphql/types';
 import { I_GraphQLOptions, I_MutationResponse, I_NormalizeExtra, I_TableState } from '#shared/types';
 import { normalizeWithPagination } from '#shared/utils';

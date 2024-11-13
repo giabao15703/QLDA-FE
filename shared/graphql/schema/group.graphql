@@ -59,7 +59,7 @@ mutation getGroupQldaJoin($groupId: ID!, $userEmail: String!) {
     }
 }
 mutation getGroupQldaRequest($joinRequestId: ID!) {
-    acceptJoinRequest(joinRequestId: $joinRequestId, ) {
+    acceptJoinRequest(joinRequestId: $joinRequestId ) {
         status
         error {
             code

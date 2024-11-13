@@ -72,11 +72,8 @@
         <mat-menu #notificationMenu="matMenu" class="!max-w-full !max-h-86 !overflow-x-hidden">
             <ng-template matMenuContent>
                 <div *ngIf="notifications.length > 0; else noNotifications" class="p-4 bg-white shadow-lg rounded-lg">
-                    <div
-                        *ngFor="let notification of notifications; let i = index"
-                        class="flex items-center justify-between mb-2 p-2 border-b gap-2"
-                    >
-                        <p class="text-gray-800">{{ notification.message }}</p>
+                    <div *ngFor="let notification of notifications" class="flex items-center justify-between mb-2 p-2 border-b gap-2">
+                        <p class="text-gray-800">{{ notification }}</p>
                         <div class="flex gap-2">
                             <button
                                 (click)="acceptJoinRequest(notification.id)"

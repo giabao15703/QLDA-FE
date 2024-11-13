@@ -1,6 +1,6 @@
 fragment DeTaiInfo on DeTaiNode {
     id
-    giangVien{
+    giangvienId{
         ...UserInfo
     }
     tenDeTai

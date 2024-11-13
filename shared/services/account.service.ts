@@ -119,6 +119,7 @@ import {
 } from '#shared/graphql/types';
 import { GraphqlService } from '#shared/services';
 import {
+    E_Role,
     I_Admin,
     I_Buyer,
     I_BuyerSubAccount,
@@ -659,7 +660,10 @@ export class AccountService {
 
     getAdmin = (variables?: GetAdminQueryVariables, options?: I_GraphQLOptions<GetAdminQuery, I_Admin>) => {
         return this.graphqlService.query<GetAdminQuery, GetAdminQueryVariables, I_Admin>(this.getAdminGQL, variables, {
-            normalize: (data) => data.admin,
+            normalize: (data) => ({
+                ...data.admin,
+                role: data.admin.role as unknown as E_Role,
+            }),
             ...options,
         }) as Promise<I_Admin>;
     };

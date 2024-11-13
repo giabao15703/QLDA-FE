@@ -71,51 +71,6 @@ export class AccountAdminDetailComponent {
                 inputType: E_InputType.PASSWORD,
             },
             {
-                label: 'account.admin-accounts.status',
-                name: 'status',
-                fieldType: E_FieldType.SELECT,
-                options: [
-                    {
-                        label: 'account.admin-accounts.active',
-                        value: 1,
-                    },
-                    {
-                        label: 'account.admin-accounts.inactive',
-                        value: 2,
-                    },
-                    {
-                        label: 'account.admin-accounts.cancelled',
-                        value: 3,
-                    },
-                    {
-                        label: 'account.admin-accounts.pending',
-                        value: 4,
-                    },
-                ],
-            },
-            {
-                label: 'account.admin-accounts.validFrom',
-                name: 'validFrom',
-                fieldType: E_FieldType.DATEPICKER,
-                validate: [
-                    {
-                        rule: Validators.required,
-                        message: 'Please fill valid from',
-                    },
-                ],
-            },
-            {
-                label: 'account.admin-accounts.validTo',
-                name: 'validTo',
-                fieldType: E_FieldType.DATEPICKER,
-                validate: [
-                    {
-                        rule: Validators.required,
-                        message: 'Please fill valid to',
-                    },
-                ],
-            },
-            {
                 label: 'account.admin-accounts.roles',
                 name: 'role',
                 fieldType: E_FieldType.SELECT,
@@ -131,10 +86,6 @@ export class AccountAdminDetailComponent {
                     {
                         label: 'account.admin-accounts.levelThree',
                         value: 3,
-                    },
-                    {
-                        label: 'account.admin-accounts.levelFour',
-                        value: 4,
                     },
                 ],
             },
@@ -170,7 +121,8 @@ export class AccountAdminDetailComponent {
                     shortName,
                     longName,
                     email,
-                    user: { status, userspermissionSet },
+                    user: { status },
+                    role,
                 } = this.data;
 
                 this.form.patchValue({
@@ -179,9 +131,7 @@ export class AccountAdminDetailComponent {
                     longName,
                     email,
                     status,
-                    validFrom: userspermissionSet?.edges?.[0]?.node?.validFrom,
-                    validTo: userspermissionSet?.edges?.[0]?.node?.validTo,
-                    role: userspermissionSet?.edges?.[0]?.node?.permission?.role,
+                    role,
                 });
             }
         }
@@ -197,14 +147,7 @@ export class AccountAdminDetailComponent {
                     ...(this.mode === E_Form_Mode.CREATE && { password: values.password }),
                 },
                 longName: values.longName,
-                permissions: [
-                    {
-                        validFrom: toPythonDate(values.validFrom),
-                        validTo: toPythonDate(values.validTo),
-                        role: parseInt(values.role),
-                        modules: values.modules || [],
-                    },
-                ],
+                role: values.role,
             };
 
             if (this.mode === E_Form_Mode.CREATE) {
@@ -212,25 +155,26 @@ export class AccountAdminDetailComponent {
                     admin: variables,
                 });
 
-                if (adminCreate.status) {
-                    this.localStorageService.remove(FORM_NAME);
-                    this.notificationService.success('notification.createSuccessfully');
-                } else {
-                    this.notificationService.error(adminCreate.error?.message);
-                }
-            } else {
-                const { adminUpdate } = await this.accountService.updateAdmin({
-                    id: this.data.id,
-                    admin: variables,
-                    isDelete: false,
-                });
+                // Kiểm tra nếu adminCreate tồn tại và adminCreate.admin cũng tồn tại
+                if (adminCreate?.status && 'admin' in adminCreate) {
+                    if ('admin' in adminCreate) {
+                        const createdAdminId = adminCreate.admin.id;
+                        const createdAdminRole = adminCreate.admin.role;
 
-                if (adminUpdate.status) {
-                    this.localStorageService.remove(FORM_NAME);
-                    this.notificationService.success('notification.updateSuccessfully');
-                    this.onCloseDrawer();
-                } else {
-                    this.notificationService.error(adminUpdate.error?.message);
+                        // Tạo một đối tượng để lưu cả id và role
+                        const adminInfo = {
+                            id: createdAdminId,
+                            role: createdAdminRole,
+                        };
+
+                        // Lưu đối tượng này vào localStorage dưới dạng chuỗi JSON
+                        this.localStorageService.set('createdAdminInfo', JSON.stringify(adminInfo));
+
+                        this.localStorageService.remove(FORM_NAME);
+                        this.notificationService.success('notification.createSuccessfully');
+                    } else {
+                        this.notificationService.error(adminCreate.error?.message || 'Unknown error');
+                    }
                 }
             }
 

@@ -98,6 +98,7 @@ export class DeTaiDetailComponent {
                     tenDeTai: deTaiDetail.tenDeTai,
                     moTa: deTaiDetail.moTa || '',
                     giangVienFullName: deTaiDetail.giangVienFullName,
+                    giangvienId: deTaiDetail.giangVien,
                 });
             }
         }
@@ -108,14 +109,18 @@ export class DeTaiDetailComponent {
             const variables = {
                 input: {
                     tenDeTai: values.tenDeTai,
-                    moTa: values.moTa,
                     giangVienFullName: values.giangVienFullName,
+                    giangVien: values.giangVien,
                 },
             };
 
             if (this.mode === E_Form_Mode.CREATE) {
                 const { deTaiCreate } = await this.deTaiService.createDeTai({
-                    ...variables,
+                    input: {
+                        ...variables.input,
+                        giangvienId: values.giangVien.id,
+                        moTa: values.moTa || '',
+                    },
                 });
 
                 if (deTaiCreate.status) {

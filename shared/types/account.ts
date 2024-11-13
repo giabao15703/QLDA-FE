@@ -459,8 +459,14 @@ export interface I_Admin {
     companyLongName?: string;
     companyShortName?: string;
     language?: I_Language;
+    role?: E_Role;
 }
 
+export enum E_Role {
+    A_1 = 1,
+    A_2 = 2,
+    A_3 = 3,
+}
 export interface I_ClientFocus {
     id?: string;
     name?: string;

@@ -4,7 +4,6 @@ fragment AdminInfo on AdminNode {
         ...UserWithPermissionAndSubstitutionPermissionInfo
     }
     longName
-    picture
     email
     shortName
     fullName
@@ -19,6 +18,7 @@ fragment AdminInfo on AdminNode {
     language {
         ...LanguageInfo
     }
+    role
 }
 
 fragment GroupPermissionInfo on GroupPermissionNode {

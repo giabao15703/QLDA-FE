@@ -116,6 +116,7 @@ export class AuthService {
 
             this.localStorageService.set('token', loginResult.login.token);
             this.localStorageService.set('user', loginResult?.login?.user);
+            this.localStorageService.set('admin', loginResult?.login?.admin);
             this.localStorageService.set('languageCode', loginResult.login.user.language.itemCode);
             setTimeout(() => {
                 this.localStorageService.set(

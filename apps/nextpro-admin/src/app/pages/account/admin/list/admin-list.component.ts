@@ -190,84 +190,9 @@ export class AccountAdminListPage {
                 render: formatDate,
             },
             {
-                sort: 'valid_from',
-                name: 'user.userspermissionSet.edges[0].node.validFrom',
-                label: 'account.admin-accounts.validFrom',
-                render: formatDate,
-            },
-            {
-                sort: 'valid_to',
-                name: 'user.userspermissionSet.edges[0].node.validTo',
-                label: 'account.admin-accounts.validTo',
-                render: formatDate,
-            },
-            {
                 sort: 'role',
-                name: 'user.userspermissionSet.edges[0].node.permission.role',
+                name: 'role',
                 label: 'account.admin-accounts.roles',
-                render: (cell) => {
-                    let roleText;
-
-                    switch (cell) {
-                        case 1:
-                            roleText = 'trưởng khoa';
-                            break;
-                        case 2:
-                            roleText = 'giáo vụ';
-                            break;
-                        case 3:
-                            roleText = 'giảng viên';
-                            break;
-                    }
-
-                    return roleText ? this.translateService.instant(roleText) : '';
-                },
-            },
-            {
-                sort: 'modules',
-                name: 'user.userspermissionSet.edges',
-                label: 'account.admin-accounts.modules',
-                render: (cell) => {
-                    return cell.map((item) => item?.node?.permission?.group?.name).join(', ');
-                },
-            },
-            {
-                cellStyle: { width: '80px' },
-                type: E_TableColumnType.HTML,
-                sort: 'status',
-                name: 'user.status',
-                label: 'account.admin-accounts.status',
-                render: (cell) => {
-                    let status = '';
-                    let statusText = '';
-
-                    switch (cell) {
-                        case 1:
-                            status = 'active';
-                            statusText = 'account.admin-accounts.active';
-                            break;
-                        case 2:
-                            status = 'inactive';
-                            statusText = 'account.admin-accounts.inactive';
-                            break;
-                        case 3:
-                            status = 'cancelled';
-                            statusText = 'account.admin-accounts.cancelled';
-                            break;
-                        case 4:
-                            status = 'pending';
-                            statusText = 'account.admin-accounts.pending';
-                            break;
-                        default:
-                            status = 'undefined';
-                            statusText = 'account.admin-accounts.undefined';
-                            break;
-                    }
-
-                    return `<div class="text-white text-center p-[10px] bg-${status}">
-                        ${this.translateService.instant(statusText)}
-                    </div>`;
-                },
             },
             // {
             //     name: 'subId',

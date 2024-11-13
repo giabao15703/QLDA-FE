@@ -4,7 +4,7 @@ query getDeTais(
     $first: Int
     $last: Int
     $id: String
-    $giangVien: String 
+    $giangvienId: String 
     $tenDeTai: String
     $moTa: String
 
@@ -15,7 +15,7 @@ query getDeTais(
         first: $first
         last: $last
         id: $id
-        giangVien: $giangVien
+        giangvienId: $giangvienId
         tenDeTai: $tenDeTai
         moTa: $moTa
 

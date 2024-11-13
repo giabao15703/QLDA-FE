@@ -1,6 +1,9 @@
 mutation login($user: LoginInput!) {
     login(user: $user) {
         token
+        admin {
+            ...AdminInfo
+        }
         status
         user {
             ...UserWithBuyerAndSupplierInfo

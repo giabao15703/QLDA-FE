@@ -14,4 +14,18 @@ fragment JoinGroupInfo on JoinGroupNode {
         ...GroupQLDAInfo
     }
     membersCount
+    role
+}
+fragment JoinRequestInfo on JoinRequestNode {
+    id
+    user{
+        ...UserInfo
+    }
+    group{
+        ...GroupQLDAInfo
+    }
+    isApproved
+    createdAt
+    membersCount
+    leaderUserId
 }

@@ -46,6 +46,12 @@ export type Scalars = {
   UploadType: { input: any; output: any; }
 };
 
+export type AcceptJoinRequest = {
+  __typename?: 'AcceptJoinRequest';
+  error?: Maybe<Error>;
+  status?: Maybe<Scalars['Boolean']['output']>;
+};
+
 export type AdminCreate = {
   __typename?: 'AdminCreate';
   admin?: Maybe<AdminNode>;
@@ -60,9 +66,8 @@ export type AdminDelete = {
 
 export type AdminInput = {
   longName: Scalars['String']['input'];
-  permissions?: InputMaybe<Array<InputMaybe<PermissionInput>>>;
-  picture?: InputMaybe<Scalars['Upload']['input']>;
-  user: UserAdminInput;
+  role: Scalars['Int']['input'];
+  user: UserInput;
 };
 
 export type AdminNode = CustomNode & UserInterface & {
@@ -79,7 +84,7 @@ export type AdminNode = CustomNode & UserInterface & {
   language?: Maybe<LanguageNode>;
   lastName?: Maybe<Scalars['String']['output']>;
   longName: Scalars['String']['output'];
-  picture?: Maybe<Scalars['String']['output']>;
+  role: AdminRole;
   shortName?: Maybe<Scalars['String']['output']>;
   user: UserNode;
   userType?: Maybe<Scalars['Int']['output']>;
@@ -115,6 +120,16 @@ export type AdminProfileUpdateInput = {
   picture?: InputMaybe<Scalars['Upload']['input']>;
   user: UserAdminUpdateInput;
 };
+
+/** An enumeration. */
+export enum AdminRole {
+  /** Trưởng khoa */
+  A_1 = 'A_1',
+  /** Giáo vụ */
+  A_2 = 'A_2',
+  /** Giảng viên */
+  A_3 = 'A_3'
+}
 
 export type AdminStatusUpdate = {
   __typename?: 'AdminStatusUpdate';
@@ -3092,6 +3107,11 @@ export type CoursesUpdatesStatus = {
   status?: Maybe<Scalars['Boolean']['output']>;
 };
 
+export type CreateKeHoachDoAn = {
+  __typename?: 'CreateKeHoachDoAn';
+  keHoachDoAn?: Maybe<KeHoachDoAnNode>;
+};
+
 export type CreateNewPassword = {
   __typename?: 'CreateNewPassword';
   error?: Maybe<Error>;
@@ -3458,17 +3478,18 @@ export type DeTaiCreate = {
 };
 
 export type DeTaiInput = {
-  giangVienFullName: Scalars['String']['input'];
+  giangvienId: Scalars['ID']['input'];
   moTa: Scalars['String']['input'];
   tenDeTai: Scalars['String']['input'];
 };
 
 export type DeTaiNode = CustomNode & {
   __typename?: 'DeTaiNode';
-  giangVien: UserNode;
   giangVienFullName?: Maybe<Scalars['String']['output']>;
+  giangvienId: UserNode;
   /** The ID of the object. */
   id: Scalars['ID']['output'];
+  kehoachdoanId: KeHoachDoAnType;
   moTa: Scalars['String']['output'];
   tenDeTai: Scalars['String']['output'];
 };
@@ -3489,6 +3510,18 @@ export type DeTaiNodeEdge = {
   cursor: Scalars['String']['output'];
   /** The item at the end of the edge */
   node?: Maybe<DeTaiNode>;
+};
+
+export type DeTaiUpdate = {
+  __typename?: 'DeTaiUpdate';
+  deTai?: Maybe<DeTaiNode>;
+  error?: Maybe<Error>;
+  status?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type DeleteKeHoachDoAn = {
+  __typename?: 'DeleteKeHoachDoAn';
+  success?: Maybe<Scalars['Boolean']['output']>;
 };
 
 export type DeliveryResponsibleCreate = {
@@ -4432,9 +4465,9 @@ export type GroupQldaNode = CustomNode & {
   /** The ID of the object. */
   id: Scalars['ID']['output'];
   joinGroups: JoinGroupNodeConnection;
+  joinRequests: JoinRequestNodeConnection;
   maNhom: Scalars['String']['output'];
   memberCount: Scalars['Int']['output'];
-  membersCount?: Maybe<Scalars['Int']['output']>;
   name: Scalars['String']['output'];
   status: Scalars['Boolean']['output'];
 };
@@ -4447,6 +4480,17 @@ export type GroupQldaNodeJoinGroupsArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   status?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type GroupQldaNodeJoinRequestsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  groupId?: InputMaybe<Scalars['Float']['input']>;
+  isApproved?: InputMaybe<Scalars['Boolean']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  userId?: InputMaybe<Scalars['Float']['input']>;
 };
 
 export type GroupQldaNodeConnection = {
@@ -5124,6 +5168,7 @@ export type JoinGroupNode = CustomNode & {
   /** The ID of the object. */
   id: Scalars['ID']['output'];
   membersCount?: Maybe<Scalars['Int']['output']>;
+  role: Scalars['String']['output'];
   user: UserNode;
 };
 
@@ -5143,6 +5188,142 @@ export type JoinGroupNodeEdge = {
   cursor: Scalars['String']['output'];
   /** The item at the end of the edge */
   node?: Maybe<JoinGroupNode>;
+};
+
+export type JoinRequestNode = CustomNode & {
+  __typename?: 'JoinRequestNode';
+  createdAt: Scalars['DateTime']['output'];
+  group: GroupQldaNode;
+  /** The ID of the object. */
+  id: Scalars['ID']['output'];
+  isApproved: Scalars['Boolean']['output'];
+  leaderNotification?: Maybe<Scalars['String']['output']>;
+  leaderUserId?: Maybe<Scalars['Int']['output']>;
+  membersCount?: Maybe<Scalars['Int']['output']>;
+  user: UserNode;
+};
+
+export type JoinRequestNodeConnection = {
+  __typename?: 'JoinRequestNodeConnection';
+  /** Contains the nodes in this connection. */
+  edges: Array<Maybe<JoinRequestNodeEdge>>;
+  /** Pagination data for this connection. */
+  pageInfo: PageInfo;
+  totalCount?: Maybe<Scalars['Int']['output']>;
+};
+
+/** A Relay edge containing a `JoinRequestNode` and its cursor. */
+export type JoinRequestNodeEdge = {
+  __typename?: 'JoinRequestNodeEdge';
+  /** A cursor for use in pagination */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge */
+  node?: Maybe<JoinRequestNode>;
+};
+
+export type KeHoachDoAnNode = CustomNode & {
+  __typename?: 'KeHoachDoAnNode';
+  detaiSet: DeTaiNodeConnection;
+  /** The ID of the object. */
+  id: Scalars['ID']['output'];
+  kyMo: Scalars['String']['output'];
+  slDoAn: Scalars['Int']['output'];
+  slSinhVien: Scalars['Int']['output'];
+  tgbdChamHoiDong: Scalars['Date']['output'];
+  tgbdChamPhanBien: Scalars['Date']['output'];
+  tgbdDangKyDeTai: Scalars['Date']['output'];
+  tgbdDoAn: Scalars['Date']['output'];
+  tgbdLamDoAn: Scalars['Date']['output'];
+  tgbdTaoDoAn: Scalars['Date']['output'];
+  tgktChamHoiDong: Scalars['Date']['output'];
+  tgktChamPhanBien: Scalars['Date']['output'];
+  tgktDangKyDeTai: Scalars['Date']['output'];
+  tgktDoAn: Scalars['Date']['output'];
+  tgktLamDoAn: Scalars['Date']['output'];
+  tgktTaoDoAn: Scalars['Date']['output'];
+  user: UserNode;
+};
+
+
+export type KeHoachDoAnNodeDetaiSetArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  giangvienId?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  moTa?: InputMaybe<Scalars['String']['input']>;
+  tenDeTai?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type KeHoachDoAnNodeConnection = {
+  __typename?: 'KeHoachDoAnNodeConnection';
+  /** Contains the nodes in this connection. */
+  edges: Array<Maybe<KeHoachDoAnNodeEdge>>;
+  /** Pagination data for this connection. */
+  pageInfo: PageInfo;
+  totalCount?: Maybe<Scalars['Int']['output']>;
+};
+
+/** A Relay edge containing a `KeHoachDoAnNode` and its cursor. */
+export type KeHoachDoAnNodeEdge = {
+  __typename?: 'KeHoachDoAnNodeEdge';
+  /** A cursor for use in pagination */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge */
+  node?: Maybe<KeHoachDoAnNode>;
+};
+
+export type KeHoachDoAnType = Node & {
+  __typename?: 'KeHoachDoAnType';
+  detaiSet: DeTaiNodeConnection;
+  /** The ID of the object. */
+  id: Scalars['ID']['output'];
+  kyMo: Scalars['String']['output'];
+  slDoAn: Scalars['Int']['output'];
+  slSinhVien: Scalars['Int']['output'];
+  tgbdChamHoiDong: Scalars['Date']['output'];
+  tgbdChamPhanBien: Scalars['Date']['output'];
+  tgbdDangKyDeTai: Scalars['Date']['output'];
+  tgbdDoAn: Scalars['Date']['output'];
+  tgbdLamDoAn: Scalars['Date']['output'];
+  tgbdTaoDoAn: Scalars['Date']['output'];
+  tgktChamHoiDong: Scalars['Date']['output'];
+  tgktChamPhanBien: Scalars['Date']['output'];
+  tgktDangKyDeTai: Scalars['Date']['output'];
+  tgktDoAn: Scalars['Date']['output'];
+  tgktLamDoAn: Scalars['Date']['output'];
+  tgktTaoDoAn: Scalars['Date']['output'];
+  user: UserNode;
+};
+
+
+export type KeHoachDoAnTypeDetaiSetArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  giangvienId?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  moTa?: InputMaybe<Scalars['String']['input']>;
+  tenDeTai?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type KeHoachDoAnTypeConnection = {
+  __typename?: 'KeHoachDoAnTypeConnection';
+  /** Contains the nodes in this connection. */
+  edges: Array<Maybe<KeHoachDoAnTypeEdge>>;
+  /** Pagination data for this connection. */
+  pageInfo: PageInfo;
+};
+
+/** A Relay edge containing a `KeHoachDoAnType` and its cursor. */
+export type KeHoachDoAnTypeEdge = {
+  __typename?: 'KeHoachDoAnTypeEdge';
+  /** A cursor for use in pagination */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge */
+  node?: Maybe<KeHoachDoAnType>;
 };
 
 export type LanguageCreate = {
@@ -5509,6 +5690,7 @@ export type LevelUpdateStatus = {
 
 export type Login = {
   __typename?: 'Login';
+  admin?: Maybe<AdminNode>;
   error?: Maybe<Error>;
   status?: Maybe<Scalars['Boolean']['output']>;
   token?: Maybe<Scalars['String']['output']>;
@@ -5624,6 +5806,7 @@ export type MoudulesUpdatesStatus = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  acceptJoinRequest?: Maybe<AcceptJoinRequest>;
   adminCreate?: Maybe<AdminCreate>;
   adminDelete?: Maybe<AdminDelete>;
   adminProfileUpdate?: Maybe<AdminProfileUpdate>;
@@ -5703,6 +5886,7 @@ export type Mutation = {
   coursesDelete?: Maybe<CoursesDelete>;
   coursesUpdate?: Maybe<CoursesUpdate>;
   coursesUpdateStatus?: Maybe<CoursesUpdatesStatus>;
+  createKeHoachDoAn?: Maybe<CreateKeHoachDoAn>;
   createMasterAdmin?: Maybe<AdminSuperCreate>;
   createNewPassword?: Maybe<CreateNewPassword>;
   createOrder?: Maybe<OrderCreateMutation>;
@@ -5712,6 +5896,8 @@ export type Mutation = {
   currencyUpdateStatus?: Maybe<CurrencyUpdateStatus>;
   databaseDelete?: Maybe<DatabaseDelete>;
   deTaiCreate?: Maybe<DeTaiCreate>;
+  deTaiUpdate?: Maybe<DeTaiUpdate>;
+  deleteKeHoachDoAn?: Maybe<DeleteKeHoachDoAn>;
   deleteOrder?: Maybe<OrderDeleteMutation>;
   deliveryResponsibleCreate?: Maybe<DeliveryResponsibleCreate>;
   deliveryResponsibleDelete?: Maybe<DeliveryResponsibleDelete>;
@@ -5894,6 +6080,7 @@ export type Mutation = {
   unitOfMeasureDelete?: Maybe<UnitofMeasureDelete>;
   unitOfMeasureUpdate?: Maybe<UnitofMeasureUpdate>;
   unitOfMeasureUpdateStatus?: Maybe<UnitofMeasureUpdateStatus>;
+  updateKeHoachDoAn?: Maybe<UpdateKeHoachDoAn>;
   updateOrder?: Maybe<OrderUpdateMutation>;
   updateOrderStatus?: Maybe<OrderUpdateStatusMutation>;
   userDiamondSponsorClickCount?: Maybe<UserDiamondSponsorClickCount>;
@@ -5927,6 +6114,11 @@ export type Mutation = {
   warrantyTermDelete?: Maybe<WarrantyTermDelete>;
   warrantyTermUpdate?: Maybe<WarrantyTermUpdate>;
   warrantyTermUpdateStatus?: Maybe<WarrantyTermUpdateStatus>;
+};
+
+
+export type MutationAcceptJoinRequestArgs = {
+  joinRequestId: Scalars['ID']['input'];
 };
 
 
@@ -6360,6 +6552,26 @@ export type MutationCoursesUpdateStatusArgs = {
 };
 
 
+export type MutationCreateKeHoachDoAnArgs = {
+  kyMo: Scalars['String']['input'];
+  slDoAn: Scalars['Int']['input'];
+  slSinhVien: Scalars['Int']['input'];
+  tgbdChamHoiDong: Scalars['Date']['input'];
+  tgbdChamPhanBien: Scalars['Date']['input'];
+  tgbdDangKyDeTai: Scalars['Date']['input'];
+  tgbdDoAn: Scalars['Date']['input'];
+  tgbdLamDoAn: Scalars['Date']['input'];
+  tgbdTaoDoAn: Scalars['Date']['input'];
+  tgktChamHoiDong: Scalars['Date']['input'];
+  tgktChamPhanBien: Scalars['Date']['input'];
+  tgktDangKyDeTai: Scalars['Date']['input'];
+  tgktDoAn: Scalars['Date']['input'];
+  tgktLamDoAn: Scalars['Date']['input'];
+  tgktTaoDoAn: Scalars['Date']['input'];
+  userId: Scalars['ID']['input'];
+};
+
+
 export type MutationCreateNewPasswordArgs = {
   confirmPassword: Scalars['String']['input'];
   password: Scalars['String']['input'];
@@ -6397,6 +6609,17 @@ export type MutationCurrencyUpdateStatusArgs = {
 
 export type MutationDeTaiCreateArgs = {
   input: DeTaiInput;
+};
+
+
+export type MutationDeTaiUpdateArgs = {
+  id: Scalars['ID']['input'];
+  input: DeTaiInput;
+};
+
+
+export type MutationDeleteKeHoachDoAnArgs = {
+  id: Scalars['ID']['input'];
 };
 
 
@@ -7338,6 +7561,27 @@ export type MutationUnitOfMeasureUpdateArgs = {
 
 export type MutationUnitOfMeasureUpdateStatusArgs = {
   listStatus: Array<InputMaybe<UnitofMeasureStatusInput>>;
+};
+
+
+export type MutationUpdateKeHoachDoAnArgs = {
+  id: Scalars['ID']['input'];
+  kyMo?: InputMaybe<Scalars['String']['input']>;
+  slDoAn?: InputMaybe<Scalars['Int']['input']>;
+  slSinhVien?: InputMaybe<Scalars['Int']['input']>;
+  tgbdChamHoiDong?: InputMaybe<Scalars['Date']['input']>;
+  tgbdChamPhanBien?: InputMaybe<Scalars['Date']['input']>;
+  tgbdDangKyDeTai?: InputMaybe<Scalars['Date']['input']>;
+  tgbdDoAn?: InputMaybe<Scalars['Date']['input']>;
+  tgbdLamDoAn?: InputMaybe<Scalars['Date']['input']>;
+  tgbdTaoDoAn?: InputMaybe<Scalars['Date']['input']>;
+  tgktChamHoiDong?: InputMaybe<Scalars['Date']['input']>;
+  tgktChamPhanBien?: InputMaybe<Scalars['Date']['input']>;
+  tgktDangKyDeTai?: InputMaybe<Scalars['Date']['input']>;
+  tgktDoAn?: InputMaybe<Scalars['Date']['input']>;
+  tgktLamDoAn?: InputMaybe<Scalars['Date']['input']>;
+  tgktTaoDoAn?: InputMaybe<Scalars['Date']['input']>;
+  userId?: InputMaybe<Scalars['ID']['input']>;
 };
 
 
@@ -9412,6 +9656,12 @@ export type Query = {
   /** The ID of the object */
   joinGroup?: Maybe<JoinGroupNode>;
   /** The ID of the object */
+  joinRequest?: Maybe<JoinRequestNode>;
+  joinRequests?: Maybe<JoinRequestNodeConnection>;
+  /** The ID of the object */
+  keHoachDoAn?: Maybe<KeHoachDoAnNode>;
+  keHoachDoAns?: Maybe<KeHoachDoAnNodeConnection>;
+  /** The ID of the object */
   language?: Maybe<LanguageNode>;
   languages?: Maybe<LanguageNodeConnection>;
   /** The ID of the object */
@@ -9586,6 +9836,7 @@ export type QueryAdminsArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
   longName?: InputMaybe<Scalars['String']['input']>;
   orderBy?: InputMaybe<Scalars['String']['input']>;
+  role?: InputMaybe<Scalars['String']['input']>;
   shortName?: InputMaybe<Scalars['String']['input']>;
   status?: InputMaybe<Scalars['String']['input']>;
   username?: InputMaybe<Scalars['String']['input']>;
@@ -10161,7 +10412,7 @@ export type QueryDeTaisArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
-  giangVien?: InputMaybe<Scalars['String']['input']>;
+  giangvienId?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   moTa?: InputMaybe<Scalars['String']['input']>;
@@ -10488,6 +10739,40 @@ export type QueryIndustrySubSectorsArgs = {
 
 export type QueryJoinGroupArgs = {
   id: Scalars['ID']['input'];
+};
+
+
+export type QueryJoinRequestArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryJoinRequestsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  groupId?: InputMaybe<Scalars['Float']['input']>;
+  isApproved?: InputMaybe<Scalars['Boolean']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  userId?: InputMaybe<Scalars['Float']['input']>;
+};
+
+
+export type QueryKeHoachDoAnArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryKeHoachDoAnsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  kyMo?: InputMaybe<Scalars['String']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  maKeHoach?: InputMaybe<Scalars['String']['input']>;
+  slDoAn?: InputMaybe<Scalars['Float']['input']>;
+  slSinhVien?: InputMaybe<Scalars['Float']['input']>;
+  userId?: InputMaybe<Scalars['Float']['input']>;
 };
 
 
@@ -14895,11 +15180,9 @@ export type UnitofMeasureUpdateStatus = {
   status?: Maybe<Scalars['Boolean']['output']>;
 };
 
-export type UserAdminInput = {
-  email: Scalars['String']['input'];
-  password: Scalars['String']['input'];
-  shortName: Scalars['String']['input'];
-  status?: InputMaybe<Scalars['Int']['input']>;
+export type UpdateKeHoachDoAn = {
+  __typename?: 'UpdateKeHoachDoAn';
+  keHoachDoAn?: Maybe<KeHoachDoAnNode>;
 };
 
 export type UserAdminUpdateInput = {
@@ -15264,6 +15547,8 @@ export type UserNode = CustomNode & {
   /** Designates that this user has all permissions without explicitly assigning them. */
   isSuperuser: Scalars['Boolean']['output'];
   joinGroups: JoinGroupNodeConnection;
+  joinRequests: JoinRequestNodeConnection;
+  keHoachDoAn: KeHoachDoAnTypeConnection;
   language: LanguageNode;
   lastLogin?: Maybe<Scalars['DateTime']['output']>;
   lastName?: Maybe<Scalars['String']['output']>;
@@ -15273,6 +15558,7 @@ export type UserNode = CustomNode & {
   pk?: Maybe<Scalars['Int']['output']>;
   rfxAwardedSuppliers: RfxAwardNodeConnection;
   rfxUserBuyers: RfxNodeConnection;
+  role?: Maybe<Scalars['Int']['output']>;
   shortName: Scalars['String']['output'];
   status?: Maybe<Scalars['Int']['output']>;
   supplier?: Maybe<SupplierNode>;
@@ -15394,7 +15680,7 @@ export type UserNodeDetaiSetArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
-  giangVien?: InputMaybe<Scalars['String']['input']>;
+  giangvienId?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   moTa?: InputMaybe<Scalars['String']['input']>;
@@ -15430,6 +15716,25 @@ export type UserNodeJoinGroupsArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   status?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type UserNodeJoinRequestsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  groupId?: InputMaybe<Scalars['Float']['input']>;
+  isApproved?: InputMaybe<Scalars['Boolean']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  userId?: InputMaybe<Scalars['Float']['input']>;
+};
+
+
+export type UserNodeKeHoachDoAnArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -16086,7 +16391,7 @@ export type WholeSalePriceType = {
   qualityTo?: Maybe<Scalars['Int']['output']>;
 };
 
-export type AdminInfoFragment = { __typename?: 'AdminNode', id: string, longName: string, picture?: string | null, email?: string | null, shortName?: string | null, fullName?: string | null, username?: string | null, userType?: number | null, created?: any | null, firstName?: string | null, lastName?: string | null, companyWebsite?: string | null, companyLongName?: string | null, companyShortName?: string | null, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, userspermissionSet: { __typename?: 'UsersPermissionNodeConnection', edges: Array<{ __typename?: 'UsersPermissionNodeEdge', node?: { __typename?: 'UsersPermissionNode', id: string, validFrom?: any | null, validTo?: any | null, status: number, pk?: number | null, permission: { __typename?: 'GroupPermissionNode', id: string, role: number, group?: { __typename?: 'GroupNode', id: string, name: string } | null } } | null } | null> }, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, language?: { __typename?: 'LanguageNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'LanguageTranslationNode', id: string, languageCode: string, name: string }> } | null };
+export type AdminInfoFragment = { __typename?: 'AdminNode', id: string, longName: string, email?: string | null, shortName?: string | null, fullName?: string | null, username?: string | null, userType?: number | null, created?: any | null, firstName?: string | null, lastName?: string | null, companyWebsite?: string | null, companyLongName?: string | null, companyShortName?: string | null, role: AdminRole, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, userspermissionSet: { __typename?: 'UsersPermissionNodeConnection', edges: Array<{ __typename?: 'UsersPermissionNodeEdge', node?: { __typename?: 'UsersPermissionNode', id: string, validFrom?: any | null, validTo?: any | null, status: number, pk?: number | null, permission: { __typename?: 'GroupPermissionNode', id: string, role: number, group?: { __typename?: 'GroupNode', id: string, name: string } | null } } | null } | null> }, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, language?: { __typename?: 'LanguageNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'LanguageTranslationNode', id: string, languageCode: string, name: string }> } | null };
 
 export type GroupPermissionInfoFragment = { __typename?: 'GroupPermissionNode', id: string, role: number, group?: { __typename?: 'GroupNode', id: string, name: string } | null };
 
@@ -16095,7 +16400,7 @@ export type GetAdminQueryVariables = Exact<{
 }>;
 
 
-export type GetAdminQuery = { __typename?: 'Query', admin?: { __typename?: 'AdminNode', id: string, longName: string, picture?: string | null, email?: string | null, shortName?: string | null, fullName?: string | null, username?: string | null, userType?: number | null, created?: any | null, firstName?: string | null, lastName?: string | null, companyWebsite?: string | null, companyLongName?: string | null, companyShortName?: string | null, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, userspermissionSet: { __typename?: 'UsersPermissionNodeConnection', edges: Array<{ __typename?: 'UsersPermissionNodeEdge', node?: { __typename?: 'UsersPermissionNode', id: string, validFrom?: any | null, validTo?: any | null, status: number, pk?: number | null, permission: { __typename?: 'GroupPermissionNode', id: string, role: number, group?: { __typename?: 'GroupNode', id: string, name: string } | null } } | null } | null> }, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, language?: { __typename?: 'LanguageNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'LanguageTranslationNode', id: string, languageCode: string, name: string }> } | null } | null };
+export type GetAdminQuery = { __typename?: 'Query', admin?: { __typename?: 'AdminNode', id: string, longName: string, email?: string | null, shortName?: string | null, fullName?: string | null, username?: string | null, userType?: number | null, created?: any | null, firstName?: string | null, lastName?: string | null, companyWebsite?: string | null, companyLongName?: string | null, companyShortName?: string | null, role: AdminRole, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, userspermissionSet: { __typename?: 'UsersPermissionNodeConnection', edges: Array<{ __typename?: 'UsersPermissionNodeEdge', node?: { __typename?: 'UsersPermissionNode', id: string, validFrom?: any | null, validTo?: any | null, status: number, pk?: number | null, permission: { __typename?: 'GroupPermissionNode', id: string, role: number, group?: { __typename?: 'GroupNode', id: string, name: string } | null } } | null } | null> }, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, language?: { __typename?: 'LanguageNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'LanguageTranslationNode', id: string, languageCode: string, name: string }> } | null } | null };
 
 export type GetAdminsQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -16111,18 +16416,19 @@ export type GetAdminsQueryVariables = Exact<{
   shortName?: InputMaybe<Scalars['String']['input']>;
   validFrom?: InputMaybe<Scalars['String']['input']>;
   validTo?: InputMaybe<Scalars['String']['input']>;
+  role?: InputMaybe<Scalars['String']['input']>;
   orderBy?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type GetAdminsQuery = { __typename?: 'Query', admins?: { __typename?: 'AdminNodeConnection', totalCount?: number | null, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'AdminNodeEdge', node?: { __typename?: 'AdminNode', id: string, longName: string, picture?: string | null, email?: string | null, shortName?: string | null, fullName?: string | null, username?: string | null, userType?: number | null, created?: any | null, firstName?: string | null, lastName?: string | null, companyWebsite?: string | null, companyLongName?: string | null, companyShortName?: string | null, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, userspermissionSet: { __typename?: 'UsersPermissionNodeConnection', edges: Array<{ __typename?: 'UsersPermissionNodeEdge', node?: { __typename?: 'UsersPermissionNode', id: string, validFrom?: any | null, validTo?: any | null, status: number, pk?: number | null, permission: { __typename?: 'GroupPermissionNode', id: string, role: number, group?: { __typename?: 'GroupNode', id: string, name: string } | null } } | null } | null> }, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, language?: { __typename?: 'LanguageNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'LanguageTranslationNode', id: string, languageCode: string, name: string }> } | null } | null } | null> } | null };
+export type GetAdminsQuery = { __typename?: 'Query', admins?: { __typename?: 'AdminNodeConnection', totalCount?: number | null, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'AdminNodeEdge', node?: { __typename?: 'AdminNode', id: string, longName: string, email?: string | null, shortName?: string | null, fullName?: string | null, username?: string | null, userType?: number | null, created?: any | null, firstName?: string | null, lastName?: string | null, companyWebsite?: string | null, companyLongName?: string | null, companyShortName?: string | null, role: AdminRole, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, userspermissionSet: { __typename?: 'UsersPermissionNodeConnection', edges: Array<{ __typename?: 'UsersPermissionNodeEdge', node?: { __typename?: 'UsersPermissionNode', id: string, validFrom?: any | null, validTo?: any | null, status: number, pk?: number | null, permission: { __typename?: 'GroupPermissionNode', id: string, role: number, group?: { __typename?: 'GroupNode', id: string, name: string } | null } } | null } | null> }, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, language?: { __typename?: 'LanguageNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'LanguageTranslationNode', id: string, languageCode: string, name: string }> } | null } | null } | null> } | null };
 
 export type CreateAdminMutationVariables = Exact<{
   admin: AdminInput;
 }>;
 
 
-export type CreateAdminMutation = { __typename?: 'Mutation', adminCreate?: { __typename?: 'AdminCreate', status?: boolean | null, error?: { __typename?: 'Error', code?: string | null, message?: string | null, field?: string | null } | null, admin?: { __typename?: 'AdminNode', id: string, longName: string, picture?: string | null, email?: string | null, shortName?: string | null, fullName?: string | null, username?: string | null, userType?: number | null, created?: any | null, firstName?: string | null, lastName?: string | null, companyWebsite?: string | null, companyLongName?: string | null, companyShortName?: string | null, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, userspermissionSet: { __typename?: 'UsersPermissionNodeConnection', edges: Array<{ __typename?: 'UsersPermissionNodeEdge', node?: { __typename?: 'UsersPermissionNode', id: string, validFrom?: any | null, validTo?: any | null, status: number, pk?: number | null, permission: { __typename?: 'GroupPermissionNode', id: string, role: number, group?: { __typename?: 'GroupNode', id: string, name: string } | null } } | null } | null> }, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, language?: { __typename?: 'LanguageNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'LanguageTranslationNode', id: string, languageCode: string, name: string }> } | null } | null } | null };
+export type CreateAdminMutation = { __typename?: 'Mutation', adminCreate?: { __typename?: 'AdminCreate', status?: boolean | null, error?: { __typename?: 'Error', code?: string | null, message?: string | null, field?: string | null } | null, admin?: { __typename?: 'AdminNode', id: string, longName: string, email?: string | null, shortName?: string | null, fullName?: string | null, username?: string | null, userType?: number | null, created?: any | null, firstName?: string | null, lastName?: string | null, companyWebsite?: string | null, companyLongName?: string | null, companyShortName?: string | null, role: AdminRole, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, userspermissionSet: { __typename?: 'UsersPermissionNodeConnection', edges: Array<{ __typename?: 'UsersPermissionNodeEdge', node?: { __typename?: 'UsersPermissionNode', id: string, validFrom?: any | null, validTo?: any | null, status: number, pk?: number | null, permission: { __typename?: 'GroupPermissionNode', id: string, role: number, group?: { __typename?: 'GroupNode', id: string, name: string } | null } } | null } | null> }, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, language?: { __typename?: 'LanguageNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'LanguageTranslationNode', id: string, languageCode: string, name: string }> } | null } | null } | null };
 
 export type UpdateAdminMutationVariables = Exact<{
   admin: AdminUpdateInput;
@@ -16131,7 +16437,7 @@ export type UpdateAdminMutationVariables = Exact<{
 }>;
 
 
-export type UpdateAdminMutation = { __typename?: 'Mutation', adminUpdate?: { __typename?: 'AdminUpdate', status?: boolean | null, error?: { __typename?: 'Error', code?: string | null, message?: string | null, field?: string | null } | null, admin?: { __typename?: 'AdminNode', id: string, longName: string, picture?: string | null, email?: string | null, shortName?: string | null, fullName?: string | null, username?: string | null, userType?: number | null, created?: any | null, firstName?: string | null, lastName?: string | null, companyWebsite?: string | null, companyLongName?: string | null, companyShortName?: string | null, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, userspermissionSet: { __typename?: 'UsersPermissionNodeConnection', edges: Array<{ __typename?: 'UsersPermissionNodeEdge', node?: { __typename?: 'UsersPermissionNode', id: string, validFrom?: any | null, validTo?: any | null, status: number, pk?: number | null, permission: { __typename?: 'GroupPermissionNode', id: string, role: number, group?: { __typename?: 'GroupNode', id: string, name: string } | null } } | null } | null> }, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, language?: { __typename?: 'LanguageNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'LanguageTranslationNode', id: string, languageCode: string, name: string }> } | null } | null } | null };
+export type UpdateAdminMutation = { __typename?: 'Mutation', adminUpdate?: { __typename?: 'AdminUpdate', status?: boolean | null, error?: { __typename?: 'Error', code?: string | null, message?: string | null, field?: string | null } | null, admin?: { __typename?: 'AdminNode', id: string, longName: string, email?: string | null, shortName?: string | null, fullName?: string | null, username?: string | null, userType?: number | null, created?: any | null, firstName?: string | null, lastName?: string | null, companyWebsite?: string | null, companyLongName?: string | null, companyShortName?: string | null, role: AdminRole, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, userspermissionSet: { __typename?: 'UsersPermissionNodeConnection', edges: Array<{ __typename?: 'UsersPermissionNodeEdge', node?: { __typename?: 'UsersPermissionNode', id: string, validFrom?: any | null, validTo?: any | null, status: number, pk?: number | null, permission: { __typename?: 'GroupPermissionNode', id: string, role: number, group?: { __typename?: 'GroupNode', id: string, name: string } | null } } | null } | null> }, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, language?: { __typename?: 'LanguageNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'LanguageTranslationNode', id: string, languageCode: string, name: string }> } | null } | null } | null };
 
 export type UpdateAdminStatusMutationVariables = Exact<{
   listStatus: Array<InputMaybe<AdminStatusUpdateInput>> | InputMaybe<AdminStatusUpdateInput>;
@@ -16156,7 +16462,7 @@ export type LoginMutationVariables = Exact<{
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', login?: { __typename?: 'Login', token?: string | null, status?: boolean | null, user?: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, buyer?: { __typename?: 'BuyerNode', id: string, companyFullName?: string | null, companyShortName?: string | null, companyLongName?: string | null, companyLogo?: string | null, companyTax: string, companyAddress: string, companyCity: string, companyWebsite?: string | null, companyReferralCode?: string | null, companyEmail?: string | null, picture?: string | null, phone: string, validFrom: any, validTo: any, sendMail30Day?: any | null, sendMail15Day?: any | null, sendMail7Day?: any | null, sendMailExpire?: any | null, email?: string | null, shortName?: string | null, fullName?: string | null, username?: string | null, userType?: number | null, created?: any | null, firstName?: string | null, lastName?: string | null, pk?: number | null, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, companyCountry: { __typename?: 'CountryNode', id: string, itemCode: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'CountryTranslationNode', id: string, languageCode: string, name: string }> }, companyCountryState: { __typename?: 'CountryStateNode', id: string, name: string, stateCode: string, status?: boolean | null, country: { __typename?: 'CountryNode', id: string, itemCode: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'CountryTranslationNode', id: string, languageCode: string, name: string }> }, translations: Array<{ __typename?: 'CountryStateTranslationNode', id: string, languageCode: string, name: string }> }, companyNumberOfEmployee: { __typename?: 'NumberofEmployeeNode', id: string, name: string, status?: boolean | null }, gender: { __typename?: 'GenderNode', id: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'GenderTranslationNode', id: string, languageCode: string, name: string }> }, position: { __typename?: 'PositionNode', id: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'PositionTranslationNode', id: string, languageCode: string, name: string }> }, language?: { __typename?: 'LanguageNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'LanguageTranslationNode', id: string, languageCode: string, name: string }> } | null, profileFeatures?: { __typename?: 'ProfileFeaturesBuyerNode', id: string, name: string, marketResearch: string, rfxYear: number, noEauctionYear: number, helpDesk: string, reportYear: number, subUserAccounts: number, feeEauction?: number | null, totalFeeYear?: number | null, profileFeaturesType: number, status?: boolean | null, rfxAutoNego: boolean } | null, currency?: { __typename?: 'CurrencyNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'CurrencyTranslationNode', id: string, languageCode: string, name: string }> } | null, buyerActivity: { __typename?: 'BuyerActivityNodeConnection', edges: Array<{ __typename?: 'BuyerActivityNodeEdge', node?: { __typename?: 'BuyerActivityNode', changedDate: any, reasonManual?: string | null, changedState: number, pk?: number | null, changedBy?: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } } | null } | null } | null> }, buyerIndustry: { __typename?: 'BuyerIndustryNodeConnection', totalCount?: number | null, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'BuyerIndustryNodeEdge', node?: { __typename?: 'BuyerIndustryNode', id: string, industry: { __typename?: 'IndustrySubSectorsNode', id: string, itemCode: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'IndustrySubSectorsTranslationNode', id: string, languageCode: string, name: string }> } } | null } | null> } } | null, supplier?: { __typename?: 'SupplierNode', id: string, companyFullName?: string | null, companyShortName?: string | null, companyLongName?: string | null, companyTax: string, companyLogo?: string | null, companyAddress: string, companyCity: string, companyCeoOwnerName?: string | null, companyCeoOwnerEmail?: string | null, companyWebsite?: string | null, companyCredentialProfile?: string | null, companyReferralCode?: string | null, companyTagLine?: string | null, companyDescription?: string | null, companyEstablishedSince?: number | null, companyAnniversaryDate?: any | null, phone: string, picture?: string | null, imageBanner?: string | null, bankName?: string | null, bankCode?: string | null, bankAddress?: string | null, beneficiaryName?: string | null, switchBicCode?: string | null, bankAccountNumber?: string | null, internationalBank?: string | null, supplierFormRegistration?: string | null, bankCertification?: string | null, qualityCertification?: string | null, businessLicense?: string | null, taxCertification?: string | null, others?: string | null, validFrom: any, validTo: any, sendMail30Day?: any | null, sendMail15Day?: any | null, sendMail7Day?: any | null, sendMailExpire?: any | null, viewed: number, order: number, email?: string | null, shortName?: string | null, fullName?: string | null, username?: string | null, userType?: number | null, created?: any | null, firstName?: string | null, lastName?: string | null, pk?: number | null, isFollowed?: boolean | null, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, companyCountry: { __typename?: 'CountryNode', id: string, itemCode: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'CountryTranslationNode', id: string, languageCode: string, name: string }> }, companyCountryState: { __typename?: 'CountryStateNode', id: string, name: string, stateCode: string, status?: boolean | null, country: { __typename?: 'CountryNode', id: string, itemCode: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'CountryTranslationNode', id: string, languageCode: string, name: string }> }, translations: Array<{ __typename?: 'CountryStateTranslationNode', id: string, languageCode: string, name: string }> }, companyNumberOfEmployee: { __typename?: 'NumberofEmployeeNode', id: string, name: string, status?: boolean | null }, gender: { __typename?: 'GenderNode', id: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'GenderTranslationNode', id: string, languageCode: string, name: string }> }, position: { __typename?: 'PositionNode', id: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'PositionTranslationNode', id: string, languageCode: string, name: string }> }, level?: { __typename?: 'LevelNode', id: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'LevelTranslationNode', id: string, languageCode: string, name: string }> } | null, language?: { __typename?: 'LanguageNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'LanguageTranslationNode', id: string, languageCode: string, name: string }> } | null, currency?: { __typename?: 'CurrencyNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'CurrencyTranslationNode', id: string, languageCode: string, name: string }> } | null, bankCurrency?: { __typename?: 'CurrencyNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'CurrencyTranslationNode', id: string, languageCode: string, name: string }> } | null, profileFeatures?: { __typename?: 'ProfileFeaturesSupplierNode', id: string, name: string, freeRegistration: string, quoteSubmiting: string, rfxrReceivingPriority?: number | null, subUserAccounts: number, helpDesk: string, flashSale: number, product: number, reportYear: number, baseRateMonth?: number | null, baseRateFullYear?: number | null, profileFeaturesType: number, status?: boolean | null } | null, sicpRegistration?: { __typename?: 'SICPRegistrationNode', id: string, name: string, legalStatus?: number | null, bankAccount?: number | null, sanctionCheck?: number | null, certificateManagement?: number | null, dueDiligence?: number | null, financialRisk?: number | null, totalAmount?: number | null, sicpType: number, status?: boolean | null } | null, promotion?: { __typename?: 'PromotionNode', id: string, name: string, description: string, discount: number, validFrom: any, validTo: any, status?: boolean | null, applyForBuyer: boolean, applyForSupplier: boolean, applyForAdvertisement: boolean, visible: boolean, userGiven?: string | null, userGivenEmail?: string | null, commission?: number | null, applyScope?: PromotionApplyScope | null, descriptionDefault?: string | null, translations: Array<{ __typename?: 'PromotionTranslationNode', id: string, languageCode: string, name: string, description: string }> } | null, supplierActivity: { __typename?: 'SupplierActivityNodeConnection', edges: Array<{ __typename?: 'SupplierActivityNodeEdge', node?: { __typename?: 'SupplierActivityNode', changedDate: any, reasonManual?: string | null, changedState: number, pk?: number | null, changedBy?: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } } | null } | null } | null> }, suppliercategorySet: { __typename?: 'SupplierCategoryNodeConnection', totalCount?: number | null, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'SupplierCategoryNodeEdge', node?: { __typename?: 'SupplierCategoryNode', id: string, percentage: number, minimumOfValue: number, category: { __typename?: 'CategoryNode', id: string, itemCode: string, name: string, status?: boolean | null, subClusterCode: { __typename?: 'SubClusterCodeNode', id: string, itemCode: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'SubClusterCodeTranslationNode', id: string, languageCode: string, name: string }> }, translations: Array<{ __typename?: 'CategoryTranslationNode', id: string, languageCode: string, name: string }> } } | null } | null> }, supplierindustrySet: { __typename?: 'SupplierIndustryNodeConnection', totalCount?: number | null, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'SupplierIndustryNodeEdge', node?: { __typename?: 'SupplierIndustryNode', id: string, percentage: number, industrySubSectors: { __typename?: 'IndustrySubSectorsNode', id: string, itemCode: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'IndustrySubSectorsTranslationNode', id: string, languageCode: string, name: string }> } } | null } | null> }, supplierclientfocusSet: { __typename?: 'SupplierClientFocusNodeConnection', totalCount?: number | null, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'SupplierClientFocusNodeEdge', node?: { __typename?: 'SupplierClientFocusNode', id: string, percentage: number, clientFocus: { __typename?: 'ClientFocusNode', id: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'ClientFocusTranslationNode', id: string, languageCode: string, name: string }> } } | null } | null> }, supplierPortfolio: { __typename?: 'PortfolioNodeConnection', totalCount?: number | null, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'PortfolioNodeEdge', node?: { __typename?: 'PortfolioNode', id: string, company: string, projectName: string, value: number, projectDescription: string, image?: string | null } | null } | null> }, certificate: Array<{ __typename?: 'SupplierCertificateNode', created: any, id: string, file: string, name?: string | null, type?: SupplierCertificateType | null, size?: string | null }> } | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } } | null, error?: { __typename?: 'Error', code?: string | null, message?: string | null, field?: string | null } | null } | null };
+export type LoginMutation = { __typename?: 'Mutation', login?: { __typename?: 'Login', token?: string | null, status?: boolean | null, admin?: { __typename?: 'AdminNode', id: string, longName: string, email?: string | null, shortName?: string | null, fullName?: string | null, username?: string | null, userType?: number | null, created?: any | null, firstName?: string | null, lastName?: string | null, companyWebsite?: string | null, companyLongName?: string | null, companyShortName?: string | null, role: AdminRole, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, userspermissionSet: { __typename?: 'UsersPermissionNodeConnection', edges: Array<{ __typename?: 'UsersPermissionNodeEdge', node?: { __typename?: 'UsersPermissionNode', id: string, validFrom?: any | null, validTo?: any | null, status: number, pk?: number | null, permission: { __typename?: 'GroupPermissionNode', id: string, role: number, group?: { __typename?: 'GroupNode', id: string, name: string } | null } } | null } | null> }, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, language?: { __typename?: 'LanguageNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'LanguageTranslationNode', id: string, languageCode: string, name: string }> } | null } | null, user?: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, buyer?: { __typename?: 'BuyerNode', id: string, companyFullName?: string | null, companyShortName?: string | null, companyLongName?: string | null, companyLogo?: string | null, companyTax: string, companyAddress: string, companyCity: string, companyWebsite?: string | null, companyReferralCode?: string | null, companyEmail?: string | null, picture?: string | null, phone: string, validFrom: any, validTo: any, sendMail30Day?: any | null, sendMail15Day?: any | null, sendMail7Day?: any | null, sendMailExpire?: any | null, email?: string | null, shortName?: string | null, fullName?: string | null, username?: string | null, userType?: number | null, created?: any | null, firstName?: string | null, lastName?: string | null, pk?: number | null, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, companyCountry: { __typename?: 'CountryNode', id: string, itemCode: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'CountryTranslationNode', id: string, languageCode: string, name: string }> }, companyCountryState: { __typename?: 'CountryStateNode', id: string, name: string, stateCode: string, status?: boolean | null, country: { __typename?: 'CountryNode', id: string, itemCode: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'CountryTranslationNode', id: string, languageCode: string, name: string }> }, translations: Array<{ __typename?: 'CountryStateTranslationNode', id: string, languageCode: string, name: string }> }, companyNumberOfEmployee: { __typename?: 'NumberofEmployeeNode', id: string, name: string, status?: boolean | null }, gender: { __typename?: 'GenderNode', id: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'GenderTranslationNode', id: string, languageCode: string, name: string }> }, position: { __typename?: 'PositionNode', id: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'PositionTranslationNode', id: string, languageCode: string, name: string }> }, language?: { __typename?: 'LanguageNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'LanguageTranslationNode', id: string, languageCode: string, name: string }> } | null, profileFeatures?: { __typename?: 'ProfileFeaturesBuyerNode', id: string, name: string, marketResearch: string, rfxYear: number, noEauctionYear: number, helpDesk: string, reportYear: number, subUserAccounts: number, feeEauction?: number | null, totalFeeYear?: number | null, profileFeaturesType: number, status?: boolean | null, rfxAutoNego: boolean } | null, currency?: { __typename?: 'CurrencyNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'CurrencyTranslationNode', id: string, languageCode: string, name: string }> } | null, buyerActivity: { __typename?: 'BuyerActivityNodeConnection', edges: Array<{ __typename?: 'BuyerActivityNodeEdge', node?: { __typename?: 'BuyerActivityNode', changedDate: any, reasonManual?: string | null, changedState: number, pk?: number | null, changedBy?: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } } | null } | null } | null> }, buyerIndustry: { __typename?: 'BuyerIndustryNodeConnection', totalCount?: number | null, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'BuyerIndustryNodeEdge', node?: { __typename?: 'BuyerIndustryNode', id: string, industry: { __typename?: 'IndustrySubSectorsNode', id: string, itemCode: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'IndustrySubSectorsTranslationNode', id: string, languageCode: string, name: string }> } } | null } | null> } } | null, supplier?: { __typename?: 'SupplierNode', id: string, companyFullName?: string | null, companyShortName?: string | null, companyLongName?: string | null, companyTax: string, companyLogo?: string | null, companyAddress: string, companyCity: string, companyCeoOwnerName?: string | null, companyCeoOwnerEmail?: string | null, companyWebsite?: string | null, companyCredentialProfile?: string | null, companyReferralCode?: string | null, companyTagLine?: string | null, companyDescription?: string | null, companyEstablishedSince?: number | null, companyAnniversaryDate?: any | null, phone: string, picture?: string | null, imageBanner?: string | null, bankName?: string | null, bankCode?: string | null, bankAddress?: string | null, beneficiaryName?: string | null, switchBicCode?: string | null, bankAccountNumber?: string | null, internationalBank?: string | null, supplierFormRegistration?: string | null, bankCertification?: string | null, qualityCertification?: string | null, businessLicense?: string | null, taxCertification?: string | null, others?: string | null, validFrom: any, validTo: any, sendMail30Day?: any | null, sendMail15Day?: any | null, sendMail7Day?: any | null, sendMailExpire?: any | null, viewed: number, order: number, email?: string | null, shortName?: string | null, fullName?: string | null, username?: string | null, userType?: number | null, created?: any | null, firstName?: string | null, lastName?: string | null, pk?: number | null, isFollowed?: boolean | null, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, companyCountry: { __typename?: 'CountryNode', id: string, itemCode: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'CountryTranslationNode', id: string, languageCode: string, name: string }> }, companyCountryState: { __typename?: 'CountryStateNode', id: string, name: string, stateCode: string, status?: boolean | null, country: { __typename?: 'CountryNode', id: string, itemCode: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'CountryTranslationNode', id: string, languageCode: string, name: string }> }, translations: Array<{ __typename?: 'CountryStateTranslationNode', id: string, languageCode: string, name: string }> }, companyNumberOfEmployee: { __typename?: 'NumberofEmployeeNode', id: string, name: string, status?: boolean | null }, gender: { __typename?: 'GenderNode', id: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'GenderTranslationNode', id: string, languageCode: string, name: string }> }, position: { __typename?: 'PositionNode', id: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'PositionTranslationNode', id: string, languageCode: string, name: string }> }, level?: { __typename?: 'LevelNode', id: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'LevelTranslationNode', id: string, languageCode: string, name: string }> } | null, language?: { __typename?: 'LanguageNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'LanguageTranslationNode', id: string, languageCode: string, name: string }> } | null, currency?: { __typename?: 'CurrencyNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'CurrencyTranslationNode', id: string, languageCode: string, name: string }> } | null, bankCurrency?: { __typename?: 'CurrencyNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'CurrencyTranslationNode', id: string, languageCode: string, name: string }> } | null, profileFeatures?: { __typename?: 'ProfileFeaturesSupplierNode', id: string, name: string, freeRegistration: string, quoteSubmiting: string, rfxrReceivingPriority?: number | null, subUserAccounts: number, helpDesk: string, flashSale: number, product: number, reportYear: number, baseRateMonth?: number | null, baseRateFullYear?: number | null, profileFeaturesType: number, status?: boolean | null } | null, sicpRegistration?: { __typename?: 'SICPRegistrationNode', id: string, name: string, legalStatus?: number | null, bankAccount?: number | null, sanctionCheck?: number | null, certificateManagement?: number | null, dueDiligence?: number | null, financialRisk?: number | null, totalAmount?: number | null, sicpType: number, status?: boolean | null } | null, promotion?: { __typename?: 'PromotionNode', id: string, name: string, description: string, discount: number, validFrom: any, validTo: any, status?: boolean | null, applyForBuyer: boolean, applyForSupplier: boolean, applyForAdvertisement: boolean, visible: boolean, userGiven?: string | null, userGivenEmail?: string | null, commission?: number | null, applyScope?: PromotionApplyScope | null, descriptionDefault?: string | null, translations: Array<{ __typename?: 'PromotionTranslationNode', id: string, languageCode: string, name: string, description: string }> } | null, supplierActivity: { __typename?: 'SupplierActivityNodeConnection', edges: Array<{ __typename?: 'SupplierActivityNodeEdge', node?: { __typename?: 'SupplierActivityNode', changedDate: any, reasonManual?: string | null, changedState: number, pk?: number | null, changedBy?: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } } | null } | null } | null> }, suppliercategorySet: { __typename?: 'SupplierCategoryNodeConnection', totalCount?: number | null, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'SupplierCategoryNodeEdge', node?: { __typename?: 'SupplierCategoryNode', id: string, percentage: number, minimumOfValue: number, category: { __typename?: 'CategoryNode', id: string, itemCode: string, name: string, status?: boolean | null, subClusterCode: { __typename?: 'SubClusterCodeNode', id: string, itemCode: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'SubClusterCodeTranslationNode', id: string, languageCode: string, name: string }> }, translations: Array<{ __typename?: 'CategoryTranslationNode', id: string, languageCode: string, name: string }> } } | null } | null> }, supplierindustrySet: { __typename?: 'SupplierIndustryNodeConnection', totalCount?: number | null, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'SupplierIndustryNodeEdge', node?: { __typename?: 'SupplierIndustryNode', id: string, percentage: number, industrySubSectors: { __typename?: 'IndustrySubSectorsNode', id: string, itemCode: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'IndustrySubSectorsTranslationNode', id: string, languageCode: string, name: string }> } } | null } | null> }, supplierclientfocusSet: { __typename?: 'SupplierClientFocusNodeConnection', totalCount?: number | null, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'SupplierClientFocusNodeEdge', node?: { __typename?: 'SupplierClientFocusNode', id: string, percentage: number, clientFocus: { __typename?: 'ClientFocusNode', id: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'ClientFocusTranslationNode', id: string, languageCode: string, name: string }> } } | null } | null> }, supplierPortfolio: { __typename?: 'PortfolioNodeConnection', totalCount?: number | null, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'PortfolioNodeEdge', node?: { __typename?: 'PortfolioNode', id: string, company: string, projectName: string, value: number, projectDescription: string, image?: string | null } | null } | null> }, certificate: Array<{ __typename?: 'SupplierCertificateNode', created: any, id: string, file: string, name?: string | null, type?: SupplierCertificateType | null, size?: string | null }> } | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } } | null, error?: { __typename?: 'Error', code?: string | null, message?: string | null, field?: string | null } | null } | null };
 
 export type LogoutMutationVariables = Exact<{
   token: Scalars['String']['input'];
@@ -16487,7 +16793,7 @@ export type UpdateCouponStatusMutationVariables = Exact<{
 
 export type UpdateCouponStatusMutation = { __typename?: 'Mutation', couponUpdateStatus?: { __typename?: 'CouponUpdateStatus', status?: boolean | null, error?: { __typename?: 'Error', code?: string | null, message?: string | null, field?: string | null } | null } | null };
 
-export type DeTaiInfoFragment = { __typename?: 'DeTaiNode', id: string, tenDeTai: string, moTa: string, giangVienFullName?: string | null, giangVien: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } } };
+export type DeTaiInfoFragment = { __typename?: 'DeTaiNode', id: string, tenDeTai: string, moTa: string, giangVienFullName?: string | null, giangvienId: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } } };
 
 export type GetDeTaisQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -16495,27 +16801,27 @@ export type GetDeTaisQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
-  giangVien?: InputMaybe<Scalars['String']['input']>;
+  giangvienId?: InputMaybe<Scalars['String']['input']>;
   tenDeTai?: InputMaybe<Scalars['String']['input']>;
   moTa?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type GetDeTaisQuery = { __typename?: 'Query', deTais?: { __typename?: 'DeTaiNodeConnection', totalCount?: number | null, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'DeTaiNodeEdge', node?: { __typename?: 'DeTaiNode', id: string, tenDeTai: string, moTa: string, giangVienFullName?: string | null, giangVien: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } } } | null } | null> } | null };
+export type GetDeTaisQuery = { __typename?: 'Query', deTais?: { __typename?: 'DeTaiNodeConnection', totalCount?: number | null, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'DeTaiNodeEdge', node?: { __typename?: 'DeTaiNode', id: string, tenDeTai: string, moTa: string, giangVienFullName?: string | null, giangvienId: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } } } | null } | null> } | null };
 
 export type GetDeTaiQueryVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
 
 
-export type GetDeTaiQuery = { __typename?: 'Query', deTai?: { __typename?: 'DeTaiNode', id: string, tenDeTai: string, moTa: string, giangVienFullName?: string | null, giangVien: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } } } | null };
+export type GetDeTaiQuery = { __typename?: 'Query', deTai?: { __typename?: 'DeTaiNode', id: string, tenDeTai: string, moTa: string, giangVienFullName?: string | null, giangvienId: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } } } | null };
 
 export type CreateDeTaiMutationVariables = Exact<{
   input: DeTaiInput;
 }>;
 
 
-export type CreateDeTaiMutation = { __typename?: 'Mutation', deTaiCreate?: { __typename?: 'DeTaiCreate', status?: boolean | null, deTai?: { __typename?: 'DeTaiNode', id: string, tenDeTai: string, moTa: string, giangVienFullName?: string | null, giangVien: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } } } | null, error?: { __typename?: 'Error', code?: string | null, message?: string | null, field?: string | null } | null } | null };
+export type CreateDeTaiMutation = { __typename?: 'Mutation', deTaiCreate?: { __typename?: 'DeTaiCreate', status?: boolean | null, deTai?: { __typename?: 'DeTaiNode', id: string, tenDeTai: string, moTa: string, giangVienFullName?: string | null, giangvienId: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } } } | null, error?: { __typename?: 'Error', code?: string | null, message?: string | null, field?: string | null } | null } | null };
 
 export type ShippingFeeInfoFragment = { __typename?: 'ShippingFeeNode', id: string, weight: number, fee: number, status: boolean, pickUpCity: { __typename?: 'CountryStateNode', id: string, name: string, stateCode: string, status?: boolean | null, country: { __typename?: 'CountryNode', id: string, itemCode: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'CountryTranslationNode', id: string, languageCode: string, name: string }> }, translations: Array<{ __typename?: 'CountryStateTranslationNode', id: string, languageCode: string, name: string }> }, destinationCity: { __typename?: 'CountryStateNode', id: string, name: string, stateCode: string, status?: boolean | null, country: { __typename?: 'CountryNode', id: string, itemCode: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'CountryTranslationNode', id: string, languageCode: string, name: string }> }, translations: Array<{ __typename?: 'CountryStateTranslationNode', id: string, languageCode: string, name: string }> } };
 
@@ -16697,7 +17003,9 @@ export type CreateDiamondSponsorTextEditerMutation = { __typename?: 'Mutation', 
 
 export type GroupQldaInfoFragment = { __typename?: 'GroupQLDANode', id: string, maNhom: string, name: string, status: boolean, memberCount: number };
 
-export type JoinGroupInfoFragment = { __typename?: 'JoinGroupNode', id: string, membersCount?: number | null, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, group: { __typename?: 'GroupQLDANode', id: string, maNhom: string, name: string, status: boolean, memberCount: number } };
+export type JoinGroupInfoFragment = { __typename?: 'JoinGroupNode', id: string, membersCount?: number | null, role: string, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, group: { __typename?: 'GroupQLDANode', id: string, maNhom: string, name: string, status: boolean, memberCount: number } };
+
+export type JoinRequestInfoFragment = { __typename?: 'JoinRequestNode', id: string, isApproved: boolean, createdAt: any, membersCount?: number | null, leaderUserId?: number | null, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, group: { __typename?: 'GroupQLDANode', id: string, maNhom: string, name: string, status: boolean, memberCount: number } };
 
 export type GetGroupQldasQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -16710,6 +17018,19 @@ export type GetGroupQldasQueryVariables = Exact<{
 
 
 export type GetGroupQldasQuery = { __typename?: 'Query', groupQldas?: { __typename?: 'GroupQLDANodeConnection', totalCount?: number | null, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'GroupQLDANodeEdge', node?: { __typename?: 'GroupQLDANode', id: string, maNhom: string, name: string, status: boolean, memberCount: number } | null } | null> } | null };
+
+export type GetGroupQldaRequestsQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  userId?: InputMaybe<Scalars['Float']['input']>;
+  groupId?: InputMaybe<Scalars['Float']['input']>;
+  isApproved?: InputMaybe<Scalars['Boolean']['input']>;
+}>;
+
+
+export type GetGroupQldaRequestsQuery = { __typename?: 'Query', joinRequests?: { __typename?: 'JoinRequestNodeConnection', edges: Array<{ __typename?: 'JoinRequestNodeEdge', node?: { __typename?: 'JoinRequestNode', id: string, leaderUserId?: number | null, user: { __typename?: 'UserNode', id: string }, group: { __typename?: 'GroupQLDANode', id: string } } | null } | null> } | null };
 
 export type GetGroupQldaQueryVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -16725,6 +17046,13 @@ export type GetGroupQldaJoinMutationVariables = Exact<{
 
 
 export type GetGroupQldaJoinMutation = { __typename?: 'Mutation', groupQldaJoin?: { __typename?: 'GroupQLDAJoin', status?: boolean | null, error?: { __typename?: 'Error', code?: string | null, message?: string | null } | null } | null };
+
+export type GetGroupQldaRequestMutationVariables = Exact<{
+  joinRequestId: Scalars['ID']['input'];
+}>;
+
+
+export type GetGroupQldaRequestMutation = { __typename?: 'Mutation', acceptJoinRequest?: { __typename?: 'AcceptJoinRequest', status?: boolean | null, error?: { __typename?: 'Error', code?: string | null, message?: string | null } | null } | null };
 
 export type CreateGroupQldaMutationVariables = Exact<{
   input: GroupQldaInput;
@@ -19389,7 +19717,6 @@ export const AdminInfoFragmentDoc = gql`
     ...UserWithPermissionAndSubstitutionPermissionInfo
   }
   longName
-  picture
   email
   shortName
   fullName
@@ -19404,6 +19731,7 @@ export const AdminInfoFragmentDoc = gql`
   language {
     ...LanguageInfo
   }
+  role
 }
     ${UserWithPermissionAndSubstitutionPermissionInfoFragmentDoc}
 ${LanguageInfoFragmentDoc}`;
@@ -19746,7 +20074,7 @@ export const CouponInfoFragmentDoc = gql`
 export const DeTaiInfoFragmentDoc = gql`
     fragment DeTaiInfo on DeTaiNode {
   id
-  giangVien {
+  giangvienId {
     ...UserInfo
   }
   tenDeTai
@@ -20181,6 +20509,23 @@ export const JoinGroupInfoFragmentDoc = gql`
     ...GroupQLDAInfo
   }
   membersCount
+  role
+}
+    ${UserInfoFragmentDoc}
+${GroupQldaInfoFragmentDoc}`;
+export const JoinRequestInfoFragmentDoc = gql`
+    fragment JoinRequestInfo on JoinRequestNode {
+  id
+  user {
+    ...UserInfo
+  }
+  group {
+    ...GroupQLDAInfo
+  }
+  isApproved
+  createdAt
+  membersCount
+  leaderUserId
 }
     ${UserInfoFragmentDoc}
 ${GroupQldaInfoFragmentDoc}`;
@@ -21351,7 +21696,7 @@ export const GetAdminDocument = gql`
     }
   }
 export const GetAdminsDocument = gql`
-    query getAdmins($before: String, $after: String, $first: Int, $last: Int, $id: ID, $longName: String, $created: String, $username: String, $email: String, $status: String, $shortName: String, $validFrom: String, $validTo: String, $orderBy: String) {
+    query getAdmins($before: String, $after: String, $first: Int, $last: Int, $id: ID, $longName: String, $created: String, $username: String, $email: String, $status: String, $shortName: String, $validFrom: String, $validTo: String, $role: String, $orderBy: String) {
   admins(
     before: $before
     after: $after
@@ -21366,6 +21711,7 @@ export const GetAdminsDocument = gql`
     shortName: $shortName
     validFrom: $validFrom
     validTo: $validTo
+    role: $role
     orderBy: $orderBy
   ) {
     totalCount
@@ -21500,6 +21846,9 @@ export const LoginDocument = gql`
     mutation login($user: LoginInput!) {
   login(user: $user) {
     token
+    admin {
+      ...AdminInfo
+    }
     status
     user {
       ...UserWithBuyerAndSupplierInfo
@@ -21509,7 +21858,8 @@ export const LoginDocument = gql`
     }
   }
 }
-    ${UserWithBuyerAndSupplierInfoFragmentDoc}
+    ${AdminInfoFragmentDoc}
+${UserWithBuyerAndSupplierInfoFragmentDoc}
 ${ErrorInfoFragmentDoc}`;
 
   @Injectable({
@@ -22378,14 +22728,14 @@ export const UpdateCouponStatusDocument = gql`
     }
   }
 export const GetDeTaisDocument = gql`
-    query getDeTais($before: String, $after: String, $first: Int, $last: Int, $id: String, $giangVien: String, $tenDeTai: String, $moTa: String) {
+    query getDeTais($before: String, $after: String, $first: Int, $last: Int, $id: String, $giangvienId: String, $tenDeTai: String, $moTa: String) {
   deTais(
     before: $before
     after: $after
     first: $first
     last: $last
     id: $id
-    giangVien: $giangVien
+    giangvienId: $giangvienId
     tenDeTai: $tenDeTai
     moTa: $moTa
   ) {
@@ -22942,6 +23292,43 @@ ${GroupQldaInfoFragmentDoc}`;
       super(apollo);
     }
   }
+export const GetGroupQldaRequestsDocument = gql`
+    query getGroupQldaRequests($before: String, $after: String, $first: Int, $last: Int, $userId: Float, $groupId: Float, $isApproved: Boolean) {
+  joinRequests(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    userId: $userId
+    groupId: $groupId
+    isApproved: $isApproved
+  ) {
+    edges {
+      node {
+        id
+        user {
+          id
+        }
+        group {
+          id
+        }
+        leaderUserId
+      }
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetGroupQldaRequestsGQL extends Apollo.Query<GetGroupQldaRequestsQuery, GetGroupQldaRequestsQueryVariables> {
+    override document = GetGroupQldaRequestsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const GetGroupQldaDocument = gql`
     query getGroupQlda($id: ID!) {
   groupQlda(id: $id) {
@@ -22977,6 +23364,28 @@ export const GetGroupQldaJoinDocument = gql`
   })
   export class GetGroupQldaJoinGQL extends Apollo.Mutation<GetGroupQldaJoinMutation, GetGroupQldaJoinMutationVariables> {
     override document = GetGroupQldaJoinDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetGroupQldaRequestDocument = gql`
+    mutation getGroupQldaRequest($joinRequestId: ID!) {
+  acceptJoinRequest(joinRequestId: $joinRequestId) {
+    status
+    error {
+      code
+      message
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetGroupQldaRequestGQL extends Apollo.Mutation<GetGroupQldaRequestMutation, GetGroupQldaRequestMutationVariables> {
+    override document = GetGroupQldaRequestDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

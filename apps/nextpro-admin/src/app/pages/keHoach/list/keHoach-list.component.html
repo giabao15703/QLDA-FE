@@ -1,41 +1,26 @@
 @if (loadingService.checkLoading(['getKeHoach'])) {
-    <app-loading [backdrop]="true" />
+<app-loading [backdrop]="true" />
 }
 <mat-drawer-container [hasBackdrop]="false">
     <mat-drawer [disableClose]="true" [opened]="!!detail" mode="over" position="end" class="!w-full">
         @if (detail) {
-            <nextpro-admin-keHoach-detail
-                [mode]="detail.mode"
-                [data]="detail.data"
-                [onCloseDrawer]="handleCloseDetailDrawer"
-                [refetch]="table.refetch"
-            />
+        <nextpro-admin-keHoach-detail [mode]="detail.mode" [data]="detail.data"
+            [onCloseDrawer]="handleCloseDetailDrawer" [refetch]="table.refetch" />
         }
     </mat-drawer>
     <mat-drawer class="!w-auto" mode="side" position="start" [disableClose]="true" [opened]="table.config.showFilter">
-        <app-filter
-            formClass="grid grid-cols-2 gap-2"
-            [onFilter]="table.handleFilter"
-            [formConfig]="table.config.filterForm"
-            [onCloseDrawer]="table.toggleFilterDrawer"
-        />
+        <app-filter formClass="grid grid-cols-2 gap-2" [onFilter]="table.handleFilter"
+            [formConfig]="table.config.filterForm" [onCloseDrawer]="table.toggleFilterDrawer" />
     </mat-drawer>
     <mat-drawer-content>
-        <app-table
-            [attr.name]="table.name"
-            [isLoading]="loadingService.checkLoading(['getKeHoachs'])"
-            [extendHeight]="180"
-            [columns]="table.config.columns"
-            [data]="table.state.data"
-            [pagination]="table.state.pagination"
-            [onSelectionInit]="table.onSelectionInit"
-            [onShowFilter]="table.toggleFilterDrawer"
-            [onSort]="table.handleSort"
-            [onPageChange]="table.handlePageChange"
-        />
+        <app-table [attr.name]="table.name" [isLoading]="loadingService.checkLoading(['getKeHoachs'])"
+            [extendHeight]="180" [columns]="table.config.columns" [data]="table.state.data"
+            [pagination]="table.state.pagination" [onSelectionInit]="table.onSelectionInit"
+            [onShowFilter]="table.toggleFilterDrawer" [onSort]="table.handleSort"
+            [onPageChange]="table.handlePageChange" />
         @if (table.state.selection) {
-            <div class="footer-fixed">
-               <!--  <button
+        <div class="footer-fixed">
+            <!--  <button
                     mat-raised-button
                     color="primary"
                     (click)="handleUpdateStatus(true)"
@@ -53,20 +38,16 @@
                     <mat-icon>close</mat-icon>
                     {{ 'button.deactivate' | translate | uppercase }}
                 </button> -->
-                <button
-                    mat-raised-button
-                    color="primary"
-                    (click)="handleCreate()"
-                    [disabled]="table.state.selection.hasValue()"
-                >
-                    <mat-icon>add</mat-icon>
-                    {{ 'button.create' | translate | uppercase }}
-                </button>
-                <!-- <button mat-raised-button color="primary" (click)="handleExport()">
+            <button mat-raised-button color="primary" (click)="handleCreate()"
+                [disabled]="table.state.selection.hasValue()">
+                <mat-icon>add</mat-icon>
+                {{ 'button.create' | translate | uppercase }}
+            </button>
+            <!-- <button mat-raised-button color="primary" (click)="handleExport()">
                     <mat-icon>download</mat-icon>
                     {{ 'button.exportAll' | translate | uppercase }}
                 </button> -->
-            </div>
+        </div>
         }
     </mat-drawer-content>
 </mat-drawer-container>

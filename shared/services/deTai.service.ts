@@ -24,7 +24,7 @@ export class DeTaiService {
         private getDeTaisGQL: GetDeTaisGQL, // Hàm lấy danh sách DeTai
         private getDeTaiGQL: GetDeTaiGQL, // Hàm lấy chi tiết DeTai
         private createDeTaiGQL: CreateDeTaiGQL, // Hàm tạo DeTai
-    ) {}
+    ) { }
 
     get error(): Observable<string> {
         return this.graphqlService.error;
@@ -55,7 +55,7 @@ export class DeTaiService {
             normalize: (data) => {
                 const deTai: I_DeTai = {
                     ...data.deTai,
-                    moTa: data.deTai.mota,
+                    mota: data.deTai.mota,
                     idgvhuongdan: {
                         ...data.deTai.idgvhuongdan,
                         role: data.deTai.idgvhuongdan.role as unknown as E_Role,

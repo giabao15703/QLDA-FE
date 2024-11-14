@@ -7,7 +7,7 @@ export interface I_DeTai {
     idgvphanbien?: I_Admin;
     tendoan?: string;
     chuyenNganh?: string;
-    moTa: string;
+    mota: string;
     trangThai?: string;
     yeuCau?: string;
     idKeHoach?: string;

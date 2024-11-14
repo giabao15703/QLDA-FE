@@ -7578,6 +7578,7 @@ export type MutationUnitOfMeasureUpdateStatusArgs = {
 
 
 export type MutationUpdateKeHoachDoAnArgs = {
+  adminId?: InputMaybe<Scalars['ID']['input']>;
   id: Scalars['ID']['input'];
   kyMo?: InputMaybe<Scalars['String']['input']>;
   slDoAn?: InputMaybe<Scalars['Int']['input']>;
@@ -10775,6 +10776,7 @@ export type QueryKeHoachDoAnArgs = {
 
 
 export type QueryKeHoachDoAnsArgs = {
+  adminId?: InputMaybe<Scalars['Float']['input']>;
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;

@@ -15,5 +15,4 @@ fragment KeHoachInfo on KeHoachDoAnNode {
     tgktChamPhanBien
     tgbdChamHoiDong
     tgktChamHoiDong
-    
 }

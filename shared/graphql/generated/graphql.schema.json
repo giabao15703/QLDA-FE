@@ -59486,6 +59486,18 @@
             "description": null,
             "args": [
               {
+                "name": "adminId",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
                 "name": "id",
                 "description": null,
                 "type": {
@@ -83806,6 +83818,18 @@
             "name": "keHoachDoAns",
             "description": null,
             "args": [
+              {
+                "name": "adminId",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Float",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
               {
                 "name": "after",
                 "description": null,

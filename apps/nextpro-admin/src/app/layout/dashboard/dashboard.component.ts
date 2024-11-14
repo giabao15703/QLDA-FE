@@ -81,6 +81,11 @@ export class LayoutDashboard {
                               },
                           ],
                       },
+                      {
+                          name: 'Trưởng Khoa',
+                          icon: '/assets/icons/setting-3-svgrepo-com.svg',
+                          href: '/admin/keHoach',
+                      },
                   ]
                 : []),
             {

@@ -9,7 +9,7 @@ import {
     GetDeTaisQuery,
     GetDeTaisQueryVariables,
 } from '#shared/graphql/types';
-import { I_DeTai, I_GraphQLOptions, I_MutationResponse, I_NormalizeExtra, I_TableState } from '#shared/types';
+import { E_Role, I_DeTai, I_GraphQLOptions, I_MutationResponse, I_NormalizeExtra, I_TableState } from '#shared/types';
 import { normalizeWithPagination } from '#shared/utils';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -52,7 +52,21 @@ export class DeTaiService {
     // Lấy chi tiết một Đề Tài
     getDeTai = (variables?: GetDeTaiQueryVariables, options?: I_GraphQLOptions<GetDeTaiQuery, I_DeTai>) => {
         return this.graphqlService.query<GetDeTaiQuery, GetDeTaiQueryVariables, I_DeTai>(this.getDeTaiGQL, variables, {
-            normalize: (data) => data.deTai,
+            normalize: (data) => {
+                const deTai: I_DeTai = {
+                    ...data.deTai,
+                    moTa: data.deTai.mota,
+                    idgvhuongdan: {
+                        ...data.deTai.idgvhuongdan,
+                        role: data.deTai.idgvhuongdan.role as unknown as E_Role,
+                    },
+                    idgvphanbien: {
+                        ...data.deTai.idgvphanbien,
+                        role: data.deTai.idgvphanbien.role as unknown as E_Role,
+                    },
+                };
+                return deTai;
+            },
             ...options,
         }) as Promise<I_DeTai>;
     };

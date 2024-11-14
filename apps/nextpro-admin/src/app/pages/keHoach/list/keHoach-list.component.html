@@ -1,10 +1,10 @@
-@if (loadingService.checkLoading(['getGiangVien'])) {
+@if (loadingService.checkLoading(['getKeHoach'])) {
     <app-loading [backdrop]="true" />
 }
 <mat-drawer-container [hasBackdrop]="false">
     <mat-drawer [disableClose]="true" [opened]="!!detail" mode="over" position="end" class="!w-full">
         @if (detail) {
-            <nextpro-admin-de-tai-detail
+            <nextpro-admin-keHoach-detail
                 [mode]="detail.mode"
                 [data]="detail.data"
                 [onCloseDrawer]="handleCloseDetailDrawer"
@@ -23,7 +23,7 @@
     <mat-drawer-content>
         <app-table
             [attr.name]="table.name"
-            [isLoading]="loadingService.checkLoading(['getGiangViens'])"
+            [isLoading]="loadingService.checkLoading(['getKeHoachs'])"
             [extendHeight]="180"
             [columns]="table.config.columns"
             [data]="table.state.data"

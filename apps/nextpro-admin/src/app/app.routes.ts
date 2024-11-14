@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router';
+import { Router, Routes } from '@angular/router';
 
 import { LayoutBlank, LayoutDashboard } from '#admin/layout';
 import { AccountAdminListPage } from '#admin/pages/account/admin/list/admin-list.component';
@@ -47,8 +47,10 @@ import { SicpPage } from '#admin/pages/sicp/sicp.component';
 import { UserGuideBuyerPage } from '#admin/pages/user-guide/buyer/buyer.component';
 import { UserGuideSupplierPage } from '#admin/pages/user-guide/supplier/supplier.component';
 import { WarrantyTermListPage } from './pages/master-data/warranty-term/list/warranty-term-list.component';
+import { Injector } from '@angular/core';
+/* import { KeHoachListPage } from './pages/keHoach/list/keHoach-list.component'; */
 /* import { GroupListComponent } from './pages/group/list/group-list.component'; */
-import { DeTaiListPage } from './pages/deTai/list/deTai-list.component';
+/* import { DeTaiListPage} from './pages/deTai/list/deTai-list.component'; */
 
 export const appRoutes: Routes = [
     { path: '', redirectTo: 'admin/home', pathMatch: 'full' },
@@ -284,8 +286,12 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'deTai',
-                children: [{ path: '', component: DeTaiListPage, data: { breadcrumb: 'Giảng Viên' } }],
+                /* children: [{ path: '', component: DeTaiListPage, data: { breadcrumb: 'Giảng Viên' } }], */
             },
+            /* {
+                path: 'keHoach',
+                children: [{ path: '', component: KeHoachListPage, data: { breadcrumb: 'Trưởng Khoa' } }],
+            }, */
             {
                 path: 'our-partner',
                 children: [{ path: '', component: OurPartnerListPage, data: { breadcrumb: 'Our Partners' } }],

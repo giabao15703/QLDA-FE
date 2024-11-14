@@ -1,6 +1,4 @@
-import { I_Admin } from './account';
-
-export interface I_KeHoachDoAN {
+export interface I_KeHoach {
     id?: string;
     slSinhVien: number;
     slDoAn: number;
@@ -17,5 +15,4 @@ export interface I_KeHoachDoAN {
     tgktChamPhanBien: string;
     tgbdChamHoiDong: string;
     tgktChamHoiDong: string;
-    admin: I_Admin;
 }

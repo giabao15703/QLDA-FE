@@ -32,3 +32,4 @@ export * from './user-guide.service';
 export * from './delivery.service';
 export * from './deTai.service';
 export * from './groupQlda.service';
+export * from './keHoach.service';

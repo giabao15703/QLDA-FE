@@ -56,6 +56,7 @@ export class LayoutDashboard {
 
         // Kiểm tra nếu role của admin là trưởng khoa
         const isTruongKhoa = adminRole === E_Role.A_1;
+        const isGiangVien = adminRole === E_Role.A_3;
 
         // Khởi tạo menuData với điều kiện hiển thị dựa trên role
         this.menuData = [
@@ -86,15 +87,25 @@ export class LayoutDashboard {
                           icon: '/assets/icons/setting-3-svgrepo-com.svg',
                           href: '/admin/keHoach',
                       },
+                      {
+                          name: 'Đề Tài',
+                          icon: '/assets/icons/setting-3-svgrepo-com.svg',
+                          href: '/admin/deTai',
+                      },
                   ]
                 : []),
-            {
-                name: 'Đề Tài',
-                icon: '/assets/icons/setting-3-svgrepo-com.svg',
-                href: '/admin/deTai',
-            },
+            ...(isGiangVien
+                ? [
+                      {
+                          name: 'Đề Tài',
+                          icon: '/assets/icons/setting-3-svgrepo-com.svg',
+                          href: '/admin/deTai',
+                      },
+                  ]
+                : []),
         ];
     }
+
     toggleSidebar = () => {
         this.localStorageService.set('showSidebar', !this.showSidebar);
         this.showSidebar = !this.showSidebar;

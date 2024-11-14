@@ -24,7 +24,7 @@ export class DeTaiService {
         private getDeTaisGQL: GetDeTaisGQL, // Hàm lấy danh sách DeTai
         private getDeTaiGQL: GetDeTaiGQL, // Hàm lấy chi tiết DeTai
         private createDeTaiGQL: CreateDeTaiGQL, // Hàm tạo DeTai
-    ) { }
+    ) {}
 
     get error(): Observable<string> {
         return this.graphqlService.error;

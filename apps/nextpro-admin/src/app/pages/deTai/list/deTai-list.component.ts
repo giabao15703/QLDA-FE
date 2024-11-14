@@ -106,7 +106,7 @@ export class DeTaiListPage {
                         default:
                             return 'Không xác định';
                     }
-                }
+                },
             },
             {
                 cellStyle: { width: '50px' },

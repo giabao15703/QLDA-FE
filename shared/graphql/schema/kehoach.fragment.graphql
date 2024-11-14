@@ -1,0 +1,21 @@
+fragment KeHoachInfo on KeHoachDoAnNode {
+    id
+    slSinhVien
+    slDoAn
+    kyMo
+    tgbdDoAn
+    tgktDoAn
+    tgbdTaoDoAn
+    tgktTaoDoAn
+    tgbdDangKyDeTai
+    tgktDangKyDeTai
+    tgbdLamDoAn
+    tgktLamDoAn
+    tgbdChamPhanBien
+    tgktChamPhanBien
+    tgbdChamHoiDong
+    tgktChamHoiDong
+    admin{
+        ...AdminInfo
+    }
+}

@@ -84,11 +84,6 @@ export class LayoutDashboard {
                   ]
                 : []),
             {
-                name: 'Group',
-                icon: '/assets/icons/setting-3-svgrepo-com.svg',
-                href: '/admin/group',
-            },
-            {
                 name: 'Đề Tài',
                 icon: '/assets/icons/setting-3-svgrepo-com.svg',
                 href: '/admin/deTai',

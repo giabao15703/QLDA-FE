@@ -1,0 +1,53 @@
+query getKeHoachs(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $maKeHoach: String
+    $slSinhVien: Float
+    $slDoAn: Float
+    $kyMo: String
+    $adminId: Float
+
+) {
+    keHoachDoAns(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        maKeHoach: $maKeHoach
+        slSinhVien: $slSinhVien
+        slDoAn: $slDoAn
+        kyMo: $kyMo
+        adminId: $adminId
+    ) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...KeHoachInfo
+            }
+        }
+    }
+}  
+
+query getKeHoach($id: ID!) {
+    keHoachDoAn(id: $id) {
+        ...KeHoachInfo
+    }
+}
+
+
+mutation createKeHoach($input: KeHoachDoAnInput!) {
+    createKeHoachDoAn(input: $input) {
+        status
+        keHoachDoAn {
+            ...KeHoachInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}

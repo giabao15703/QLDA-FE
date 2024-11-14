@@ -4,10 +4,14 @@ query getDeTais(
     $first: Int
     $last: Int
     $id: String
-    $giangvienId: String 
-    $tenDeTai: String
-    $moTa: String
-
+    $idgvhuongdan: String
+    $idgvphanbien: String
+    $idnhom: String
+    $madoan: String
+    $chuyennganh: String
+    $tendoan: String
+    $trangthai: String
+    $idkehoach: String
 ) {
     deTais(
         before: $before
@@ -15,10 +19,14 @@ query getDeTais(
         first: $first
         last: $last
         id: $id
-        giangvienId: $giangvienId
-        tenDeTai: $tenDeTai
-        moTa: $moTa
-
+        idgvhuongdan: $idgvhuongdan
+        idgvphanbien: $idgvphanbien
+        idnhom: $idnhom
+        madoan: $madoan
+        chuyennganh: $chuyennganh
+        tendoan: $tendoan
+        trangthai: $trangthai
+        idkehoach: $idkehoach
     ) {
         totalCount
         pageInfo {

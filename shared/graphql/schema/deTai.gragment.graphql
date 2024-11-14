@@ -1,9 +1,28 @@
+# fragment DeTaiInfo on DeTaiNode {
+#     id
+#     id{
+#         ...UserInfo
+#     }
+#     tenDeTai
+#     moTa
+#     giangVienFullName
+# }
+
+
 fragment DeTaiInfo on DeTaiNode {
     id
-    giangvienId{
-        ...UserInfo
+    idgvhuongdan{
+        ...AdminInfo
     }
-    tenDeTai
-    moTa
-    giangVienFullName
+    idgvphanbien{
+        ...AdminInfo
+    }
+    tendoan
+    chuyennganh
+    mota
+    trangthai
+    yeucau
+    idkehoach{
+        ...KeHoachInfo
+    }
 }

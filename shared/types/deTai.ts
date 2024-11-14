@@ -1,9 +1,14 @@
+import { I_Admin } from './account';
 import { I_User } from './user';
 
 export interface I_DeTai {
     id?: string;
-    giangVien?: I_User;
-    tenDeTai?: string;
-    moTa?: string;
-    giangVienFullName?: string;
+    idgvhuongdan?: I_Admin;
+    idgvphanbien?: I_Admin;
+    tendoan?: string;
+    chuyenNganh?: string;
+    moTa: string;
+    trangThai?: string;
+    yeuCau?: string;
+    idKeHoach?: string;
 }

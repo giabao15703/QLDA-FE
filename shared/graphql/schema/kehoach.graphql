@@ -42,12 +42,8 @@ query getKeHoach($id: ID!) {
 
 mutation createKeHoach($input: KeHoachDoAnInput!) {
     createKeHoachDoAn(input: $input) {
-        status
         keHoachDoAn {
             ...KeHoachInfo
-        }
-        error {
-            ...ErrorInfo
         }
     }
 }

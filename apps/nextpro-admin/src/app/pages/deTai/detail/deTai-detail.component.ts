@@ -67,8 +67,8 @@ export class DeTaiDetailComponent {
                     { label: 'Đã huỷ', value: '2' },
                     { label: 'Yêu cầu chỉnh sửa', value: '3' },
                 ],
-                disabled:true,
-            }
+                disabled: true,
+            },
         ];
     }
 
@@ -102,8 +102,6 @@ export class DeTaiDetailComponent {
 
     handleSave = async () => {
         this.form.submit(async (values) => {
-            debugger;
-            // Lấy ID giảng viên từ accountService
             const currentUser = localStorage.getItem('user');
             const idgvhuongdan = JSON.parse(currentUser).id; // ID của giảng viên hiện tại
 

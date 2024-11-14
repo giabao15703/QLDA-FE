@@ -53,8 +53,6 @@ import { KeHoachListPage } from './pages/keHoach/list/keHoach-list.component';
 /* import { KeHoachListPage } from './pages/keHoach/list/keHoach-list.component'; */
 /* import { GroupListComponent } from './pages/group/list/group-list.component'; */
 /* import { DeTaiListPage} from './pages/deTai/list/deTai-list.component'; */
-
-
 /* import { GroupListComponent } from './pages/group/list/group-list.component'; */
 
 export const appRoutes: Routes = [
@@ -289,6 +287,10 @@ export const appRoutes: Routes = [
                 path: 'coupon',
                 children: [{ path: '', component: CouponListPage, data: { breadcrumb: 'Coupon' } }],
             },
+            /* { */
+            /* path: 'deTai', */
+            /* children: [{ path: '', component: DeTaiListPage, data: { breadcrumb: 'Giảng Viên' } }], */
+            /* }, */
             {
                 path: 'deTai',
                 children: [{ path: '', component: DeTaiListPage, data: { breadcrumb: 'Giảng Viên' } }],

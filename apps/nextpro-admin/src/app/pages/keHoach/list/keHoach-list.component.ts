@@ -82,11 +82,11 @@ export class KeHoachListPage {
                     return (this.table.state.pagination.page - 1) * this.table.state.pagination.pageSize + index + 1;
                 },
             },
-            {
+            /* {
                 sort: 'maKeHoach',
                 name: 'maKeHoach',
                 label: 'Mã kế hoạch',
-            },
+            }, */
             {
                 sort: 'kyMo',
                 name: 'kyMo',
@@ -106,61 +106,73 @@ export class KeHoachListPage {
                 sort: 'tgbdDoAn',
                 name: 'tgbdDoAn',
                 label: 'Thời gian bắt đầu đồ án',
+                render: formatDate,
             },
             {
                 sort: 'tgktDoAn',
                 name: 'tgktDoAn',
                 label: 'Thời gian kết thúc đồ án',
+                render: formatDate,
             },
             {
                 sort: 'tgbdTaoDoAn',
                 name: 'tgbdTaoDoAn',
                 label: 'Thời gian bắt đầu tạo đồ án',
+                render: formatDate,
             },
             {
                 sort: 'tgktTaoDoAn',
                 name: 'tgktTaoDoAn',
                 label: 'Thời gian kết thúc tạo đồ án',
+                render: formatDate,
             },
             {
                 sort: 'tgbdDangKyDeTai',
                 name: 'tgbdDangKyDeTai',
                 label: 'Thời gian bắt đầu đăng ký đề tài',
+                render: formatDate,
             },
             {
                 sort: 'tgktDangKyDeTai',
                 name: 'tgktDangKyDeTai',
                 label: 'Thời gian kết thúc đăng ký đề tài',
+                render: formatDate,
             },
             {
                 sort: 'tgbdLamDoAn',
                 name: 'tgbdLamDoAn',
                 label: 'Thời gian bắt đầu làm đồ án',
+                render: formatDate,
             },
             {
                 sort: 'tgktLamDoAn',
                 name: 'tgktLamDoAn',
                 label: 'Thời gian kết thúc làm đồ án',
+                render: formatDate,
             },
             {
                 sort: 'tgbdChamPhanBien',
                 name: 'tgbdChamPhanBien',
                 label: 'Thời gian bắt đầu chấm phản biện',
+                render: formatDate,
             },
             {
                 sort: 'tgktChamPhanBien',
                 name: 'tgktChamPhanBien',
                 label: 'Thời gian kết thúc chấm phản biện',
+                render: formatDate,
             },
             {
                 sort: 'tgbdChamHoiDong',
                 name: 'tgbdChamHoiDong',
                 label: 'Thời gian bắt đầu chấm hội đồng',
+                render: formatDate,
             },
             {
                 sort: 'tgktChamHoiDong',
                 name: 'tgktChamHoiDong',
                 label: 'Thời gian kết thúc chấm hội đồng',
+                render: formatDate,
             },
             {
                 cellStyle: { width: '50px' },

@@ -83,12 +83,12 @@ export class KeHoachService {
     // Tạo mới một Đề Tài
     createKeHoach = (
         variables?: CreateKeHoachMutationVariables,
-        options?: I_GraphQLOptions<CreateKeHoachMutation, { keHoachDoAnCreate: I_MutationResponse }>,
+        options?: I_GraphQLOptions<CreateKeHoachMutation, { createKeHoachDoAn: I_MutationResponse }>,
     ) => {
         return this.graphqlService.mutate<
             CreateKeHoachMutation,
             CreateKeHoachMutationVariables,
-            { keHoachDoAnCreate: I_MutationResponse }
+            { createKeHoachDoAn: I_MutationResponse }
         >(this.createKeHoachGQL, variables, options);
     };
 }

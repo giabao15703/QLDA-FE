@@ -52,10 +52,10 @@ export class KeHoachDetailComponent {
         private accountService: AccountService,
     ) {
         this.form.config = [
-            {
+            /* {
                 label: 'Mã kế hoạch',
                 name: 'maKeHoach',
-            },
+            }, */
             {
                 label: 'Kỳ mở',
                 name: 'kyMo',
@@ -71,50 +71,62 @@ export class KeHoachDetailComponent {
             {
                 label: 'Thời gian bắt đầu đồ án',
                 name: 'tgbdDoAn',
+                fieldType: E_FieldType.DATEPICKER,
             },
             {
                 label: 'Thời gian kết thúc đồ án',
                 name: 'tgktDoAn',
+                fieldType: E_FieldType.DATEPICKER,
             },
             {
                 label: 'Thời gian bắt đầu tạo đồ án',
                 name: 'tgbdTaoDoAn',
+                fieldType: E_FieldType.DATEPICKER,
             },
             {
                 label: 'Thời gian kết thúc tạo đồ án',
                 name: 'tgktTaoDoAn',
+                fieldType: E_FieldType.DATEPICKER,
             },
             {
                 label: 'Thời gian bắt đầu đăng ký đề tài',
                 name: 'tgbdDangKyDeTai',
+                fieldType: E_FieldType.DATEPICKER,
             },
             {
                 label: 'Thời gian kết thúc đăng ký đề tài',
                 name: 'tgktDangKyDeTai',
+                fieldType: E_FieldType.DATEPICKER,
             },
             {
                 label: 'Thời gian bắt đầu làm đồ án',
                 name: 'tgbdLamDoAn',
+                fieldType: E_FieldType.DATEPICKER,
             },
             {
                 label: 'Thời gian kết thúc làm đồ án',
                 name: 'tgktLamDoAn',
+                fieldType: E_FieldType.DATEPICKER,
             },
             {
                 label: 'Thời gian bắt đầu chấm phản biện',
                 name: 'tgbdChamPhanBien',
+                fieldType: E_FieldType.DATEPICKER,
             },
             {
                 label: 'Thời gian kết thúc chấm phản biện',
                 name: 'tgktChamPhanBien',
+                fieldType: E_FieldType.DATEPICKER,
             },
             {
                 label: 'Thời gian bắt đầu chấm hội đồng',
                 name: 'tgbdChamHoiDong',
+                fieldType: E_FieldType.DATEPICKER,
             },
             {
                 label: 'Thời gian kết thúc chấm hội đồng',
                 name: 'tgktChamHoiDong',
+                fieldType: E_FieldType.DATEPICKER,
             },
             /* {
                 label: 'Admin',
@@ -179,33 +191,35 @@ export class KeHoachDetailComponent {
                     slSinhVien: values.slSinhVien,
                     slDoAn: values.slDoAn,
                     kyMo: values.kyMo,
-                    tgbdDoAn: values.tgbdDoAn,
-                    tgktDoAn: values.tgktDoAn,
-                    tgbdTaoDoAn: values.tgbdTaoDoAn,
-                    tgktTaoDoAn: values.tgktTaoDoAn,
-                    tgbdDangKyDeTai: values.tgbdDangKyDeTai,
-                    tgktDangKyDeTai: values.tgktDangKyDeTai,
-                    tgbdLamDoAn: values.tgbdLamDoAn,
-                    tgktLamDoAn: values.tgktLamDoAn,
-                    tgbdChamPhanBien: values.tgbdChamPhanBien,
-                    tgktChamPhanBien: values.tgktChamPhanBien,
-                    tgbdChamHoiDong: values.tgbdChamHoiDong,
-                    tgktChamHoiDong: values.tgktChamHoiDong,
+                    tgbdDoAn: new Date(values.tgbdDoAn),
+                    tgktDoAn: new Date(values.tgktDoAn),
+                    tgbdTaoDoAn: new Date(values.tgbdTaoDoAn),
+                    tgktTaoDoAn: new Date(values.tgktTaoDoAn),
+                    tgbdDangKyDeTai: new Date(values.tgbdDangKyDeTai),
+                    tgktDangKyDeTai: new Date(values.tgktDangKyDeTai),
+                    tgbdLamDoAn: new Date(values.tgbdLamDoAn),
+                    tgktLamDoAn: new Date(values.tgktLamDoAn),
+                    tgbdChamPhanBien: new Date(values.tgbdChamPhanBien),
+                    tgktChamPhanBien: new Date(values.tgktChamPhanBien),
+                    tgbdChamHoiDong: new Date(values.tgbdChamHoiDong),
+                    tgktChamHoiDong: new Date(values.tgktChamHoiDong),
                 },
             };
 
-            /*  if (this.mode === E_Form_Mode.CREATE) {
-                const response = await this.keHoachService.createKeHoach({
-                    input: variables.input,
-                }); */
+            if (this.mode === E_Form_Mode.CREATE) {
+                const { createKeHoachDoAn } = await this.keHoachService.createKeHoach({
+                    input: {
+                        ...variables.input,
+                    },
+                });
 
-            /* if (response.data.keHoachDoAnCreate.status) {
+                if (createKeHoachDoAn.status) {
                     this.localStorageService.remove(FORM_NAME);
                     this.notificationService.success('notification.createSuccessfully');
                 } else {
-                    this.notificationService.error(response.data.keHoachDoAnCreate.error?.message);
-                } */
-            /*  } */
+                    this.notificationService.error(createKeHoachDoAn.error?.message);
+                }
+            }
 
             this.refetch();
         }, FORM_NAME);

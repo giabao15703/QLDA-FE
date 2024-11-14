@@ -3152,7 +3152,9 @@ export type CoursesUpdatesStatus = {
 
 export type CreateKeHoachDoAn = {
   __typename?: 'CreateKeHoachDoAn';
+  error?: Maybe<Error>;
   keHoachDoAn?: Maybe<KeHoachDoAnNode>;
+  status?: Maybe<Scalars['Boolean']['output']>;
 };
 
 export type CreateNewPassword = {
@@ -17085,7 +17087,7 @@ export type CreateKeHoachMutationVariables = Exact<{
 }>;
 
 
-export type CreateKeHoachMutation = { __typename?: 'Mutation', createKeHoachDoAn?: { __typename?: 'CreateKeHoachDoAn', keHoachDoAn?: { __typename?: 'KeHoachDoAnNode', id: string, slSinhVien: number, slDoAn: number, kyMo: string, tgbdDoAn: any, tgktDoAn: any, tgbdTaoDoAn: any, tgktTaoDoAn: any, tgbdDangKyDeTai: any, tgktDangKyDeTai: any, tgbdLamDoAn: any, tgktLamDoAn: any, tgbdChamPhanBien: any, tgktChamPhanBien: any, tgbdChamHoiDong: any, tgktChamHoiDong: any } | null } | null };
+export type CreateKeHoachMutation = { __typename?: 'Mutation', createKeHoachDoAn?: { __typename?: 'CreateKeHoachDoAn', status?: boolean | null, keHoachDoAn?: { __typename?: 'KeHoachDoAnNode', id: string, slSinhVien: number, slDoAn: number, kyMo: string, tgbdDoAn: any, tgktDoAn: any, tgbdTaoDoAn: any, tgktTaoDoAn: any, tgbdDangKyDeTai: any, tgktDangKyDeTai: any, tgbdLamDoAn: any, tgktLamDoAn: any, tgbdChamPhanBien: any, tgktChamPhanBien: any, tgbdChamHoiDong: any, tgktChamHoiDong: any } | null, error?: { __typename?: 'Error', code?: string | null, message?: string | null, field?: string | null } | null } | null };
 
 export type CountryInfoFragment = { __typename?: 'CountryNode', id: string, itemCode: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'CountryTranslationNode', id: string, languageCode: string, name: string }> };
 
@@ -23532,12 +23534,17 @@ export const GetKeHoachDocument = gql`
 export const CreateKeHoachDocument = gql`
     mutation createKeHoach($input: KeHoachDoAnInput!) {
   createKeHoachDoAn(input: $input) {
+    status
     keHoachDoAn {
       ...KeHoachInfo
     }
+    error {
+      ...ErrorInfo
+    }
   }
 }
-    ${KeHoachInfoFragmentDoc}`;
+    ${KeHoachInfoFragmentDoc}
+${ErrorInfoFragmentDoc}`;
 
   @Injectable({
     providedIn: 'root'

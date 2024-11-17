@@ -6,6 +6,7 @@ export interface I_GroupQLDA {
     name?: string;
     status?: boolean;
     memberCount?: number;
+    creatorShortName?: string;
 }
 export interface I_JoinGroup {
     id?: string;

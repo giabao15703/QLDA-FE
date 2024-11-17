@@ -1,5 +1,5 @@
 <section class="mb-8">
-    <nextpro-user-navbar />
+    <nextpro-user-navbar></nextpro-user-navbar>
 </section>
 
 <section>
@@ -26,10 +26,10 @@
                     </button>
                 </form>
             </div>
-            <div class="bg-white shadow-md rounded-lg p-4 mb-4">
-                <h2 class="text-2xl font-bold mb-4">Tham gia nhóm</h2>
 
-                <!-- Bảng danh sách đồ án -->
+            <!-- Bảng danh sách nhóm -->
+            <div class="bg-white shadow-md rounded-lg p-4 mb-4">
+                <h2 class="text-2xl font-bold mb-4">Danh sách nhóm</h2>
                 <table class="min-w-full bg-white shadow-md rounded-lg">
                     <thead>
                         <tr class="[&_th]:text-nowrap">
@@ -37,6 +37,7 @@
                             <th class="py-2 px-4 border-b">Tên nhóm</th>
                             <th class="py-2 px-4 border-b">Số lượng thành viên</th>
                             <th class="py-2 px-4 border-b">Trạng thái</th>
+                            <th class="py-2 px-4 border-b">Trưởng nhóm</th> <!-- Cột mới -->
                             <th class="py-2 px-4 border-b">Thao tác</th>
                         </tr>
                     </thead>
@@ -44,10 +45,9 @@
                         <tr *ngFor="let group of groupData.data">
                             <td class="py-2 px-4 border-b">{{ group.maNhom }}</td>
                             <td class="py-2 px-4 border-b">{{ group.name }}</td>
-                            <td class="py-2 px-4 border-b">
-                                {{ group.memberCount }}
-                            </td>
+                            <td class="py-2 px-4 border-b">{{ group.memberCount }}</td>
                             <td class="py-2 px-4 border-b">{{ group.status }}</td>
+                            <td class="py-2 px-4 border-b">{{ group.creatorShortName }}</td>
                             <td class="py-2 px-4 border-b text-center">
                                 <button
                                     class="bg-blue-500 text-white text-sm px-4 py-2 rounded hover:bg-blue-600"
@@ -58,7 +58,6 @@
                             </td>
                         </tr>
                     </tbody>
-                    
                 </table>
             </div>
         </div>

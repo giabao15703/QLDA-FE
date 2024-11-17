@@ -38760,17 +38760,25 @@
         "isOneOf": null,
         "fields": [
           {
+            "name": "creatorShortName",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "deTai",
             "description": "",
             "args": [],
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -45124,7 +45132,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Date",
+                "name": "DateTime",
                 "ofType": null
               }
             },
@@ -45140,7 +45148,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Date",
+                "name": "DateTime",
                 "ofType": null
               }
             },
@@ -45156,7 +45164,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Date",
+                "name": "DateTime",
                 "ofType": null
               }
             },
@@ -45172,7 +45180,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Date",
+                "name": "DateTime",
                 "ofType": null
               }
             },
@@ -45188,7 +45196,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Date",
+                "name": "DateTime",
                 "ofType": null
               }
             },
@@ -45204,7 +45212,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Date",
+                "name": "DateTime",
                 "ofType": null
               }
             },
@@ -45220,7 +45228,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Date",
+                "name": "DateTime",
                 "ofType": null
               }
             },
@@ -45236,7 +45244,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Date",
+                "name": "DateTime",
                 "ofType": null
               }
             },
@@ -45252,7 +45260,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Date",
+                "name": "DateTime",
                 "ofType": null
               }
             },
@@ -45268,7 +45276,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Date",
+                "name": "DateTime",
                 "ofType": null
               }
             },
@@ -45284,7 +45292,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Date",
+                "name": "DateTime",
                 "ofType": null
               }
             },
@@ -45300,7 +45308,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Date",
+                "name": "DateTime",
                 "ofType": null
               }
             },
@@ -45565,7 +45573,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Date",
+                "name": "DateTime",
                 "ofType": null
               }
             },
@@ -45581,7 +45589,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Date",
+                "name": "DateTime",
                 "ofType": null
               }
             },
@@ -45597,7 +45605,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Date",
+                "name": "DateTime",
                 "ofType": null
               }
             },
@@ -45613,7 +45621,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Date",
+                "name": "DateTime",
                 "ofType": null
               }
             },
@@ -45629,7 +45637,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Date",
+                "name": "DateTime",
                 "ofType": null
               }
             },
@@ -45645,7 +45653,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Date",
+                "name": "DateTime",
                 "ofType": null
               }
             },
@@ -45661,7 +45669,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Date",
+                "name": "DateTime",
                 "ofType": null
               }
             },
@@ -45677,7 +45685,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Date",
+                "name": "DateTime",
                 "ofType": null
               }
             },
@@ -45693,7 +45701,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Date",
+                "name": "DateTime",
                 "ofType": null
               }
             },
@@ -45709,7 +45717,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Date",
+                "name": "DateTime",
                 "ofType": null
               }
             },
@@ -45725,7 +45733,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Date",
+                "name": "DateTime",
                 "ofType": null
               }
             },
@@ -45741,7 +45749,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Date",
+                "name": "DateTime",
                 "ofType": null
               }
             },
@@ -59509,18 +59517,6 @@
             "name": "updateKeHoachDoAn",
             "description": null,
             "args": [
-              {
-                "name": "adminId",
-                "description": null,
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "ID",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
               {
                 "name": "id",
                 "description": null,
@@ -83842,18 +83838,6 @@
             "name": "keHoachDoAns",
             "description": null,
             "args": [
-              {
-                "name": "adminId",
-                "description": null,
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Float",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
               {
                 "name": "after",
                 "description": null,

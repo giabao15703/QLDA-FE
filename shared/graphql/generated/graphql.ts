@@ -4521,7 +4521,8 @@ export type GroupQldaJoin = {
 
 export type GroupQldaNode = CustomNode & {
   __typename?: 'GroupQLDANode';
-  deTai: Scalars['String']['output'];
+  creatorShortName?: Maybe<Scalars['String']['output']>;
+  deTai?: Maybe<Scalars['String']['output']>;
   /** The ID of the object. */
   id: Scalars['ID']['output'];
   joinGroups: JoinGroupNodeConnection;
@@ -5285,18 +5286,18 @@ export type KeHoachDoAnInput = {
   kyMo: Scalars['String']['input'];
   slDoAn: Scalars['Int']['input'];
   slSinhVien: Scalars['Int']['input'];
-  tgbdChamHoiDong: Scalars['Date']['input'];
-  tgbdChamPhanBien: Scalars['Date']['input'];
-  tgbdDangKyDeTai: Scalars['Date']['input'];
-  tgbdDoAn: Scalars['Date']['input'];
-  tgbdLamDoAn: Scalars['Date']['input'];
-  tgbdTaoDoAn: Scalars['Date']['input'];
-  tgktChamHoiDong: Scalars['Date']['input'];
-  tgktChamPhanBien: Scalars['Date']['input'];
-  tgktDangKyDeTai: Scalars['Date']['input'];
-  tgktDoAn: Scalars['Date']['input'];
-  tgktLamDoAn: Scalars['Date']['input'];
-  tgktTaoDoAn: Scalars['Date']['input'];
+  tgbdChamHoiDong: Scalars['DateTime']['input'];
+  tgbdChamPhanBien: Scalars['DateTime']['input'];
+  tgbdDangKyDeTai: Scalars['DateTime']['input'];
+  tgbdDoAn: Scalars['DateTime']['input'];
+  tgbdLamDoAn: Scalars['DateTime']['input'];
+  tgbdTaoDoAn: Scalars['DateTime']['input'];
+  tgktChamHoiDong: Scalars['DateTime']['input'];
+  tgktChamPhanBien: Scalars['DateTime']['input'];
+  tgktDangKyDeTai: Scalars['DateTime']['input'];
+  tgktDoAn: Scalars['DateTime']['input'];
+  tgktLamDoAn: Scalars['DateTime']['input'];
+  tgktTaoDoAn: Scalars['DateTime']['input'];
 };
 
 export type KeHoachDoAnNode = CustomNode & {
@@ -5307,18 +5308,18 @@ export type KeHoachDoAnNode = CustomNode & {
   kyMo: Scalars['String']['output'];
   slDoAn: Scalars['Int']['output'];
   slSinhVien: Scalars['Int']['output'];
-  tgbdChamHoiDong: Scalars['Date']['output'];
-  tgbdChamPhanBien: Scalars['Date']['output'];
-  tgbdDangKyDeTai: Scalars['Date']['output'];
-  tgbdDoAn: Scalars['Date']['output'];
-  tgbdLamDoAn: Scalars['Date']['output'];
-  tgbdTaoDoAn: Scalars['Date']['output'];
-  tgktChamHoiDong: Scalars['Date']['output'];
-  tgktChamPhanBien: Scalars['Date']['output'];
-  tgktDangKyDeTai: Scalars['Date']['output'];
-  tgktDoAn: Scalars['Date']['output'];
-  tgktLamDoAn: Scalars['Date']['output'];
-  tgktTaoDoAn: Scalars['Date']['output'];
+  tgbdChamHoiDong: Scalars['DateTime']['output'];
+  tgbdChamPhanBien: Scalars['DateTime']['output'];
+  tgbdDangKyDeTai: Scalars['DateTime']['output'];
+  tgbdDoAn: Scalars['DateTime']['output'];
+  tgbdLamDoAn: Scalars['DateTime']['output'];
+  tgbdTaoDoAn: Scalars['DateTime']['output'];
+  tgktChamHoiDong: Scalars['DateTime']['output'];
+  tgktChamPhanBien: Scalars['DateTime']['output'];
+  tgktDangKyDeTai: Scalars['DateTime']['output'];
+  tgktDoAn: Scalars['DateTime']['output'];
+  tgktLamDoAn: Scalars['DateTime']['output'];
+  tgktTaoDoAn: Scalars['DateTime']['output'];
 };
 
 
@@ -7580,7 +7581,6 @@ export type MutationUnitOfMeasureUpdateStatusArgs = {
 
 
 export type MutationUpdateKeHoachDoAnArgs = {
-  adminId?: InputMaybe<Scalars['ID']['input']>;
   id: Scalars['ID']['input'];
   kyMo?: InputMaybe<Scalars['String']['input']>;
   slDoAn?: InputMaybe<Scalars['Int']['input']>;
@@ -10778,7 +10778,6 @@ export type QueryKeHoachDoAnArgs = {
 
 
 export type QueryKeHoachDoAnsArgs = {
-  adminId?: InputMaybe<Scalars['Float']['input']>;
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -16998,11 +16997,11 @@ export type CreateDiamondSponsorTextEditerMutationVariables = Exact<{
 
 export type CreateDiamondSponsorTextEditerMutation = { __typename?: 'Mutation', userDiamondSponsorCreateTextEditer?: { __typename?: 'UserDiamondSponsorTextEditer', status?: boolean | null, error?: { __typename?: 'Error', code?: string | null, message?: string | null, field?: string | null } | null } | null };
 
-export type GroupQldaInfoFragment = { __typename?: 'GroupQLDANode', id: string, maNhom: string, name: string, status: boolean, memberCount: number };
+export type GroupQldaInfoFragment = { __typename?: 'GroupQLDANode', id: string, maNhom: string, name: string, status: boolean, memberCount: number, creatorShortName?: string | null };
 
-export type JoinGroupInfoFragment = { __typename?: 'JoinGroupNode', id: string, membersCount?: number | null, role: string, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, group: { __typename?: 'GroupQLDANode', id: string, maNhom: string, name: string, status: boolean, memberCount: number } };
+export type JoinGroupInfoFragment = { __typename?: 'JoinGroupNode', id: string, membersCount?: number | null, role: string, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, group: { __typename?: 'GroupQLDANode', id: string, maNhom: string, name: string, status: boolean, memberCount: number, creatorShortName?: string | null } };
 
-export type JoinRequestInfoFragment = { __typename?: 'JoinRequestNode', id: string, isApproved: boolean, createdAt: any, membersCount?: number | null, leaderUserId?: number | null, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, group: { __typename?: 'GroupQLDANode', id: string, maNhom: string, name: string, status: boolean, memberCount: number } };
+export type JoinRequestInfoFragment = { __typename?: 'JoinRequestNode', id: string, isApproved: boolean, createdAt: any, membersCount?: number | null, leaderUserId?: number | null, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, group: { __typename?: 'GroupQLDANode', creatorShortName?: string | null } };
 
 export type GetGroupQldasQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -17014,7 +17013,7 @@ export type GetGroupQldasQueryVariables = Exact<{
 }>;
 
 
-export type GetGroupQldasQuery = { __typename?: 'Query', groupQldas?: { __typename?: 'GroupQLDANodeConnection', totalCount?: number | null, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'GroupQLDANodeEdge', node?: { __typename?: 'GroupQLDANode', id: string, maNhom: string, name: string, status: boolean, memberCount: number } | null } | null> } | null };
+export type GetGroupQldasQuery = { __typename?: 'Query', groupQldas?: { __typename?: 'GroupQLDANodeConnection', totalCount?: number | null, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'GroupQLDANodeEdge', node?: { __typename?: 'GroupQLDANode', id: string, maNhom: string, name: string, status: boolean, memberCount: number, creatorShortName?: string | null } | null } | null> } | null };
 
 export type GetGroupQldaRequestsQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -17027,14 +17026,14 @@ export type GetGroupQldaRequestsQueryVariables = Exact<{
 }>;
 
 
-export type GetGroupQldaRequestsQuery = { __typename?: 'Query', joinRequests?: { __typename?: 'JoinRequestNodeConnection', edges: Array<{ __typename?: 'JoinRequestNodeEdge', node?: { __typename?: 'JoinRequestNode', id: string, leaderUserId?: number | null, user: { __typename?: 'UserNode', id: string }, group: { __typename?: 'GroupQLDANode', id: string } } | null } | null> } | null };
+export type GetGroupQldaRequestsQuery = { __typename?: 'Query', joinRequests?: { __typename?: 'JoinRequestNodeConnection', edges: Array<{ __typename?: 'JoinRequestNodeEdge', node?: { __typename?: 'JoinRequestNode', id: string, leaderUserId?: number | null, user: { __typename?: 'UserNode', id: string }, group: { __typename?: 'GroupQLDANode', id: string, creatorShortName?: string | null } } | null } | null> } | null };
 
 export type GetGroupQldaQueryVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
 
 
-export type GetGroupQldaQuery = { __typename?: 'Query', groupQlda?: { __typename?: 'GroupQLDANode', id: string, maNhom: string, name: string, status: boolean, memberCount: number } | null };
+export type GetGroupQldaQuery = { __typename?: 'Query', groupQlda?: { __typename?: 'GroupQLDANode', id: string, maNhom: string, name: string, status: boolean, memberCount: number, creatorShortName?: string | null } | null };
 
 export type GetGroupQldaJoinMutationVariables = Exact<{
   groupId: Scalars['ID']['input'];
@@ -17057,7 +17056,7 @@ export type CreateGroupQldaMutationVariables = Exact<{
 }>;
 
 
-export type CreateGroupQldaMutation = { __typename?: 'Mutation', groupQldaCreate?: { __typename?: 'GroupQLDACreate', status?: boolean | null, groupQlda?: { __typename?: 'GroupQLDANode', id: string, maNhom: string, name: string, status: boolean, memberCount: number } | null, error?: { __typename?: 'Error', code?: string | null, message?: string | null, field?: string | null } | null } | null };
+export type CreateGroupQldaMutation = { __typename?: 'Mutation', groupQldaCreate?: { __typename?: 'GroupQLDACreate', status?: boolean | null, groupQlda?: { __typename?: 'GroupQLDANode', id: string, maNhom: string, name: string, status: boolean, memberCount: number, creatorShortName?: string | null } | null, error?: { __typename?: 'Error', code?: string | null, message?: string | null, field?: string | null } | null } | null };
 
 export type KeHoachInfoFragment = { __typename?: 'KeHoachDoAnNode', id: string, slSinhVien: number, slDoAn: number, kyMo: string, tgbdDoAn: any, tgktDoAn: any, tgbdTaoDoAn: any, tgktTaoDoAn: any, tgbdDangKyDeTai: any, tgktDangKyDeTai: any, tgbdLamDoAn: any, tgktLamDoAn: any, tgbdChamPhanBien: any, tgktChamPhanBien: any, tgbdChamHoiDong: any, tgktChamHoiDong: any };
 
@@ -20553,6 +20552,7 @@ export const GroupQldaInfoFragmentDoc = gql`
   name
   status
   memberCount
+  creatorShortName
 }
     `;
 export const JoinGroupInfoFragmentDoc = gql`
@@ -20576,15 +20576,14 @@ export const JoinRequestInfoFragmentDoc = gql`
     ...UserInfo
   }
   group {
-    ...GroupQLDAInfo
+    creatorShortName
   }
   isApproved
   createdAt
   membersCount
   leaderUserId
 }
-    ${UserInfoFragmentDoc}
-${GroupQldaInfoFragmentDoc}`;
+    ${UserInfoFragmentDoc}`;
 export const ReasonInfoFragmentDoc = gql`
     fragment ReasonInfo on ReasonNode {
   id
@@ -23372,6 +23371,7 @@ export const GetGroupQldaRequestsDocument = gql`
         }
         group {
           id
+          creatorShortName
         }
         leaderUserId
       }

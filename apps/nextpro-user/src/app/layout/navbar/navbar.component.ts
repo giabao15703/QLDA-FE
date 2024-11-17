@@ -31,41 +31,58 @@ export class NavbarComponent {
     ) {
         this.user = this.localStorageService.get('user');
 
-        this.localStorageService.onChange('user', async (oldValue, newValue) => {
+        /* this.localStorageService.onChange('user', async (oldValue, newValue) => {
             if (newValue) {
                 this.user = newValue;
                 this.updateMenuPaths();
             }
-        });
+        }); */
     }
 
     ngOnInit() {
-        this.updateMenuPaths();
         this.user = this.localStorageService.get('user');
         this.LoadNotifications();
     }
 
     LoadNotifications() {
-        const currentUserId = localStorage.getItem('user');
+        console.log('LoadNotifications() được gọi');
 
-        if (!currentUserId) {
-            console.error('Không xác định được userId từ localStorage.');
+        const user = JSON.parse(localStorage.getItem('user') || '{}');
+        console.log('Dữ liệu user từ localStorage:', user);
+
+        if (!user || !user.shortName) {
+            console.error('Người dùng không có shortName.');
             return;
         }
 
         this.groupQldaService
             .getGroupQldaRequests()
             .then((joinRequests: I_JoinRequest[]) => {
-                console.log('Join Requests:', joinRequests); // Kiểm tra cấu trúc của joinRequests
+                console.log('Dữ liệu trả về từ API:', joinRequests);
 
-                this.notifications = joinRequests.map((request: I_JoinRequest) => ({
-                    message: `Lời mời tham gia nhóm ${request.group?.id} từ ${request.user?.id}`,
-                    id: request.id, // Kiểm tra xem request.id có tồn tại không
-                }));
-                console.log('Notifications:', this.notifications);
+                if (!joinRequests || joinRequests.length === 0) {
+                    console.log('Không có yêu cầu tham gia nhóm.');
+                    this.notifications = [];
+                    return;
+                }
+
+                this.notifications = joinRequests
+                    .filter((request: I_JoinRequest) => {
+                        console.log(`So sánh leader: ${request.group?.creatorShortName} === ${user.shortName}`);
+                        return request.group?.creatorShortName === user.shortName;
+                    })
+                    .map((request: I_JoinRequest) => ({
+                        message: `Lời mời tham gia nhóm ${request.group?.id} từ người dùng ${request.user?.id}`,
+                        id: request.id,
+                    }));
+
+                console.log('Notifications sau khi xử lý:', this.notifications);
             })
-            .catch((error) => console.error('Error loading notifications:', error));
+            .catch((error) => {
+                console.error('Lỗi khi gọi API:', error);
+            });
     }
+
     setJoinRequestId(joinRequestId: string) {
         if (!joinRequestId) {
             console.error('joinRequestId is undefined or invalid.');
@@ -77,38 +94,27 @@ export class NavbarComponent {
 
     async acceptJoinRequest(joinRequestId: string) {
         if (!joinRequestId) {
-            this.errorMessage = 'Join request ID không tồn tại';
-            console.error(this.errorMessage);
+            this.notificationService.error('Join request ID không tồn tại');
+            console.error('Join request ID không tồn tại');
             return;
         }
 
         try {
-            const user = JSON.parse(localStorage.getItem('user') || '{}');
-            const user_id = user.user?.id;
-
-            if (!user || !user_id) {
-                this.errorMessage = 'Thông tin người dùng không tồn tại';
-                console.error(this.errorMessage);
-                return;
-            }
-
-            await this.groupQldaService.getGroupQldaRequest({
+            const response = await this.groupQldaService.getGroupQldaRequest({
                 joinRequestId: joinRequestId,
-                /* userId: user_id, */
             });
             this.notificationService.success('Đã chấp nhận yêu cầu tham gia');
-            console.log('API được gọi thành công');
+            window.location.reload();
         } catch (error) {
+            this.notificationService.error('Lỗi khi chấp nhận yêu cầu tham gia');
             console.error('Lỗi khi chấp nhận yêu cầu tham gia:', error);
-            this.errorMessage = 'Có lỗi xảy ra khi chấp nhận yêu cầu tham gia.';
         }
-        window.location.reload();
     }
 
     // Cập nhật các đường dẫn menu
-    updateMenuPaths() {
+    /* updateMenuPaths() {
         const isBuyer = this.user.userType === E_UserType.BUYER;
-
+    
         const pathsConfig = {
             buyer: {
                 path: '/purchase-order/buyer',
@@ -119,15 +125,15 @@ export class NavbarComponent {
                 activePaths: ['/purchase-order/supplier'],
             },
         };
-
+    
         const selectedPaths = isBuyer ? pathsConfig.buyer : pathsConfig.supplier;
-
+    
         this.menus = this.menus.map((menu) =>
             menu.label === 'navbar.order'
                 ? { ...menu, path: selectedPaths.path, activePaths: selectedPaths.activePaths }
                 : menu,
         );
-    }
+    } */
 
     isActive(paths: string[]): boolean {
         return paths.includes(this.router.url);

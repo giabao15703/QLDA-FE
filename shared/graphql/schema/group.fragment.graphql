@@ -3,7 +3,8 @@ fragment GroupQLDAInfo on GroupQLDANode {
     maNhom  # Mã nhóm
     name    # Tên nhóm
     status 
-    memberCount  # Trạng thái của nhóm (mở hoặc đóng)
+    memberCount
+    creatorShortName 
 }
 fragment JoinGroupInfo on JoinGroupNode {
     id
@@ -22,7 +23,7 @@ fragment JoinRequestInfo on JoinRequestNode {
         ...UserInfo
     }
     group{
-        ...GroupQLDAInfo
+        creatorShortName
     }
     isApproved
     createdAt

@@ -37,6 +37,7 @@ query getGroupQldaRequests(
                 }
                 group {
                     id
+                    creatorShortName
                 }
                 leaderUserId
             }
@@ -58,16 +59,16 @@ mutation getGroupQldaJoin($groupId: ID!, $userEmail: String!) {
         }
     }
 }
-mutation getGroupQldaRequest($joinRequestId: ID!) {
-    acceptJoinRequest(joinRequestId: $joinRequestId ) {
+mutation acceptJoinRequest($joinRequestId: ID!, $userId: ID) {
+    acceptJoinRequest(joinRequestId: $joinRequestId, userId: $userId) {
         status
         error {
             code
             message
         }
-        
     }
 }
+
 
 mutation createGroupQlda($input: GroupQLDAInput!, $userEmail: String!) {
     groupQldaCreate(input: $input, userEmail: $userEmail) {

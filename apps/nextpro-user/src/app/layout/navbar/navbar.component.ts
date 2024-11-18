@@ -45,8 +45,6 @@ export class NavbarComponent {
     }
 
     LoadNotifications() {
-        console.log('LoadNotifications() được gọi');
-
         const user = JSON.parse(localStorage.getItem('user') || '{}');
         console.log('Dữ liệu user từ localStorage:', user);
 

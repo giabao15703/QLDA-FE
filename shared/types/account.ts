@@ -459,7 +459,7 @@ export interface I_Admin {
     companyLongName?: string;
     companyShortName?: string;
     language?: I_Language;
-    role?: E_Role| AdminRole;
+    role?: E_Role | AdminRole;
 }
 
 export enum E_Role {

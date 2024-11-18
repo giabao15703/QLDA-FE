@@ -4,11 +4,14 @@ import { I_User } from './user';
 export interface I_DeTai {
     id?: string;
     idgvhuongdan?: I_Admin;
-    idgvphanbien?: I_Admin;
+    idgvphanbien?: I_Admin | null;
     tendoan?: string;
-    chuyenNganh?: string;
+    chuyennganh?: string;
     mota: string;
-    trangThai?: string;
-    yeuCau?: string;
+    trangthai?: string;
+    yeucau?: string;
     idKeHoach?: string;
+    giangVienLongName?: string;
+    keHoachDoAnId?: string;
+    giangVienPhanBienLongName?: string;
 }

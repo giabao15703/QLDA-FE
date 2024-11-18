@@ -184,10 +184,12 @@ export const getQueryVariables = ({
     variables,
     page = 1,
     pageSize = 10,
+    filter = {},
 }: {
     variables?: I_QueryVariables;
     page?: number;
     pageSize?: number;
+    filter?: Record<string, any>;
 }) => {
     const {
         pageIndex: pageIndexVariable,
@@ -210,6 +212,7 @@ export const getQueryVariables = ({
                   after: ((currentPage - 1) * currentPageSize - 1).toString(),
               }),
         ...(excludeIdList ? { excludeIdList } : {}),
+        ...filter,
     };
 };
 

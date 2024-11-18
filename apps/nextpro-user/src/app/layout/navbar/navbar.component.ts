@@ -100,7 +100,7 @@ export class NavbarComponent {
         }
 
         try {
-            const response = await this.groupQldaService.getGroupQldaRequest({
+            const response = await this.groupQldaService.acceptJoinRequest({
                 joinRequestId: joinRequestId,
             });
             this.notificationService.success('Đã chấp nhận yêu cầu tham gia');

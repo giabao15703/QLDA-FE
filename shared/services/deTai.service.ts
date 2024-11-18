@@ -8,6 +8,9 @@ import {
     GetDeTaisGQL,
     GetDeTaisQuery,
     GetDeTaisQueryVariables,
+    UpdateDeTaiGQL,
+    UpdateDeTaiMutation,
+    UpdateDeTaiMutationVariables,
 } from '#shared/graphql/types';
 import { E_Role, I_DeTai, I_GraphQLOptions, I_MutationResponse, I_NormalizeExtra, I_TableState } from '#shared/types';
 import { normalizeWithPagination } from '#shared/utils';
@@ -24,6 +27,7 @@ export class DeTaiService {
         private getDeTaisGQL: GetDeTaisGQL, // Hàm lấy danh sách DeTai
         private getDeTaiGQL: GetDeTaiGQL, // Hàm lấy chi tiết DeTai
         private createDeTaiGQL: CreateDeTaiGQL, // Hàm tạo DeTai
+        private updateDeTaiGQL: UpdateDeTaiGQL, // Hàm cập nhật danh sách DeTai
     ) {}
 
     get error(): Observable<string> {
@@ -60,10 +64,15 @@ export class DeTaiService {
                         ...data.deTai.idgvhuongdan,
                         role: data.deTai.idgvhuongdan.role as unknown as E_Role,
                     },
-                    idgvphanbien: {
-                        ...data.deTai.idgvphanbien,
-                        role: data.deTai.idgvphanbien.role as unknown as E_Role,
-                    },
+                    idgvphanbien: data.deTai.idgvphanbien
+                        ? {
+                              ...data.deTai.idgvphanbien,
+                              role: data.deTai.idgvphanbien.role as unknown as E_Role, // Ép kiểu
+                          }
+                        : null, // Nếu null, giữ nguyên null
+                    // Add new fields here
+                    // giangVienLongName: data.deTai.giangVienLongName,
+                    // giangVienPhanBienLongName: data.deTai.giangVienPhanBienLongName,
                 };
                 return deTai;
             },
@@ -81,5 +90,16 @@ export class DeTaiService {
             CreateDeTaiMutationVariables,
             { deTaiCreate: I_MutationResponse }
         >(this.createDeTaiGQL, variables, options);
+    };
+
+    updateDeTai = (
+        variables?: UpdateDeTaiMutationVariables,
+        options?: I_GraphQLOptions<UpdateDeTaiMutation, { deTaiUpdate: I_MutationResponse }>,
+    ) => {
+        return this.graphqlService.mutate<
+            UpdateDeTaiMutation,
+            UpdateDeTaiMutationVariables,
+            { deTaiUpdate: I_MutationResponse }
+        >(this.updateDeTaiGQL, variables, options);
     };
 }

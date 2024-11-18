@@ -11,9 +11,9 @@ import {
     GetGroupQldaJoinGQL, // <-- Import thêm mutation này
     GetGroupQldaJoinMutation,
     GetGroupQldaJoinMutationVariables,
-    GetGroupQldaRequestGQL,
-    GetGroupQldaRequestMutation,
-    GetGroupQldaRequestMutationVariables,
+    AcceptJoinRequestGQL,
+    AcceptJoinRequestMutation,
+    AcceptJoinRequestMutationVariables,
     GetGroupQldaRequestsGQL,
     GetGroupQldaRequestsQuery,
     GetGroupQldaRequestsQueryVariables,
@@ -35,7 +35,7 @@ export class GroupQLDAService {
         private getGroupQldaGQL: GetGroupQldaGQL, // Lấy chi tiết GroupQLDA
         private createGroupQldaGQL: CreateGroupQldaGQL, // Tạo GroupQLDA
         private getGroupQldaJoinGQL: GetGroupQldaJoinGQL,
-        private getGroupQldaRequestGQL: GetGroupQldaRequestGQL,
+        private acceptJoinRequestGQL: AcceptJoinRequestGQL,
         private getGroupQldaRequestsGQL: GetGroupQldaRequestsGQL,
     ) {}
 
@@ -103,15 +103,15 @@ export class GroupQLDAService {
             { groupQldaJoin: I_MutationResponse }
         >(this.getGroupQldaJoinGQL, variables, options);
     };
-    getGroupQldaRequest = (
-        variables?: GetGroupQldaRequestMutationVariables,
-        options?: I_GraphQLOptions<GetGroupQldaRequestMutation, { groupQldaRequest: I_MutationResponse }>,
+    acceptJoinRequest = (
+        variables?: AcceptJoinRequestMutationVariables,
+        options?: I_GraphQLOptions<AcceptJoinRequestMutation, { acceptJoinRequest: I_MutationResponse }>,
     ) => {
         return this.graphqlService.mutate<
-            GetGroupQldaRequestMutation,
-            GetGroupQldaRequestMutationVariables,
-            { groupQldaRequest: I_MutationResponse }
-        >(this.getGroupQldaRequestGQL, variables, options);
+            AcceptJoinRequestMutation,
+            AcceptJoinRequestMutationVariables,
+            { acceptJoinRequest: I_MutationResponse }
+        >(this.acceptJoinRequestGQL, variables, options);
     };
     private normalizeGroupQldaRequestList = (
         data: GetGroupQldaRequestsQuery,

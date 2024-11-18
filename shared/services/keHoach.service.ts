@@ -17,6 +17,9 @@ import {
     GetKeHoachsGQL,
     GetKeHoachsQuery,
     GetKeHoachsQueryVariables,
+    UpdateKeHoachGQL,
+    UpdateKeHoachMutation,
+    UpdateKeHoachMutationVariables,
 } from '#shared/graphql/types';
 import {
     I_DeTai,
@@ -43,6 +46,7 @@ export class KeHoachService {
         private getKeHoachsGQL: GetKeHoachsGQL,
         private getKeHoachGQL: GetKeHoachGQL,
         private createKeHoachGQL: CreateKeHoachGQL,
+        private updateKeHoachGQL: UpdateKeHoachGQL,
     ) {}
 
     get error(): Observable<string> {
@@ -91,4 +95,18 @@ export class KeHoachService {
             { createKeHoachDoAn: I_MutationResponse }
         >(this.createKeHoachGQL, variables, options);
     };
+
+    // Cập nhật một Đề Tài
+    updateKeHoach = (
+        variables?: UpdateKeHoachMutationVariables,
+        options?: I_GraphQLOptions<UpdateKeHoachMutation, { updateKeHoachDoAn: I_MutationResponse }>,
+    ) => {
+        return this.graphqlService.mutate<
+            UpdateKeHoachMutation,
+            UpdateKeHoachMutationVariables,
+            { updateKeHoachDoAn: I_MutationResponse }
+        >(this.updateKeHoachGQL, variables, options);
+    };
+
+    
 }

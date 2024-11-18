@@ -3523,12 +3523,11 @@ export type DeTaiCreate = {
 };
 
 export type DeTaiInput = {
-  idgvhuongdan: Scalars['ID']['input'];
   mota: Scalars['String']['input'];
   tendoan: Scalars['String']['input'];
 };
 
-export type DeTaiNode = Node & {
+export type DeTaiNode = CustomNode & {
   __typename?: 'DeTaiNode';
   chuyennganh?: Maybe<Scalars['String']['output']>;
   giangVienLongName?: Maybe<Scalars['String']['output']>;
@@ -4527,6 +4526,7 @@ export type GroupQldaNode = CustomNode & {
   id: Scalars['ID']['output'];
   joinGroups: JoinGroupNodeConnection;
   joinRequests: JoinRequestNodeConnection;
+  leaderUser?: Maybe<UserNode>;
   maNhom: Scalars['String']['output'];
   memberCount: Scalars['Int']['output'];
   name: Scalars['String']['output'];
@@ -6629,7 +6629,7 @@ export type MutationDeTaiCreateArgs = {
 
 
 export type MutationDeTaiUpdateArgs = {
-  id: Scalars['ID']['input'];
+  id: Scalars['String']['input'];
   input: DeTaiUpdateInput;
 };
 
@@ -7581,22 +7581,8 @@ export type MutationUnitOfMeasureUpdateStatusArgs = {
 
 
 export type MutationUpdateKeHoachDoAnArgs = {
-  id: Scalars['ID']['input'];
-  kyMo?: InputMaybe<Scalars['String']['input']>;
-  slDoAn?: InputMaybe<Scalars['Int']['input']>;
-  slSinhVien?: InputMaybe<Scalars['Int']['input']>;
-  tgbdChamHoiDong?: InputMaybe<Scalars['Date']['input']>;
-  tgbdChamPhanBien?: InputMaybe<Scalars['Date']['input']>;
-  tgbdDangKyDeTai?: InputMaybe<Scalars['Date']['input']>;
-  tgbdDoAn?: InputMaybe<Scalars['Date']['input']>;
-  tgbdLamDoAn?: InputMaybe<Scalars['Date']['input']>;
-  tgbdTaoDoAn?: InputMaybe<Scalars['Date']['input']>;
-  tgktChamHoiDong?: InputMaybe<Scalars['Date']['input']>;
-  tgktChamPhanBien?: InputMaybe<Scalars['Date']['input']>;
-  tgktDangKyDeTai?: InputMaybe<Scalars['Date']['input']>;
-  tgktDoAn?: InputMaybe<Scalars['Date']['input']>;
-  tgktLamDoAn?: InputMaybe<Scalars['Date']['input']>;
-  tgktTaoDoAn?: InputMaybe<Scalars['Date']['input']>;
+  id: Scalars['String']['input'];
+  input: KeHoachDoAnInput;
 };
 
 
@@ -15195,7 +15181,9 @@ export type UnitofMeasureUpdateStatus = {
 
 export type UpdateKeHoachDoAn = {
   __typename?: 'UpdateKeHoachDoAn';
+  error?: Maybe<Error>;
   keHoachDoAn?: Maybe<KeHoachDoAnNode>;
+  status?: Maybe<Scalars['Boolean']['output']>;
 };
 
 export type UserAdminUpdateInput = {
@@ -15563,6 +15551,7 @@ export type UserNode = CustomNode & {
   language: LanguageNode;
   lastLogin?: Maybe<Scalars['DateTime']['output']>;
   lastName?: Maybe<Scalars['String']['output']>;
+  ledGroups: GroupQldaNodeConnection;
   localTime: Scalars['String']['output'];
   modified: Scalars['DateTime']['output'];
   password: Scalars['String']['output'];
@@ -15726,6 +15715,16 @@ export type UserNodeJoinRequestsArgs = {
   isApproved?: InputMaybe<Scalars['Boolean']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   userId?: InputMaybe<Scalars['Float']['input']>;
+};
+
+
+export type UserNodeLedGroupsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  status?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 
@@ -16784,14 +16783,13 @@ export type UpdateCouponStatusMutationVariables = Exact<{
 
 export type UpdateCouponStatusMutation = { __typename?: 'Mutation', couponUpdateStatus?: { __typename?: 'CouponUpdateStatus', status?: boolean | null, error?: { __typename?: 'Error', code?: string | null, message?: string | null, field?: string | null } | null } | null };
 
-export type DeTaiInfoFragment = { __typename?: 'DeTaiNode', id: string, tendoan?: string | null, chuyennganh?: string | null, mota?: string | null, trangthai?: string | null, yeucau?: string | null, idgvhuongdan?: { __typename?: 'AdminNode', id: string, longName: string, email?: string | null, shortName?: string | null, fullName?: string | null, username?: string | null, userType?: number | null, created?: any | null, firstName?: string | null, lastName?: string | null, companyWebsite?: string | null, companyLongName?: string | null, companyShortName?: string | null, role: AdminRole, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, userspermissionSet: { __typename?: 'UsersPermissionNodeConnection', edges: Array<{ __typename?: 'UsersPermissionNodeEdge', node?: { __typename?: 'UsersPermissionNode', id: string, validFrom?: any | null, validTo?: any | null, status: number, pk?: number | null, permission: { __typename?: 'GroupPermissionNode', id: string, role: number, group?: { __typename?: 'GroupNode', id: string, name: string } | null } } | null } | null> }, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, language?: { __typename?: 'LanguageNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'LanguageTranslationNode', id: string, languageCode: string, name: string }> } | null } | null, idgvphanbien?: { __typename?: 'AdminNode', id: string, longName: string, email?: string | null, shortName?: string | null, fullName?: string | null, username?: string | null, userType?: number | null, created?: any | null, firstName?: string | null, lastName?: string | null, companyWebsite?: string | null, companyLongName?: string | null, companyShortName?: string | null, role: AdminRole, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, userspermissionSet: { __typename?: 'UsersPermissionNodeConnection', edges: Array<{ __typename?: 'UsersPermissionNodeEdge', node?: { __typename?: 'UsersPermissionNode', id: string, validFrom?: any | null, validTo?: any | null, status: number, pk?: number | null, permission: { __typename?: 'GroupPermissionNode', id: string, role: number, group?: { __typename?: 'GroupNode', id: string, name: string } | null } } | null } | null> }, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, language?: { __typename?: 'LanguageNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'LanguageTranslationNode', id: string, languageCode: string, name: string }> } | null } | null, idkehoach?: { __typename?: 'KeHoachDoAnNode', id: string, slSinhVien: number, slDoAn: number, kyMo: string, tgbdDoAn: any, tgktDoAn: any, tgbdTaoDoAn: any, tgktTaoDoAn: any, tgbdDangKyDeTai: any, tgktDangKyDeTai: any, tgbdLamDoAn: any, tgktLamDoAn: any, tgbdChamPhanBien: any, tgktChamPhanBien: any, tgbdChamHoiDong: any, tgktChamHoiDong: any } | null };
+export type DeTaiInfoFragment = { __typename?: 'DeTaiNode', id: string, tendoan?: string | null, chuyennganh?: string | null, mota?: string | null, trangthai?: string | null, yeucau?: string | null, giangVienLongName?: string | null, giangVienPhanBienLongName?: string | null, idgvhuongdan?: { __typename?: 'AdminNode', id: string, longName: string, email?: string | null, shortName?: string | null, fullName?: string | null, username?: string | null, userType?: number | null, created?: any | null, firstName?: string | null, lastName?: string | null, companyWebsite?: string | null, companyLongName?: string | null, companyShortName?: string | null, role: AdminRole, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, userspermissionSet: { __typename?: 'UsersPermissionNodeConnection', edges: Array<{ __typename?: 'UsersPermissionNodeEdge', node?: { __typename?: 'UsersPermissionNode', id: string, validFrom?: any | null, validTo?: any | null, status: number, pk?: number | null, permission: { __typename?: 'GroupPermissionNode', id: string, role: number, group?: { __typename?: 'GroupNode', id: string, name: string } | null } } | null } | null> }, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, language?: { __typename?: 'LanguageNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'LanguageTranslationNode', id: string, languageCode: string, name: string }> } | null } | null, idgvphanbien?: { __typename?: 'AdminNode', id: string, longName: string, email?: string | null, shortName?: string | null, fullName?: string | null, username?: string | null, userType?: number | null, created?: any | null, firstName?: string | null, lastName?: string | null, companyWebsite?: string | null, companyLongName?: string | null, companyShortName?: string | null, role: AdminRole, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, userspermissionSet: { __typename?: 'UsersPermissionNodeConnection', edges: Array<{ __typename?: 'UsersPermissionNodeEdge', node?: { __typename?: 'UsersPermissionNode', id: string, validFrom?: any | null, validTo?: any | null, status: number, pk?: number | null, permission: { __typename?: 'GroupPermissionNode', id: string, role: number, group?: { __typename?: 'GroupNode', id: string, name: string } | null } } | null } | null> }, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, language?: { __typename?: 'LanguageNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'LanguageTranslationNode', id: string, languageCode: string, name: string }> } | null } | null, idkehoach?: { __typename?: 'KeHoachDoAnNode', id: string, slSinhVien: number, slDoAn: number, kyMo: string, tgbdDoAn: any, tgktDoAn: any, tgbdTaoDoAn: any, tgktTaoDoAn: any, tgbdDangKyDeTai: any, tgktDangKyDeTai: any, tgbdLamDoAn: any, tgktLamDoAn: any, tgbdChamPhanBien: any, tgktChamPhanBien: any, tgbdChamHoiDong: any, tgktChamHoiDong: any } | null };
 
 export type GetDeTaisQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
   after?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
-  id?: InputMaybe<Scalars['String']['input']>;
   idgvhuongdan?: InputMaybe<Scalars['String']['input']>;
   idgvphanbien?: InputMaybe<Scalars['String']['input']>;
   idnhom?: InputMaybe<Scalars['String']['input']>;
@@ -16803,21 +16801,31 @@ export type GetDeTaisQueryVariables = Exact<{
 }>;
 
 
-export type GetDeTaisQuery = { __typename?: 'Query', deTais?: { __typename?: 'DeTaiNodeConnection', totalCount?: number | null, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'DeTaiNodeEdge', node?: { __typename?: 'DeTaiNode', id: string, tendoan?: string | null, chuyennganh?: string | null, mota?: string | null, trangthai?: string | null, yeucau?: string | null, idgvhuongdan?: { __typename?: 'AdminNode', id: string, longName: string, email?: string | null, shortName?: string | null, fullName?: string | null, username?: string | null, userType?: number | null, created?: any | null, firstName?: string | null, lastName?: string | null, companyWebsite?: string | null, companyLongName?: string | null, companyShortName?: string | null, role: AdminRole, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, userspermissionSet: { __typename?: 'UsersPermissionNodeConnection', edges: Array<{ __typename?: 'UsersPermissionNodeEdge', node?: { __typename?: 'UsersPermissionNode', id: string, validFrom?: any | null, validTo?: any | null, status: number, pk?: number | null, permission: { __typename?: 'GroupPermissionNode', id: string, role: number, group?: { __typename?: 'GroupNode', id: string, name: string } | null } } | null } | null> }, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, language?: { __typename?: 'LanguageNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'LanguageTranslationNode', id: string, languageCode: string, name: string }> } | null } | null, idgvphanbien?: { __typename?: 'AdminNode', id: string, longName: string, email?: string | null, shortName?: string | null, fullName?: string | null, username?: string | null, userType?: number | null, created?: any | null, firstName?: string | null, lastName?: string | null, companyWebsite?: string | null, companyLongName?: string | null, companyShortName?: string | null, role: AdminRole, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, userspermissionSet: { __typename?: 'UsersPermissionNodeConnection', edges: Array<{ __typename?: 'UsersPermissionNodeEdge', node?: { __typename?: 'UsersPermissionNode', id: string, validFrom?: any | null, validTo?: any | null, status: number, pk?: number | null, permission: { __typename?: 'GroupPermissionNode', id: string, role: number, group?: { __typename?: 'GroupNode', id: string, name: string } | null } } | null } | null> }, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, language?: { __typename?: 'LanguageNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'LanguageTranslationNode', id: string, languageCode: string, name: string }> } | null } | null, idkehoach?: { __typename?: 'KeHoachDoAnNode', id: string, slSinhVien: number, slDoAn: number, kyMo: string, tgbdDoAn: any, tgktDoAn: any, tgbdTaoDoAn: any, tgktTaoDoAn: any, tgbdDangKyDeTai: any, tgktDangKyDeTai: any, tgbdLamDoAn: any, tgktLamDoAn: any, tgbdChamPhanBien: any, tgktChamPhanBien: any, tgbdChamHoiDong: any, tgktChamHoiDong: any } | null } | null } | null> } | null };
+export type GetDeTaisQuery = { __typename?: 'Query', deTais?: { __typename?: 'DeTaiNodeConnection', totalCount?: number | null, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'DeTaiNodeEdge', node?: { __typename?: 'DeTaiNode', id: string, tendoan?: string | null, chuyennganh?: string | null, mota?: string | null, trangthai?: string | null, yeucau?: string | null, giangVienLongName?: string | null, giangVienPhanBienLongName?: string | null, idgvhuongdan?: { __typename?: 'AdminNode', id: string, longName: string, email?: string | null, shortName?: string | null, fullName?: string | null, username?: string | null, userType?: number | null, created?: any | null, firstName?: string | null, lastName?: string | null, companyWebsite?: string | null, companyLongName?: string | null, companyShortName?: string | null, role: AdminRole, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, userspermissionSet: { __typename?: 'UsersPermissionNodeConnection', edges: Array<{ __typename?: 'UsersPermissionNodeEdge', node?: { __typename?: 'UsersPermissionNode', id: string, validFrom?: any | null, validTo?: any | null, status: number, pk?: number | null, permission: { __typename?: 'GroupPermissionNode', id: string, role: number, group?: { __typename?: 'GroupNode', id: string, name: string } | null } } | null } | null> }, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, language?: { __typename?: 'LanguageNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'LanguageTranslationNode', id: string, languageCode: string, name: string }> } | null } | null, idgvphanbien?: { __typename?: 'AdminNode', id: string, longName: string, email?: string | null, shortName?: string | null, fullName?: string | null, username?: string | null, userType?: number | null, created?: any | null, firstName?: string | null, lastName?: string | null, companyWebsite?: string | null, companyLongName?: string | null, companyShortName?: string | null, role: AdminRole, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, userspermissionSet: { __typename?: 'UsersPermissionNodeConnection', edges: Array<{ __typename?: 'UsersPermissionNodeEdge', node?: { __typename?: 'UsersPermissionNode', id: string, validFrom?: any | null, validTo?: any | null, status: number, pk?: number | null, permission: { __typename?: 'GroupPermissionNode', id: string, role: number, group?: { __typename?: 'GroupNode', id: string, name: string } | null } } | null } | null> }, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, language?: { __typename?: 'LanguageNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'LanguageTranslationNode', id: string, languageCode: string, name: string }> } | null } | null, idkehoach?: { __typename?: 'KeHoachDoAnNode', id: string, slSinhVien: number, slDoAn: number, kyMo: string, tgbdDoAn: any, tgktDoAn: any, tgbdTaoDoAn: any, tgktTaoDoAn: any, tgbdDangKyDeTai: any, tgktDangKyDeTai: any, tgbdLamDoAn: any, tgktLamDoAn: any, tgbdChamPhanBien: any, tgktChamPhanBien: any, tgbdChamHoiDong: any, tgktChamHoiDong: any } | null } | null } | null> } | null };
 
 export type GetDeTaiQueryVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
 
 
-export type GetDeTaiQuery = { __typename?: 'Query', deTai?: { __typename?: 'DeTaiNode', id: string, tendoan?: string | null, chuyennganh?: string | null, mota?: string | null, trangthai?: string | null, yeucau?: string | null, idgvhuongdan?: { __typename?: 'AdminNode', id: string, longName: string, email?: string | null, shortName?: string | null, fullName?: string | null, username?: string | null, userType?: number | null, created?: any | null, firstName?: string | null, lastName?: string | null, companyWebsite?: string | null, companyLongName?: string | null, companyShortName?: string | null, role: AdminRole, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, userspermissionSet: { __typename?: 'UsersPermissionNodeConnection', edges: Array<{ __typename?: 'UsersPermissionNodeEdge', node?: { __typename?: 'UsersPermissionNode', id: string, validFrom?: any | null, validTo?: any | null, status: number, pk?: number | null, permission: { __typename?: 'GroupPermissionNode', id: string, role: number, group?: { __typename?: 'GroupNode', id: string, name: string } | null } } | null } | null> }, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, language?: { __typename?: 'LanguageNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'LanguageTranslationNode', id: string, languageCode: string, name: string }> } | null } | null, idgvphanbien?: { __typename?: 'AdminNode', id: string, longName: string, email?: string | null, shortName?: string | null, fullName?: string | null, username?: string | null, userType?: number | null, created?: any | null, firstName?: string | null, lastName?: string | null, companyWebsite?: string | null, companyLongName?: string | null, companyShortName?: string | null, role: AdminRole, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, userspermissionSet: { __typename?: 'UsersPermissionNodeConnection', edges: Array<{ __typename?: 'UsersPermissionNodeEdge', node?: { __typename?: 'UsersPermissionNode', id: string, validFrom?: any | null, validTo?: any | null, status: number, pk?: number | null, permission: { __typename?: 'GroupPermissionNode', id: string, role: number, group?: { __typename?: 'GroupNode', id: string, name: string } | null } } | null } | null> }, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, language?: { __typename?: 'LanguageNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'LanguageTranslationNode', id: string, languageCode: string, name: string }> } | null } | null, idkehoach?: { __typename?: 'KeHoachDoAnNode', id: string, slSinhVien: number, slDoAn: number, kyMo: string, tgbdDoAn: any, tgktDoAn: any, tgbdTaoDoAn: any, tgktTaoDoAn: any, tgbdDangKyDeTai: any, tgktDangKyDeTai: any, tgbdLamDoAn: any, tgktLamDoAn: any, tgbdChamPhanBien: any, tgktChamPhanBien: any, tgbdChamHoiDong: any, tgktChamHoiDong: any } | null } | null };
+export type GetDeTaiQuery = { __typename?: 'Query', deTai?: { __typename?: 'DeTaiNode', id: string, tendoan?: string | null, chuyennganh?: string | null, mota?: string | null, trangthai?: string | null, yeucau?: string | null, giangVienLongName?: string | null, giangVienPhanBienLongName?: string | null, idgvhuongdan?: { __typename?: 'AdminNode', id: string, longName: string, email?: string | null, shortName?: string | null, fullName?: string | null, username?: string | null, userType?: number | null, created?: any | null, firstName?: string | null, lastName?: string | null, companyWebsite?: string | null, companyLongName?: string | null, companyShortName?: string | null, role: AdminRole, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, userspermissionSet: { __typename?: 'UsersPermissionNodeConnection', edges: Array<{ __typename?: 'UsersPermissionNodeEdge', node?: { __typename?: 'UsersPermissionNode', id: string, validFrom?: any | null, validTo?: any | null, status: number, pk?: number | null, permission: { __typename?: 'GroupPermissionNode', id: string, role: number, group?: { __typename?: 'GroupNode', id: string, name: string } | null } } | null } | null> }, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, language?: { __typename?: 'LanguageNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'LanguageTranslationNode', id: string, languageCode: string, name: string }> } | null } | null, idgvphanbien?: { __typename?: 'AdminNode', id: string, longName: string, email?: string | null, shortName?: string | null, fullName?: string | null, username?: string | null, userType?: number | null, created?: any | null, firstName?: string | null, lastName?: string | null, companyWebsite?: string | null, companyLongName?: string | null, companyShortName?: string | null, role: AdminRole, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, userspermissionSet: { __typename?: 'UsersPermissionNodeConnection', edges: Array<{ __typename?: 'UsersPermissionNodeEdge', node?: { __typename?: 'UsersPermissionNode', id: string, validFrom?: any | null, validTo?: any | null, status: number, pk?: number | null, permission: { __typename?: 'GroupPermissionNode', id: string, role: number, group?: { __typename?: 'GroupNode', id: string, name: string } | null } } | null } | null> }, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, language?: { __typename?: 'LanguageNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'LanguageTranslationNode', id: string, languageCode: string, name: string }> } | null } | null, idkehoach?: { __typename?: 'KeHoachDoAnNode', id: string, slSinhVien: number, slDoAn: number, kyMo: string, tgbdDoAn: any, tgktDoAn: any, tgbdTaoDoAn: any, tgktTaoDoAn: any, tgbdDangKyDeTai: any, tgktDangKyDeTai: any, tgbdLamDoAn: any, tgktLamDoAn: any, tgbdChamPhanBien: any, tgktChamPhanBien: any, tgbdChamHoiDong: any, tgktChamHoiDong: any } | null } | null };
 
 export type CreateDeTaiMutationVariables = Exact<{
   input: DeTaiInput;
 }>;
 
 
-export type CreateDeTaiMutation = { __typename?: 'Mutation', deTaiCreate?: { __typename?: 'DeTaiCreate', status?: boolean | null, deTai?: { __typename?: 'DeTaiNode', id: string, tendoan?: string | null, chuyennganh?: string | null, mota?: string | null, trangthai?: string | null, yeucau?: string | null, idgvhuongdan?: { __typename?: 'AdminNode', id: string, longName: string, email?: string | null, shortName?: string | null, fullName?: string | null, username?: string | null, userType?: number | null, created?: any | null, firstName?: string | null, lastName?: string | null, companyWebsite?: string | null, companyLongName?: string | null, companyShortName?: string | null, role: AdminRole, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, userspermissionSet: { __typename?: 'UsersPermissionNodeConnection', edges: Array<{ __typename?: 'UsersPermissionNodeEdge', node?: { __typename?: 'UsersPermissionNode', id: string, validFrom?: any | null, validTo?: any | null, status: number, pk?: number | null, permission: { __typename?: 'GroupPermissionNode', id: string, role: number, group?: { __typename?: 'GroupNode', id: string, name: string } | null } } | null } | null> }, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, language?: { __typename?: 'LanguageNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'LanguageTranslationNode', id: string, languageCode: string, name: string }> } | null } | null, idgvphanbien?: { __typename?: 'AdminNode', id: string, longName: string, email?: string | null, shortName?: string | null, fullName?: string | null, username?: string | null, userType?: number | null, created?: any | null, firstName?: string | null, lastName?: string | null, companyWebsite?: string | null, companyLongName?: string | null, companyShortName?: string | null, role: AdminRole, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, userspermissionSet: { __typename?: 'UsersPermissionNodeConnection', edges: Array<{ __typename?: 'UsersPermissionNodeEdge', node?: { __typename?: 'UsersPermissionNode', id: string, validFrom?: any | null, validTo?: any | null, status: number, pk?: number | null, permission: { __typename?: 'GroupPermissionNode', id: string, role: number, group?: { __typename?: 'GroupNode', id: string, name: string } | null } } | null } | null> }, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, language?: { __typename?: 'LanguageNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'LanguageTranslationNode', id: string, languageCode: string, name: string }> } | null } | null, idkehoach?: { __typename?: 'KeHoachDoAnNode', id: string, slSinhVien: number, slDoAn: number, kyMo: string, tgbdDoAn: any, tgktDoAn: any, tgbdTaoDoAn: any, tgktTaoDoAn: any, tgbdDangKyDeTai: any, tgktDangKyDeTai: any, tgbdLamDoAn: any, tgktLamDoAn: any, tgbdChamPhanBien: any, tgktChamPhanBien: any, tgbdChamHoiDong: any, tgktChamHoiDong: any } | null } | null, error?: { __typename?: 'Error', code?: string | null, message?: string | null, field?: string | null } | null } | null };
+export type CreateDeTaiMutation = { __typename?: 'Mutation', deTaiCreate?: { __typename?: 'DeTaiCreate', status?: boolean | null, deTai?: { __typename?: 'DeTaiNode', id: string, tendoan?: string | null, chuyennganh?: string | null, mota?: string | null, trangthai?: string | null, yeucau?: string | null, giangVienLongName?: string | null, giangVienPhanBienLongName?: string | null, idgvhuongdan?: { __typename?: 'AdminNode', id: string, longName: string, email?: string | null, shortName?: string | null, fullName?: string | null, username?: string | null, userType?: number | null, created?: any | null, firstName?: string | null, lastName?: string | null, companyWebsite?: string | null, companyLongName?: string | null, companyShortName?: string | null, role: AdminRole, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, userspermissionSet: { __typename?: 'UsersPermissionNodeConnection', edges: Array<{ __typename?: 'UsersPermissionNodeEdge', node?: { __typename?: 'UsersPermissionNode', id: string, validFrom?: any | null, validTo?: any | null, status: number, pk?: number | null, permission: { __typename?: 'GroupPermissionNode', id: string, role: number, group?: { __typename?: 'GroupNode', id: string, name: string } | null } } | null } | null> }, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, language?: { __typename?: 'LanguageNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'LanguageTranslationNode', id: string, languageCode: string, name: string }> } | null } | null, idgvphanbien?: { __typename?: 'AdminNode', id: string, longName: string, email?: string | null, shortName?: string | null, fullName?: string | null, username?: string | null, userType?: number | null, created?: any | null, firstName?: string | null, lastName?: string | null, companyWebsite?: string | null, companyLongName?: string | null, companyShortName?: string | null, role: AdminRole, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, userspermissionSet: { __typename?: 'UsersPermissionNodeConnection', edges: Array<{ __typename?: 'UsersPermissionNodeEdge', node?: { __typename?: 'UsersPermissionNode', id: string, validFrom?: any | null, validTo?: any | null, status: number, pk?: number | null, permission: { __typename?: 'GroupPermissionNode', id: string, role: number, group?: { __typename?: 'GroupNode', id: string, name: string } | null } } | null } | null> }, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, language?: { __typename?: 'LanguageNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'LanguageTranslationNode', id: string, languageCode: string, name: string }> } | null } | null, idkehoach?: { __typename?: 'KeHoachDoAnNode', id: string, slSinhVien: number, slDoAn: number, kyMo: string, tgbdDoAn: any, tgktDoAn: any, tgbdTaoDoAn: any, tgktTaoDoAn: any, tgbdDangKyDeTai: any, tgktDangKyDeTai: any, tgbdLamDoAn: any, tgktLamDoAn: any, tgbdChamPhanBien: any, tgktChamPhanBien: any, tgbdChamHoiDong: any, tgktChamHoiDong: any } | null } | null, error?: { __typename?: 'Error', code?: string | null, message?: string | null, field?: string | null } | null } | null };
+
+export type UpdateDeTaiMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+  input: DeTaiUpdateInput;
+}>;
+
+
+export type UpdateDeTaiMutation = { __typename?: 'Mutation', deTaiUpdate?: { __typename?: 'DeTaiUpdate', status?: boolean | null, deTai?: { __typename?: 'DeTaiNode', id: string, tendoan?: string | null, chuyennganh?: string | null, mota?: string | null, trangthai?: string | null, yeucau?: string | null, giangVienLongName?: string | null, giangVienPhanBienLongName?: string | null, idgvhuongdan?: { __typename?: 'AdminNode', id: string, longName: string, email?: string | null, shortName?: string | null, fullName?: string | null, username?: string | null, userType?: number | null, created?: any | null, firstName?: string | null, lastName?: string | null, companyWebsite?: string | null, companyLongName?: string | null, companyShortName?: string | null, role: AdminRole, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, userspermissionSet: { __typename?: 'UsersPermissionNodeConnection', edges: Array<{ __typename?: 'UsersPermissionNodeEdge', node?: { __typename?: 'UsersPermissionNode', id: string, validFrom?: any | null, validTo?: any | null, status: number, pk?: number | null, permission: { __typename?: 'GroupPermissionNode', id: string, role: number, group?: { __typename?: 'GroupNode', id: string, name: string } | null } } | null } | null> }, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, language?: { __typename?: 'LanguageNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'LanguageTranslationNode', id: string, languageCode: string, name: string }> } | null } | null, idgvphanbien?: { __typename?: 'AdminNode', id: string, longName: string, email?: string | null, shortName?: string | null, fullName?: string | null, username?: string | null, userType?: number | null, created?: any | null, firstName?: string | null, lastName?: string | null, companyWebsite?: string | null, companyLongName?: string | null, companyShortName?: string | null, role: AdminRole, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, userspermissionSet: { __typename?: 'UsersPermissionNodeConnection', edges: Array<{ __typename?: 'UsersPermissionNodeEdge', node?: { __typename?: 'UsersPermissionNode', id: string, validFrom?: any | null, validTo?: any | null, status: number, pk?: number | null, permission: { __typename?: 'GroupPermissionNode', id: string, role: number, group?: { __typename?: 'GroupNode', id: string, name: string } | null } } | null } | null> }, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, language?: { __typename?: 'LanguageNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'LanguageTranslationNode', id: string, languageCode: string, name: string }> } | null } | null, idkehoach?: { __typename?: 'KeHoachDoAnNode', id: string, slSinhVien: number, slDoAn: number, kyMo: string, tgbdDoAn: any, tgktDoAn: any, tgbdTaoDoAn: any, tgktTaoDoAn: any, tgbdDangKyDeTai: any, tgktDangKyDeTai: any, tgbdLamDoAn: any, tgktLamDoAn: any, tgbdChamPhanBien: any, tgktChamPhanBien: any, tgbdChamHoiDong: any, tgktChamHoiDong: any } | null } | null, error?: { __typename?: 'Error', code?: string | null, message?: string | null, field?: string | null } | null } | null };
+
+export type DeTaiInfoDuplicateFragment = { __typename?: 'DeTaiNode', id: string, tendoan?: string | null, chuyennganh?: string | null, mota?: string | null, trangthai?: string | null, yeucau?: string | null, giangVienLongName?: string | null, giangVienPhanBienLongName?: string | null, idgvhuongdan?: { __typename?: 'AdminNode', id: string, longName: string, email?: string | null, shortName?: string | null, fullName?: string | null, username?: string | null, userType?: number | null, created?: any | null, firstName?: string | null, lastName?: string | null, companyWebsite?: string | null, companyLongName?: string | null, companyShortName?: string | null, role: AdminRole, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, userspermissionSet: { __typename?: 'UsersPermissionNodeConnection', edges: Array<{ __typename?: 'UsersPermissionNodeEdge', node?: { __typename?: 'UsersPermissionNode', id: string, validFrom?: any | null, validTo?: any | null, status: number, pk?: number | null, permission: { __typename?: 'GroupPermissionNode', id: string, role: number, group?: { __typename?: 'GroupNode', id: string, name: string } | null } } | null } | null> }, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, language?: { __typename?: 'LanguageNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'LanguageTranslationNode', id: string, languageCode: string, name: string }> } | null } | null, idgvphanbien?: { __typename?: 'AdminNode', id: string, longName: string, email?: string | null, shortName?: string | null, fullName?: string | null, username?: string | null, userType?: number | null, created?: any | null, firstName?: string | null, lastName?: string | null, companyWebsite?: string | null, companyLongName?: string | null, companyShortName?: string | null, role: AdminRole, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, userspermissionSet: { __typename?: 'UsersPermissionNodeConnection', edges: Array<{ __typename?: 'UsersPermissionNodeEdge', node?: { __typename?: 'UsersPermissionNode', id: string, validFrom?: any | null, validTo?: any | null, status: number, pk?: number | null, permission: { __typename?: 'GroupPermissionNode', id: string, role: number, group?: { __typename?: 'GroupNode', id: string, name: string } | null } } | null } | null> }, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, language?: { __typename?: 'LanguageNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'LanguageTranslationNode', id: string, languageCode: string, name: string }> } | null } | null, idkehoach?: { __typename?: 'KeHoachDoAnNode', id: string, slSinhVien: number, slDoAn: number, kyMo: string, tgbdDoAn: any, tgktDoAn: any, tgbdTaoDoAn: any, tgktTaoDoAn: any, tgbdDangKyDeTai: any, tgktDangKyDeTai: any, tgbdLamDoAn: any, tgktLamDoAn: any, tgbdChamPhanBien: any, tgktChamPhanBien: any, tgbdChamHoiDong: any, tgktChamHoiDong: any } | null };
 
 export type ShippingFeeInfoFragment = { __typename?: 'ShippingFeeNode', id: string, weight: number, fee: number, status: boolean, pickUpCity: { __typename?: 'CountryStateNode', id: string, name: string, stateCode: string, status?: boolean | null, country: { __typename?: 'CountryNode', id: string, itemCode: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'CountryTranslationNode', id: string, languageCode: string, name: string }> }, translations: Array<{ __typename?: 'CountryStateTranslationNode', id: string, languageCode: string, name: string }> }, destinationCity: { __typename?: 'CountryStateNode', id: string, name: string, stateCode: string, status?: boolean | null, country: { __typename?: 'CountryNode', id: string, itemCode: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'CountryTranslationNode', id: string, languageCode: string, name: string }> }, translations: Array<{ __typename?: 'CountryStateTranslationNode', id: string, languageCode: string, name: string }> } };
 
@@ -17043,12 +17051,12 @@ export type GetGroupQldaJoinMutationVariables = Exact<{
 
 export type GetGroupQldaJoinMutation = { __typename?: 'Mutation', groupQldaJoin?: { __typename?: 'GroupQLDAJoin', status?: boolean | null, error?: { __typename?: 'Error', code?: string | null, message?: string | null } | null } | null };
 
-export type GetGroupQldaRequestMutationVariables = Exact<{
+export type AcceptJoinRequestMutationVariables = Exact<{
   joinRequestId: Scalars['ID']['input'];
 }>;
 
 
-export type GetGroupQldaRequestMutation = { __typename?: 'Mutation', acceptJoinRequest?: { __typename?: 'AcceptJoinRequest', status?: boolean | null, error?: { __typename?: 'Error', code?: string | null, message?: string | null } | null } | null };
+export type AcceptJoinRequestMutation = { __typename?: 'Mutation', acceptJoinRequest?: { __typename?: 'AcceptJoinRequest', status?: boolean | null, error?: { __typename?: 'Error', code?: string | null, message?: string | null } | null } | null };
 
 export type CreateGroupQldaMutationVariables = Exact<{
   input: GroupQldaInput;
@@ -17087,6 +17095,14 @@ export type CreateKeHoachMutationVariables = Exact<{
 
 
 export type CreateKeHoachMutation = { __typename?: 'Mutation', createKeHoachDoAn?: { __typename?: 'CreateKeHoachDoAn', status?: boolean | null, keHoachDoAn?: { __typename?: 'KeHoachDoAnNode', id: string, slSinhVien: number, slDoAn: number, kyMo: string, tgbdDoAn: any, tgktDoAn: any, tgbdTaoDoAn: any, tgktTaoDoAn: any, tgbdDangKyDeTai: any, tgktDangKyDeTai: any, tgbdLamDoAn: any, tgktLamDoAn: any, tgbdChamPhanBien: any, tgktChamPhanBien: any, tgbdChamHoiDong: any, tgktChamHoiDong: any } | null, error?: { __typename?: 'Error', code?: string | null, message?: string | null, field?: string | null } | null } | null };
+
+export type UpdateKeHoachMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+  input: KeHoachDoAnInput;
+}>;
+
+
+export type UpdateKeHoachMutation = { __typename?: 'Mutation', updateKeHoachDoAn?: { __typename?: 'UpdateKeHoachDoAn', status?: boolean | null, keHoachDoAn?: { __typename?: 'KeHoachDoAnNode', id: string, slSinhVien: number, slDoAn: number, kyMo: string, tgbdDoAn: any, tgktDoAn: any, tgbdTaoDoAn: any, tgktTaoDoAn: any, tgbdDangKyDeTai: any, tgktDangKyDeTai: any, tgbdLamDoAn: any, tgktLamDoAn: any, tgbdChamPhanBien: any, tgktChamPhanBien: any, tgbdChamHoiDong: any, tgktChamHoiDong: any } | null, error?: { __typename?: 'Error', code?: string | null, message?: string | null, field?: string | null } | null } | null };
 
 export type CountryInfoFragment = { __typename?: 'CountryNode', id: string, itemCode: string, name: string, status?: boolean | null, translations: Array<{ __typename?: 'CountryTranslationNode', id: string, languageCode: string, name: string }> };
 
@@ -20134,6 +20150,30 @@ export const DeTaiInfoFragmentDoc = gql`
   idkehoach {
     ...KeHoachInfo
   }
+  giangVienLongName
+  giangVienPhanBienLongName
+}
+    ${AdminInfoFragmentDoc}
+${KeHoachInfoFragmentDoc}`;
+export const DeTaiInfoDuplicateFragmentDoc = gql`
+    fragment DeTaiInfoDuplicate on DeTaiNode {
+  id
+  idgvhuongdan {
+    ...AdminInfo
+  }
+  idgvphanbien {
+    ...AdminInfo
+  }
+  tendoan
+  chuyennganh
+  mota
+  trangthai
+  yeucau
+  idkehoach {
+    ...KeHoachInfo
+  }
+  giangVienLongName
+  giangVienPhanBienLongName
 }
     ${AdminInfoFragmentDoc}
 ${KeHoachInfoFragmentDoc}`;
@@ -22783,13 +22823,12 @@ export const UpdateCouponStatusDocument = gql`
     }
   }
 export const GetDeTaisDocument = gql`
-    query getDeTais($before: String, $after: String, $first: Int, $last: Int, $id: String, $idgvhuongdan: String, $idgvphanbien: String, $idnhom: String, $madoan: String, $chuyennganh: String, $tendoan: String, $trangthai: String, $idkehoach: String) {
+    query getDeTais($before: String, $after: String, $first: Int, $last: Int, $idgvhuongdan: String, $idgvphanbien: String, $idnhom: String, $madoan: String, $chuyennganh: String, $tendoan: String, $trangthai: String, $idkehoach: String) {
   deTais(
     before: $before
     after: $after
     first: $first
     last: $last
-    id: $id
     idgvhuongdan: $idgvhuongdan
     idgvphanbien: $idgvphanbien
     idnhom: $idnhom
@@ -22861,6 +22900,31 @@ ${ErrorInfoFragmentDoc}`;
   })
   export class CreateDeTaiGQL extends Apollo.Mutation<CreateDeTaiMutation, CreateDeTaiMutationVariables> {
     override document = CreateDeTaiDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const UpdateDeTaiDocument = gql`
+    mutation updateDeTai($id: String!, $input: DeTaiUpdateInput!) {
+  deTaiUpdate(id: $id, input: $input) {
+    status
+    deTai {
+      ...DeTaiInfo
+    }
+    error {
+      ...ErrorInfo
+    }
+  }
+}
+    ${DeTaiInfoFragmentDoc}
+${ErrorInfoFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class UpdateDeTaiGQL extends Apollo.Mutation<UpdateDeTaiMutation, UpdateDeTaiMutationVariables> {
+    override document = UpdateDeTaiDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
@@ -23430,8 +23494,8 @@ export const GetGroupQldaJoinDocument = gql`
       super(apollo);
     }
   }
-export const GetGroupQldaRequestDocument = gql`
-    mutation getGroupQldaRequest($joinRequestId: ID!) {
+export const AcceptJoinRequestDocument = gql`
+    mutation acceptJoinRequest($joinRequestId: ID!) {
   acceptJoinRequest(joinRequestId: $joinRequestId) {
     status
     error {
@@ -23445,8 +23509,8 @@ export const GetGroupQldaRequestDocument = gql`
   @Injectable({
     providedIn: 'root'
   })
-  export class GetGroupQldaRequestGQL extends Apollo.Mutation<GetGroupQldaRequestMutation, GetGroupQldaRequestMutationVariables> {
-    override document = GetGroupQldaRequestDocument;
+  export class AcceptJoinRequestGQL extends Apollo.Mutation<AcceptJoinRequestMutation, AcceptJoinRequestMutationVariables> {
+    override document = AcceptJoinRequestDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
@@ -23551,6 +23615,31 @@ ${ErrorInfoFragmentDoc}`;
   })
   export class CreateKeHoachGQL extends Apollo.Mutation<CreateKeHoachMutation, CreateKeHoachMutationVariables> {
     override document = CreateKeHoachDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const UpdateKeHoachDocument = gql`
+    mutation updateKeHoach($id: String!, $input: KeHoachDoAnInput!) {
+  updateKeHoachDoAn(id: $id, input: $input) {
+    status
+    keHoachDoAn {
+      ...KeHoachInfo
+    }
+    error {
+      ...ErrorInfo
+    }
+  }
+}
+    ${KeHoachInfoFragmentDoc}
+${ErrorInfoFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class UpdateKeHoachGQL extends Apollo.Mutation<UpdateKeHoachMutation, UpdateKeHoachMutationVariables> {
+    override document = UpdateKeHoachDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

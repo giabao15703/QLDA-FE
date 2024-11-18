@@ -49,3 +49,15 @@ mutation createKeHoach($input: KeHoachDoAnInput!) {
         }
     }
 }
+
+mutation updateKeHoach($id: String!, $input: KeHoachDoAnInput!) {
+    updateKeHoachDoAn(id: $id, input: $input) {
+        status
+        keHoachDoAn {
+            ...KeHoachInfo
+        }
+        error{
+            ...ErrorInfo
+        }
+    }
+}

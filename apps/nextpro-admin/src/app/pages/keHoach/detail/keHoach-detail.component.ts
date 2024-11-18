@@ -18,7 +18,7 @@ import {
     AccountService,
 } from '#shared/services';
 import { E_FieldType, E_Form_Mode, I_Coupon, I_KeHoach, I_User } from '#shared/types'; // Đổi sang I_KeHoach
-import { formatDate } from '#shared/utils';
+import { formatDate, toPythonDate } from '#shared/utils';
 
 const FORM_NAME = 'FORM_ADMIN_KEHOACH'; // Đổi tên form
 
@@ -188,21 +188,21 @@ export class KeHoachDetailComponent {
         this.form.submit(async (values) => {
             const variables = {
                 input: {
-                    slSinhVien: values.slSinhVien,
-                    slDoAn: values.slDoAn,
+                    slSinhVien: parseInt(values.slSinhVien.toString(), 10),
+                    slDoAn: parseInt(values.slDoAn.toString(), 10),
                     kyMo: values.kyMo,
-                    tgbdDoAn: new Date(values.tgbdDoAn),
-                    tgktDoAn: new Date(values.tgktDoAn),
-                    tgbdTaoDoAn: new Date(values.tgbdTaoDoAn),
-                    tgktTaoDoAn: new Date(values.tgktTaoDoAn),
-                    tgbdDangKyDeTai: new Date(values.tgbdDangKyDeTai),
-                    tgktDangKyDeTai: new Date(values.tgktDangKyDeTai),
-                    tgbdLamDoAn: new Date(values.tgbdLamDoAn),
-                    tgktLamDoAn: new Date(values.tgktLamDoAn),
-                    tgbdChamPhanBien: new Date(values.tgbdChamPhanBien),
-                    tgktChamPhanBien: new Date(values.tgktChamPhanBien),
-                    tgbdChamHoiDong: new Date(values.tgbdChamHoiDong),
-                    tgktChamHoiDong: new Date(values.tgktChamHoiDong),
+                    tgbdDoAn: toPythonDate(values.tgbdDoAn),
+                    tgktDoAn: toPythonDate(values.tgktDoAn),
+                    tgbdTaoDoAn: toPythonDate(values.tgbdTaoDoAn),
+                    tgktTaoDoAn: toPythonDate(values.tgktTaoDoAn),
+                    tgbdDangKyDeTai: toPythonDate(values.tgbdDangKyDeTai),
+                    tgktDangKyDeTai: toPythonDate(values.tgktDangKyDeTai),
+                    tgbdLamDoAn: toPythonDate(values.tgbdLamDoAn),
+                    tgktLamDoAn: toPythonDate(values.tgktLamDoAn),
+                    tgbdChamPhanBien: toPythonDate(values.tgbdChamPhanBien),
+                    tgktChamPhanBien: toPythonDate(values.tgktChamPhanBien),
+                    tgbdChamHoiDong: toPythonDate(values.tgbdChamHoiDong),
+                    tgktChamHoiDong: toPythonDate(values.tgktChamHoiDong),
                 },
             };
 
@@ -215,9 +215,22 @@ export class KeHoachDetailComponent {
 
                 if (createKeHoachDoAn.status) {
                     this.localStorageService.remove(FORM_NAME);
-                    this.notificationService.success('notification.createSuccessfully');
+                    this.notificationService.success('notification.createSuccessfully');this.onCloseDrawer();
                 } else {
                     this.notificationService.error(createKeHoachDoAn.error?.message);
+                }
+            } else {
+                const { updateKeHoachDoAn } = await this.keHoachService.updateKeHoach({
+                    id: this.data.id,
+                    input: variables.input,
+                });
+
+                if (updateKeHoachDoAn.status) {
+                    this.localStorageService.remove(FORM_NAME);
+                    this.notificationService.success('notification.updateSuccessfully');
+                    this.onCloseDrawer();
+                } else {
+                    this.notificationService.error(updateKeHoachDoAn.error?.message);
                 }
             }
 

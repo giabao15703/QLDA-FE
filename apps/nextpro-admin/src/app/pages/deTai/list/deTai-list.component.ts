@@ -80,6 +80,11 @@ export class DeTaiListPage {
                 label: 'Tên đề tài', // Thay đổi label phù hợp
             },
             {
+                sort: 'giangVienLongName',
+                name: 'giangVienLongName',
+                label: 'Giảng viên phụ trách',
+            },
+            {
                 sort: 'mota', // Sử dụng moTa để sort
                 name: 'mota', // Đổi name thành moTa
                 label: 'Mô tả', // Thay đổi label phù hợp
@@ -108,6 +113,7 @@ export class DeTaiListPage {
                     }
                 },
             },
+
             {
                 cellStyle: { width: '50px' },
                 sticky: 'right',
@@ -140,13 +146,17 @@ export class DeTaiListPage {
     }
 
     getDeTai = async (hash?: string) => {
-        this.detail = await this.routeService.getDetail({
-            hash,
-            detail: ({ id }) =>
-                this.deTaiService.getDeTai({
-                    id,
-                }),
-        });
+        try {
+            this.detail = await this.routeService.getDetail({
+                hash,
+                detail: async ({ id }) => {
+                    const deTai = await this.deTaiService.getDeTai({ id });
+                    return deTai;
+                },
+            });
+        } catch (error) {
+            console.error('Error fetching deTai:', error);
+        }
     };
 
     getDeTais = async (variables?: I_QueryVariables) => {

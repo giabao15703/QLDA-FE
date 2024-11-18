@@ -1,14 +1,3 @@
-# fragment DeTaiInfo on DeTaiNode {
-#     id
-#     id{
-#         ...UserInfo
-#     }
-#     tenDeTai
-#     moTa
-#     giangVienFullName
-# }
-
-
 fragment DeTaiInfo on DeTaiNode {
     id
     idgvhuongdan{
@@ -25,4 +14,6 @@ fragment DeTaiInfo on DeTaiNode {
     idkehoach{
         ...KeHoachInfo
     }
+    giangVienLongName
+    giangVienPhanBienLongName
 }

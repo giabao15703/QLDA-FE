@@ -61,13 +61,19 @@ export class DeTaiDetailComponent {
             {
                 label: 'Trạng thái',
                 name: 'trangthai',
+                fieldType: E_FieldType.SELECT,
                 options: [
                     { label: 'Đang chờ duyệt', value: '0' },
                     { label: 'Đã duyệt', value: '1' },
                     { label: 'Đã huỷ', value: '2' },
                     { label: 'Yêu cầu chỉnh sửa', value: '3' },
                 ],
-                disabled: true,
+                disabled: JSON.parse(localStorage.getItem('user')).role === 1,
+            },
+            {
+                label: 'Yêu cầu',
+                name: 'yeucau',
+                disabled: JSON.parse(localStorage.getItem('user')).role !== 1,
             },
         ];
     }
@@ -88,17 +94,17 @@ export class DeTaiDetailComponent {
     ngOnChanges(changes) {
         if (changes?.mode?.currentValue === E_Form_Mode.CREATE) {
             this.form.reset();
-        } else {
-            if (this.data) {
-                const deTaiDetail = this.data;
-
-                this.form.patchValue({
-                    tenDeTai: deTaiDetail.tendoan,
-                    moTa: deTaiDetail.mota || '',
-                });
-            }
+        } else if (this.data) {
+            const deTaiDetail = this.data;
+            this.form.patchValue({
+                tendoan: deTaiDetail.tendoan,
+                mota: deTaiDetail.mota || '',
+                trangthai: deTaiDetail.trangthai,
+                yeucau: deTaiDetail.yeucau,
+            });
         }
     }
+
 
     handleSave = async () => {
         this.form.submit(async (values) => {
@@ -107,7 +113,6 @@ export class DeTaiDetailComponent {
 
             const variables = {
                 input: {
-                    idgvhuongdan: idgvhuongdan, // Gửi idgvhuongdan từ BE
                     tendoan: values.tendoan,
                     mota: values.mota,
                 },
@@ -123,6 +128,26 @@ export class DeTaiDetailComponent {
                     this.notificationService.success('notification.createSuccessfully');
                 } else {
                     this.notificationService.error(deTaiCreate.error?.message);
+                }
+            
+            }
+            
+            else {
+                const { deTaiUpdate } = await this.deTaiService.updateDeTai({
+                    id: this.data.id,
+                    input: {
+                        tendoan: values.tendoan,
+                        mota: values.mota,
+                        trangthai: values.trangthai,
+                        yeucau: values.yeucau,
+                    }
+                });
+                if (deTaiUpdate.status) {
+                    this.localStorageService.remove(FORM_NAME);
+                    this.notificationService.success('notification.updateSuccessfully');
+                    this.onCloseDrawer();
+                } else {
+                    this.notificationService.error(deTaiUpdate.error?.message);
                 }
             }
 

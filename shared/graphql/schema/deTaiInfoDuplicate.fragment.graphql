@@ -1,0 +1,19 @@
+fragment DeTaiInfoDuplicate on DeTaiNode {
+    id
+    idgvhuongdan{
+        ...AdminInfo
+    }
+    idgvphanbien{
+        ...AdminInfo
+    }
+    tendoan
+    chuyennganh
+    mota
+    trangthai
+    yeucau
+    idkehoach{
+        ...KeHoachInfo
+    }
+    giangVienLongName
+    giangVienPhanBienLongName
+}

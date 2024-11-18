@@ -11,6 +11,8 @@ query getGroupQldas($before: String, $after: String, $first: Int, $last: Int, $n
         }
     }
 }
+
+
 query getGroupQldaRequests(
     $before: String
     $after: String
@@ -44,6 +46,7 @@ query getGroupQldaRequests(
         }
     }
 }
+
 query getGroupQlda($id: ID!) {
     groupQlda(id: $id) {
         ...GroupQLDAInfo
@@ -59,8 +62,8 @@ mutation getGroupQldaJoin($groupId: ID!, $userEmail: String!) {
         }
     }
 }
-mutation acceptJoinRequest($joinRequestId: ID!, $userId: ID) {
-    acceptJoinRequest(joinRequestId: $joinRequestId, userId: $userId) {
+mutation acceptJoinRequest($joinRequestId: ID!) {
+    acceptJoinRequest(joinRequestId: $joinRequestId) {
         status
         error {
             code

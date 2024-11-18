@@ -3,7 +3,6 @@ query getDeTais(
     $after: String
     $first: Int
     $last: Int
-    $id: String
     $idgvhuongdan: String
     $idgvphanbien: String
     $idnhom: String
@@ -18,7 +17,6 @@ query getDeTais(
         after: $after
         first: $first
         last: $last
-        id: $id
         idgvhuongdan: $idgvhuongdan
         idgvphanbien: $idgvphanbien
         idnhom: $idnhom
@@ -38,14 +36,13 @@ query getDeTais(
             }
         }
     }
-}  
+}
 
 query getDeTai($id: ID!) {
     deTai(id: $id) {
         ...DeTaiInfo
     }
 }
-
 
 mutation createDeTai($input: DeTaiInput!) {
     deTaiCreate(input: $input) {
@@ -58,3 +55,16 @@ mutation createDeTai($input: DeTaiInput!) {
         }
     }
 }
+
+mutation updateDeTai($id: String!, $input: DeTaiUpdateInput!) {
+    deTaiUpdate(id: $id, input: $input) {
+        status
+        deTai {
+            ...DeTaiInfo
+        }
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+

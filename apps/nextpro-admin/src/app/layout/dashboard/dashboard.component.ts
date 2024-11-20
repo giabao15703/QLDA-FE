@@ -56,6 +56,7 @@ export class LayoutDashboard {
 
         // Kiểm tra nếu role của admin là trưởng khoa
         const isTruongKhoa = adminRole === E_Role.A_1;
+        const isGiaoVu = adminRole === E_Role.A_2;
         const isGiangVien = adminRole === E_Role.A_3;
 
         // Khởi tạo menuData với điều kiện hiển thị dựa trên role
@@ -100,6 +101,26 @@ export class LayoutDashboard {
                           name: 'Đề Tài',
                           icon: '/assets/icons/setting-3-svgrepo-com.svg',
                           href: '/admin/deTai',
+                      },
+                  ]
+                : []),
+            ...(isGiaoVu
+                ? [
+                      {
+                          name: 'Account',
+                          icon: '/assets/icons/account.svg',
+                          children: [
+                              {
+                                  name: 'Account',
+                                  icon: '/assets/icons/buyer.svg',
+                                  href: '/admin/account/',
+                              },
+                              {
+                                  name: 'Admin Account',
+                                  icon: '/assets/icons/admin.svg',
+                                  href: '/admin/account/admin',
+                              },
+                          ],
                       },
                   ]
                 : []),

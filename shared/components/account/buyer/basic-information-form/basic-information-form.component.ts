@@ -17,6 +17,7 @@ import {
     LocalStorageService,
     MasterDataService,
     ModalService,
+    NotificationService,
     PromotionService,
 } from '#shared/services';
 import {
@@ -38,6 +39,7 @@ import { FormComponent } from '../../../form/form.component';
 import { IndustrySelectComponent } from '../../../industry-select/industry-select.component';
 import { LoadingComponent } from '../../../loading/loading.component';
 import { TableComponent } from '../../../table/table.component';
+import { HttpClient } from '@angular/common/http';
 
 const FORM_NAME = 'ACCOUNT_BUYER_BASIC_INFORMATION_FORM';
 
@@ -60,6 +62,8 @@ export class BuyerBasicInformationFormComponent {
         private masterDataService: MasterDataService,
         private accountService: AccountService,
         private translateService: TranslateService,
+        private http: HttpClient,
+        private notificationService: NotificationService,
     ) {
         this.translateService.use(JSON.parse(localStorage.getItem('languageCode') || 'en') === 'vi' ? 'vi' : 'en');
         this.form.config = [
@@ -73,16 +77,16 @@ export class BuyerBasicInformationFormComponent {
                     {
                         label: 'auth.register.become-buyer.form-buyer.fullName',
                         placeholder: 'auth.register.become-buyer.form-buyer.fullName',
-                        name: 'fullName',
+                        name: 'shortName',
                         maxLength: 255,
                         validate: [
                             {
                                 rule: Validators.required,
-                                message: 'VALIDATE_DESCRIPTION.fullName.required',
+                                message: 'VALIDATE_DESCRIPTION.shortName.required',
                             },
                             {
                                 rule: Validators.pattern(REGEX_NO_NUMBERS_SPECIAL),
-                                message: 'VALIDATE_DESCRIPTION.fullName.pattern',
+                                message: 'VALIDATE_DESCRIPTION.shortName.pattern',
                             },
                         ],
                     },
@@ -310,7 +314,7 @@ export class BuyerBasicInformationFormComponent {
     };
 
     handleSave = () => {
-        this.form.submit(async ({ confirmPassword, email, password }) => {
+        this.form.submit(async ({ confirmPassword, email, password, shortName }) => {
             // Kiểm tra xác thực mật khẩu
             if (password !== confirmPassword) {
                 this.form.setFieldError('confirmPassword', 'VALIDATE_DESCRIPTION.password.notMatch');
@@ -323,6 +327,7 @@ export class BuyerBasicInformationFormComponent {
                 user: {
                     email: email ?? '',
                     password: password ?? '',
+                    shortName: shortName ?? '',
                     // Thêm các trường khác nếu cần cho mutation
                 },
             };
@@ -347,4 +352,53 @@ export class BuyerBasicInformationFormComponent {
                 });
         }, FORM_NAME);
     };
+    selectedFile: File | null = null;
+
+    onFileChange(event: any) {
+        const file = event.target.files[0];
+        if (file) {
+            this.selectedFile = file;
+        }
+    }
+
+    uploadFile() {
+        if (!this.selectedFile) {
+            alert('Vui lòng chọn file!');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('file', this.selectedFile);
+
+        const headers = { 'X-CSRFToken': this.getCsrfToken() };
+
+        this.http.post('http://localhost:8000/api/import-students/', formData, { headers }).subscribe(
+            (response: any) => {
+                console.log('Response:', response); // Log phản hồi từ server để kiểm tra
+
+                if (response && response.status === 'success') {
+                    this.notificationService.success(response.message || 'File đã được upload thành công!');
+                } else if (response && response.status === 'error') {
+                    // Nếu không import được tài khoản nào
+                    if (response.message.includes('Không có tài khoản nào được import')) {
+                        this.notificationService.error(response.message || 'Tất cả tài khoản đã tồn tại!');
+                    } else {
+                        this.notificationService.error(response.message || 'Đã xảy ra lỗi khi upload file!');
+                    }
+                } else {
+                    console.error('Unexpected response format:', response);
+                    this.notificationService.error('Đã xảy ra lỗi khi upload file!');
+                }
+            },
+            (error) => {
+                console.error('Error during file upload:', error); // Log chi tiết lỗi
+                this.notificationService.error('Đã xảy ra lỗi khi upload file!');
+            },
+        );
+    }
+
+    getCsrfToken(): string {
+        const match = document.cookie.match(/csrftoken=([\w-]+)/);
+        return match ? match[1] : '';
+    }
 }

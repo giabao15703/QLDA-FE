@@ -4,52 +4,8 @@ query getBuyer($id: ID!) {
     }
 }
 
-query getBuyers(
-    $before: String
-    $after: String
-    $first: Int
-    $last: Int
-    $id: ID
-    $created: String
-    $username: String
-    $usernameExact: String
-    $email: String
-    $status: String
-    $validFrom: String
-    $validTo: String
-    $profileFeature: String
-    $auctionsYear: String
-    $rfxCancel: String
-    $changedBy: String
-    $changedDate: String
-    $reasonManual: String
-    $fullName: String
-    $changedState: String
-    $orderBy: String
-) {
-    buyers(
-        before: $before
-        after: $after
-        first: $first
-        last: $last
-        id: $id
-        created: $created
-        username: $username
-        usernameExact: $usernameExact
-        email: $email
-        status: $status
-        validFrom: $validFrom
-        validTo: $validTo
-        profileFeature: $profileFeature
-        auctionsYear: $auctionsYear
-        rfxCancel: $rfxCancel
-        changedBy: $changedBy
-        changedDate: $changedDate
-        reasonManual: $reasonManual
-        fullName: $fullName
-        changedState: $changedState
-        orderBy: $orderBy
-    ) {
+query getBuyers($before: String, $after: String, $first: Int, $last: Int, $email: String, $username: String) {
+    buyers(before: $before, after: $after, first: $first, last: $last, email: $email, username: $username) {
         totalCount
         pageInfo {
             ...PageInfo
@@ -60,7 +16,8 @@ query getBuyers(
             }
         }
     }
-}mutation createBuyer($user: UserInput!) {
+}
+mutation createBuyer($user: UserInput!) {
     buyerCreate(user: $user) {
         status
         error {
@@ -68,7 +25,6 @@ query getBuyers(
         }
     }
 }
-
 
 mutation updateBuyerStatus($listStatus: [BuyerStatusUpdateInput]!, $reasonManual: String) {
     buyerStatusUpdate(listStatus: $listStatus, reasonManual: $reasonManual) {

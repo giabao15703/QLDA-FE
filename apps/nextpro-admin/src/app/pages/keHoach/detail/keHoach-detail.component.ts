@@ -215,7 +215,8 @@ export class KeHoachDetailComponent {
 
                 if (createKeHoachDoAn.status) {
                     this.localStorageService.remove(FORM_NAME);
-                    this.notificationService.success('notification.createSuccessfully');this.onCloseDrawer();
+                    this.notificationService.success('notification.createSuccessfully');
+                    this.onCloseDrawer();
                 } else {
                     this.notificationService.error(createKeHoachDoAn.error?.message);
                 }

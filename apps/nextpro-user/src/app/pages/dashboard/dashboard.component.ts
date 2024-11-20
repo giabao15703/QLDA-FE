@@ -9,11 +9,18 @@ import { NavbarComponent } from '#user/layout';
     imports: [SidebarComponent, NavbarComponent],
 })
 export class DashboardComponent {
-    constructor() {
-        // Khởi tạo các biến hoặc dịch vụ cần thiết
-    }
+    shortName: string = ''; // Biến để lưu shortName
+
+    constructor() {}
 
     ngOnInit() {
-        // Thực hiện các hành động khi component được khởi tạo
+        // Lấy dữ liệu user từ localStorage
+        const userData = localStorage.getItem('user');
+        if (userData) {
+            const user = JSON.parse(userData);
+
+            // Gắn shortName từ user nếu tồn tại
+            this.shortName = user?.shortName ?? 'Không có shortName';
+        }
     }
 }

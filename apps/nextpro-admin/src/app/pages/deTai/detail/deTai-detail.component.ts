@@ -105,7 +105,6 @@ export class DeTaiDetailComponent {
         }
     }
 
-
     handleSave = async () => {
         this.form.submit(async (values) => {
             const currentUser = localStorage.getItem('user');
@@ -129,10 +128,7 @@ export class DeTaiDetailComponent {
                 } else {
                     this.notificationService.error(deTaiCreate.error?.message);
                 }
-            
-            }
-            
-            else {
+            } else {
                 const { deTaiUpdate } = await this.deTaiService.updateDeTai({
                     id: this.data.id,
                     input: {
@@ -140,7 +136,7 @@ export class DeTaiDetailComponent {
                         mota: values.mota,
                         trangthai: values.trangthai,
                         yeucau: values.yeucau,
-                    }
+                    },
                 });
                 if (deTaiUpdate.status) {
                     this.localStorageService.remove(FORM_NAME);

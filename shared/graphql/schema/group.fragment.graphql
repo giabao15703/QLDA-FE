@@ -4,8 +4,10 @@ fragment GroupQLDAInfo on GroupQLDANode {
     name    # Tên nhóm
     status 
     memberCount
+    maxMember
     creatorShortName 
 }
+
 fragment JoinGroupInfo on JoinGroupNode {
     id
     user{
@@ -14,9 +16,9 @@ fragment JoinGroupInfo on JoinGroupNode {
     group{
         ...GroupQLDAInfo
     }
-    membersCount
     role
 }
+
 fragment JoinRequestInfo on JoinRequestNode {
     id
     user{

@@ -56,7 +56,6 @@ export class GroupRegistrationComponent implements OnInit {
                 input: {
                     name: this.tenNhom,
                 },
-                userEmail: String(user.email),
             });
 
             // Kiểm tra phản hồi từ server
@@ -112,7 +111,6 @@ export class GroupRegistrationComponent implements OnInit {
             // Gửi yêu cầu tham gia nhóm
             const response = await this.groupQLDAService.getGroupQldaJoin({
                 groupId: this.groupData.data[0].id,
-                userEmail: String(user.email),
             });
             if (response.groupQldaJoin.status) {
                 this.notification.success('Bạn đã xin tham gia nhóm');

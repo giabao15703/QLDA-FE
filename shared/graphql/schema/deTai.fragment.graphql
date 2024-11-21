@@ -6,11 +6,13 @@ fragment DeTaiInfo on DeTaiNode {
     idgvphanbien{
         ...AdminInfo
     }
+    madoan
     tendoan
     chuyennganh
     mota
     trangthai
     yeucau
+    idnhom
     idkehoach{
         ...KeHoachInfo
     }

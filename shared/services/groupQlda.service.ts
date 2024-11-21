@@ -17,13 +17,16 @@ import {
     GetGroupQldaRequestsGQL,
     GetGroupQldaRequestsQuery,
     GetGroupQldaRequestsQueryVariables,
+    GetJoinGroupsQuery,
+    GetJoinGroupsQueryVariables,
+    GetJoinGroupsGQL,
 } from '#shared/graphql/types';
 import { I_GraphQLOptions, I_MutationResponse, I_NormalizeExtra, I_TableState } from '#shared/types';
 import { normalizeWithPagination } from '#shared/utils';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GraphqlService } from './core/graphql.service';
-import { I_GroupQLDA, I_JoinRequest } from 'shared/types/group';
+import { I_GroupQLDA, I_JoinGroup, I_JoinRequest } from 'shared/types/group';
 
 @Injectable({
     providedIn: 'root',
@@ -37,6 +40,7 @@ export class GroupQLDAService {
         private getGroupQldaJoinGQL: GetGroupQldaJoinGQL,
         private acceptJoinRequestGQL: AcceptJoinRequestGQL,
         private getGroupQldaRequestsGQL: GetGroupQldaRequestsGQL,
+        private getJoinGroupsGQL: GetJoinGroupsGQL,
     ) {}
 
     get error(): Observable<string> {
@@ -133,4 +137,18 @@ export class GroupQLDAService {
             ...options,
         }) as Promise<I_JoinRequest[]>; // Ensure this returns an array of I_JoinRequest
     };
+
+    getJoinGroups = (
+        variables?: GetJoinGroupsQueryVariables,
+        options?: I_GraphQLOptions<GetJoinGroupsQuery, I_JoinGroup[]>,
+    ) => {
+        return this.graphqlService.query<
+            GetJoinGroupsQuery,
+            GetJoinGroupsQueryVariables,
+            I_JoinGroup[]
+        >(this.getJoinGroupsGQL, variables, {
+            normalize: (data) => this.normalizeGroupQldaRequestList(data, options?.extra),
+            ...options,
+        }) as Promise<I_JoinGroup[]>; 
+    }
 }

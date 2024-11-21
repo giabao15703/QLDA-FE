@@ -8,7 +8,7 @@
         <div class="container mx-auto p-4 ">
             <!-- Tiêu đề trang -->
             <h2 class="text-2xl font-bold mb-4">Đăng ký Đồ án</h2>
-        
+
             <!-- Bảng danh sách đồ án -->
             <table class="min-w-full bg-white shadow-md rounded-lg ">
                 <thead>
@@ -16,49 +16,26 @@
                         <th class="py-2 px-4 border-b">Mã Đồ án</th>
                         <th class="py-2 px-4 border-b">Tên Đồ án</th>
                         <th class="py-2 px-4 border-b">Mô tả</th>
-                        <th class="py-2 px-4 border-b">Yêu cầu</th>
+                        <th class="py-2 px-4 border-b">Giảng viên phụ trách</th>
                         <th class="py-2 px-4 border-b">Hành động</th>
                     </tr>
                 </thead>
-                <tbody class="[&_tr]:py-4 cursor-pointer ">
+                <tbody class="[&_tr]:py-4 cursor-pointer " *ngIf="deTaiData?.data?.length > 0">
                     <!-- Dòng mẫu cho đồ án -->
-                    <tr>
-                        <td class="py-2 hover:text-blue-500 px-4 border-b">DA001</td>
-                        <td class="py-2 hover:text-blue-500 px-4 border-b">Phát triển ứng dụng web</td>
-                        <td class="py-2 hover:text-blue-500 px-4 border-b">Xây dựng ứng dụng web cho quản lý sinh viên</td>
-                        <td class="py-2 hover:text-blue-500 px-4 border-b">Kiến thức về HTML, CSS, JavaScript</td>
+                    <tr *ngFor="let deTai of deTaiData.data">
+                        <td class="py-2 hover:text-blue-500 px-4 border-b text-center">{{deTai.madoan}}</td>
+                        <td class="py-2 hover:text-blue-500 px-4 border-b text-center">{{deTai.tendoan}}</td>
+                        <td class="py-2 hover:text-blue-500 px-4 border-b text-center">{{deTai.mota}}</td>
+                        <td class="py-2 hover:text-blue-500 px-4 border-b text-center">{{deTai.giangVienLongName}}</td>
                         <td class="py-2 px-4 border-b text-center">
-                            <button class="bg-blue-500 text-white text-sm px-4 py-2 rounded hover:bg-blue-600">Đăng ký</button>
+                            <button 
+                                class="bg-blue-500 text-white text-sm px-4 py-2 rounded hover:bg-blue-600"
+                                (click)="onSubmit()" 
+                                [disabled]="deTai.idnhom !== ''">
+                                {{ deTai.idnhom !== '' ? 'Đã được đăng ký' : 'Đăng ký đồ án' }}
+                            </button>
                         </td>
                     </tr>
-                    <tr>
-                        <td class="py-2 px-4 border-b hover:text-blue-500">DA001</td>
-                        <td class="py-2 px-4 border-b hover:text-blue-500">Phát triển ứng dụng web</td>
-                        <td class="py-2 hover:text-blue-500 px-4 border-b">Xây dựng ứng dụng web cho quản lý sinh viên</td>
-                        <td class="py-2 hover:text-blue-500 px-4 border-b">Kiến thức về HTML, CSS, JavaScript</td>
-                        <td class="py-2 px-4 border-b text-center">
-                            <button class="bg-blue-500 text-white text-sm px-4 py-2 rounded hover:bg-blue-600">Đăng ký</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="py-2 hover:text-blue-500 px-4 border-b">DA001</td>
-                        <td class="py-2 hover:text-blue-500 px-4 border-b">Phát triển ứng dụng web</td>
-                        <td class="py-2 hover:text-blue-500 px-4 border-b">Xây dựng ứng dụng web cho quản lý sinh viên</td>
-                        <td class="py-2 hover:text-blue-500 px-4 border-b">Kiến thức về HTML, CSS, JavaScript</td>
-                        <td class="py-2 px-4 border-b text-center">
-                            <button class="bg-blue-500 text-white text-sm px-4 py-2 rounded hover:bg-blue-600">Đăng ký</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="py-2 hover:text-blue-500 px-4 border-b">DA001</td>
-                        <td class="py-2 hover:text-blue-500 px-4 border-b">Phát triển ứng dụng web</td>
-                        <td class="py-2 hover:text-blue-500 px-4 border-b">Xây dựng ứng dụng web cho quản lý sinh viên</td>
-                        <td class="py-2 hover:text-blue-500 px-4 border-b">Kiến thức về HTML, CSS, JavaScript</td>
-                        <td class="py-2 px-4 border-b text-center">
-                            <button class="bg-blue-500 text-white text-sm px-4 py-2 rounded hover:bg-blue-600">Đăng ký</button>
-                        </td>
-                    </tr>
-                    <!-- Thêm các dòng khác tương tự -->
                 </tbody>
             </table>
         </div>

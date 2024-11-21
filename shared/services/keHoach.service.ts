@@ -107,6 +107,4 @@ export class KeHoachService {
             { updateKeHoachDoAn: I_MutationResponse }
         >(this.updateKeHoachGQL, variables, options);
     };
-
-    
 }

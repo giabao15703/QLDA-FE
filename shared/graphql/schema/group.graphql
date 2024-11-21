@@ -31,6 +31,10 @@ query getGroupQldaRequests(
         groupId: $groupId
         isApproved: $isApproved
     ) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
         edges {
             node {
                 id
@@ -47,14 +51,40 @@ query getGroupQldaRequests(
     }
 }
 
+query getJoinGroups(
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $userId: Float
+    $groupId: Float
+    $role: String
+) {
+    joinGroups(
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        userId: $userId
+        groupId: $groupId
+        role: $role
+    ) {
+        edges {
+            node {
+                ...JoinGroupInfo
+            }
+        }
+    }
+}
+
 query getGroupQlda($id: ID!) {
     groupQlda(id: $id) {
         ...GroupQLDAInfo
     }
 }
 
-mutation getGroupQldaJoin($groupId: ID!, $userEmail: String!) {
-    groupQldaJoin(groupId: $groupId, userEmail: $userEmail) {
+mutation getGroupQldaJoin($groupId: ID!) {
+    groupQldaJoin(groupId: $groupId) {
         status
         error {
             code
@@ -73,8 +103,8 @@ mutation acceptJoinRequest($joinRequestId: ID!) {
 }
 
 
-mutation createGroupQlda($input: GroupQLDAInput!, $userEmail: String!) {
-    groupQldaCreate(input: $input, userEmail: $userEmail) {
+mutation createGroupQlda($input: GroupQLDAInput!) {
+    groupQldaCreate(input: $input) {
         status
         groupQlda {
             ...GroupQLDAInfo

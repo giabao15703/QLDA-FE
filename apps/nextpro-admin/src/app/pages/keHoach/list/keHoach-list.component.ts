@@ -103,7 +103,7 @@ export class KeHoachListPage {
                 sort: 'slDoAn',
                 name: 'slDoAn',
                 label: 'Số lượng đồ án (giảng viên có thể đăng kí )',
-                cellStyle: { textAlign: 'center', width: '150px'},
+                cellStyle: { textAlign: 'center', width: '150px' },
             },
             {
                 sort: 'tgbdDoAn',

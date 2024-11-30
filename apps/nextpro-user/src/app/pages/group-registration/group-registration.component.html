@@ -47,7 +47,7 @@
                                     mat-raised-button
                                     [disabled]="group.memberCount >= group.maxMember"
                                     matTooltip="Nhóm đã đầy"
-                                    (click)="onSubmitJoin()"
+                                    (click)="onSubmitJoin(group.id)"
                                     >
                                     Gia nhập
                                 </button>

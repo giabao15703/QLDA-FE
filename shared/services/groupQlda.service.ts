@@ -138,17 +138,24 @@ export class GroupQLDAService {
         }) as Promise<I_JoinRequest[]>; // Ensure this returns an array of I_JoinRequest
     };
 
+    private normalizeJoinGroupList = (
+        data: GetJoinGroupsQuery,
+        extra?: I_NormalizeExtra,
+    ): I_TableState<I_JoinGroup> => {
+        return normalizeWithPagination<I_JoinGroup>(data.joinGroups, extra);
+    };
+
     getJoinGroups = (
         variables?: GetJoinGroupsQueryVariables,
-        options?: I_GraphQLOptions<GetJoinGroupsQuery, I_JoinGroup[]>,
+        options?: I_GraphQLOptions<GetJoinGroupsQuery, I_TableState<I_JoinGroup>>,
     ) => {
-        return this.graphqlService.query<
-            GetJoinGroupsQuery,
-            GetJoinGroupsQueryVariables,
-            I_JoinGroup[]
-        >(this.getJoinGroupsGQL, variables, {
-            normalize: (data) => this.normalizeGroupQldaRequestList(data, options?.extra),
-            ...options,
-        }) as Promise<I_JoinGroup[]>; 
-    }
+        return this.graphqlService.query<GetJoinGroupsQuery, GetJoinGroupsQueryVariables, I_TableState<I_JoinGroup>>(
+            this.getJoinGroupsGQL,
+            variables,
+            {
+                normalize: (data) => this.normalizeJoinGroupList(data, options?.extra),
+                ...options,
+            },
+        ) as Promise<I_TableState<I_JoinGroup>>;
+    };
 }

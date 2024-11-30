@@ -17050,7 +17050,7 @@ export type GetJoinGroupsQueryVariables = Exact<{
 }>;
 
 
-export type GetJoinGroupsQuery = { __typename?: 'Query', joinGroups?: { __typename?: 'JoinGroupNodeConnection', edges: Array<{ __typename?: 'JoinGroupNodeEdge', node?: { __typename?: 'JoinGroupNode', id: string, role: string, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, group: { __typename?: 'GroupQLDANode', id: string, maNhom: string, name: string, status: boolean, memberCount: number, maxMember: number, creatorShortName?: string | null } } | null } | null> } | null };
+export type GetJoinGroupsQuery = { __typename?: 'Query', joinGroups?: { __typename?: 'JoinGroupNodeConnection', totalCount?: number | null, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'JoinGroupNodeEdge', node?: { __typename?: 'JoinGroupNode', id: string, role: string, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, group: { __typename?: 'GroupQLDANode', id: string, maNhom: string, name: string, status: boolean, memberCount: number, maxMember: number, creatorShortName?: string | null } } | null } | null> } | null };
 
 export type GetGroupQldaQueryVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -23470,6 +23470,10 @@ export const GetJoinGroupsDocument = gql`
     groupId: $groupId
     role: $role
   ) {
+    totalCount
+    pageInfo {
+      ...PageInfo
+    }
     edges {
       node {
         ...JoinGroupInfo
@@ -23477,7 +23481,8 @@ export const GetJoinGroupsDocument = gql`
     }
   }
 }
-    ${JoinGroupInfoFragmentDoc}`;
+    ${PageInfoFragmentDoc}
+${JoinGroupInfoFragmentDoc}`;
 
   @Injectable({
     providedIn: 'root'

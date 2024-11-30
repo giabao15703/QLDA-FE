@@ -20,14 +20,14 @@ export class DashboardComponent {
     shortName: string = ''; // Biến để lưu shortName
     isLoading: boolean = false;
     isSidebarOpen = true; // Trạng thái mở/đóng Sidebar
-    groupData : I_TableState<I_JoinGroup>;
+    groupData: I_TableState<I_JoinGroup>;
     errorMessage: string = '';
 
     toggleSidebar() {
         this.isSidebarOpen = !this.isSidebarOpen;
     }
 
-    ngOnInit() {
+    async ngOnInit() {
         // Lấy dữ liệu user từ localStorage
         const userData = localStorage.getItem('user');
         if (userData) {
@@ -36,18 +36,11 @@ export class DashboardComponent {
             // Gắn shortName từ user nếu tồn tại
             this.shortName = user?.shortName ?? 'Không có shortName';
         }
-        this.getGroup();
+        var group_id = await this.groupService.getJoinGroups({ userId: this.user.id });
+        var group = await this.groupService.getJoinGroups({ groupId: parseInt(group_id.data[0].group?.id) });
+        console.log(group.data);
     }
     openModal() {}
-
-    getGroup() {
-        this.isLoading = true;
-        this.groupService
-            .getJoinGroups({  userId: this.user.id  })
-            .then((data) => {
-                console.log('Group Data:', data);
-            })
-    }
 
     getDeTai() {}
 }

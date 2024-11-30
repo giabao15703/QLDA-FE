@@ -101,8 +101,12 @@ export class NavbarComponent {
             const response = await this.groupQldaService.acceptJoinRequest({
                 joinRequestId: joinRequestId,
             });
+            if(response.acceptJoinRequest.status) {
             this.notificationService.success('Đã chấp nhận yêu cầu tham gia');
             window.location.reload();
+            } else {
+                this.notificationService.error(response.acceptJoinRequest.error?.message);
+            }
         } catch (error) {
             this.notificationService.error('Lỗi khi chấp nhận yêu cầu tham gia');
             console.error('Lỗi khi chấp nhận yêu cầu tham gia:', error);

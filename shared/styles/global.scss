@@ -65,13 +65,11 @@ button {
         // border-radius: 10px;
     }
 
-
     &:disabled {
         background-color: #cbd5e0; // Màu nền khi bị vô hiệu hóa
         cursor: not-allowed; // Con trỏ chuột dạng bị khóa
         opacity: 0.6; // Mờ hơn
     }
-
 }
 
 .background-auth-tab .mat-mdc-tab-label-container {
@@ -151,7 +149,6 @@ fieldset legend {
 }
 
 .mdc-evolution-chip-set .mat-mdc-standard-chip {
-
     .mdc-evolution-chip__cell--primary,
     .mdc-evolution-chip__action--primary,
     .mat-mdc-chip-action-label {
@@ -236,7 +233,9 @@ fieldset legend {
 .sidebar {
     width: 16rem;
     /* Chiều rộng của Sidebar */
-    transition: transform 0.2s ease-in-out, width 0.2s ease-out;
+    transition:
+        transform 0.2s ease-in-out,
+        width 0.2s ease-out;
     /* Hiệu ứng mượt */
 }
 

@@ -5,7 +5,7 @@ export interface I_GroupQLDA {
     id?: string;
     maNhom?: string;
     name?: string;
-    de_tai?:I_DeTai;
+    de_tai?: I_DeTai;
     status?: boolean;
     memberCount?: number;
     maxMember?: number;

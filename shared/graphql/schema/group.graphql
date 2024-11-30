@@ -69,6 +69,10 @@ query getJoinGroups(
         groupId: $groupId
         role: $role
     ) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
         edges {
             node {
                 ...JoinGroupInfo

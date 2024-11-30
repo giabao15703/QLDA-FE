@@ -33,7 +33,9 @@ export class ProjectRegistrationComponent {
 
     getData() {
         this.isLoading = true;
-        this.deTaiService.getDeTais().then((data) => {
+        this.deTaiService
+            .getDeTais()
+            .then((data) => {
                 this.deTaiData = data;
                 console.log('DETAI Data:', this.deTaiData);
             })
@@ -49,20 +51,18 @@ export class ProjectRegistrationComponent {
     //Gửi yêu cầu đăng kí đề tài
     async onSubmit() {
         try {
-            // Gửi yêu cầu tạo nhóm
             const response = await this.deTaiService.updateDeTai({
                 id: this.deTaiData.data[0].id,
                 input: {},
             });
-            if(response.deTaiUpdate.status){
+            if (response.deTaiUpdate.status) {
                 this.notification.success('Bạn đã xin đăng kí thành công');
                 console.log('Đăng kí đề tài thành công:', response);
-            }
-            else{
+            } else {
                 this.notification.error(response.deTaiUpdate.error.message);
                 console.log('Đăng kí đề tài không thành công:', response);
             }
-            
+
             //window.location.reload();
         } catch (error) {
             console.error('Lỗi khi đăng kí đề tài:', error);

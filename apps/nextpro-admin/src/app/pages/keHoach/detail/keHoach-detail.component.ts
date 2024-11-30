@@ -61,11 +61,11 @@ export class KeHoachDetailComponent {
                 name: 'kyMo',
             },
             {
-                label: 'Số lượng sinh viên',
+                label: 'Số lượng sinh viên trong 1 nhóm',
                 name: 'slSinhVien',
             },
             {
-                label: 'Số lượng đồ án',
+                label: 'Số lượng đề tài 1 giảng viên có thể tạo',
                 name: 'slDoAn',
             },
             {
@@ -79,12 +79,12 @@ export class KeHoachDetailComponent {
                 fieldType: E_FieldType.DATEPICKER,
             },
             {
-                label: 'Thời gian bắt đầu tạo đồ án',
+                label: 'Thời gian bắt đầu tạo đề tài',
                 name: 'tgbdTaoDoAn',
                 fieldType: E_FieldType.DATEPICKER,
             },
             {
-                label: 'Thời gian kết thúc tạo đồ án',
+                label: 'Thời gian kết thúc tạo đề tài',
                 name: 'tgktTaoDoAn',
                 fieldType: E_FieldType.DATEPICKER,
             },
@@ -122,23 +122,13 @@ export class KeHoachDetailComponent {
                 label: 'Thời gian bắt đầu chấm hội đồng',
                 name: 'tgbdChamHoiDong',
                 fieldType: E_FieldType.DATEPICKER,
+
             },
             {
                 label: 'Thời gian kết thúc chấm hội đồng',
                 name: 'tgktChamHoiDong',
                 fieldType: E_FieldType.DATEPICKER,
             },
-            /* {
-                label: 'Admin',
-                name: 'adminFullName',
-                loadingName: 'getUsers',
-                fieldType: E_FieldType.SELECT,
-                getOptions: () => this.accountService.getUsers().then((res) => res.data.filter((item) => item.status)),
-                mapOption: (item: I_User) => ({
-                    label: item.fullName,
-                    value: item.fullName,
-                }),
-            }, */
         ];
     }
 
@@ -183,6 +173,7 @@ export class KeHoachDetailComponent {
             }
         }
     }
+
 
     handleSave = async () => {
         this.form.submit(async (values) => {
@@ -230,7 +221,8 @@ export class KeHoachDetailComponent {
                     this.localStorageService.remove(FORM_NAME);
                     this.notificationService.success('notification.updateSuccessfully');
                     this.onCloseDrawer();
-                } else {
+                } 
+                else {
                     this.notificationService.error(updateKeHoachDoAn.error?.message);
                 }
             }

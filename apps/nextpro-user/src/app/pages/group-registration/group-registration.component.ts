@@ -98,25 +98,17 @@ export class GroupRegistrationComponent implements OnInit {
     }
 
     // Tham gia nhóm
-    async onSubmitJoin() {
+    async onSubmitJoin(group_id) {
         try {
-            const user = JSON.parse(localStorage.getItem('user') || '{}');
-            console.log('User từ localStorage:', user);
-
-            if (!user || !user.id) {
-                this.errorMessage = 'Thông tin người dùng không tồn tại';
-                return;
-            }
-
             // Gửi yêu cầu tham gia nhóm
             const response = await this.groupQLDAService.getGroupQldaJoin({
-                groupId: this.groupData.data[0].id,
+                groupId: group_id
             });
             if (response.groupQldaJoin.status) {
                 this.notification.success('Bạn đã xin tham gia nhóm');
                 window.location.reload();
             } else {
-                this.notification.error(`Bạn đã yêu cầu tham gia hoặc đã có nhóm`);
+                this.notification.error(response.groupQldaJoin.error?.message);
             }
         } catch (error) {
             console.error('Lỗi khi tham gia nhóm:', error);

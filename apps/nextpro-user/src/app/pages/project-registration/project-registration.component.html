@@ -30,9 +30,9 @@
                         <td class="py-2 px-4 border-b text-center">
                             <button 
                                 class="bg-blue-500 text-white text-sm px-4 py-2 rounded hover:bg-blue-600"
-                                (click)="onSubmit()" 
-                                [disabled]="deTai.idnhom !== ''">
-                                {{ deTai.idnhom !== '' ? 'Đã được đăng ký' : 'Đăng ký đồ án' }}
+                                (click)="onSubmit(deTai.id)" 
+                                [disabled]="deTai.idnhom !== '' &&deTai.idnhom !== null">
+                                {{ deTai.idnhom !== '' && deTai.idnhom !== null ? 'Đã được đăng ký' : 'Đăng ký đồ án' }}
                             </button>
                         </td>
                     </tr>

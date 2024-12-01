@@ -10,6 +10,7 @@ import { NotFoundPage } from '#admin/pages/page-not-found/page-not-found.compone
 import { DeTaiListPage } from './pages/deTai/list/deTai-list.component';
 import { KeHoachListPage } from './pages/keHoach/list/keHoach-list.component';
 import { HomePage } from './pages/home/home.component';
+import { GroupListPage } from './pages/group/list/group-list.component';
 
 export const appRoutes: Routes = [
     { path: '', redirectTo: 'admin/home', pathMatch: 'full' },
@@ -38,11 +39,15 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'deTai',
-                children: [{ path: '', component: DeTaiListPage, data: { breadcrumb: 'Giảng Viên' } }],
+                children: [{ path: '', component: DeTaiListPage, data: { breadcrumb: 'Đề tài' } }],
             },
             {
                 path: 'keHoach',
-                children: [{ path: '', component: KeHoachListPage, data: { breadcrumb: 'Trưởng Khoa' } }],
+                children: [{ path: '', component: KeHoachListPage, data: { breadcrumb: 'Kế hoạch đồ án' } }],
+            },
+            {
+                path: 'group',
+                children: [{ path: '', component: GroupListPage, data: { breadcrumb: 'Nhóm đồ án' } }],
             },
         ],
         canActivate: [AuthGuard],

@@ -1,5 +1,23 @@
-query getGroupQldas($before: String, $after: String, $first: Int, $last: Int, $name: String, $status: Boolean) {
-    groupQldas(before: $before, after: $after, first: $first, last: $last, name: $name, status: $status) {
+query getGroupQldas(
+        $before: String, 
+        $after: String, 
+        $first: Int, 
+        $last: Int, 
+        $name: String, 
+        $status: Boolean,
+        $idgvhuongdan: String
+        $idgvphanbien: String
+    ) {
+    groupQldas(
+        before: $before, 
+        after: $after, 
+        first: $first, 
+        last: $last, 
+        name: $name, 
+        status: $status,
+        idgvhuongdan: $idgvhuongdan
+        idgvphanbien: $idgvphanbien
+    ) {
         totalCount
         pageInfo {
             ...PageInfo

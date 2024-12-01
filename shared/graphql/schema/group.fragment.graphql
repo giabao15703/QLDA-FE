@@ -5,7 +5,10 @@ fragment GroupQLDAInfo on GroupQLDANode {
     status 
     memberCount
     maxMember
-    creatorShortName 
+    creatorShortName
+    deTai{
+        ...DeTaiInfo
+    }
 }
 
 fragment JoinGroupInfo on JoinGroupNode {

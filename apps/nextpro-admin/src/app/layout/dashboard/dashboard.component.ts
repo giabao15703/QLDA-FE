@@ -84,7 +84,7 @@ export class LayoutDashboard {
                           ],
                       },
                       {
-                          name: 'Trưởng Khoa',
+                          name: 'Kế hoạch đồ án',
                           icon: '/assets/icons/setting-3-svgrepo-com.svg',
                           href: '/admin/keHoach',
                       },
@@ -92,6 +92,11 @@ export class LayoutDashboard {
                           name: 'Đề Tài',
                           icon: '/assets/icons/setting-3-svgrepo-com.svg',
                           href: '/admin/deTai',
+                      },
+                      {
+                          name: 'Nhóm đồ án',
+                          icon: '/assets/icons/setting-3-svgrepo-com.svg',
+                          href: '/admin/group',
                       },
                   ]
                 : []),
@@ -101,6 +106,11 @@ export class LayoutDashboard {
                           name: 'Đề Tài',
                           icon: '/assets/icons/setting-3-svgrepo-com.svg',
                           href: '/admin/deTai',
+                      },
+                      {
+                          name: 'Nhóm đồ án',
+                          icon: '/assets/icons/setting-3-svgrepo-com.svg',
+                          href: '/admin/group',
                       },
                   ]
                 : []),
@@ -121,6 +131,11 @@ export class LayoutDashboard {
                                   href: '/admin/account/admin',
                               },
                           ],
+                      },
+                      {
+                          name: 'Nhóm đồ án',
+                          icon: '/assets/icons/setting-3-svgrepo-com.svg',
+                          href: '/admin/group',
                       },
                   ]
                 : []),

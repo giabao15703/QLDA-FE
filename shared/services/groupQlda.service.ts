@@ -78,7 +78,7 @@ export class GroupQLDAService {
             this.getGroupQldaGQL,
             variables,
             {
-                normalize: (data) => data.groupQlda,
+                //normalize: (data) => data.groupQlda,
                 ...options,
             },
         ) as Promise<I_GroupQLDA>;

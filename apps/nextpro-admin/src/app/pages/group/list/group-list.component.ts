@@ -1,18 +1,18 @@
-/* /* import { CommonModule } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import { FilterComponent, ImportComponent, LoadingComponent, TableComponent } from '#shared/components';
 import { MaterialModules } from '#shared/modules';
-import { DeliveryService, LoadingService, OrderService, RouteService, TableService } from '#shared/services';
 import {
-    E_FieldType,
-    E_Form_Mode,
-    E_TableColumnType,
-    I_GroupStudent,
-    I_QueryVariables,
-    I_ShippingFee,
-} from '#shared/types';
+    DeliveryService,
+    GroupQLDAService,
+    LoadingService,
+    OrderService,
+    RouteService,
+    TableService,
+} from '#shared/services';
+import { E_FieldType, E_Form_Mode, E_TableColumnType, I_GroupQLDA, I_QueryVariables } from '#shared/types';
 import { getQueryVariables } from '#shared/utils';
 import { GroupDetailComponent } from '../../group/detail/group-detail.component';
 
@@ -33,44 +33,15 @@ import { GroupDetailComponent } from '../../group/detail/group-detail.component'
         GroupDetailComponent,
     ],
 })
-export class GroupListComponent {
+export class GroupListPage {
     constructor(
         public loadingService: LoadingService,
-        public table: TableService<I_GroupStudent>,
+        public table: TableService<I_GroupQLDA>,
         private routeService: RouteService,
         private translateService: TranslateService,
-        private deliveryService: DeliveryService,
-        private orderService: OrderService,
+        private GroupService: GroupQLDAService,
     ) {
-        this.table.config.filterForm = [
-            {
-                label: 'Name',
-                name: 'nameGroup', // Update to match the correct field in GroupStudent
-            },
-            {
-                label: 'Student',
-                name: 'members.fullName', // Update to match the detail structure
-            },
-            {
-                label: 'Giang Vien',
-                name: 'giangVien.nameGiangVien', // Update to match the correct field for GiangVien
-            },
-            {
-                label: 'Status',
-                name: 'status',
-                fieldType: E_FieldType.SELECT,
-                options: [
-                    {
-                        label: 'Active',
-                        value: true,
-                    },
-                    {
-                        label: 'Inactive',
-                        value: false,
-                    },
-                ],
-            },
-        ];
+        this.table.config.filterForm = [];
 
         this.table.config.columns = [
             {
@@ -89,25 +60,23 @@ export class GroupListComponent {
                 },
             },
             {
-                sort: 'nameGroup',
-                name: 'nameGroup',
-                label: 'Name',
+                sort: 'maNhom',
+                name: 'maNhom',
+                label: 'Mã nhóm',
             },
             {
-                sort: 'members',
-                name: 'members',
-                label: 'Members',
-                render: (row) => {
-                    return row.members.map((member) => member.fullName).join(', ');
-                },
-            },
-            {
-                sort: 'giangVien',
-                name: 'giangVien',
-                label: 'GiangVien',
+                sort: 'tenDeTai',
+                name: 'tenDeTai',
+                label: 'Tên đề tài',
                 render: (_, __, row) => {
-                    return row.giangVien?.nameGiangVien || 'N/A';
+                    console.log(row.deTai?.tendoan);
+                    return row.deTai?.tendoan;
                 },
+            },
+            {
+                sort: 'memberCount',
+                name: 'memberCount',
+                label: 'Members',
             },
             {
                 type: E_TableColumnType.HTML,
@@ -129,7 +98,7 @@ export class GroupListComponent {
                 ctas: [
                     {
                         icon: 'edit',
-                        onClick: (row: I_GroupStudent) => {
+                        onClick: (row: I_GroupQLDA) => {
                             this.routeService.goTo({ mode: E_Form_Mode.UPDATE, id: row.id });
                         },
                     },
@@ -137,40 +106,47 @@ export class GroupListComponent {
             },
         ];
 
-        this.table.config.refetch = this.getGroupStudents; 
+        this.table.config.refetch = this.getGroupQldas;
 
         this.routeService.onChange(({ hash }) => {
-            this.getGroupStudent(hash);
+            this.getGroupQlda(hash);
         });
     }
 
     detail = null;
 
     ngOnInit() {
-        this.getGroupStudent();
-        this.getGroupStudents(); 
+        this.getGroupQlda();
+        this.getGroupQldas();
     }
 
-    getGroupStudent = async (hash?: string) => {
+    getGroupQlda = async (hash?: string) => {
         this.detail = await this.routeService.getDetail({
             hash,
             detail: ({ id }) =>
-                this.orderService.getGroupStudent({
+                this.GroupService.getGroupQlda({
                     id,
                 }),
         });
     };
-     getGroupStudents = async (nameGroup?: string, members?: string, giangVienName?: string, status?: boolean) => {
-        const groupStudents = {
-            nameGroup: nameGroup || null, 
-            members: members || [],
-            giangVien: giangVienName || null,
-            status: status || null,
-        };
+    getGroupQldas = async (variables?: I_QueryVariables) => {
+        const currentUser = localStorage.getItem('user');
+        const groupQldas = await this.GroupService.getGroupQldas(
+            {
+                ...getQueryVariables({
+                    variables: {
+                        ...variables,
+                        idgvhuongdan: JSON.parse(currentUser).id,
+                    },
+                }),
+            },
+            { extra: { variables } },
+        );
 
-        this.table.state.data = [groupStudents]; // Thay
-        this.table.state.pagination = { totalCount: 1 };
-    }; 
+        this.table.state.data = groupQldas.data;
+        this.table.state.pagination = groupQldas.pagination;
+        this.table.state.selection?.clear();
+    };
 
     handleSort = (values) => {
         this.table.handleSort({
@@ -186,4 +162,4 @@ export class GroupListComponent {
         this.routeService.removeHash();
         this.detail = null;
     };
-} */
+}

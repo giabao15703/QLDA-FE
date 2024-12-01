@@ -49,10 +49,10 @@ export class ProjectRegistrationComponent {
     }
 
     //Gửi yêu cầu đăng kí đề tài
-    async onSubmit() {
+    async onSubmit(detai_id) {
         try {
             const response = await this.deTaiService.updateDeTai({
-                id: this.deTaiData.data[0].id,
+                id: detai_id,
                 input: {},
             });
             if (response.deTaiUpdate.status) {

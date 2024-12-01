@@ -991,7 +991,6 @@ export class SupplierCoreBusinessComponent {
         //                         },
         //                     },
         //                 ]);
-
         //                 this.form.tableUpdateRows(rowsToUpdate, true);
         //                 this.categoriesSelected = categoriesSelected;
         //                 this.modalService.hide();
@@ -1023,7 +1022,6 @@ export class SupplierCoreBusinessComponent {
         //                         },
         //                     },
         //                 ]);
-
         //                 this.form.tableUpdateRows(rowsToUpdate, true);
         //                 this.industriesSelected = industriesSelected;
         //                 this.modalService.hide();

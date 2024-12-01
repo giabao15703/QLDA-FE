@@ -1,7 +1,6 @@
 import { LoadingComponent } from '#shared/components';
 import { MaterialModules } from '#shared/modules';
 import { DetailedFooterComponent, NavbarComponent } from '#user/layout';
-import { CartComponent } from '#user/pages/product/cart/cart.component';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -12,7 +11,6 @@ import { TranslateModule } from '@ngx-translate/core';
     standalone: true,
     imports: [
         CommonModule,
-        CartComponent,
         FormsModule,
         NavbarComponent,
         DetailedFooterComponent,

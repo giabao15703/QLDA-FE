@@ -5,9 +5,9 @@ export * from './account/supplier/basic-information-form/basic-information-form.
 export * from './account/supplier/core-business/core-business.component';
 export * from './account/supplier/product/form/product-form.component';
 export * from './account/supplier/product/list/product-list.component';
-export * from './account/supplier/upgrade-profile/upgrade-profile.component';
+export * from './account/supplier/upgrade-profile_deleted/upgrade-profile.component';
 export * from './account/supplier/verification/verification.component';
-export * from './category-select/category-select.component';
+//export * from './category-select/category-select.component';
 export * from './confirm/confirm.component';
 export * from './filter/filter.component';
 export * from './form-header/form-header.component';

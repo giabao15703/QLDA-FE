@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { CategorySelectComponent, IndustrySelectComponent } from '#shared/components';
+// import { CategorySelectComponent, IndustrySelectComponent } from '#shared/components';
 import {
     REGEX_ALPHANUMERIC,
     REGEX_ALPHANUMERIC_AND_SPACES,
@@ -964,76 +964,76 @@ export class SupplierCoreBusinessComponent {
     };
 
     openCategorySelectDialog = () => {
-        this.modalService.show({
-            modal: {
-                height: 'auto',
-                title: 'supplier-profile.tabs.core-business.form.select-category-modal-title',
-                content: CategorySelectComponent,
-                footer: {
-                    onSubmit: (categoriesSelected: I_Category[]) => {
-                        const rowsToUpdate = categoriesSelected.flatMap((category, index) => [
-                            {
-                                name: TABLE_CORE_BUSINESS_INFORMATION,
-                                index,
-                                key: 'coreBusinessSubCluster',
-                                value: {
-                                    label: category.subClusterCode.name,
-                                    value: category.subClusterCode.id,
-                                },
-                            },
-                            {
-                                name: TABLE_CORE_BUSINESS_INFORMATION,
-                                index,
-                                key: 'coreBusinessDetailed',
-                                value: {
-                                    label: category.name,
-                                    value: category.id,
-                                },
-                            },
-                        ]);
+        // this.modalService.show({
+        //     modal: {
+        //         height: 'auto',
+        //         title: 'supplier-profile.tabs.core-business.form.select-category-modal-title',
+        //         content: CategorySelectComponent,
+        //         footer: {
+        //             onSubmit: (categoriesSelected: I_Category[]) => {
+        //                 const rowsToUpdate = categoriesSelected.flatMap((category, index) => [
+        //                     {
+        //                         name: TABLE_CORE_BUSINESS_INFORMATION,
+        //                         index,
+        //                         key: 'coreBusinessSubCluster',
+        //                         value: {
+        //                             label: category.subClusterCode.name,
+        //                             value: category.subClusterCode.id,
+        //                         },
+        //                     },
+        //                     {
+        //                         name: TABLE_CORE_BUSINESS_INFORMATION,
+        //                         index,
+        //                         key: 'coreBusinessDetailed',
+        //                         value: {
+        //                             label: category.name,
+        //                             value: category.id,
+        //                         },
+        //                     },
+        //                 ]);
 
-                        this.form.tableUpdateRows(rowsToUpdate, true);
-                        this.categoriesSelected = categoriesSelected;
-                        this.modalService.hide();
-                    },
-                },
-            },
-            data: {
-                categoriesSelected: this.categoriesSelected,
-            },
-        });
+        //                 this.form.tableUpdateRows(rowsToUpdate, true);
+        //                 this.categoriesSelected = categoriesSelected;
+        //                 this.modalService.hide();
+        //             },
+        //         },
+        //     },
+        //     data: {
+        //         categoriesSelected: this.categoriesSelected,
+        //     },
+        // });
     };
 
     openIndustrySelectDialog = () => {
-        this.modalService.show({
-            modal: {
-                height: 'auto',
-                title: 'supplier-profile.tabs.core-business.form.select-industry-modal-title',
-                content: IndustrySelectComponent,
-                footer: {
-                    onSubmit: (industriesSelected: I_Industry[]) => {
-                        const rowsToUpdate = industriesSelected.flatMap((industry, index) => [
-                            {
-                                name: TABLE_CLIENT_INDUSTRY_FOCUS,
-                                index,
-                                key: 'industryFocus',
-                                value: {
-                                    label: industry.name,
-                                    value: industry.id,
-                                },
-                            },
-                        ]);
+        // this.modalService.show({
+        //     modal: {
+        //         height: 'auto',
+        //         title: 'supplier-profile.tabs.core-business.form.select-industry-modal-title',
+        //         content: IndustrySelectComponent,
+        //         footer: {
+        //             onSubmit: (industriesSelected: I_Industry[]) => {
+        //                 const rowsToUpdate = industriesSelected.flatMap((industry, index) => [
+        //                     {
+        //                         name: TABLE_CLIENT_INDUSTRY_FOCUS,
+        //                         index,
+        //                         key: 'industryFocus',
+        //                         value: {
+        //                             label: industry.name,
+        //                             value: industry.id,
+        //                         },
+        //                     },
+        //                 ]);
 
-                        this.form.tableUpdateRows(rowsToUpdate, true);
-                        this.industriesSelected = industriesSelected;
-                        this.modalService.hide();
-                    },
-                },
-            },
-            data: {
-                industriesSelected: this.industriesSelected,
-            },
-        });
+        //                 this.form.tableUpdateRows(rowsToUpdate, true);
+        //                 this.industriesSelected = industriesSelected;
+        //                 this.modalService.hide();
+        //             },
+        //         },
+        //     },
+        //     data: {
+        //         industriesSelected: this.industriesSelected,
+        //     },
+        // });
     };
 
     onSubmit = async () => {

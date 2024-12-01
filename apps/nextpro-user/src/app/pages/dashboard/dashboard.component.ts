@@ -36,8 +36,8 @@ export class DashboardComponent {
             // Gắn shortName từ user nếu tồn tại
             this.shortName = user?.shortName ?? 'Không có shortName';
         }
-        var group_id = await this.groupService.getJoinGroups({ userId: this.user.id });
-        var group = await this.groupService.getJoinGroups({ groupId: parseInt(group_id.data[0].group?.id) });
+        const group_id = await this.groupService.getJoinGroups({ userId: this.user.id });
+        const group = await this.groupService.getJoinGroups({ groupId: parseInt(group_id.data[0].group?.id) });
         console.log(group.data);
     }
     openModal() {}

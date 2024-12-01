@@ -102,7 +102,7 @@ export class GroupRegistrationComponent implements OnInit {
         try {
             // Gửi yêu cầu tham gia nhóm
             const response = await this.groupQLDAService.getGroupQldaJoin({
-                groupId: group_id
+                groupId: group_id,
             });
             if (response.groupQldaJoin.status) {
                 this.notification.success('Bạn đã xin tham gia nhóm');

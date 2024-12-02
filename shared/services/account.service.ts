@@ -295,34 +295,6 @@ export class AccountService {
         return normalizeWithPagination<I_BuyerSubAccount>(data.buyerSubAccounts, extra);
     };
 
-    getBuyerSubAccount = (
-        variables?: GetBuyerSubAccountQueryVariables,
-        options?: I_GraphQLOptions<GetBuyerSubAccountQuery, I_Buyer>,
-    ) => {
-        return this.graphqlService.query<GetBuyerSubAccountQuery, GetBuyerSubAccountQueryVariables, I_Buyer>(
-            this.getBuyerSubAccountGQL,
-            variables,
-            {
-                normalize: (data) => data.buyerSubAccount,
-                ...options,
-            },
-        ) as Promise<I_BuyerSubAccount>;
-    };
-
-    getBuyerSubAccountWithBuyer = (
-        variables?: GetBuyerSubAccountWithBuyerQueryVariables,
-        options?: I_GraphQLOptions<GetBuyerSubAccountWithBuyerQuery, I_Buyer>,
-    ) => {
-        return this.graphqlService.query<
-            GetBuyerSubAccountWithBuyerQuery,
-            GetBuyerSubAccountWithBuyerQueryVariables,
-            I_Buyer
-        >(this.getBuyerSubAccountWithBuyerGQL, variables, {
-            normalize: (data) => data.buyerSubAccount,
-            ...options,
-        }) as Promise<I_BuyerSubAccount>;
-    };
-
     getBuyerSubAccounts = (
         variables?: GetBuyerSubAccountsQueryVariables,
         options?: I_GraphQLOptions<GetBuyerSubAccountsQuery, I_TableState<I_BuyerSubAccount>>,

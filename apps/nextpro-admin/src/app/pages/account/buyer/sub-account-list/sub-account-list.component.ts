@@ -369,20 +369,20 @@ export class AccountBuyerSubAccountListComponent {
         ];
         this.table.config.refetch = this.getBuyerSubAccountsWithBuyer;
 
-        this.routeService.onChange(({ hash }) => {
+        /* this.routeService.onChange(({ hash }) => {
             this.getBuyerSubAccountWithBuyer(hash);
-        });
+        }); */
     }
 
     detail = null;
     exportUrl = REST_API_ADMIN_ENDPOINTS.ACCOUNT.BUYER.MAIN_ACCOUNT.EXPORT;
 
     ngOnInit() {
-        this.getBuyerSubAccountWithBuyer();
+        /*  this.getBuyerSubAccountWithBuyer(); */
         this.getBuyerSubAccountsWithBuyer();
     }
 
-    getBuyerSubAccountWithBuyer = async (hash?: string) => {
+    /* getBuyerSubAccountWithBuyer = async (hash?: string) => {
         const response = await this.routeService.getDetail({
             tab: TAB_NAME,
             hash,
@@ -421,7 +421,7 @@ export class AccountBuyerSubAccountListComponent {
             companyLogo: await getFile(buyerSubAccountWithBuyerDetail?.buyer?.companyLogo),
             buyerIndustry: buyerSubAccountWithBuyerDetail?.buyer?.buyerIndustry,
         };
-    };
+    }; */
 
     getBuyerSubAccountsWithBuyer = async (variables?: I_QueryVariables) => {
         const buyerSubAccountsWithBuyer = await this.accountService.getBuyerSubAccountsWithBuyer(

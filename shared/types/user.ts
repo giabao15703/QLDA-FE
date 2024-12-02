@@ -23,6 +23,17 @@ export interface I_User {
     companyPosition?: number;
     supplier?: I_Supplier;
     buyer?: I_Buyer;
+    mssv?: string;
+    noiSinh?: string;
+    ngaySinh?: string;
+    gender?: string;
+    phone?: string;
+    bacDaoTao?: string;
+    loaiHinhDaoTao?: string;
+    nganh?: string;
+    lop?: string;
+    khoaHoc?: string;
+    picture?: string;
     userspermissionSet?: {
         edges?: {
             node?: I_UserPermission;

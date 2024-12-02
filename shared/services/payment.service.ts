@@ -82,7 +82,19 @@ export class PaymentDataService {
             this.getHistoryPaymentGQL,
             variables,
             {
-                normalize: (data) => data.historyPayment,
+                normalize: (data) => ({
+                    ...data.historyPayment,
+                    userPayment: {
+                        ...data.historyPayment.userPayment,
+                        user: {
+                            ...data.historyPayment.userPayment.user,
+                            buyer: {
+                                ...data.historyPayment.userPayment.user.buyer,
+                                gender: data.historyPayment.userPayment.user.buyer.gender,
+                            },
+                        },
+                    },
+                }),
                 ...options,
             },
         ) as Promise<I_HistoryPayment>;
@@ -110,7 +122,19 @@ export class PaymentDataService {
             this.getHistoryPendingGQL,
             variables,
             {
-                normalize: (data) => data.historyPending,
+                normalize: (data) => ({
+                    ...data.historyPending,
+                    userPayment: {
+                        ...data.historyPending.userPayment,
+                        user: {
+                            ...data.historyPending.userPayment.user,
+                            buyer: {
+                                ...data.historyPending.userPayment.user.buyer,
+                                gender: data.historyPending.userPayment.user.buyer.gender,
+                            },
+                        },
+                    },
+                }),
                 ...options,
             },
         ) as Promise<I_HistoryPending>;

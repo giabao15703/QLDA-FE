@@ -192,7 +192,7 @@ export class UserBuyerProfileSubAccountFormComponent {
         this.masterDataService.getLanguages().then((languages) => (this.language = languages?.data?.[0]?.id));
     }
 
-    ngOnChanges(changes) {
+    /* ngOnChanges(changes) {
         if (changes?.mode?.currentValue === E_Form_Mode.CREATE) {
             this.form.reset();
         } else {
@@ -203,9 +203,9 @@ export class UserBuyerProfileSubAccountFormComponent {
                 this.getBuyerSubAccount(changes?.data?.currentValue?.id);
             }
         }
-    }
+    } */
 
-    getBuyerSubAccount = async (id: string) => {
+    /* getBuyerSubAccount = async (id: string) => {
         const buyerSubAccount = await this.accountService.getBuyerSubAccount({
             id,
         });
@@ -221,7 +221,7 @@ export class UserBuyerProfileSubAccountFormComponent {
             currency: buyerSubAccount.currency.id,
         });
     };
-
+ */
     handleSave = () => {
         this.form.submit(
             async ({ gender, phone, position, picture, currency, password, confirmPassword, email, fullName }) => {
@@ -244,7 +244,7 @@ export class UserBuyerProfileSubAccountFormComponent {
                                 user: {
                                     password,
                                     email,
-                                    fullName,
+                                    /* fullName, */
                                 },
                             },
                         });

@@ -25,6 +25,17 @@ fragment UserInfo on UserNode {
         name
     }
     pk
+    ngaySinh
+    noiSinh
+    lop
+    bacDaoTao
+    khoaHoc
+    loaiHinhDaoTao
+    nganh
+    gender
+    picture
+    phone
+    mssv
 }
 
 fragment UserWithBuyerInfo on UserNode {

@@ -50,7 +50,7 @@ export class BuyerProfilePage {
     subAccounts = null;
 
     async ngOnInit() {
-        const buyer = await this.accountService.getBuyer({
+        /* const buyer = await this.accountService.getBuyer({
             id: this.activatedRoute.snapshot.paramMap.get('id'),
         });
         this.buyer = buyer;
@@ -85,7 +85,7 @@ export class BuyerProfilePage {
 
         this.subAccounts = {
             id: buyer.id,
-        };
+        }; */
     }
 
     handleImageError(event: Event) {

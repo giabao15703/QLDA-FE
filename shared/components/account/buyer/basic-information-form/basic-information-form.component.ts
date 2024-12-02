@@ -121,6 +121,48 @@ export class BuyerBasicInformationFormComponent {
                         ],
                     },
                     {
+                        name: 'ngaySinh',
+                        label: 'Ngày sinh',
+                        fieldType: E_FieldType.DATEPICKER,
+                    },
+                    {
+                        name: 'noiSinh',
+                        label: 'Nơi sinh',
+                    },
+                    {
+                        name: 'mssv',
+                        label: 'MSSV',
+                    },
+                    {
+                        name: 'lop',
+                        label: 'Lớp',
+                    },
+                    {
+                        name: 'gender',
+                        label: 'Giới tính',
+                    },
+                    {
+                        name: 'picture',
+                        label: 'Ảnh',
+                        fieldType: E_FieldType.UPLOAD,
+                    },
+                    {
+                        name: 'khoaHoc',
+                        label: 'Khóa học',
+                    },
+                    {
+                        name: 'loaiHinhDaoTao',
+                        label: 'Loại hình đào tạo',
+                    },
+                    {
+                        name: 'bacDaoTao',
+                        label: 'Bậc đào tạo',
+                    },
+                    {
+                        name: 'nganh',
+                        label: 'Ngành',
+                    },
+                    {
                         label: 'auth.register.become-buyer.form-buyer.password',
                         placeholder: 'auth.register.become-buyer.form-buyer.password',
                         name: 'password',
@@ -314,43 +356,70 @@ export class BuyerBasicInformationFormComponent {
     };
 
     handleSave = () => {
-        this.form.submit(async ({ confirmPassword, email, password, shortName }) => {
-            // Kiểm tra xác thực mật khẩu
-            if (password !== confirmPassword) {
-                this.form.setFieldError('confirmPassword', 'VALIDATE_DESCRIPTION.password.notMatch');
-                return;
-            }
+        this.form.submit(
+            async ({
+                confirmPassword,
+                email,
+                password,
+                shortName,
+                phone,
+                lop,
+                bacDaoTao,
+                khoaHoc,
+                loaiHinhDaoTao,
+                ngaySinh,
+                noiSinh,
+                nganh,
+                gender,
+                picture,
+                mssv,
+            }) => {
+                if (password !== confirmPassword) {
+                    this.form.setFieldError('confirmPassword', 'VALIDATE_DESCRIPTION.password.notMatch');
+                    return;
+                }
+                const submitData = {
+                    user: {
+                        email: email ?? '',
+                        password: password ?? '',
+                        shortName: shortName ?? '',
+                        phone: phone ?? '',
+                        lop: lop ?? '',
+                        bacDaoTao: bacDaoTao ?? '',
+                        khoaHoc: khoaHoc ?? '',
+                        loaiHinhDaoTao: loaiHinhDaoTao ?? '',
+                        ngaySinh: ngaySinh ? new Date(ngaySinh).toISOString().split('T')[0] : '',
+                        noiSinh: noiSinh ?? '',
+                        nganh: nganh ?? '',
+                        gender: gender ?? '',
+                        picture: picture ?? '',
+                        mssv: mssv ?? '',
+                    },
+                };
 
-            // Chuẩn bị dữ liệu để gửi
-            // Điều chỉnh dữ liệu submit để phù hợp với cấu trúc của mutation GraphQL
-            const submitData = {
-                user: {
-                    email: email ?? '',
-                    password: password ?? '',
-                    shortName: shortName ?? '',
-                    // Thêm các trường khác nếu cần cho mutation
-                },
-            };
-
-            // Sửa đổi phần gọi AccountService để sử dụng mutation GraphQL
-            this.accountService
-                .createBuyer(submitData) // Gọi mutation GraphQL
-                .then((response: any) => {
-                    const data = response.data;
-                    if (data?.buyerCreate?.status) {
-                        // Tạo buyer thành công, xử lý trường hợp thành công
-                        this.localStorageService.remove(FORM_NAME);
-                        console.log('Buyer được tạo thành công:', data.buyerCreate);
-                    } else {
-                        // Xử lý lỗi từ phản hồi mutation
-                        this.form.setFieldError('general', data?.buyerCreate?.error?.message || 'Lỗi không xác định');
-                    }
-                })
-                .catch((error) => {
-                    // Xử lý lỗi khi gửi request
-                    this.form.setFieldError('general', error.message || 'Đã xảy ra lỗi khi tạo buyer');
-                });
-        }, FORM_NAME);
+                this.accountService
+                    .createBuyer(submitData) // Gọi mutation GraphQL
+                    .then((response: any) => {
+                        const data = response.data;
+                        if (data?.buyerCreate?.status) {
+                            // Tạo buyer thành công, xử lý trường hợp thành công
+                            this.localStorageService.remove(FORM_NAME);
+                            console.log('Buyer được tạo thành công:', data.buyerCreate);
+                        } else {
+                            // Xử lý lỗi từ phản hồi mutation
+                            this.form.setFieldError(
+                                'general',
+                                data?.buyerCreate?.error?.message || 'Lỗi không xác định',
+                            );
+                        }
+                    })
+                    .catch((error) => {
+                        // Xử lý lỗi khi gửi request
+                        this.form.setFieldError('general', error.message || 'Đã xảy ra lỗi khi tạo buyer');
+                    });
+            },
+            FORM_NAME,
+        );
     };
     selectedFile: File | null = null;
 

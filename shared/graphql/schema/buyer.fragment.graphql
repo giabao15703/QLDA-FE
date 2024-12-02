@@ -36,28 +36,7 @@ fragment BuyerInfo on BuyerNode {
     user {
         ...UserInfo
     }
-    companyFullName
-    companyShortName
-    companyLongName
-    companyLogo
-    companyTax
-    companyAddress
-    companyCity
-    companyCountry {
-        ...CountryInfo
-    }
-    companyCountryState {
-        ...CityInfo
-    }
-    companyNumberOfEmployee {
-        ...NumberOfEmployeeInfo
-    }
-    companyWebsite
-    companyReferralCode
-    companyEmail
-    gender {
-        ...GenderInfo
-    }
+    gender
     picture
     phone
     position {
@@ -105,6 +84,15 @@ fragment BuyerInfo on BuyerNode {
     firstName
     lastName
     pk
+    mssv
+    ngaySinh
+    noiSinh
+    lop
+    khoaHoc
+    bacDaoTao
+    loaiHinhDaoTao
+    nganh
+    gender
 }
 
 fragment BuyerSubAccountsActivityInfo on BuyerSubAccountsActivityNode {

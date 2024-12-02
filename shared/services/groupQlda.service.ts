@@ -21,7 +21,7 @@ import {
     GetJoinGroupsQueryVariables,
     GetJoinGroupsGQL,
 } from '#shared/graphql/types';
-import { I_GraphQLOptions, I_MutationResponse, I_NormalizeExtra, I_TableState } from '#shared/types';
+import { E_Role, I_GraphQLOptions, I_MutationResponse, I_NormalizeExtra, I_TableState } from '#shared/types';
 import { normalizeWithPagination } from '#shared/utils';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -78,7 +78,11 @@ export class GroupQLDAService {
             this.getGroupQldaGQL,
             variables,
             {
-                //normalize: (data) => data.groupQlda,
+                normalize: (data) => {
+                    const groupQlda = data.groupQlda as unknown as I_GroupQLDA;
+                    groupQlda.deTai.idgvhuongdan.role = groupQlda.deTai.idgvhuongdan.role as E_Role;
+                    return groupQlda;
+                },
                 ...options,
             },
         ) as Promise<I_GroupQLDA>;

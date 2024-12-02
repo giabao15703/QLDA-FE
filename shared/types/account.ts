@@ -140,7 +140,7 @@ export interface I_Buyer {
     companyWebsite?: string;
     companyReferralCode?: string;
     companyEmail?: string;
-    gender?: I_Gender;
+    gender?: string;
     picture?: string;
     phone?: string;
     position?: I_Position;
@@ -155,6 +155,14 @@ export interface I_Buyer {
     sendMail15Day?: string;
     sendMail7Day?: string;
     sendMailExpire?: string;
+    mssv?: string;
+    ngaySinh?: Date;
+    noiSinh?: string;
+    lop?: string;
+    khoaHoc?: string;
+    bacDaoTao?: string;
+    loaiHinhDaoTao?: string;
+    nganh?: string;
     buyerActivity?: {
         edges?: {
             node?: I_BuyerActivity;

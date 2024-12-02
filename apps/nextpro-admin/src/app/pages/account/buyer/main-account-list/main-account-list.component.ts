@@ -179,9 +179,29 @@ export class AccountBuyerMainAccountListComponent {
                 label: 'account.buyer-accounts.buyer-accounts-list.logID',
             },
             {
+                sort: 'mssv',
+                name: 'mssv',
+                label: 'MSSV',
+            },
+            {
                 sort: 'username',
                 name: 'username',
                 label: 'account.buyer-accounts.buyer-accounts-list.accountID',
+            },
+            {
+                sort: 'gender',
+                name: 'gender',
+                label: 'Giới tính',
+            },
+            {
+                sort: 'phone',
+                name: 'phone',
+                label: 'Số điện thoại',
+            },
+            {
+                sort: 'picture',
+                name: 'picture',
+                label: 'Ảnh',
             },
             {
                 sort: 'email',
@@ -195,52 +215,40 @@ export class AccountBuyerMainAccountListComponent {
                 render: formatDate,
             },
             {
-                cellStyle: { width: '80px' },
-                type: E_TableColumnType.HTML,
-                sort: 'status',
-                name: 'user',
-                label: 'masterData.status',
-                render: (cell) => {
-                    let status;
-                    let statusText;
-
-                    switch (cell.status) {
-                        case 1:
-                            status = 'active';
-                            statusText = 'account.buyer-accounts.buyer-accounts-list.active';
-                            break;
-                        case 2:
-                            status = 'inactive';
-                            statusText = 'account.buyer-accounts.buyer-accounts-list.inactive';
-                            break;
-                    }
-                },
-                expand: {
-                    type: E_TableColumnType.HTML,
-                    render: (row) => {
-                        let status;
-                        let statusText;
-
-                        switch (row.node.changedState) {
-                            case 1:
-                                status = 'active';
-                                statusText = 'account.buyer-accounts.buyer-accounts-list.active';
-                                break;
-                            case 2:
-                                status = 'inactive';
-                                statusText = 'account.buyer-accounts.buyer-accounts-list.inactive';
-                                break;
-                            default:
-                                status = 'undefined';
-                                statusText = 'account.buyer-accounts.buyer-accounts-list.undefined';
-                                break;
-                        }
-
-                        return `<div class="text-white text-center p-[10px] bg-${status}">
-                            ${this.translateService.instant(statusText)}
-                        </div>`;
-                    },
-                },
+                sort: 'ngaySinh',
+                name: 'ngaySinh',
+                label: 'Ngày sinh',
+                render: formatDate,
+            },
+            {
+                sort: 'noiSinh',
+                name: 'noiSinh',
+                label: 'Nơi sinh',
+            },
+            {
+                sort: 'lop',
+                name: 'lop',
+                label: 'Lớp',
+            },
+            {
+                sort: 'khoaHoc',
+                name: 'khoaHoc',
+                label: 'Khóa học',
+            },
+            {
+                sort: 'loaiHinhDaoTao',
+                name: 'loaiHinhDaoTao',
+                label: 'Loại hình đào tạo',
+            },
+            {
+                sort: 'bacDaoTao',
+                name: 'bacDaoTao',
+                label: 'Bậc đào tạo',
+            },
+            {
+                sort: 'nganh',
+                name: 'nganh',
+                label: 'Ngành',
             },
             {
                 cellStyle: { width: '50px' },
@@ -298,7 +306,11 @@ export class AccountBuyerMainAccountListComponent {
             { extra: { variables } },
         );
         console.log('Buyers data:', users.data);
-        this.table.state.data = users.data;
+        const filteredUsers = users.data.filter((user) => user.userType === 2);
+        this.table.state.data = filteredUsers.map((user) => ({
+            ...user,
+            ngaySinh: new Date(user.ngaySinh),
+        }));
         this.table.state.pagination = users.pagination;
         this.table.state.selection?.clear();
         this.table.state.expand.clear();

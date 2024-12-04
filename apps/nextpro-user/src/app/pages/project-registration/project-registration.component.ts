@@ -37,6 +37,7 @@ export class ProjectRegistrationComponent {
             .getDeTais()
             .then((data) => {
                 this.deTaiData = data;
+                this.deTaiData.data = this.deTaiData.data.filter((item) => Number(item.trangthai) === 1);
                 console.log('DETAI Data:', this.deTaiData);
             })
             .catch((error) => {

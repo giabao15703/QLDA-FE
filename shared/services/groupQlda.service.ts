@@ -20,8 +20,14 @@ import {
     GetJoinGroupsQuery,
     GetJoinGroupsQueryVariables,
     GetJoinGroupsGQL,
+    GetStudentsWithoutGroupQuery,
+    GetStudentsWithoutGroupQueryVariables,
+    GetStudentsWithoutGroupGQL,
+    GetInviteUserToGroupMutation,
+    GetInviteUserToGroupMutationVariables,
+    GetInviteUserToGroupGQL,
 } from '#shared/graphql/types';
-import { E_Role, I_GraphQLOptions, I_MutationResponse, I_NormalizeExtra, I_TableState } from '#shared/types';
+import { E_Role, I_GraphQLOptions, I_MutationResponse, I_NormalizeExtra, I_TableState, I_User } from '#shared/types';
 import { normalizeWithPagination } from '#shared/utils';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -41,6 +47,8 @@ export class GroupQLDAService {
         private acceptJoinRequestGQL: AcceptJoinRequestGQL,
         private getGroupQldaRequestsGQL: GetGroupQldaRequestsGQL,
         private getJoinGroupsGQL: GetJoinGroupsGQL,
+        private getStudentsWithoutGroupGQL: GetStudentsWithoutGroupGQL,
+        private getInviteUserToGroupGQL: GetInviteUserToGroupGQL,
     ) {}
 
     get error(): Observable<string> {
@@ -80,7 +88,7 @@ export class GroupQLDAService {
             {
                 normalize: (data) => {
                     const groupQlda = data.groupQlda as unknown as I_GroupQLDA;
-                    groupQlda.deTai.idgvhuongdan.role = groupQlda.deTai.idgvhuongdan.role as E_Role;
+                    /* groupQlda.deTai.idgvhuongdan.role = groupQlda.deTai.idgvhuongdan.role as E_Role; */
                     return groupQlda;
                 },
                 ...options,
@@ -161,5 +169,38 @@ export class GroupQLDAService {
                 ...options,
             },
         ) as Promise<I_TableState<I_JoinGroup>>;
+    };
+    private normalizeStudentsWithoutGroupList = (
+        data: GetStudentsWithoutGroupQuery,
+        extra?: I_NormalizeExtra,
+    ): I_TableState<I_User> => {
+        // Trả về toàn bộ dữ liệu mà không cần phân trang
+        return { data: data.studentsWithoutGroup || [] };
+    };
+
+    getStudentsWithoutGroup = (
+        variables?: GetStudentsWithoutGroupQueryVariables,
+        options?: I_GraphQLOptions<GetStudentsWithoutGroupQuery, I_TableState<I_User>>,
+    ) => {
+        return this.graphqlService.query<
+            GetStudentsWithoutGroupQuery,
+            GetStudentsWithoutGroupQueryVariables,
+            I_TableState<I_User>
+        >(this.getStudentsWithoutGroupGQL, variables, {
+            normalize: (data) => {
+                return this.normalizeStudentsWithoutGroupList(data, options?.extra);
+            },
+            ...options,
+        }) as Promise<I_TableState<I_User>>;
+    };
+    getInviteUserToGroup = (
+        variables?: GetInviteUserToGroupMutationVariables,
+        options?: I_GraphQLOptions<GetInviteUserToGroupMutation, { inviteUserToGroup: I_MutationResponse }>,
+    ) => {
+        return this.graphqlService.mutate<
+            GetInviteUserToGroupMutation,
+            GetInviteUserToGroupMutationVariables,
+            { inviteUserToGroup: I_MutationResponse }
+        >(this.getInviteUserToGroupGQL, variables, options);
     };
 }

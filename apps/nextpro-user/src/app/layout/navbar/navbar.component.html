@@ -111,129 +111,13 @@
                                 class="w-7"
                             />
                         }
-                        @if (user?.fullName) {
-                            <div class="text-white">{{ user.fullName }}</div>
+                        @if (user?.shortName) {
+                            <div class="text-white">{{ user.shortName }}</div>
                         }
                         <img src="/assets/icons/navbar/down-arrow-svgrepo-com.svg" alt="" />
                     </div>
                 </button>
                 <mat-menu #menuPersonal="matMenu" class="!bg-gradient-to-r from-[#3CC9C7] to-[#15677f]">
-                    @switch (user?.userType) {
-                        @case (3) {
-                            <div mat-menu-item>
-                                <a
-                                    [routerLink]="['/supplier/' + user?.id]"
-                                    class="flex items-center gap-3 no-underline text-[#ffffff] !text-[15px]"
-                                >
-                                    <span class="material-symbols-outlined">person</span>
-                                    <div>{{ 'navbar.personal.profile' | translate }}</div>
-                                </a>
-                            </div>
-                            <div mat-menu-item>
-                                <a
-                                    [routerLink]="['#']"
-                                    class="flex items-center gap-3 no-underline text-[#ffffff] !text-[15px]"
-                                >
-                                    <span class="material-symbols-outlined">quick_reference</span>
-                                    <div>{{ 'navbar.personal.guide' | translate }}</div>
-                                </a>
-                            </div>
-                            <div mat-menu-item>
-                                <a
-                                    [routerLink]="['/payment']"
-                                    class="flex items-center gap-3 no-underline text-[#ffffff] !text-[15px]"
-                                >
-                                    <span class="material-symbols-outlined">credit_card</span>
-                                    <div>{{ 'navbar.personal.payment' | translate }}</div>
-                                </a>
-                            </div>
-                            <div mat-menu-item>
-                                <a
-                                    href="https://discovery.nextpro.io/"
-                                    target="_blank"
-                                    class="flex items-center gap-3 no-underline text-[#ffffff] !text-[15px]"
-                                >
-                                    <span class="material-symbols-outlined">explore</span>
-                                    <div>{{ 'navbar.personal.nextPro-discovery' | translate }}</div>
-                                </a>
-                            </div>
-                            <div mat-menu-item>
-                                <a
-                                    [routerLink]="['#']"
-                                    class="flex items-center gap-3 no-underline text-[#ffffff] !text-[15px]"
-                                >
-                                    <span class="material-symbols-outlined">encrypted</span>
-                                    <div>{{ 'navbar.personal.change-password' | translate }}</div>
-                                </a>
-                            </div>
-                        }
-                        @default {
-                            <div mat-menu-item>
-                                <a
-                                    [routerLink]="['/buyer/' + user?.id]"
-                                    class="flex items-center gap-3 no-underline text-[#ffffff] !text-[15px]"
-                                >
-                                    <span class="material-symbols-outlined">person</span>
-                                    <div>{{ 'navbar.personal.profile' | translate }}</div>
-                                </a>
-                            </div>
-                            <div mat-menu-item>
-                                <a
-                                    [routerLink]="['#']"
-                                    class="flex items-center gap-3 no-underline text-[#ffffff] !text-[15px]"
-                                >
-                                    <span class="material-symbols-outlined">person_add</span>
-                                    <div>{{ 'navbar.personal.follow' | translate }}</div>
-                                </a>
-                            </div>
-                            <div mat-menu-item>
-                                <a
-                                    [routerLink]="['/buyer-club']"
-                                    class="flex items-center gap-3 no-underline text-[#ffffff] !text-[15px]"
-                                >
-                                    <span class="material-symbols-outlined">groups</span>
-                                    <div>{{ 'navbar.personal.buyer-club' | translate }}</div>
-                                </a>
-                            </div>
-                            <div mat-menu-item>
-                                <a
-                                    [routerLink]="['/payment']"
-                                    class="flex items-center gap-3 no-underline text-[#ffffff] !text-[15px]"
-                                >
-                                    <span class="material-symbols-outlined">credit_card</span>
-                                    <div>{{ 'navbar.personal.payment' | translate }}</div>
-                                </a>
-                            </div>
-                            <div mat-menu-item>
-                                <a
-                                    [routerLink]="['#']"
-                                    class="flex items-center gap-3 no-underline text-[#ffffff] !text-[15px]"
-                                >
-                                    <span class="material-symbols-outlined">quick_reference</span>
-                                    <div>{{ 'navbar.personal.guide' | translate }}</div>
-                                </a>
-                            </div>
-                            <div mat-menu-item>
-                                <a
-                                    [routerLink]="['#']"
-                                    class="flex items-center gap-3 no-underline text-[#ffffff] !text-[15px]"
-                                >
-                                    <span class="material-symbols-outlined">quiz</span>
-                                    <div>{{ 'navbar.personal.frequently-asked-questions' | translate }}</div>
-                                </a>
-                            </div>
-                            <div mat-menu-item>
-                                <a
-                                    href="https://discovery.nextpro.io/"
-                                    target="_blank"
-                                    class="flex items-center gap-3 no-underline text-[#ffffff] !text-[15px]"
-                                >
-                                    <span class="material-symbols-outlined">explore</span>
-                                    <div>{{ 'navbar.personal.nextPro-discovery' | translate }}</div>
-                                </a>
-                            </div>
-                        }
-                    }
                     <div mat-menu-item>
                         <div
                             (click)="onLogout()"

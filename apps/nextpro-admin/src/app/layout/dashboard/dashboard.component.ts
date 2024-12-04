@@ -7,7 +7,7 @@ import { BreadcrumbComponent, BreadcrumbItemDirective } from 'xng-breadcrumb';
 import { NavListComponent } from '#admin/layout/dashboard/nav-list/nav-list.component';
 import { MaterialModules } from '#shared/modules';
 import { AuthService, ConfirmService, LocalStorageService } from '#shared/services';
-import { E_Role, I_NavItem } from '#shared/types';
+import { E_Role, I_NavItem, I_Profile } from '#shared/types';
 
 @Component({
     standalone: true,
@@ -30,11 +30,12 @@ export class LayoutDashboard {
         private translateService: TranslateService,
         private localStorageService: LocalStorageService,
     ) {}
-
+    user: I_Profile = {};
     showSidebar = true;
     menuData: I_NavItem[] = [];
 
     ngOnInit() {
+        this.user = this.localStorageService.get('user');
         const showSidebar = this.localStorageService.get('showSidebar') ?? true;
         this.showSidebar = showSidebar;
 

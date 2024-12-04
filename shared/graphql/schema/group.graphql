@@ -58,10 +58,13 @@ query getGroupQldaRequests(
                 id
                 user {
                     id
+                    shortName
                 }
                 group {
                     id
                     creatorShortName
+                    name
+                    maNhom
                 }
                 leaderUserId
             }
@@ -133,6 +136,28 @@ mutation createGroupQlda($input: GroupQLDAInput!) {
         }
         error {
             ...ErrorInfo
+        }
+    }
+}
+query getStudentsWithoutGroup{
+  studentsWithoutGroup {
+    id
+    shortName
+    email
+    gender
+    phone
+    nganh
+    mssv
+    ngaySinh
+    khoaHoc
+  }
+}
+mutation getInviteUserToGroup($groupId: ID!, $userId: ID!) {
+    inviteUserToGroup(groupId: $groupId, userId: $userId) {
+        status
+        error {
+            code
+            message
         }
     }
 }

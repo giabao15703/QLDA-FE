@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 
 import { MaterialModules } from '#shared/modules';
 import { LocalStorageService, RouteService } from '#shared/services';
-import { I_NavItem } from '#shared/types';
+import { I_NavItem, I_Profile } from '#shared/types';
 
 @Component({
     standalone: true,
@@ -21,7 +21,7 @@ export class NavItemComponent {
             this.isActive = this.navItem.href === route;
         });
     }
-
+    user: I_Profile = {};
     @Input() navParent: I_NavItem;
     @Input() navItem: I_NavItem;
     @Input() isExpanded = false;
@@ -29,6 +29,7 @@ export class NavItemComponent {
     isActive: boolean = false;
 
     ngOnInit() {
+        this.user = this.localStorageService.get('user');
         const activeMenu = this.localStorageService.get('activeMenu') ?? '';
         const activeSubMenu = this.localStorageService.get('activeSubMenu') ?? '';
 

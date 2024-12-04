@@ -1,7 +1,7 @@
 fragment GroupQLDAInfo on GroupQLDANode {
     id
-    maNhom  # Mã nhóm
-    name    # Tên nhóm
+    maNhom
+    name
     status 
     memberCount
     maxMember

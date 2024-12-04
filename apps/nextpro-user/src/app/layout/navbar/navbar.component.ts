@@ -6,7 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ImageComponent, LanguageSwitchComponent } from '#shared/components';
 import { MaterialModules } from '#shared/modules';
 import { AuthService, GroupQLDAService, LocalStorageService, NotificationService } from '#shared/services';
-import { E_UserType, I_JoinRequest, I_Profile } from '#shared/types';
+import { E_UserType, I_JoinGroup, I_JoinRequest, I_Profile, I_TableState } from '#shared/types';
 import { MatMenuTrigger } from '@angular/material/menu';
 
 @Component({
@@ -54,7 +54,7 @@ export class NavbarComponent {
         }
 
         this.groupQldaService
-            .getGroupQldaRequests()
+            .getGroupQldaRequests() // Lấy tất cả yêu cầu tham gia nhóm
             .then((joinRequests: I_JoinRequest[]) => {
                 console.log('Dữ liệu trả về từ API:', joinRequests);
 
@@ -64,20 +64,35 @@ export class NavbarComponent {
                     return;
                 }
 
-                this.notifications = joinRequests
-                    .filter((request: I_JoinRequest) => {
-                        console.log(`So sánh leader: ${request.group?.creatorShortName} === ${user.shortName}`);
-                        return request.group?.creatorShortName === user.shortName;
-                    })
-                    .map((request: I_JoinRequest) => ({
-                        message: `Lời mời tham gia nhóm ${request.group?.id} từ người dùng ${request.user?.id}`,
-                        id: request.id,
-                    }));
+                this.groupQldaService
+                    .getJoinGroups({ userId: user.id }) // Lấy các nhóm mà người dùng tham gia
+                    .then((response: I_TableState<I_JoinGroup>) => {
+                        console.log('Danh sách nhóm mà người dùng tham gia:', response);
 
-                console.log('Notifications sau khi xử lý:', this.notifications);
+                        const joinGroups = response.data;
+
+                        // Lọc các yêu cầu mời tham gia nhóm mà người dùng là người được mời
+                        this.notifications = joinRequests
+                            .filter((request: I_JoinRequest) => {
+                                // Kiểm tra nếu người dùng là người được mời vào nhóm
+                                const isInvited = request.user?.id === user.id && !request.isApproved;
+
+                                // Nếu là người được mời thì hiển thị thông báo, còn leader không nhận thông báo mời
+                                return isInvited;
+                            })
+                            .map((request: I_JoinRequest) => ({
+                                message: `Bạn đã được mời tham gia nhóm ${request.group?.name} từ người dùng ${request.user?.shortName}`,
+                                id: request.id,
+                            }));
+
+                        console.log('Thông báo sau khi xử lý:', this.notifications);
+                    })
+                    .catch((error) => {
+                        console.error('Lỗi khi gọi API:', error);
+                    });
             })
             .catch((error) => {
-                console.error('Lỗi khi gọi API:', error);
+                console.error('Lỗi khi gọi API yêu cầu tham gia nhóm:', error);
             });
     }
 
@@ -103,7 +118,7 @@ export class NavbarComponent {
             });
             if (response.acceptJoinRequest.status) {
                 this.notificationService.success('Đã chấp nhận yêu cầu tham gia');
-                window.location.reload();
+                window.location.reload(); // Cập nhật lại trang sau khi chấp nhận
             } else {
                 this.notificationService.error(response.acceptJoinRequest.error?.message);
             }

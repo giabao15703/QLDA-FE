@@ -57,22 +57,29 @@ export class DeTaiService {
     getDeTai = (variables?: GetDeTaiQueryVariables, options?: I_GraphQLOptions<GetDeTaiQuery, I_DeTai>) => {
         return this.graphqlService.query<GetDeTaiQuery, GetDeTaiQueryVariables, I_DeTai>(this.getDeTaiGQL, variables, {
             normalize: (data) => {
+                // Kiểm tra xem data.deTai có tồn tại hay không trước khi truy cập vào các thuộc tính
+                if (!data.deTai) {
+                    throw new Error('DeTai data is null or undefined');
+                }
+
                 const deTai: I_DeTai = {
                     ...data.deTai,
-                    mota: data.deTai.mota,
-                    idgvhuongdan: {
-                        ...data.deTai.idgvhuongdan,
-                        role: data.deTai.idgvhuongdan.role as unknown as E_Role,
-                    },
+                    mota: data.deTai.mota || '', // Nếu mota là null hoặc undefined, gán giá trị mặc định là chuỗi rỗng
+                    idgvhuongdan: data.deTai.idgvhuongdan
+                        ? {
+                              ...data.deTai.idgvhuongdan,
+                              role: data.deTai.idgvhuongdan.role as unknown as E_Role,
+                          }
+                        : null, // Nếu idgvhuongdan là null, giữ nguyên null
                     idgvphanbien: data.deTai.idgvphanbien
                         ? {
                               ...data.deTai.idgvphanbien,
-                              role: data.deTai.idgvphanbien.role as unknown as E_Role, // Ép kiểu
+                              role: data.deTai.idgvphanbien.role as unknown as E_Role,
                           }
-                        : null, // Nếu null, giữ nguyên null
+                        : null, // Nếu idgvphanbien là null, giữ nguyên null
                     // Add new fields here
-                    // giangVienLongName: data.deTai.giangVienLongName,
-                    // giangVienPhanBienLongName: data.deTai.giangVienPhanBienLongName,
+                    // giangVienLongName: data.deTai.giangVienLongName || '',
+                    // giangVienPhanBienLongName: data.deTai.giangVienPhanBienLongName || '',
                 };
                 return deTai;
             },

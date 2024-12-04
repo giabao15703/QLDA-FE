@@ -155,21 +155,17 @@ export class AccountAdminDetailComponent {
                     admin: variables,
                 });
 
-                // Kiểm tra nếu adminCreate tồn tại và adminCreate.admin cũng tồn tại
                 if (adminCreate?.status && 'admin' in adminCreate) {
                     if ('admin' in adminCreate) {
                         const createdAdminId = adminCreate.admin.id;
                         const createdAdminRole = adminCreate.admin.role;
 
-                        // Tạo một đối tượng để lưu cả id và role
                         const adminInfo = {
                             id: createdAdminId,
                             role: createdAdminRole,
                         };
 
-                        // Lưu đối tượng này vào localStorage dưới dạng chuỗi JSON
                         this.localStorageService.set('createdAdminInfo', JSON.stringify(adminInfo));
-
                         this.localStorageService.remove(FORM_NAME);
                         this.notificationService.success('notification.createSuccessfully');
                     } else {

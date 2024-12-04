@@ -10,22 +10,40 @@
             <div class="bg-white shadow-md rounded-lg p-4 mb-4">
                 <h2 class="text-xl font-bold mb-2">Thông tin sinh viên</h2>
                 <div class="flex p-4 justify-start gap-4">
-                    <img src="" alt="Student Image" class="w-24 h-24 rounded-full mr-4" />
+                    <img [src]="picture" alt="Ảnh đại diện của {{ shortName }}" class="w-24 h-24 rounded-full" />
                     <div class="flex-1">
-                        <p>MSSV: <span class="font-semibold">2001215717</span></p>
+                        <p>
+                            MSSV: <span class="font-semibold">{{ mssv }}</span>
+                        </p>
                         <p>
                             Họ tên: <span class="font-semibold">{{ shortName }}</span>
                         </p>
-                        <p>Giới tính: <span class="font-semibold">Nam</span></p>
-                        <p>Ngày sinh: <span class="font-semibold">19/12/2003</span></p>
-                        <p>Nơi sinh: <span class="font-semibold">Tỉnh Quảng Ngãi</span></p>
+                        <p>
+                            Giới tính: <span class="font-semibold">{{ gender }}</span>
+                        </p>
+                        <p>
+                            Ngày sinh: <span class="font-semibold">{{ ngaySinh }}</span>
+                        </p>
+                        <p>
+                            Nơi sinh: <span class="font-semibold">{{ noiSinh }}</span>
+                        </p>
                     </div>
                     <div class="flex-1">
-                        <p>Lớp học: <span class="font-semibold">12DHTH01</span></p>
-                        <p>Khóa học: <span class="font-semibold">2021</span></p>
-                        <p>Bậc đào tạo: <span class="font-semibold">Đại học</span></p>
-                        <p>Loại hình đào tạo: <span class="font-semibold">Chính quy</span></p>
-                        <p>Ngành: <span class="font-semibold">Công nghệ thông tin</span></p>
+                        <p>
+                            Lớp học: <span class="font-semibold">{{ lop }}</span>
+                        </p>
+                        <p>
+                            Khóa học: <span class="font-semibold">{{ khoaHoc }}</span>
+                        </p>
+                        <p>
+                            Bậc đào tạo: <span class="font-semibold">{{ bacDaoTao }}</span>
+                        </p>
+                        <p>
+                            Loại hình đào tạo: <span class="font-semibold">{{ loaiHinhDaoTao }}</span>
+                        </p>
+                        <p>
+                            Ngành: <span class="font-semibold">{{ nganh }}</span>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -60,8 +78,9 @@
                         <!-- Cột Thông tin nhóm của bạn -->
                         <div class="w-1/2 border rounded-lg p-4">
                             <h3 class="font-bold text-lg">Thông tin nhóm của bạn</h3>
-                            <p><strong>Tên nhóm:</strong> tenNhom</p>
-                            <p><strong>Số lượng thành viên:</strong> soLuongThanhVien</p>
+                            <p><strong>Tên nhóm:</strong> {{ groupName || 'Chưa có nhóm' }}</p>
+                            <p><strong>Số lượng thành viên:</strong> {{ memberCount || 'Chưa có thông tin' }}</p>
+                            <p><strong>Số thành viên tối đa:</strong> {{ maxMember || 'Chưa có thông tin' }}</p>
                             <button mat-raised-button color="primary" (click)="openModal()">
                                 Xem danh sách thành viên
                             </button>
@@ -70,12 +89,43 @@
                         <!-- Cột Thông tin đề tài của nhóm bạn -->
                         <div class="w-1/2 border rounded-lg p-4">
                             <h3 class="font-bold text-lg">Thông tin đề tài của nhóm</h3>
-                            <p><strong>Mã đề tài:</strong> maDeTai</p>
-                            <p><strong>Tên đề tài:</strong> tenDeTai</p>
-                            <p><strong>Trạng thái:</strong> trangThai</p>
+                            <p><strong>Mã đề tài:</strong> {{ maDeTai || 'Chưa có mã đề tài' }}</p>
+                            <p><strong>Tên đề tài:</strong> {{ deTaiName || 'Chưa có tên đề tài' }}</p>
+                            <p><strong>Trạng thái:</strong> {{ deTaiStatus || 'Chưa có trạng thái' }}</p>
                         </div>
                     </div>
                 </div>
+            </main>
+            <main class="bg-white shadow-md rounded-lg p-4 mb-4">
+                <h2 class="text-xl font-bold mb-4">Người dùng chưa tham gia nhóm</h2>
+                <table class="min-w-full table-auto">
+                    <thead class="bg-gray-200">
+                        <tr>
+                            <th class="px-4 py-2 text-left">MSSV</th>
+                            <th class="px-4 py-2 text-left">Họ tên</th>
+                            <th class="px-4 py-2 text-left">Giới tính</th>
+                            <th class="px-4 py-2 text-left">Ngày sinh</th>
+                            <th class="px-4 py-2 text-left">Lớp học</th>
+                            <th class="px-4 py-2 text-left">Ngành</th>
+                            <th class="px-4 py-2 text-left">Khóa học</th>
+                            <th class="px-4 py-2 text-left">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let user of filteredUsers">
+                            <td class="px-4 py-2">{{ user.mssv }}</td>
+                            <td class="px-4 py-2">{{ user.fullName }}</td>
+                            <td class="px-4 py-2">{{ user.gender }}</td>
+                            <td class="px-4 py-2">{{ user.ngaySinh }}</td>
+                            <td class="px-4 py-2">{{ user.lop }}</td>
+                            <td class="px-4 py-2">{{ user.nganh }}</td>
+                            <td class="px-4 py-2">{{ user.khoaHoc }}</td>
+                            <td class="px-4 py-2">
+                                <button mat-raised-button color="primary" (click)="inviteUserToGroup(user)">Mời vào nhóm</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </main>
         </div>
     </div>

@@ -46,6 +46,12 @@ export type Scalars = {
   UploadType: { input: any; output: any; }
 };
 
+export type AcceptGroupInvitation = {
+  __typename?: 'AcceptGroupInvitation';
+  error?: Maybe<Error>;
+  status?: Maybe<Scalars['Boolean']['output']>;
+};
+
 export type AcceptJoinRequest = {
   __typename?: 'AcceptJoinRequest';
   error?: Maybe<Error>;
@@ -3111,6 +3117,13 @@ export type CoursesUpdatesStatus = {
   status?: Maybe<Scalars['Boolean']['output']>;
 };
 
+export type CreateGrading = {
+  __typename?: 'CreateGrading';
+  error?: Maybe<Error>;
+  grading?: Maybe<GradingNode>;
+  status?: Maybe<Scalars['Boolean']['output']>;
+};
+
 export type CreateKeHoachDoAn = {
   __typename?: 'CreateKeHoachDoAn';
   error?: Maybe<Error>;
@@ -3121,6 +3134,13 @@ export type CreateKeHoachDoAn = {
 export type CreateNewPassword = {
   __typename?: 'CreateNewPassword';
   error?: Maybe<Error>;
+  status?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type CreateNotification = {
+  __typename?: 'CreateNotification';
+  error?: Maybe<Error>;
+  notification?: Maybe<NotificationNode>;
   status?: Maybe<Scalars['Boolean']['output']>;
 };
 
@@ -3494,6 +3514,7 @@ export type DeTaiNode = CustomNode & {
   deTai: GroupQldaNodeConnection;
   giangVienLongName?: Maybe<Scalars['String']['output']>;
   giangVienPhanBienLongName?: Maybe<Scalars['String']['output']>;
+  gradings: GradingNodeConnection;
   /** The ID of the object. */
   id: Scalars['ID']['output'];
   idgvhuongdan?: Maybe<AdminNode>;
@@ -3518,6 +3539,18 @@ export type DeTaiNodeDeTaiArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   status?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type DeTaiNodeGradingsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  detai?: InputMaybe<Scalars['String']['input']>;
+  diemHuongdan?: InputMaybe<Scalars['Float']['input']>;
+  diemPhanbien?: InputMaybe<Scalars['Float']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  group?: InputMaybe<Scalars['String']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type DeTaiNodeConnection = {
@@ -4339,6 +4372,41 @@ export type GeneralInformationType = {
   unit?: Maybe<Scalars['String']['output']>;
 };
 
+export type GradingInput = {
+  detaiId: Scalars['ID']['input'];
+  diemHuongdan: Scalars['Float']['input'];
+  diemPhanbien: Scalars['Float']['input'];
+  groupId: Scalars['ID']['input'];
+};
+
+export type GradingNode = CustomNode & {
+  __typename?: 'GradingNode';
+  detai: DeTaiNode;
+  diemHuongdan: Scalars['Float']['output'];
+  diemPhanbien: Scalars['Float']['output'];
+  group: GroupQldaNode;
+  /** The ID of the object. */
+  id: Scalars['ID']['output'];
+};
+
+export type GradingNodeConnection = {
+  __typename?: 'GradingNodeConnection';
+  /** Contains the nodes in this connection. */
+  edges: Array<Maybe<GradingNodeEdge>>;
+  /** Pagination data for this connection. */
+  pageInfo: PageInfo;
+  totalCount?: Maybe<Scalars['Int']['output']>;
+};
+
+/** A Relay edge containing a `GradingNode` and its cursor. */
+export type GradingNodeEdge = {
+  __typename?: 'GradingNodeEdge';
+  /** A cursor for use in pagination */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge */
+  node?: Maybe<GradingNode>;
+};
+
 export type GroupCreate = {
   __typename?: 'GroupCreate';
   group?: Maybe<GroupNode>;
@@ -4470,6 +4538,7 @@ export type GroupQldaNode = CustomNode & {
   __typename?: 'GroupQLDANode';
   creatorShortName?: Maybe<Scalars['String']['output']>;
   deTai?: Maybe<DeTaiNode>;
+  gradings: GradingNodeConnection;
   /** The ID of the object. */
   id: Scalars['ID']['output'];
   joinGroups: JoinGroupNodeConnection;
@@ -4480,6 +4549,18 @@ export type GroupQldaNode = CustomNode & {
   memberCount: Scalars['Int']['output'];
   name: Scalars['String']['output'];
   status: Scalars['Boolean']['output'];
+};
+
+
+export type GroupQldaNodeGradingsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  detai?: InputMaybe<Scalars['String']['input']>;
+  diemHuongdan?: InputMaybe<Scalars['Float']['input']>;
+  diemPhanbien?: InputMaybe<Scalars['Float']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  group?: InputMaybe<Scalars['String']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -5124,6 +5205,12 @@ export type IndustryUpdateStatus = {
 
 export type InviteRegister = {
   __typename?: 'InviteRegister';
+  error?: Maybe<Error>;
+  status?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type InviteUserToGroup = {
+  __typename?: 'InviteUserToGroup';
   error?: Maybe<Error>;
   status?: Maybe<Scalars['Boolean']['output']>;
 };
@@ -5786,6 +5873,7 @@ export type MoudulesUpdatesStatus = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  acceptGroupInvitation?: Maybe<AcceptGroupInvitation>;
   acceptJoinRequest?: Maybe<AcceptJoinRequest>;
   adminCreate?: Maybe<AdminCreate>;
   adminDelete?: Maybe<AdminDelete>;
@@ -5866,9 +5954,11 @@ export type Mutation = {
   coursesDelete?: Maybe<CoursesDelete>;
   coursesUpdate?: Maybe<CoursesUpdate>;
   coursesUpdateStatus?: Maybe<CoursesUpdatesStatus>;
+  createGrading?: Maybe<CreateGrading>;
   createKeHoachDoAn?: Maybe<CreateKeHoachDoAn>;
   createMasterAdmin?: Maybe<AdminSuperCreate>;
   createNewPassword?: Maybe<CreateNewPassword>;
+  createNotification?: Maybe<CreateNotification>;
   createOrder?: Maybe<OrderCreateMutation>;
   currencyCreate?: Maybe<CurrencyCreate>;
   currencyDelete?: Maybe<CurrencyDelete>;
@@ -5933,6 +6023,7 @@ export type Mutation = {
   industryUpdate?: Maybe<IndustryUpdate>;
   industryUpdateStatus?: Maybe<IndustryUpdateStatus>;
   inviteRegister?: Maybe<InviteRegister>;
+  inviteUserToGroup?: Maybe<InviteUserToGroup>;
   languageCreate?: Maybe<LanguageCreate>;
   languageDelete?: Maybe<LanguageDelete>;
   languageUpdate?: Maybe<LanguageUpdate>;
@@ -6060,7 +6151,9 @@ export type Mutation = {
   unitOfMeasureDelete?: Maybe<UnitofMeasureDelete>;
   unitOfMeasureUpdate?: Maybe<UnitofMeasureUpdate>;
   unitOfMeasureUpdateStatus?: Maybe<UnitofMeasureUpdateStatus>;
+  updateGrading?: Maybe<UpdateGrading>;
   updateKeHoachDoAn?: Maybe<UpdateKeHoachDoAn>;
+  updateNotification?: Maybe<UpdateNotification>;
   updateOrder?: Maybe<OrderUpdateMutation>;
   updateOrderStatus?: Maybe<OrderUpdateStatusMutation>;
   userDiamondSponsorClickCount?: Maybe<UserDiamondSponsorClickCount>;
@@ -6094,6 +6187,11 @@ export type Mutation = {
   warrantyTermDelete?: Maybe<WarrantyTermDelete>;
   warrantyTermUpdate?: Maybe<WarrantyTermUpdate>;
   warrantyTermUpdateStatus?: Maybe<WarrantyTermUpdateStatus>;
+};
+
+
+export type MutationAcceptGroupInvitationArgs = {
+  joinRequestId: Scalars['ID']['input'];
 };
 
 
@@ -6532,6 +6630,11 @@ export type MutationCoursesUpdateStatusArgs = {
 };
 
 
+export type MutationCreateGradingArgs = {
+  input: GradingInput;
+};
+
+
 export type MutationCreateKeHoachDoAnArgs = {
   input: KeHoachDoAnInput;
 };
@@ -6541,6 +6644,11 @@ export type MutationCreateNewPasswordArgs = {
   confirmPassword: Scalars['String']['input'];
   password: Scalars['String']['input'];
   token: Scalars['String']['input'];
+};
+
+
+export type MutationCreateNotificationArgs = {
+  input: NotificationInput;
 };
 
 
@@ -6871,6 +6979,12 @@ export type MutationInviteRegisterArgs = {
   fullName: Scalars['String']['input'];
   referralCode?: InputMaybe<Scalars['String']['input']>;
   userType: Scalars['Int']['input'];
+};
+
+
+export type MutationInviteUserToGroupArgs = {
+  groupId: Scalars['ID']['input'];
+  userId: Scalars['ID']['input'];
 };
 
 
@@ -7527,9 +7641,21 @@ export type MutationUnitOfMeasureUpdateStatusArgs = {
 };
 
 
+export type MutationUpdateGradingArgs = {
+  id: Scalars['ID']['input'];
+  input: UpdateGradingInput;
+};
+
+
 export type MutationUpdateKeHoachDoAnArgs = {
   id: Scalars['String']['input'];
   input: KeHoachDoAnInput;
+};
+
+
+export type MutationUpdateNotificationArgs = {
+  id: Scalars['ID']['input'];
+  input: NotificationInput;
 };
 
 
@@ -7721,6 +7847,40 @@ export type MutationErrorType = {
 export type Node = {
   /** The ID of the object. */
   id: Scalars['ID']['output'];
+};
+
+export type NotificationInput = {
+  content: Scalars['String']['input'];
+  status: Scalars['Boolean']['input'];
+  title: Scalars['String']['input'];
+};
+
+export type NotificationNode = CustomNode & {
+  __typename?: 'NotificationNode';
+  content: Scalars['String']['output'];
+  createdDate: Scalars['DateTime']['output'];
+  /** The ID of the object. */
+  id: Scalars['ID']['output'];
+  status: Scalars['Boolean']['output'];
+  title: Scalars['String']['output'];
+};
+
+export type NotificationNodeConnection = {
+  __typename?: 'NotificationNodeConnection';
+  /** Contains the nodes in this connection. */
+  edges: Array<Maybe<NotificationNodeEdge>>;
+  /** Pagination data for this connection. */
+  pageInfo: PageInfo;
+  totalCount?: Maybe<Scalars['Int']['output']>;
+};
+
+/** A Relay edge containing a `NotificationNode` and its cursor. */
+export type NotificationNodeEdge = {
+  __typename?: 'NotificationNodeEdge';
+  /** A cursor for use in pagination */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge */
+  node?: Maybe<NotificationNode>;
 };
 
 export type NumberofEmployeeCreate = {
@@ -9568,6 +9728,9 @@ export type Query = {
   gender?: Maybe<GenderNode>;
   genders?: Maybe<GenderNodeConnection>;
   /** The ID of the object */
+  grading?: Maybe<GradingNode>;
+  gradings?: Maybe<GradingNodeConnection>;
+  /** The ID of the object */
   group?: Maybe<GroupNode>;
   /** The ID of the object */
   groupPermission?: Maybe<GroupPermissionNode>;
@@ -9612,6 +9775,9 @@ export type Query = {
   /** The ID of the object */
   module?: Maybe<ModulesNode>;
   modules?: Maybe<ModulesNodeConnection>;
+  /** The ID of the object */
+  notification?: Maybe<NotificationNode>;
+  notifications?: Maybe<NotificationNodeConnection>;
   /** The ID of the object */
   numberOfEmployee?: Maybe<NumberofEmployeeNode>;
   numberOfEmployees?: Maybe<NumberofEmployeeNodeConnection>;
@@ -9675,6 +9841,7 @@ export type Query = {
   /** The ID of the object */
   sponsor?: Maybe<SponsorNode>;
   sponsors?: Maybe<SponsorNodeConnection>;
+  studentsWithoutGroup?: Maybe<Array<Maybe<UserNode>>>;
   /** The ID of the object */
   subClusterCode?: Maybe<SubClusterCodeNode>;
   subClusterCodes?: Maybe<SubClusterCodeNodeConnection>;
@@ -9754,6 +9921,7 @@ export type Query = {
   userSupplierSicpTextEditor?: Maybe<SicpTextEditorNodeConnection>;
   userSupplierSicps?: Maybe<SupplierSicpNodeConnection>;
   users?: Maybe<UserNodeConnection>;
+  usersInGroup?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   /** The ID of the object */
   voucher?: Maybe<VoucherNode>;
   vouchers?: Maybe<VoucherNodeConnection>;
@@ -10500,6 +10668,23 @@ export type QueryGendersArgs = {
 };
 
 
+export type QueryGradingArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryGradingsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  detai?: InputMaybe<Scalars['String']['input']>;
+  diemHuongdan?: InputMaybe<Scalars['Float']['input']>;
+  diemPhanbien?: InputMaybe<Scalars['Float']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  group?: InputMaybe<Scalars['String']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
 export type QueryGroupArgs = {
   id: Scalars['ID']['input'];
 };
@@ -10789,6 +10974,21 @@ export type QueryModulesArgs = {
   name_Icontains?: InputMaybe<Scalars['String']['input']>;
   orderBy?: InputMaybe<Scalars['String']['input']>;
   role?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryNotificationArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryNotificationsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  createdDate?: InputMaybe<Scalars['DateTime']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  status?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 
@@ -11842,6 +12042,11 @@ export type QueryUsersArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type QueryUsersInGroupArgs = {
+  groupId: Scalars['ID']['input'];
 };
 
 
@@ -15140,10 +15345,29 @@ export type UnitofMeasureUpdateStatus = {
   status?: Maybe<Scalars['Boolean']['output']>;
 };
 
+export type UpdateGrading = {
+  __typename?: 'UpdateGrading';
+  error?: Maybe<Error>;
+  grading?: Maybe<GradingNode>;
+  status?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type UpdateGradingInput = {
+  diemHuongdan?: InputMaybe<Scalars['Float']['input']>;
+  diemPhanbien?: InputMaybe<Scalars['Float']['input']>;
+};
+
 export type UpdateKeHoachDoAn = {
   __typename?: 'UpdateKeHoachDoAn';
   error?: Maybe<Error>;
   keHoachDoAn?: Maybe<KeHoachDoAnNode>;
+  status?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type UpdateNotification = {
+  __typename?: 'UpdateNotification';
+  error?: Maybe<Error>;
+  notification?: Maybe<NotificationNode>;
   status?: Maybe<Scalars['Boolean']['output']>;
 };
 
@@ -17003,7 +17227,7 @@ export type GetGroupQldaRequestsQueryVariables = Exact<{
 }>;
 
 
-export type GetGroupQldaRequestsQuery = { __typename?: 'Query', joinRequests?: { __typename?: 'JoinRequestNodeConnection', totalCount?: number | null, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'JoinRequestNodeEdge', node?: { __typename?: 'JoinRequestNode', id: string, leaderUserId?: number | null, user: { __typename?: 'UserNode', id: string }, group: { __typename?: 'GroupQLDANode', id: string, creatorShortName?: string | null } } | null } | null> } | null };
+export type GetGroupQldaRequestsQuery = { __typename?: 'Query', joinRequests?: { __typename?: 'JoinRequestNodeConnection', totalCount?: number | null, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'JoinRequestNodeEdge', node?: { __typename?: 'JoinRequestNode', id: string, leaderUserId?: number | null, user: { __typename?: 'UserNode', id: string, shortName: string }, group: { __typename?: 'GroupQLDANode', id: string, creatorShortName?: string | null, name: string, maNhom: string } } | null } | null> } | null };
 
 export type GetJoinGroupsQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -17045,6 +17269,19 @@ export type CreateGroupQldaMutationVariables = Exact<{
 
 
 export type CreateGroupQldaMutation = { __typename?: 'Mutation', groupQldaCreate?: { __typename?: 'GroupQLDACreate', status?: boolean | null, groupQlda?: { __typename?: 'GroupQLDANode', id: string, maNhom: string, name: string, status: boolean, memberCount: number, maxMember: number, creatorShortName?: string | null, deTai?: { __typename?: 'DeTaiNode', id: string, madoan?: string | null, tendoan?: string | null, chuyennganh?: string | null, mota?: string | null, trangthai?: string | null, yeucau?: string | null, idnhom?: string | null, giangVienLongName?: string | null, giangVienPhanBienLongName?: string | null, idgvhuongdan?: { __typename?: 'AdminNode', id: string, longName: string, email?: string | null, shortName?: string | null, fullName?: string | null, username?: string | null, userType?: number | null, created?: any | null, firstName?: string | null, lastName?: string | null, companyWebsite?: string | null, companyLongName?: string | null, companyShortName?: string | null, role: AdminRole, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, ngaySinh?: any | null, noiSinh?: string | null, lop?: string | null, bacDaoTao?: string | null, khoaHoc?: string | null, loaiHinhDaoTao?: string | null, nganh?: string | null, gender?: string | null, picture?: string | null, phone?: string | null, mssv?: string | null, userspermissionSet: { __typename?: 'UsersPermissionNodeConnection', edges: Array<{ __typename?: 'UsersPermissionNodeEdge', node?: { __typename?: 'UsersPermissionNode', id: string, validFrom?: any | null, validTo?: any | null, status: number, pk?: number | null, permission: { __typename?: 'GroupPermissionNode', id: string, role: number, group?: { __typename?: 'GroupNode', id: string, name: string } | null } } | null } | null> }, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, language?: { __typename?: 'LanguageNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'LanguageTranslationNode', id: string, languageCode: string, name: string }> } | null } | null, idgvphanbien?: { __typename?: 'AdminNode', id: string, longName: string, email?: string | null, shortName?: string | null, fullName?: string | null, username?: string | null, userType?: number | null, created?: any | null, firstName?: string | null, lastName?: string | null, companyWebsite?: string | null, companyLongName?: string | null, companyShortName?: string | null, role: AdminRole, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, ngaySinh?: any | null, noiSinh?: string | null, lop?: string | null, bacDaoTao?: string | null, khoaHoc?: string | null, loaiHinhDaoTao?: string | null, nganh?: string | null, gender?: string | null, picture?: string | null, phone?: string | null, mssv?: string | null, userspermissionSet: { __typename?: 'UsersPermissionNodeConnection', edges: Array<{ __typename?: 'UsersPermissionNodeEdge', node?: { __typename?: 'UsersPermissionNode', id: string, validFrom?: any | null, validTo?: any | null, status: number, pk?: number | null, permission: { __typename?: 'GroupPermissionNode', id: string, role: number, group?: { __typename?: 'GroupNode', id: string, name: string } | null } } | null } | null> }, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, language?: { __typename?: 'LanguageNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'LanguageTranslationNode', id: string, languageCode: string, name: string }> } | null } | null, idkehoach?: { __typename?: 'KeHoachDoAnNode', id: string, slSinhVien: number, slDoAn: number, kyMo: string, tgbdDoAn: any, tgktDoAn: any, tgbdTaoDoAn: any, tgktTaoDoAn: any, tgbdDangKyDeTai: any, tgktDangKyDeTai: any, tgbdLamDoAn: any, tgktLamDoAn: any, tgbdChamPhanBien: any, tgktChamPhanBien: any, tgbdChamHoiDong: any, tgktChamHoiDong: any } | null } | null } | null, error?: { __typename?: 'Error', code?: string | null, message?: string | null, field?: string | null } | null } | null };
+
+export type GetStudentsWithoutGroupQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetStudentsWithoutGroupQuery = { __typename?: 'Query', studentsWithoutGroup?: Array<{ __typename?: 'UserNode', id: string, shortName: string, email: string, gender?: string | null, phone?: string | null, nganh?: string | null, mssv?: string | null, ngaySinh?: any | null, khoaHoc?: string | null } | null> | null };
+
+export type GetInviteUserToGroupMutationVariables = Exact<{
+  groupId: Scalars['ID']['input'];
+  userId: Scalars['ID']['input'];
+}>;
+
+
+export type GetInviteUserToGroupMutation = { __typename?: 'Mutation', inviteUserToGroup?: { __typename?: 'InviteUserToGroup', status?: boolean | null, error?: { __typename?: 'Error', code?: string | null, message?: string | null } | null } | null };
 
 export type KeHoachInfoFragment = { __typename?: 'KeHoachDoAnNode', id: string, slSinhVien: number, slDoAn: number, kyMo: string, tgbdDoAn: any, tgktDoAn: any, tgbdTaoDoAn: any, tgktTaoDoAn: any, tgbdDangKyDeTai: any, tgktDangKyDeTai: any, tgbdLamDoAn: any, tgktLamDoAn: any, tgbdChamPhanBien: any, tgktChamPhanBien: any, tgbdChamHoiDong: any, tgktChamHoiDong: any };
 
@@ -23403,10 +23640,13 @@ export const GetGroupQldaRequestsDocument = gql`
         id
         user {
           id
+          shortName
         }
         group {
           id
           creatorShortName
+          name
+          maNhom
         }
         leaderUserId
       }
@@ -23542,6 +23782,54 @@ ${ErrorInfoFragmentDoc}`;
   })
   export class CreateGroupQldaGQL extends Apollo.Mutation<CreateGroupQldaMutation, CreateGroupQldaMutationVariables> {
     override document = CreateGroupQldaDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetStudentsWithoutGroupDocument = gql`
+    query getStudentsWithoutGroup {
+  studentsWithoutGroup {
+    id
+    shortName
+    email
+    gender
+    phone
+    nganh
+    mssv
+    ngaySinh
+    khoaHoc
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetStudentsWithoutGroupGQL extends Apollo.Query<GetStudentsWithoutGroupQuery, GetStudentsWithoutGroupQueryVariables> {
+    override document = GetStudentsWithoutGroupDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetInviteUserToGroupDocument = gql`
+    mutation getInviteUserToGroup($groupId: ID!, $userId: ID!) {
+  inviteUserToGroup(groupId: $groupId, userId: $userId) {
+    status
+    error {
+      code
+      message
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetInviteUserToGroupGQL extends Apollo.Mutation<GetInviteUserToGroupMutation, GetInviteUserToGroupMutationVariables> {
+    override document = GetInviteUserToGroupDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

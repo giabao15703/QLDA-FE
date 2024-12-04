@@ -58,7 +58,7 @@ export class GroupDetailComponent {
             this.form.reset();
         } else {
             if (this.data) {
-                return
+                return;
             }
         }
     }

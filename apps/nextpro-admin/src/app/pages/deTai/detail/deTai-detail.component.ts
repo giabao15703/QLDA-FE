@@ -54,10 +54,7 @@ export class DeTaiDetailComponent {
                 label: 'Tên đề tài',
                 name: 'tendoan',
             },
-            {
-                label: 'Mô tả',
-                name: 'mota',
-            },
+            
             {
                 label: 'Trạng thái',
                 name: 'trangthai',
@@ -68,12 +65,19 @@ export class DeTaiDetailComponent {
                     { label: 'Đã huỷ', value: '2' },
                     { label: 'Yêu cầu chỉnh sửa', value: '3' },
                 ],
-                disabled: JSON.parse(localStorage.getItem('user')).role === 1,
+                class: 'd-none',
+                disabled: JSON.parse(localStorage.getItem('admin')).role === 'A_3',
             },
             {
                 label: 'Yêu cầu',
                 name: 'yeucau',
-                disabled: JSON.parse(localStorage.getItem('user')).role !== 1,
+                fieldType: E_FieldType.TEXTAREA,
+                disabled: JSON.parse(localStorage.getItem('admin')).role === 'A_3',
+            },
+            {
+                label : 'Mô tả',
+                name: 'mota',
+                fieldType: E_FieldType.TEXTAREA,
             },
         ];
     }

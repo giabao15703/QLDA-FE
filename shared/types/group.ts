@@ -1,5 +1,9 @@
 import { I_DeTai } from './deTai';
 import { I_User } from './user';
+export enum E_RequyestType {
+    INVITE = 'invite',
+    JOIN_REQUEST = 'joinRequest',
+}
 
 export interface I_GroupQLDA {
     id?: string;
@@ -24,4 +28,5 @@ export interface I_JoinRequest {
     isApproved?: boolean;
     createdAt?: string;
     membersCount?: number;
+    requestType?: E_RequyestType;
 }

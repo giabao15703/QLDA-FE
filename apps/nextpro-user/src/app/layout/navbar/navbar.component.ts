@@ -71,27 +71,46 @@ export class NavbarComponent {
 
                         const joinGroups = response.data;
 
-                        // Lọc các yêu cầu mời tham gia nhóm mà người dùng là người được mời hoặc người dùng là leader
+                        // Lọc các yêu cầu tham gia nhóm mà người dùng là người được mời hoặc là leader
                         this.notifications = joinRequests
                             .filter((request: I_JoinRequest) => {
-                                // Trường hợp 1: Nếu người dùng là người được mời vào nhóm
+                                // Trường hợp 1: Nếu người dùng là người được mời vào nhóm và yêu cầu chưa được phê duyệt
                                 const isInvited = request.user?.id === user.id && !request.isApproved;
 
-                                // Trường hợp 2: Nếu người dùng là leader của nhóm (role === "leader")
+                                // Trường hợp 2: Nếu người dùng là leader của nhóm và có người yêu cầu gia nhập nhóm chưa phê duyệt
                                 const isLeader = joinGroups.some(
                                     (group) => group.id === request.group?.id && group.role === 'leader',
                                 );
 
-                                // Nếu người dùng là người được mời hoặc là leader của nhóm, thì hiển thị thông báo
-                                return isInvited || isLeader;
+                                // Chỉ cho người được mời hoặc leader thấy các yêu cầu phù hợp
+                                return isInvited || (isLeader && !request.isApproved);
                             })
-                            .map((request: I_JoinRequest) => ({
-                                message: `Bạn đã được mời tham gia nhóm ${request.group?.name} từ người dùng ${request.user?.shortName}`,
-                                id: request.id,
-                                isLeader: joinGroups.some(
-                                    (group) => group.id === request.group?.id && group.role === 'leader',
-                                ),
-                            }));
+                            .map((request: I_JoinRequest) => {
+                                // Trường hợp người được mời tham gia nhóm
+                                if (request.user?.id === user.id && !request.isApproved) {
+                                    return {
+                                        message: `Bạn đã được mời tham gia nhóm ${request.group?.name} từ người dùng ${request.user?.shortName}`,
+                                        id: request.id,
+                                        type: 'invitation', // Loại thông báo là mời
+                                    };
+                                }
+
+                                // Trường hợp leader có người yêu cầu gia nhập nhóm
+                                if (
+                                    joinGroups.some(
+                                        (group) => group.id === request.group?.id && group.role === 'leader',
+                                    ) && !request.isApproved
+                                ) {
+                                    return {
+                                        message: `Có người xin tham gia nhóm ${request.group?.name}: ${request.user?.shortName}`,
+                                        id: request.id,
+                                        type: 'joinRequest', // Loại thông báo là yêu cầu gia nhập
+                                    };
+                                }
+
+                                return null;
+                            })
+                            .filter((notification) => notification !== null);
 
                         console.log('Thông báo sau khi xử lý:', this.notifications);
                     })
@@ -103,6 +122,9 @@ export class NavbarComponent {
                 console.error('Lỗi khi gọi API yêu cầu tham gia nhóm:', error);
             });
     }
+
+
+
 
     setJoinRequestId(joinRequestId: string) {
         if (!joinRequestId) {

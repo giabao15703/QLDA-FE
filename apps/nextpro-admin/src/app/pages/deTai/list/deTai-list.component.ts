@@ -59,7 +59,7 @@ export class DeTaiListPage {
             },
             {
                 label: 'Giảng viên phụ trách',
-                name: 'gvhdLongname'
+                name: 'gvhdLongname',
             },
             {
                 label: 'Trạng thái', // Thay đổi label cho phù hợp
@@ -103,7 +103,7 @@ export class DeTaiListPage {
                 sort: 'mota', // Sử dụng moTa để sort
                 name: 'mota', // Đổi name thành moTa
                 label: 'Mô tả', // Thay đổi label phù hợp
-                cellContentStyle: {'white-space':'pre-wrap'},
+                cellContentStyle: { 'white-space': 'pre-wrap' },
             },
             {
                 sort: 'yeucau', // Sử dụng moTa để sort
@@ -186,7 +186,7 @@ export class DeTaiListPage {
             { extra: { variables } },
         );
         //đếm đề tài có trangthai = 1
-        this.count_Not_Approved = deTais.data.filter((item) => Number(item.trangthai) !== 1).length;    
+        this.count_Not_Approved = deTais.data.filter((item) => Number(item.trangthai) !== 1).length;
         this.count_Approved = deTais.data.filter((item) => Number(item.trangthai) === 1).length;
 
         this.count_Total = deTais.data.length;

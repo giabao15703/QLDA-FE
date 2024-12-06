@@ -76,18 +76,22 @@
                         <!-- Hiển thị thông báo -->
                         <p class="text-gray-800">{{ notification.message }}</p>
                         <div class="flex gap-2">
+                            <!-- Nút chấp nhận yêu cầu tham gia -->
                             <button
+                                *ngIf="notification.type === 'invitation'"
                                 (click)="acceptJoinRequest(notification.id)"
                                 class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600"
                             >
                                 ✓
                             </button>
-                            <!-- <button
-                                (click)="rejectJoinRequest(notification.id)"
-                                class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
+                            <!-- Nút chấp nhận yêu cầu gia nhập nhóm của leader -->
+                            <button
+                                *ngIf="notification.type === 'joinRequest'"
+                                (click)="acceptJoinRequest(notification.id)"
+                                class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600"
                             >
-                                ✗
-                            </button> -->
+                                ✓
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -96,6 +100,7 @@
                 </ng-template>
             </ng-template>
         </mat-menu>
+        
         
 
         @if (isLoggedIn()) {

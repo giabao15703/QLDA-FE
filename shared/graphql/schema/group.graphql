@@ -114,8 +114,8 @@ query getGroupQlda($id: ID!) {
     }
 }
 
-mutation getGroupQldaJoin($groupId: ID!) {
-    groupQldaJoin(groupId: $groupId) {
+mutation getGroupQldaJoin($groupId: ID!, $requestType: String!) {
+    groupQldaJoin(groupId: $groupId, requestType: $requestType) {
         status
         error {
             code

@@ -122,7 +122,7 @@ export class DashboardComponent {
     }
 
     getStudentsWithoutGroup() {
-        const user = localStorage.getItem('user');
+        const user = localStorage.getItem('user'); // Lấy thông tin user từ localStorage
 
         if (!user) {
             this.errorMessage = 'Không tìm thấy thông tin người dùng.';
@@ -133,8 +133,8 @@ export class DashboardComponent {
         // Chuyển chuỗi JSON từ localStorage thành đối tượng
         const parsedUser = JSON.parse(user);
 
-        // Kiểm tra nếu đối tượng user có thuộc tính id
-        const currentUserId = parsedUser?.user?.id;
+        // Kiểm tra nếu đối tượng parsedUser có thuộc tính id
+        const currentUserId = parsedUser?.id;
 
         if (!currentUserId) {
             this.errorMessage = 'Không tìm thấy userId trong thông tin người dùng.';
@@ -143,8 +143,6 @@ export class DashboardComponent {
         }
 
         console.log('UserId từ localStorage:', currentUserId); // Kiểm tra userId lấy từ localStorage
-
-        // Lấy danh sách các JoinGroup từ service
         this.groupQLDAService
             .getJoinGroups()
             .then((response: I_TableState<I_JoinGroup>) => {
@@ -241,7 +239,7 @@ export class DashboardComponent {
             this.errorMessage = 'Không thể mời người dùng vào nhóm, vui lòng thử lại sau.';
         }
     }
-    notifications = [];
+    /* notifications = [];
     LoadNotifications() {
         const user = JSON.parse(localStorage.getItem('user') || '{}');
         console.log('Dữ liệu user từ localStorage:', user);
@@ -315,7 +313,7 @@ export class DashboardComponent {
             this.notificationService.error('Lỗi khi chấp nhận yêu cầu tham gia');
             console.error('Lỗi khi chấp nhận yêu cầu tham gia:', error);
         }
-    }
+    } */
 
     openModal() {}
 

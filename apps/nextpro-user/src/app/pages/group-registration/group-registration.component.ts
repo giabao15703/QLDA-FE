@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SidebarComponent } from '#user/layout/sidebar/sidebar.component';
 import { NavbarComponent } from '#user/layout';
 import { I_TableState } from '#shared/types';
-import { I_GroupQLDA } from 'shared/types/group';
+import { E_RequyestType, I_GroupQLDA } from 'shared/types/group';
 import { FormsModule } from '@angular/forms'; // Để binding ngModel
 import { GroupQLDAService, NotificationService } from '#shared/services';
 import { CommonModule } from '@angular/common';
@@ -98,12 +98,17 @@ export class GroupRegistrationComponent implements OnInit {
     }
 
     // Tham gia nhóm
-    async onSubmitJoin(group_id) {
+    async onSubmitJoin(group_id: string) {
         try {
-            // Gửi yêu cầu tham gia nhóm
+            console.log('requestType:', E_RequyestType.JOIN_REQUEST);
+            console.log('requestType type:', typeof E_RequyestType.JOIN_REQUEST);  // Kiểm tra kiểu
+
+            // Truyền giá trị enum vào GraphQL mutation, không cần ép kiểu
             const response = await this.groupQLDAService.getGroupQldaJoin({
                 groupId: group_id,
+                requestType: E_RequyestType.JOIN_REQUEST, // Truyền trực tiếp kiểu chuỗi
             });
+
             if (response.groupQldaJoin.status) {
                 this.notification.success('Bạn đã xin tham gia nhóm');
                 window.location.reload();
@@ -115,4 +120,5 @@ export class GroupRegistrationComponent implements OnInit {
             this.errorMessage = 'Có lỗi xảy ra khi tham gia nhóm.';
         }
     }
+
 }

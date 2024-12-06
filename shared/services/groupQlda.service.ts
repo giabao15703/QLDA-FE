@@ -33,6 +33,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GraphqlService } from './core/graphql.service';
 import { I_GroupQLDA, I_JoinGroup, I_JoinRequest } from 'shared/types/group';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root',
@@ -49,6 +50,7 @@ export class GroupQLDAService {
         private getJoinGroupsGQL: GetJoinGroupsGQL,
         private getStudentsWithoutGroupGQL: GetStudentsWithoutGroupGQL,
         private getInviteUserToGroupGQL: GetInviteUserToGroupGQL,
+        private http: HttpClient,
     ) {}
 
     get error(): Observable<string> {
@@ -61,7 +63,6 @@ export class GroupQLDAService {
     ): I_TableState<I_GroupQLDA> => {
         return normalizeWithPagination<I_GroupQLDA>(data.groupQldas, extra);
     };
-
     // Lấy danh sách GroupQLDA
     getGroupQldas = (
         variables?: GetGroupQldasQueryVariables,
@@ -203,4 +204,9 @@ export class GroupQLDAService {
             { inviteUserToGroup: I_MutationResponse }
         >(this.getInviteUserToGroupGQL, variables, options);
     };
+    getGroupsByUser(userId: string) {
+        return this.http.get<I_GroupQLDA[]>(`/api/groups/`, {
+            params: { user_id: userId },
+        });
+    }
 }

@@ -21,6 +21,8 @@ export class DashboardComponent {
         private accountService: AccountService,
         private groupQLDAService: GroupQLDAService,
         private notification: NotificationService,
+        private groupQldaService: GroupQLDAService,
+        private notificationService: NotificationService,
     ) {}
 
     // Biến dữ liệu
@@ -120,7 +122,6 @@ export class DashboardComponent {
     }
 
     getStudentsWithoutGroup() {
-        // Lấy toàn bộ đối tượng user từ localStorage
         const user = localStorage.getItem('user');
 
         if (!user) {
@@ -238,6 +239,81 @@ export class DashboardComponent {
         } catch (error) {
             console.error('Lỗi khi mời người dùng vào nhóm:', error);
             this.errorMessage = 'Không thể mời người dùng vào nhóm, vui lòng thử lại sau.';
+        }
+    }
+    notifications = [];
+    LoadNotifications() {
+        const user = JSON.parse(localStorage.getItem('user') || '{}');
+        console.log('Dữ liệu user từ localStorage:', user);
+
+        if (!user || !user.shortName) {
+            console.error('Người dùng không có shortName.');
+            return;
+        }
+
+        this.groupQldaService
+            .getGroupQldaRequests() // Lấy tất cả yêu cầu tham gia nhóm
+            .then((joinRequests: I_JoinRequest[]) => {
+                console.log('Dữ liệu trả về từ API:', joinRequests);
+
+                if (!joinRequests || joinRequests.length === 0) {
+                    console.log('Không có yêu cầu tham gia nhóm.');
+                    this.notifications = [];
+                    return;
+                }
+
+                this.groupQldaService
+                    .getJoinGroups({ userId: user.id }) // Lấy các nhóm mà người dùng tham gia
+                    .then((response: I_TableState<I_JoinGroup>) => {
+                        console.log('Danh sách nhóm mà người dùng tham gia:', response);
+
+                        const joinGroups = response.data;
+
+                        // Lọc các yêu cầu mời tham gia nhóm mà người dùng là người được mời
+                        this.notifications = joinRequests
+                            .filter((request: I_JoinRequest) => {
+                                // Kiểm tra nếu người dùng là người được mời vào nhóm
+                                const isInvited = request.user?.id === user.id && !request.isApproved;
+
+                                // Nếu là người được mời thì hiển thị thông báo, còn leader không nhận thông báo mời
+                                return isInvited;
+                            })
+                            .map((request: I_JoinRequest) => ({
+                                message: `Bạn đã được mời tham gia nhóm ${request.group?.name} từ người dùng ${request.user?.shortName}`,
+                                id: request.id,
+                            }));
+
+                        console.log('Thông báo sau khi xử lý:', this.notifications);
+                    })
+                    .catch((error) => {
+                        console.error('Lỗi khi gọi API:', error);
+                    });
+            })
+            .catch((error) => {
+                console.error('Lỗi khi gọi API yêu cầu tham gia nhóm:', error);
+            });
+    }
+
+    async acceptJoinRequest(joinRequestId: string) {
+        if (!joinRequestId) {
+            this.notificationService.error('Join request ID không tồn tại');
+            console.error('Join request ID không tồn tại');
+            return;
+        }
+
+        try {
+            const response = await this.groupQldaService.acceptJoinRequest({
+                joinRequestId: joinRequestId,
+            });
+            if (response.acceptJoinRequest.status) {
+                this.notificationService.success('Đã chấp nhận yêu cầu tham gia');
+                window.location.reload(); // Cập nhật lại trang sau khi chấp nhận
+            } else {
+                this.notificationService.error(response.acceptJoinRequest.error?.message);
+            }
+        } catch (error) {
+            this.notificationService.error('Lỗi khi chấp nhận yêu cầu tham gia');
+            console.error('Lỗi khi chấp nhận yêu cầu tham gia:', error);
         }
     }
 

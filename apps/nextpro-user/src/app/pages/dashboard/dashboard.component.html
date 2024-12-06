@@ -71,6 +71,40 @@
                     </div>
                 </div>
             </main>
+            <main class="bg-white rounded-lg p-4 mb-4">
+                <h2 class="text-xl font-bold mb-4">Danh sách lời mời</h2>
+                <ng-template matMenuContent>
+                    <div
+                        *ngIf="notifications.length > 0; else noNotifications"
+                        class="p-4 bg-white shadow-lg rounded-lg"
+                    >
+                        <div
+                            *ngFor="let notification of notifications"
+                            class="flex items-center justify-between mb-2 p-2 border-b gap-2"
+                        >
+                            <!-- Hiển thị thông báo -->
+                            <p class="text-gray-800">{{ notification.message }}</p>
+                            <div class="flex gap-2">
+                                <button
+                                    (click)="acceptJoinRequest(notification.id)"
+                                    class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600"
+                                >
+                                    ✓
+                                </button>
+                                <!-- <button
+                                    (click)="rejectJoinRequest(notification.id)"
+                                    class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
+                                >
+                                    ✗
+                                </button> -->
+                            </div>
+                        </div>
+                    </div>
+                    <ng-template #noNotifications>
+                        <p class="text-center text-gray-500">Không có thông báo</p>
+                    </ng-template>
+                </ng-template>
+            </main>
             <main class="bg-white shadow-md rounded-lg p-4 mb-4">
                 <h2 class="text-xl font-bold mb-4">Người dùng chưa tham gia nhóm</h2>
                 <table class="min-w-full table-auto">
@@ -96,12 +130,15 @@
                             <td class="px-4 py-2">{{ user.nganh }}</td>
                             <td class="px-4 py-2">{{ user.khoaHoc }}</td>
                             <td class="px-4 py-2">
-                                <button mat-raised-button color="primary" (click)="inviteUserToGroup(user)">Mời vào nhóm</button>
+                                <button mat-raised-button color="primary" (click)="inviteUserToGroup(user)">
+                                    Mời vào nhóm
+                                </button>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </main>
+            
         </div>
     </div>
 </section>

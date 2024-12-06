@@ -71,18 +71,26 @@ export class NavbarComponent {
 
                         const joinGroups = response.data;
 
-                        // Lọc các yêu cầu mời tham gia nhóm mà người dùng là người được mời
+                        // Lọc các yêu cầu mời tham gia nhóm mà người dùng là người được mời hoặc người dùng là leader
                         this.notifications = joinRequests
                             .filter((request: I_JoinRequest) => {
-                                // Kiểm tra nếu người dùng là người được mời vào nhóm
+                                // Trường hợp 1: Nếu người dùng là người được mời vào nhóm
                                 const isInvited = request.user?.id === user.id && !request.isApproved;
 
-                                // Nếu là người được mời thì hiển thị thông báo, còn leader không nhận thông báo mời
-                                return isInvited;
+                                // Trường hợp 2: Nếu người dùng là leader của nhóm (role === "leader")
+                                const isLeader = joinGroups.some(
+                                    (group) => group.id === request.group?.id && group.role === 'leader',
+                                );
+
+                                // Nếu người dùng là người được mời hoặc là leader của nhóm, thì hiển thị thông báo
+                                return isInvited || isLeader;
                             })
                             .map((request: I_JoinRequest) => ({
                                 message: `Bạn đã được mời tham gia nhóm ${request.group?.name} từ người dùng ${request.user?.shortName}`,
                                 id: request.id,
+                                isLeader: joinGroups.some(
+                                    (group) => group.id === request.group?.id && group.role === 'leader',
+                                ),
                             }));
 
                         console.log('Thông báo sau khi xử lý:', this.notifications);

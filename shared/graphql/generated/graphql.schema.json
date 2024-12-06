@@ -30803,6 +30803,18 @@
                 "deprecationReason": null
               },
               {
+                "name": "groupId",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
                 "name": "idgvhuongdan",
                 "description": null,
                 "type": {
@@ -30839,6 +30851,18 @@
                 "deprecationReason": null
               },
               {
+                "name": "mssv",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
                 "name": "name",
                 "description": null,
                 "type": {
@@ -30856,6 +30880,18 @@
                 "type": {
                   "kind": "SCALAR",
                   "name": "Boolean",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "userId",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -82911,6 +82947,18 @@
                 "deprecationReason": null
               },
               {
+                "name": "groupId",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
                 "name": "idgvhuongdan",
                 "description": null,
                 "type": {
@@ -82947,6 +82995,18 @@
                 "deprecationReason": null
               },
               {
+                "name": "mssv",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
                 "name": "name",
                 "description": null,
                 "type": {
@@ -82964,6 +83024,18 @@
                 "type": {
                   "kind": "SCALAR",
                   "name": "Boolean",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "userId",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -94870,39 +94942,6 @@
               "kind": "OBJECT",
               "name": "UserNodeConnection",
               "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "usersInGroup",
-            "description": null,
-            "args": [
-              {
-                "name": "groupId",
-                "description": null,
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "ID",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -128081,6 +128120,18 @@
                 "deprecationReason": null
               },
               {
+                "name": "groupId",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
                 "name": "idgvhuongdan",
                 "description": null,
                 "type": {
@@ -128117,6 +128168,18 @@
                 "deprecationReason": null
               },
               {
+                "name": "mssv",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
                 "name": "name",
                 "description": null,
                 "type": {
@@ -128134,6 +128197,18 @@
                 "type": {
                   "kind": "SCALAR",
                   "name": "Boolean",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "userId",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
                   "ofType": null
                 },
                 "defaultValue": null,

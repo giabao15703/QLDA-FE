@@ -3538,11 +3538,14 @@ export type DeTaiNodeDeTaiArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
+  groupId?: InputMaybe<Scalars['String']['input']>;
   idgvhuongdan?: InputMaybe<Scalars['String']['input']>;
   idgvphanbien?: InputMaybe<Scalars['String']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
+  mssv?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   status?: InputMaybe<Scalars['Boolean']['input']>;
+  userId?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -9927,7 +9930,6 @@ export type Query = {
   userSupplierSicpTextEditor?: Maybe<SicpTextEditorNodeConnection>;
   userSupplierSicps?: Maybe<SupplierSicpNodeConnection>;
   users?: Maybe<UserNodeConnection>;
-  usersInGroup?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   /** The ID of the object */
   voucher?: Maybe<VoucherNode>;
   vouchers?: Maybe<VoucherNodeConnection>;
@@ -10721,11 +10723,14 @@ export type QueryGroupQldasArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
+  groupId?: InputMaybe<Scalars['String']['input']>;
   idgvhuongdan?: InputMaybe<Scalars['String']['input']>;
   idgvphanbien?: InputMaybe<Scalars['String']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
+  mssv?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   status?: InputMaybe<Scalars['Boolean']['input']>;
+  userId?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -12050,11 +12055,6 @@ export type QueryUsersArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
-};
-
-
-export type QueryUsersInGroupArgs = {
-  groupId: Scalars['ID']['input'];
 };
 
 
@@ -15934,11 +15934,14 @@ export type UserNodeLedGroupsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
+  groupId?: InputMaybe<Scalars['String']['input']>;
   idgvhuongdan?: InputMaybe<Scalars['String']['input']>;
   idgvphanbien?: InputMaybe<Scalars['String']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
+  mssv?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   status?: InputMaybe<Scalars['Boolean']['input']>;
+  userId?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -17221,6 +17224,9 @@ export type GetGroupQldasQueryVariables = Exact<{
   status?: InputMaybe<Scalars['Boolean']['input']>;
   idgvhuongdan?: InputMaybe<Scalars['String']['input']>;
   idgvphanbien?: InputMaybe<Scalars['String']['input']>;
+  userId?: InputMaybe<Scalars['String']['input']>;
+  groupId?: InputMaybe<Scalars['String']['input']>;
+  mssv?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -23597,7 +23603,7 @@ export const CreateDiamondSponsorTextEditerDocument = gql`
     }
   }
 export const GetGroupQldasDocument = gql`
-    query getGroupQldas($before: String, $after: String, $first: Int, $last: Int, $name: String, $status: Boolean, $idgvhuongdan: String, $idgvphanbien: String) {
+    query getGroupQldas($before: String, $after: String, $first: Int, $last: Int, $name: String, $status: Boolean, $idgvhuongdan: String, $idgvphanbien: String, $userId: String, $groupId: String, $mssv: String) {
   groupQldas(
     before: $before
     after: $after
@@ -23607,6 +23613,9 @@ export const GetGroupQldasDocument = gql`
     status: $status
     idgvhuongdan: $idgvhuongdan
     idgvphanbien: $idgvphanbien
+    userId: $userId
+    groupId: $groupId
+    mssv: $mssv
   ) {
     totalCount
     pageInfo {

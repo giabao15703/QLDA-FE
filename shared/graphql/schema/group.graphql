@@ -7,6 +7,9 @@ query getGroupQldas(
         $status: Boolean,
         $idgvhuongdan: String
         $idgvphanbien: String
+        $userId: String
+        $groupId: String
+        $mssv: String
     ) {
     groupQldas(
         before: $before, 
@@ -17,6 +20,9 @@ query getGroupQldas(
         status: $status,
         idgvhuongdan: $idgvhuongdan
         idgvphanbien: $idgvphanbien
+        userId: $userId
+        groupId: $groupId
+        mssv: $mssv
     ) {
         totalCount
         pageInfo {

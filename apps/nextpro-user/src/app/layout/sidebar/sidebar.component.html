@@ -39,7 +39,13 @@
             </a>
         </li>
         <li>
-            <a href="/group-registration" class="flex items-center text-gray-700 hover:text-orange-500">
+            <a
+                href="/group-registration"
+                class="flex items-center text-gray-700 hover:text-orange-500"
+                [class.opacity-50]="isGroupRegistered"  
+                [class.cursor-not-allowed]="isGroupRegistered" 
+                (click)="isGroupRegistered ? $event.preventDefault() : null" 
+            >
                 <i class="icon mr-2 text-nowrap text-ellipsis"></i>Đăng kí nhóm
             </a>
         </li>

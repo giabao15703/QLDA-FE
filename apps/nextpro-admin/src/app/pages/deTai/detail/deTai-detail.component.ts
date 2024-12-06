@@ -54,7 +54,7 @@ export class DeTaiDetailComponent {
                 label: 'Tên đề tài',
                 name: 'tendoan',
             },
-            
+
             {
                 label: 'Trạng thái',
                 name: 'trangthai',
@@ -75,7 +75,7 @@ export class DeTaiDetailComponent {
                 disabled: JSON.parse(localStorage.getItem('admin')).role === 'A_3',
             },
             {
-                label : 'Mô tả',
+                label: 'Mô tả',
                 name: 'mota',
                 fieldType: E_FieldType.TEXTAREA,
             },

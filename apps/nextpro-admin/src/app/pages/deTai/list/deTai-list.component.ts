@@ -57,6 +57,21 @@ export class DeTaiListPage {
                 label: 'Mô tả', // Thay đổi label cho phù hợp
                 name: 'mota', // Sử dụng moTa thay vì deTai
             },
+            {
+                label: 'Giảng viên phụ trách',
+                name: 'gvhdLongname'
+            },
+            {
+                label: 'Trạng thái', // Thay đổi label cho phù hợp
+                name: 'trangthai', // Sử dụng trangThai thay vì trangthai
+                fieldType: E_FieldType.SELECT,
+                options: [
+                    { label: 'Đang chờ duyệt', value: '0' },
+                    { label: 'Đã duyệt', value: '1' },
+                    { label: 'Đã huỷ', value: '2' },
+                    { label: 'Yêu cầu chỉnh sửa', value: '3' },
+                ],
+            },
         ];
         this.table.config.columns = [
             {
@@ -88,6 +103,7 @@ export class DeTaiListPage {
                 sort: 'mota', // Sử dụng moTa để sort
                 name: 'mota', // Đổi name thành moTa
                 label: 'Mô tả', // Thay đổi label phù hợp
+                cellContentStyle: {'white-space':'pre-wrap'},
             },
             {
                 sort: 'yeucau', // Sử dụng moTa để sort
@@ -130,7 +146,7 @@ export class DeTaiListPage {
                 ],
             },
         ];
-        this.table.config.refetch = this.getDeTais; // Thay đổi hàm refetch
+        this.table.config.refetch = this.getDeTais; // Thay đổi hàm refetc
 
         this.routeService.onChange(({ hash }) => {
             this.getDeTai(hash);
@@ -139,6 +155,9 @@ export class DeTaiListPage {
 
     detail = null;
     exportUrl = REST_API_ADMIN_ENDPOINTS.COUPON.EXPORT;
+    count_Total: number = 0;
+    count_Approved: number = 0;
+    count_Not_Approved: number = 0;
 
     ngOnInit() {
         this.getDeTai();
@@ -166,7 +185,11 @@ export class DeTaiListPage {
             },
             { extra: { variables } },
         );
+        //đếm đề tài có trangthai = 1
+        this.count_Not_Approved = deTais.data.filter((item) => Number(item.trangthai) !== 1).length;    
+        this.count_Approved = deTais.data.filter((item) => Number(item.trangthai) === 1).length;
 
+        this.count_Total = deTais.data.length;
         this.table.state.data = deTais.data;
         this.table.state.pagination = deTais.pagination;
         this.table.state.selection?.clear();

@@ -53,6 +53,9 @@
                     <mat-icon>close</mat-icon>
                     {{ 'button.deactivate' | translate | uppercase }}
                 </button> -->
+                <div class="mr-3 font-bold">Số lượng đề tài: <span>{{ count_Total }}</span></div>
+                <div class="mr-3 font-bold">Đã duyệt: <span>{{ count_Approved }}</span></div>
+                <div class="mr-auto font-bold">Chưa duyệt: <span>{{ count_Not_Approved }}</span></div>
                 <button
                     mat-raised-button
                     color="primary"

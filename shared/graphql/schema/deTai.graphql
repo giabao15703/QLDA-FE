@@ -7,10 +7,12 @@ query getDeTais(
     $idgvphanbien: String
     $idnhom: String
     $madoan: String
+    $mota: String
     $chuyennganh: String
     $tendoan: String
     $trangthai: String
     $idkehoach: String
+    $gvhdLongname: String
 ) {
     deTais(
         before: $before
@@ -21,10 +23,12 @@ query getDeTais(
         idgvphanbien: $idgvphanbien
         idnhom: $idnhom
         madoan: $madoan
+        mota: $mota
         chuyennganh: $chuyennganh
         tendoan: $tendoan
         trangthai: $trangthai
         idkehoach: $idkehoach
+        gvhdLongname: $gvhdLongname
     ) {
         totalCount
         pageInfo {

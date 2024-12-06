@@ -59,6 +59,7 @@ export class LayoutDashboard {
         const isTruongKhoa = adminRole === E_Role.A_1;
         const isGiaoVu = adminRole === E_Role.A_2;
         const isGiangVien = adminRole === E_Role.A_3;
+        const isTruongBoMon = adminRole === E_Role.A_4;
 
         // Khởi tạo menuData với điều kiện hiển thị dựa trên role
         this.menuData = [
@@ -116,6 +117,31 @@ export class LayoutDashboard {
                   ]
                 : []),
             ...(isGiaoVu
+                ? [
+                      {
+                          name: 'Account',
+                          icon: '/assets/icons/account.svg',
+                          children: [
+                              {
+                                  name: 'Account',
+                                  icon: '/assets/icons/buyer.svg',
+                                  href: '/admin/account/',
+                              },
+                              {
+                                  name: 'Admin Account',
+                                  icon: '/assets/icons/admin.svg',
+                                  href: '/admin/account/admin',
+                              },
+                          ],
+                      },
+                      {
+                          name: 'Nhóm đồ án',
+                          icon: '/assets/icons/setting-3-svgrepo-com.svg',
+                          href: '/admin/group',
+                      },
+                  ]
+                : []),
+            ...(isTruongBoMon
                 ? [
                       {
                           name: 'Account',

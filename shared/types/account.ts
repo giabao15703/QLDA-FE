@@ -474,6 +474,7 @@ export enum E_Role {
     A_1 = 1,
     A_2 = 2,
     A_3 = 3,
+    A_4 = 4,
 }
 
 export enum AdminRole {

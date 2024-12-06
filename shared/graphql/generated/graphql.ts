@@ -107,6 +107,7 @@ export type AdminNodeHuongdanDetaiArgs = {
   before?: InputMaybe<Scalars['String']['input']>;
   chuyennganh?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
+  gvhdLongname?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
   idgvhuongdan?: InputMaybe<Scalars['String']['input']>;
   idgvphanbien?: InputMaybe<Scalars['String']['input']>;
@@ -114,6 +115,7 @@ export type AdminNodeHuongdanDetaiArgs = {
   idnhom?: InputMaybe<Scalars['String']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   madoan?: InputMaybe<Scalars['String']['input']>;
+  mota?: InputMaybe<Scalars['String']['input']>;
   tendoan?: InputMaybe<Scalars['String']['input']>;
   trangthai?: InputMaybe<Scalars['String']['input']>;
 };
@@ -124,6 +126,7 @@ export type AdminNodePhanbienDetaiArgs = {
   before?: InputMaybe<Scalars['String']['input']>;
   chuyennganh?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
+  gvhdLongname?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
   idgvhuongdan?: InputMaybe<Scalars['String']['input']>;
   idgvphanbien?: InputMaybe<Scalars['String']['input']>;
@@ -131,6 +134,7 @@ export type AdminNodePhanbienDetaiArgs = {
   idnhom?: InputMaybe<Scalars['String']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   madoan?: InputMaybe<Scalars['String']['input']>;
+  mota?: InputMaybe<Scalars['String']['input']>;
   tendoan?: InputMaybe<Scalars['String']['input']>;
   trangthai?: InputMaybe<Scalars['String']['input']>;
 };
@@ -5364,6 +5368,7 @@ export type KeHoachDoAnNodeDetaiSetArgs = {
   before?: InputMaybe<Scalars['String']['input']>;
   chuyennganh?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
+  gvhdLongname?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
   idgvhuongdan?: InputMaybe<Scalars['String']['input']>;
   idgvphanbien?: InputMaybe<Scalars['String']['input']>;
@@ -5371,6 +5376,7 @@ export type KeHoachDoAnNodeDetaiSetArgs = {
   idnhom?: InputMaybe<Scalars['String']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   madoan?: InputMaybe<Scalars['String']['input']>;
+  mota?: InputMaybe<Scalars['String']['input']>;
   tendoan?: InputMaybe<Scalars['String']['input']>;
   trangthai?: InputMaybe<Scalars['String']['input']>;
 };
@@ -10524,6 +10530,7 @@ export type QueryDeTaisArgs = {
   before?: InputMaybe<Scalars['String']['input']>;
   chuyennganh?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
+  gvhdLongname?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
   idgvhuongdan?: InputMaybe<Scalars['String']['input']>;
   idgvphanbien?: InputMaybe<Scalars['String']['input']>;
@@ -10531,6 +10538,7 @@ export type QueryDeTaisArgs = {
   idnhom?: InputMaybe<Scalars['String']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   madoan?: InputMaybe<Scalars['String']['input']>;
+  mota?: InputMaybe<Scalars['String']['input']>;
   tendoan?: InputMaybe<Scalars['String']['input']>;
   trangthai?: InputMaybe<Scalars['String']['input']>;
 };
@@ -16985,10 +16993,12 @@ export type GetDeTaisQueryVariables = Exact<{
   idgvphanbien?: InputMaybe<Scalars['String']['input']>;
   idnhom?: InputMaybe<Scalars['String']['input']>;
   madoan?: InputMaybe<Scalars['String']['input']>;
+  mota?: InputMaybe<Scalars['String']['input']>;
   chuyennganh?: InputMaybe<Scalars['String']['input']>;
   tendoan?: InputMaybe<Scalars['String']['input']>;
   trangthai?: InputMaybe<Scalars['String']['input']>;
   idkehoach?: InputMaybe<Scalars['String']['input']>;
+  gvhdLongname?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -23025,7 +23035,7 @@ export const UpdateCouponStatusDocument = gql`
     }
   }
 export const GetDeTaisDocument = gql`
-    query getDeTais($before: String, $after: String, $first: Int, $last: Int, $idgvhuongdan: String, $idgvphanbien: String, $idnhom: String, $madoan: String, $chuyennganh: String, $tendoan: String, $trangthai: String, $idkehoach: String) {
+    query getDeTais($before: String, $after: String, $first: Int, $last: Int, $idgvhuongdan: String, $idgvphanbien: String, $idnhom: String, $madoan: String, $mota: String, $chuyennganh: String, $tendoan: String, $trangthai: String, $idkehoach: String, $gvhdLongname: String) {
   deTais(
     before: $before
     after: $after
@@ -23035,10 +23045,12 @@ export const GetDeTaisDocument = gql`
     idgvphanbien: $idgvphanbien
     idnhom: $idnhom
     madoan: $madoan
+    mota: $mota
     chuyennganh: $chuyennganh
     tendoan: $tendoan
     trangthai: $trangthai
     idkehoach: $idkehoach
+    gvhdLongname: $gvhdLongname
   ) {
     totalCount
     pageInfo {

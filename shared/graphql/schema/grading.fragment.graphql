@@ -1,0 +1,8 @@
+fragment GradingInfo on GradingNode {
+    id
+    detai{
+        ...DeTaiInfo
+    }
+    diemHuongdan
+    diemPhanbien
+}

@@ -100,6 +100,11 @@ export class LayoutDashboard {
                           icon: '/assets/icons/setting-3-svgrepo-com.svg',
                           href: '/admin/group',
                       },
+                      {
+                            name:'Chấm điểm hướng dẫn',
+                            icon:'/assets/icons/setting-3-svgrepo-com.svg',
+                            href:'/admin/cham-huong-dan'
+                      }
                   ]
                 : []),
             ...(isGiangVien

@@ -1,4 +1,4 @@
-<!-- <div class="flex items-center gap-2 mb-2 sticky top-0 z-[101] bg-[#01313f] text-white rounded-[4px]">
+<div class="flex items-center gap-2 mb-2 sticky top-0 z-[101] bg-[#01313f] text-white rounded-[4px]">
     <button mat-raised-button color="warn" (click)="onCloseDrawer()">
         <mat-icon class="!mr-0">close</mat-icon>
     </button>
@@ -10,14 +10,6 @@
         }}
     </div>
 </div>
-<app-form [form]="form" [attr.name]="form.name" formClass="mt-4" />
-<button
-    mat-raised-button
-    color="primary"
-    (click)="handleSave()"
-    [disabled]="loadingService.checkLoading(['createClusterCode', 'updateClusterCode'])"
->
-    <mat-icon>save</mat-icon>
-    {{ (mode === 'CREATE' ? 'button.create' : 'button.update') | translate | uppercase }}
-</button>
- -->
+<mat-drawer-content>
+    <app-table [attr.name]="table.name" [columns]="table.config.columns" [data]="table.state.data" />
+</mat-drawer-content>

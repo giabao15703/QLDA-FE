@@ -21,3 +21,4 @@ export * from './order';
 export * from './group';
 export * from './deTai';
 export * from './keHoachDoAn';
+export * from './grading';

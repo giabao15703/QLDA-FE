@@ -16,4 +16,5 @@ export interface I_DeTai {
     giangVienLongName?: string;
     keHoachDoAnId?: string;
     giangVienPhanBienLongName?: string;
+    idgvphanbienScalar?: string;
 }

@@ -89,7 +89,6 @@ export class GroupQLDAService {
             {
                 normalize: (data) => {
                     const groupQlda = data.groupQlda as unknown as I_GroupQLDA;
-                    /* groupQlda.deTai.idgvhuongdan.role = groupQlda.deTai.idgvhuongdan.role as E_Role; */
                     return groupQlda;
                 },
                 ...options,

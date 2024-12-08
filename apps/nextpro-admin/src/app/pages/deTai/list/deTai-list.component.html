@@ -35,24 +35,6 @@
         />
         @if (table.state.selection) {
             <div class="footer-fixed">
-               <!--  <button
-                    mat-raised-button
-                    color="primary"
-                    (click)="handleUpdateStatus(true)"
-                    [disabled]="!table.state.selection.hasValue()"
-                >
-                    <mat-icon>check</mat-icon>
-                    {{ 'button.activate' | translate | uppercase }}
-                </button>
-                <button
-                    mat-raised-button
-                    color="warn"
-                    (click)="handleUpdateStatus(false)"
-                    [disabled]="!table.state.selection.hasValue()"
-                >
-                    <mat-icon>close</mat-icon>
-                    {{ 'button.deactivate' | translate | uppercase }}
-                </button> -->
                 <div class="mr-3 font-bold">Số lượng đề tài: <span>{{ count_Total }}</span></div>
                 <div class="mr-3 font-bold">Đã duyệt: <span>{{ count_Approved }}</span></div>
                 <div class="mr-auto font-bold">Chưa duyệt: <span>{{ count_Not_Approved }}</span></div>

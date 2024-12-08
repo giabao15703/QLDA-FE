@@ -6,7 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ImageComponent, LanguageSwitchComponent } from '#shared/components';
 import { MaterialModules } from '#shared/modules';
 import { AuthService, GroupQLDAService, LocalStorageService, NotificationService } from '#shared/services';
-import { E_UserType, I_JoinGroup, I_JoinRequest, I_Profile, I_TableState } from '#shared/types';
+import { E_RequyestType, E_UserType, I_JoinGroup, I_JoinRequest, I_Profile, I_TableState } from '#shared/types';
 import { MatMenuTrigger } from '@angular/material/menu';
 
 @Component({
@@ -52,6 +52,8 @@ export class NavbarComponent {
             console.error('Người dùng không có shortName.');
             return;
         }
+        const variable = [];
+        const check_leader = this.groupQldaService.getGroupQldaRequests({ leaderUserId: user.id });
 
         this.groupQldaService
             .getGroupQldaRequests() // Lấy tất cả yêu cầu tham gia nhóm
@@ -64,62 +66,27 @@ export class NavbarComponent {
                     return;
                 }
 
-                this.groupQldaService
-                    .getJoinGroups({ userId: user.id }) // Lấy các nhóm mà người dùng tham gia
-                    .then((response: I_TableState<I_JoinGroup>) => {
-                        console.log('Danh sách nhóm mà người dùng tham gia:', response);
+                const check_leader = joinRequests.some((request: I_JoinRequest) => request.leaderUserId == user.id);
+                const userId = parseFloat(user.id);
 
-                        const joinGroups = response.data;
-
-                        // Lọc các yêu cầu tham gia nhóm mà người dùng là người được mời hoặc là leader
-                        this.notifications = joinRequests
-                            .filter((request: I_JoinRequest) => {
-                                // Trường hợp 1: Nếu người dùng là người được mời vào nhóm và yêu cầu chưa được phê duyệt
-                                const isInvited = request.user?.id === user.id && !request.isApproved;
-
-                                // Trường hợp 2: Nếu người dùng là leader của nhóm và có người yêu cầu gia nhập nhóm chưa phê duyệt
-                                const isLeader = joinGroups.some(
-                                    (group) => group.id === request.group?.id && group.role === 'leader',
-                                );
-
-                                // Chỉ cho người được mời hoặc leader thấy các yêu cầu phù hợp
-                                return isInvited || (isLeader && !request.isApproved);
-                            })
-                            .map((request: I_JoinRequest) => {
-                                // Trường hợp người được mời tham gia nhóm
-                                if (request.user?.id === user.id && !request.isApproved) {
-                                    return {
-                                        message: `Bạn đã được mời tham gia nhóm ${request.group?.name} từ người dùng ${request.user?.shortName}`,
-                                        id: request.id,
-                                        type: 'invitation', // Loại thông báo là mời
-                                    };
-                                }
-
-                                // Trường hợp leader có người yêu cầu gia nhập nhóm
-                                if (
-                                    joinGroups.some(
-                                        (group) => group.id === request.group?.id && group.role === 'leader',
-                                    ) && !request.isApproved
-                                ) {
-                                    return {
-                                        message: `Có người xin tham gia nhóm ${request.group?.name}: ${request.user?.shortName}`,
-                                        id: request.id,
-                                        type: 'joinRequest', // Loại thông báo là yêu cầu gia nhập
-                                    };
-                                }
-
-                                return null;
-                            })
-                            .filter((notification) => notification !== null);
-
-                        console.log('Thông báo sau khi xử lý:', this.notifications);
-                    })
-                    .catch((error) => {
-                        console.error('Lỗi khi gọi API:', error);
-                    });
+                if (check_leader) {
+                    this.notifications = joinRequests.filter((request: I_JoinRequest) => request.leaderUserId == userId && request.requestType == E_RequyestType.JOIN_REQUEST)
+                        .map((request: I_JoinRequest) => ({
+                            message: `Người dùng ${request.user?.shortName} muốn xin vào nhóm của ${request.group?.name}`,
+                            id: request.id,
+                        }));
+                }
+                else {
+                    this.notifications = joinRequests.filter((request: I_JoinRequest) => request.user.id == user.id && request.requestType == E_RequyestType.INVITE)
+                        .map((request: I_JoinRequest) => ({
+                            message: `Bạn đã được mời tham gia nhóm ${request.group?.name}`,
+                            id: request.id,
+                        }));
+                }
             })
             .catch((error) => {
-                console.error('Lỗi khi gọi API yêu cầu tham gia nhóm:', error);
+                console.error('Lỗi khi lấy yêu cầu tham gia nhóm:', error);
+                // Xử lý lỗi nếu cần
             });
     }
 

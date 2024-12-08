@@ -33,3 +33,4 @@ export * from './delivery.service';
 export * from './deTai.service';
 export * from './groupQlda.service';
 export * from './keHoach.service';
+export * from './grading.service';

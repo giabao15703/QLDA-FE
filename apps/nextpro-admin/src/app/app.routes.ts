@@ -11,6 +11,7 @@ import { DeTaiListPage } from './pages/deTai/list/deTai-list.component';
 import { KeHoachListPage } from './pages/keHoach/list/keHoach-list.component';
 import { HomePage } from './pages/home/home.component';
 import { GroupListPage } from './pages/group/list/group-list.component';
+import { ChamHuongDanListPage } from './pages/cham-huong-dan/list/cham-huong-dan-list.component';
 
 export const appRoutes: Routes = [
     { path: '', redirectTo: 'admin/home', pathMatch: 'full' },
@@ -44,6 +45,10 @@ export const appRoutes: Routes = [
             {
                 path: 'keHoach',
                 children: [{ path: '', component: KeHoachListPage, data: { breadcrumb: 'Kế hoạch đồ án' } }],
+            },
+            {
+                path: 'cham-huong-dan',
+                children: [{ path: '', component: ChamHuongDanListPage, data: { breadcrumb: 'Chấm hướng dẫn' } }],
             },
             {
                 path: 'group',

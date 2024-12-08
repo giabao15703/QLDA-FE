@@ -1,0 +1,61 @@
+query getGradings(
+    $before: String,
+    $after: String,
+    $first: Int,
+    $last: Int,
+    $detai: String,
+    $diemHuongdan: Float,
+    $diemPhanbien: Float,
+){
+    gradings(
+        before: $before,
+        after: $after,
+        first: $first,
+        last: $last,
+        detai: $detai,
+        diemHuongdan: $diemHuongdan,
+        diemPhanbien: $diemPhanbien,
+    ) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...GradingInfo
+            }
+        }
+    }
+}
+
+query getGrading($id: ID!){
+    grading(id: $id){
+        ...GradingInfo
+    }
+}
+
+mutation createGrading( $input: GradingInput! ){
+    createGrading(input: $input){
+        status
+        grading{
+            ...GradingInfo
+        }
+        error{
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateGrading( $id: ID!, $input: UpdateGradingInput! ){
+    updateGrading(id: $id, input: $input){
+        status
+        grading{
+            ...GradingInfo
+        }
+        error{
+            ...ErrorInfo
+        }
+    }
+}
+
+

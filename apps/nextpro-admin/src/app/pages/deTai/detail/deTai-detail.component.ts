@@ -17,8 +17,9 @@ import {
     NotificationService,
     AccountService,
 } from '#shared/services';
-import { E_FieldType, E_Form_Mode, I_DeTai } from '#shared/types';
+import { AdminRole, E_FieldType, E_Form_Mode, I_Admin, I_DeTai } from '#shared/types';
 import { formatDate } from '#shared/utils';
+import { debug } from 'console';
 
 const FORM_NAME = 'FORM_ADMIN_DETAI';
 
@@ -48,6 +49,7 @@ export class DeTaiDetailComponent {
         private localStorageService: LocalStorageService,
         private notificationService: NotificationService,
         private deTaiService: DeTaiService,
+        private accountService: AccountService,
     ) {
         this.form.config = [
             {
@@ -65,7 +67,6 @@ export class DeTaiDetailComponent {
                     { label: 'Đã huỷ', value: '2' },
                     { label: 'Yêu cầu chỉnh sửa', value: '3' },
                 ],
-                class: 'd-none',
                 disabled: JSON.parse(localStorage.getItem('admin')).role === 'A_3',
             },
             {
@@ -79,6 +80,41 @@ export class DeTaiDetailComponent {
                 name: 'mota',
                 fieldType: E_FieldType.TEXTAREA,
             },
+            {
+                label: 'Phân phối giáo viên phản biện',
+                name: 'idgvphanbienScalar',
+                loadingName: 'getAdmins',
+                fieldType: E_FieldType.SELECT,
+                // getOptions: () =>
+                //     this.accountService.getAdmins().then((res) => {
+                //         // Lọc và map danh sách admin ra option
+                //         const gvOptions = res.data
+                //             .filter((item) => item.role !== AdminRole.A_2)
+                //             .map((item: I_Admin) => ({
+                //                 label: item.shortName,
+                //                 value: item.id,
+                //             }));
+
+                //         // Thêm option mặc định "Chưa phân phối"
+                //         return [
+                //             { label: 'Chưa phân phối', value: -1 },
+                //             ...gvOptions,
+                //         ];
+                //     }),
+                getOptions: () =>
+                    this.accountService.getAdmins().then((res) => {
+                        return [
+                            { label: 'Chưa phân phối', value: { id: -1 } },
+                            ...res.data
+                                .filter(item => item.role !== AdminRole.A_2)
+                                .map(item => ({
+                                    label: item.shortName,
+                                    value: item.id,
+                                }))
+                        ];
+                    }),
+
+            }
         ];
     }
 
@@ -105,15 +141,13 @@ export class DeTaiDetailComponent {
                 mota: deTaiDetail.mota || '',
                 trangthai: deTaiDetail.trangthai,
                 yeucau: deTaiDetail.yeucau,
+                idgvphanbienScalar: deTaiDetail.idgvphanbien?.id ?? -1,
             });
         }
     }
 
     handleSave = async () => {
         this.form.submit(async (values) => {
-            const currentUser = localStorage.getItem('user');
-            const idgvhuongdan = JSON.parse(currentUser).id; // ID của giảng viên hiện tại
-
             const variables = {
                 input: {
                     tendoan: values.tendoan,
@@ -140,6 +174,7 @@ export class DeTaiDetailComponent {
                         mota: values.mota,
                         trangthai: values.trangthai,
                         yeucau: values.yeucau,
+                        idgvphanbienScalar: values.idgvphanbienScalar,
                     },
                 });
                 if (deTaiUpdate.status) {

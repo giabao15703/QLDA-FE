@@ -14,50 +14,30 @@
                 <h2 class="text-xl font-bold mb-4">Thông tin Nhóm</h2>
 
                 <!-- Kiểm tra xem dữ liệu nhóm đã được tải chưa -->
-                <div *ngIf="groups?.length; else noGroups" class="flex flex-col gap-4">
-                    <!-- Lặp qua danh sách nhóm -->
-                    <div *ngFor="let group of groups" class="border-b pb-4 mb-4">
-                        <p><strong>Tên nhóm:</strong> {{ group.name || 'Chưa có tên' }}</p>
-                        <p><strong>Nhóm trưởng:</strong> {{ group.deTai?.leader || 'Chưa có nhóm trưởng' }}</p>
-                        <p><strong>Số thành viên:</strong> {{ group.memberCount || 0 }}</p>
+                <div class="flex flex-col gap-4">
+                    <div class="border-b pb-4 mb-4">
+                        <!--  <p><strong>Tên nhóm:</strong> {{ name || 'Chưa có tên' }}</p>
+                        <p><strong>Nhóm trưởng:</strong> {{ mssv?.leader || 'Chưa có nhóm trưởng' }}</p>
+                        <p><strong>Số thành viên:</strong> {{ email || 0 }}</p>
+ -->
+                        <!-- Danh sách thành viên -->
                         <p><strong>Thành viên:</strong></p>
-                        <ul class="list-disc pl-5">
-                            <li *ngFor="let member of group.deTai?.members">{{ member.name || 'Không có tên' }}</li>
+                        <ul class="list-disc pl-5" *ngIf="students.length > 0; else noMembers">
+                            <li *ngFor="let student of students">
+                                <strong>{{ student.shortName }}</strong> - {{ student.email }} -
+                                {{ student.gender }} - {{student.role}}
+                            </li>
                         </ul>
+                        <ng-template #noMembers>
+                            <p class="text-gray-500">Chưa có thành viên nào trong nhóm.</p>
+                        </ng-template>
+                        
                     </div>
                 </div>
 
                 <!-- Trường hợp không có nhóm -->
                 <ng-template #noGroups>
                     <p class="text-gray-500">Chưa có nhóm nào được tham gia.</p>
-                </ng-template>
-            </div>
-
-            <!-- Thông tin Đồ án -->
-            <div class="bg-white shadow-md rounded-lg p-4 mb-4">
-                <h2 class="text-xl font-bold mb-4">Thông tin Đồ án</h2>
-
-                <!-- Kiểm tra xem thông tin đồ án có được tải chưa -->
-                <div *ngIf="groups?.length; else loadingProject" class="flex flex-col gap-4">
-                    <div *ngFor="let group of groups">
-                        <div *ngIf="group.deTai" class="border-t pt-4">
-                            <p><strong>Mã Đồ án:</strong> {{ group.deTai.code || 'Chưa có mã' }}</p>
-                            <p><strong>Tên Đồ án:</strong> {{ group.deTai.title || 'Chưa có tên đồ án' }}</p>
-                            <p><strong>Mô tả:</strong> {{ group.deTai.description || 'Chưa có mô tả' }}</p>
-                            <p><strong>Trạng Thái:</strong> {{ group.deTai.status || 'Chưa có trạng thái' }}</p>
-                            <p>
-                                <strong>Giảng viên phụ trách:</strong>
-                                {{ group.deTai.lecturer || 'Chưa có giảng viên' }}
-                            </p>
-                            <p><strong>Yêu Cầu:</strong> {{ group.deTai.requirements || 'Chưa có yêu cầu' }}</p>
-                            <p><strong>Thông tin liên lạc:</strong> {{ group.deTai.contact || 'Chưa có thông tin' }}</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Trạng thái loading cho đồ án -->
-                <ng-template #loadingProject>
-                    <p class="text-gray-500">Đang tải dữ liệu đồ án...</p>
                 </ng-template>
             </div>
         </div>

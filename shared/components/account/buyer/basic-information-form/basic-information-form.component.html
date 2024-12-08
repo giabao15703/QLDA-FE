@@ -78,17 +78,20 @@
     >
         {{ buttonText | translate | uppercase }}
     </button>
+    <!-- <button
+        class="m-1 w-48"
+        mat-raised-button
+        color="primary"
+        (click)="handleUpdate()"
+        [disabled]="isLoading || (showTerms && !isTermAccept)"
+    >
+        {{ buttonText | translate | uppercase }}
+    </button> -->
     <div>
         <!-- Input chọn file -->
         <label for="fileUpload">Chọn File:</label>
-        <input
-            type="file"
-            id="fileUpload"
-            accept=".xlsx"
-            (change)="onFileChange($event)"
-            style="margin-bottom: 10px;"
-        />
-    
+        <input type="file" id="fileUpload" accept=".xlsx" (change)="onFileChange($event)" style="margin-bottom: 10px" />
+
         <!-- Nút Import -->
         <button (click)="uploadFile()">Import</button>
     </div>

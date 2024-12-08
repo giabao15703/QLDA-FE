@@ -30,7 +30,7 @@ const FORM_NAME = 'FORM_ADMIN_KEHOACH'; // Đổi tên form
     selector: 'nextpro-admin-cham-huong-dan-detail',
     templateUrl: './cham-huong-dan-detail.component.html', // Đổi tên file template và style
     styleUrl: './cham-huong-dan-detail.component.scss', // Đổi tên file style
-    providers: [FormService],
+    providers: [FormService, GradingService],
     imports: [
         CommonModule,
         TranslateModule,
@@ -45,7 +45,6 @@ const FORM_NAME = 'FORM_ADMIN_KEHOACH'; // Đổi tên form
     ],
 })
 export class ChamHuongDanDetailComponent {
-    
     constructor(
         public loadingService: LoadingService,
         public form: FormService<I_GradingForm>,
@@ -64,7 +63,12 @@ export class ChamHuongDanDetailComponent {
                 getOptions: () =>
                     this.deTaiService.getDeTais().then((res) => {
                         const gvOptions = res.data
-                            .filter((item) => item.trangthai === '1' && item.idnhom !== null && item.idgvhuongdan.id === currentUserId)
+                            .filter(
+                                (item) =>
+                                    item.trangthai === '1' &&
+                                    item.idnhom !== null &&
+                                    item.idgvhuongdan.id === currentUserId,
+                            )
                             .map((item: I_DeTai) => ({
                                 label: item.tendoan,
                                 value: item.id,
@@ -89,8 +93,7 @@ export class ChamHuongDanDetailComponent {
     @Input() onCloseDrawer;
     @Input() refetch;
 
-    ngOnInit() {
-    }
+    ngOnInit() {}
 
     ngOnChanges(changes) {
         if (changes?.mode?.currentValue === E_Form_Mode.CREATE) {
@@ -133,7 +136,7 @@ export class ChamHuongDanDetailComponent {
             } else {
                 const { updateGrading } = await this.gradingService.updateGrading({
                     id: this.data.id,
-                    input:{
+                    input: {
                         diemHuongdan: values.diemHuongdan,
                     },
                 });

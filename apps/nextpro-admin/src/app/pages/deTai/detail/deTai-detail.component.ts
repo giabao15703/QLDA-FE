@@ -104,7 +104,7 @@ export class DeTaiDetailComponent {
                 getOptions: () =>
                     this.accountService.getAdmins().then((res) => {
                         return [
-                            { label: 'Chưa phân phối', value: { id: -1 } },
+                            { label: 'Chưa phân phối', value: -1 },
                             ...res.data
                                 .filter((item) => item.role !== AdminRole.A_2)
                                 .map((item) => ({

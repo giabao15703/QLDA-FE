@@ -76,16 +76,20 @@ export class AccountAdminDetailComponent {
                 fieldType: E_FieldType.SELECT,
                 options: [
                     {
-                        label: 'account.admin-accounts.master',
+                        label: 'Trưởng khoa',
                         value: 1,
                     },
                     {
-                        label: 'account.admin-accounts.levelTwo',
+                        label: 'Giáo vụ',
                         value: 2,
                     },
                     {
-                        label: 'account.admin-accounts.levelThree',
+                        label: 'Giảng viên',
                         value: 3,
+                    },
+                    {
+                        label: 'Trưởng bộ môn',
+                        value: 4,
                     },
                 ],
             },

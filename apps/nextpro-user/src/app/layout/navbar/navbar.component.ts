@@ -5,29 +5,52 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { ImageComponent, LanguageSwitchComponent } from '#shared/components';
 import { MaterialModules } from '#shared/modules';
-import { AuthService, GroupQLDAService, LocalStorageService, NotificationService } from '#shared/services';
+import {
+    AccountService,
+    AuthService,
+    GroupQLDAService,
+    LocalStorageService,
+    NotificationService,
+} from '#shared/services';
 import { E_RequyestType, E_UserType, I_JoinGroup, I_JoinRequest, I_Profile, I_TableState } from '#shared/types';
 import { MatMenuTrigger } from '@angular/material/menu';
+import { MatDialog } from '@angular/material/dialog';
+import { FormsModule } from '@angular/forms';
 
 @Component({
     standalone: true,
     selector: 'nextpro-user-navbar',
     templateUrl: './navbar.component.html',
     styleUrl: './navbar.component.scss',
-    imports: [CommonModule, MaterialModules, TranslateModule, LanguageSwitchComponent, RouterModule, ImageComponent],
+    imports: [
+        CommonModule,
+        MaterialModules,
+        TranslateModule,
+        LanguageSwitchComponent,
+        RouterModule,
+        ImageComponent,
+        FormsModule,
+    ],
 })
 export class NavbarComponent {
     errorMessage: string = '';
     user: I_Profile = {};
     joinRequestId: I_JoinRequest | undefined; // Đảm bảo joinRequestId được định nghĩa chính xác
     menus: any;
-
+    passwords = {
+        currentPassword: '',
+        newPassword: '',
+        confirmPassword: '',
+    };
+    @ViewChild('changePasswordDialog') changePasswordDialog: any;
     constructor(
         private router: Router,
         public authService: AuthService,
         private localStorageService: LocalStorageService,
         private groupQldaService: GroupQLDAService,
         private notificationService: NotificationService,
+        private accountService: AccountService,
+        private dialog: MatDialog,
     ) {
         this.user = this.localStorageService.get('user');
 
@@ -43,7 +66,52 @@ export class NavbarComponent {
         this.user = this.localStorageService.get('user');
         this.LoadNotifications();
     }
+    openChangePasswordDialog(): void {
+        const dialogRef = this.dialog.open(this.changePasswordDialog, {
+            width: '400px',
+        });
 
+        dialogRef.afterClosed().subscribe((result) => {
+            if (result) {
+                // Gọi hàm cập nhật mật khẩu sau khi dialog đóng
+                this.onSubmit();
+            }
+        });
+    }
+
+    // Khi submit form, kiểm tra mật khẩu mới và xác nhận mật khẩu
+    onSubmit() {
+        if (this.passwords.newPassword !== this.passwords.confirmPassword) {
+            this.notificationService.error('Mật khẩu xác nhận không khớp!');
+            return;
+        }
+
+        // Thực hiện mutation để thay đổi mật khẩu
+        this.updatePassword();
+    }
+
+    // Gọi service để thay đổi mật khẩu
+    updatePassword() {
+        const variables = {
+            newPassword: this.passwords.newPassword,
+        };
+
+        // Gọi phương thức getUpdatePassword từ AuthService
+        this.accountService.getUpdatePassword(variables).then(
+            (response) => {
+                if (response.updatePassword.status) {
+                    this.notificationService.success('Mật khẩu đã được thay đổi thành công!');
+                } else {
+                    this.notificationService.error(
+                        response.updatePassword.error?.message || 'Lỗi khi thay đổi mật khẩu.',
+                    );
+                }
+            },
+            (error) => {
+                this.notificationService.error('Có lỗi xảy ra khi thay đổi mật khẩu.');
+            },
+        );
+    }
     LoadNotifications() {
         const user = JSON.parse(localStorage.getItem('user') || '{}');
         console.log('Dữ liệu user từ localStorage:', user);
@@ -93,10 +161,8 @@ export class NavbarComponent {
             })
             .catch((error) => {
                 console.error('Lỗi khi lấy yêu cầu tham gia nhóm:', error);
-                // Xử lý lỗi nếu cần
             });
     }
-
     setJoinRequestId(joinRequestId: string) {
         if (!joinRequestId) {
             console.error('joinRequestId is undefined or invalid.');

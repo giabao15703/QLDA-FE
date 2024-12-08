@@ -16054,12 +16054,12 @@
         "isOneOf": null,
         "fields": [
           {
-            "name": "buyer",
+            "name": "error",
             "description": null,
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "BuyerNode",
+              "name": "Error",
               "ofType": null
             },
             "isDeprecated": false,
@@ -51839,14 +51839,14 @@
             "description": null,
             "args": [
               {
-                "name": "buyer",
+                "name": "user",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
                   "ofType": {
                     "kind": "INPUT_OBJECT",
-                    "name": "BuyerUpdateInput",
+                    "name": "UserInput",
                     "ofType": null
                   }
                 },
@@ -51855,46 +51855,14 @@
                 "deprecationReason": null
               },
               {
-                "name": "id",
+                "name": "userId",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
                   "ofType": {
                     "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "isDeleteLogo",
-                "description": null,
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "Boolean",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "isDeletePicture",
-                "description": null,
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "Boolean",
+                    "name": "ID",
                     "ofType": null
                   }
                 },
@@ -60035,6 +60003,35 @@
             "type": {
               "kind": "OBJECT",
               "name": "OrderUpdateStatusMutation",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "updatePassword",
+            "description": null,
+            "args": [
+              {
+                "name": "newPassword",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "UpdatePassword",
               "ofType": null
             },
             "isDeprecated": false,
@@ -82514,6 +82511,22 @@
             "deprecationReason": null
           },
           {
+            "name": "getStudentsInGroup",
+            "description": "Lấy danh sách sinh viên trong nhóm",
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "StudentWithGroupNode",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "grading",
             "description": "The ID of the object",
             "args": [
@@ -104945,6 +104958,30 @@
       },
       {
         "kind": "OBJECT",
+        "name": "StudentWithGroupNode",
+        "description": null,
+        "isOneOf": null,
+        "fields": [
+          {
+            "name": "joinGroup",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "JoinGroupNode",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "SubClusterCodeCreate",
         "description": null,
         "isOneOf": null,
@@ -123594,6 +123631,42 @@
             "type": {
               "kind": "OBJECT",
               "name": "NotificationNode",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "status",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "UpdatePassword",
+        "description": null,
+        "isOneOf": null,
+        "fields": [
+          {
+            "name": "error",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Error",
               "ofType": null
             },
             "isDeprecated": false,

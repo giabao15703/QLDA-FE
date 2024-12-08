@@ -219,110 +219,23 @@ export class BuyerBasicInformationFormComponent {
     }
 
     ngOnChanges(changes) {
-        this.updateProfileHeader(changes?.data?.currentValue);
+        if (changes?.mode?.currentValue === E_Form_Mode.CREATE) {
+            this.form.reset();
+        } else {
+            if (this.data) {
+                const userDetail = this.data;
 
-        switch (changes?.mode?.currentValue) {
-            case E_Form_Mode.CREATE: {
-                this.form.reset();
-                this.form.mutate({
-                    enableAll: [
-                        'companyFullName',
-                        'companyAddress',
-                        'industries',
-                        'companyLogo',
-                        'companyCountry',
-                        'companyCountryState',
-                        'companyTax',
-                        'companyNumberOfEmployee',
-                        'currency',
-                        'fullName',
-                        'gender',
-                        'position',
-                        'email',
-                        'phone',
-                        'picture',
-                        'password',
-                        'confirmPassword',
-                        'companyReferralCode',
-                    ],
+                this.form.patchValue({
+                    mssv: userDetail.mssv,
+                    shortName: userDetail.shortName,
                 });
-                this.buyerNumber = null;
-                this.profile = null;
-                this.registerDate = new Date();
-                break;
             }
-            case E_Form_Mode.READ: {
-                this.form.mutate({
-                    disableAll: [
-                        'companyFullName',
-                        'companyAddress',
-                        'industries',
-                        'companyLogo',
-                        'companyCountry',
-                        'companyCountryState',
-                        'companyTax',
-                        'companyNumberOfEmployee',
-                        'currency',
-                        'fullName',
-                        'gender',
-                        'position',
-                        'email',
-                        'phone',
-                        'picture',
-                        'password',
-                        'confirmPassword',
-                        'companyReferralCode',
-                    ],
-                });
-                break;
-            }
-            case E_Form_Mode.UPDATE: {
-                this.form.mutate({
-                    disableAll: ['email', 'companyReferralCode'],
-                    delete: ['password', 'confirmPassword'],
-                });
-                break;
-            }
-        }
-
-        const oldData = this.localStorageService.get(FORM_NAME);
-
-        if (oldData) {
-            this.setFormData(oldData);
-        } else if (changes?.data?.currentValue) {
-            this.setFormData(changes.data.currentValue);
         }
     }
-
     updateProfileHeader = (values?: T_Any) => {
         this.buyerNumber = values?.username ?? null;
         this.profile = values?.profileFeatures?.name ?? null;
         this.registerDate = values?.created ?? new Date();
-    };
-
-    setFormData = async (values) => {
-        this.form.patchValue({
-            password: null,
-            confirmPassword: null,
-            companyFullName: values.companyFullName,
-            companyTax: values.companyTax,
-            companyAddress: values.companyAddress,
-            companyCountry: values.companyCountry,
-            companyCountryState: values.companyCountryState,
-            companyNumberOfEmployee: values.companyNumberOfEmployee,
-            companyReferralCode: values.companyReferralCode ?? '',
-            gender: values.gender,
-            phone: values.phone,
-            position: values.position,
-            currency: values.currency,
-            email: values.email,
-            fullName: values.fullName,
-            companyLogo: values.companyLogo,
-            picture: values.picture,
-            industries: values.industries,
-        });
-
-        this.industriesSelected = values.industries;
     };
 
     onTermAcceptChange = (event) => {
@@ -416,6 +329,68 @@ export class BuyerBasicInformationFormComponent {
                     .catch((error) => {
                         // Xử lý lỗi khi gửi request
                         this.form.setFieldError('general', error.message || 'Đã xảy ra lỗi khi tạo buyer');
+                    });
+            },
+            FORM_NAME,
+        );
+    };
+    handleUpdate = () => {
+        this.form.submit(
+            async ({
+                confirmPassword,
+                email,
+                password,
+                shortName,
+                phone,
+                lop,
+                bacDaoTao,
+                khoaHoc,
+                loaiHinhDaoTao,
+                ngaySinh,
+                noiSinh,
+                nganh,
+                gender,
+                picture,
+                mssv,
+            }) => {
+                if (password !== confirmPassword) {
+                    this.form.setFieldError('confirmPassword', 'VALIDATE_DESCRIPTION.password.notMatch');
+                    return;
+                }
+
+                const submitData = {
+                    user: {
+                        email: email ?? '',
+                        password: password ?? '',
+                        shortName: shortName ?? '',
+                        phone: phone ?? '',
+                        lop: lop ?? '',
+                        bacDaoTao: bacDaoTao ?? '',
+                        khoaHoc: khoaHoc ?? '',
+                        loaiHinhDaoTao: loaiHinhDaoTao ?? '',
+                        ngaySinh: ngaySinh ? new Date(ngaySinh).toISOString().split('T')[0] : '',
+                        noiSinh: noiSinh ?? '',
+                        nganh: nganh ?? '',
+                        gender: gender ?? '',
+                        picture: picture ?? '',
+                        mssv: mssv ?? '',
+                    },
+                    userId: this.data?.id ?? '',
+                };
+
+                this.accountService
+                    .updateBuyer(submitData)
+                    .then((response: any) => {
+                        const data = response.data;
+                        if (data?.buyerUpdate?.status) {
+                            this.notificationService.success('Thông tin buyer đã được cập nhật.');
+                        } else {
+                            // eslint-disable-next-line prettier/prettier
+                            this.form.setFieldError('general', data?.buyerUpdate?.error?.message || 'Lỗi không xác định');
+                        }
+                    })
+                    .catch((error) => {
+                        this.form.setFieldError('general', error.message || 'Đã xảy ra lỗi khi cập nhật buyer');
                     });
             },
             FORM_NAME,

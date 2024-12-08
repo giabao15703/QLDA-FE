@@ -26,7 +26,7 @@ import { ChamHuongDanDetailComponent } from '../detail/cham-huong-dan-detail.com
     selector: 'nextpro-admin-cham-huong-dan-list',
     templateUrl: './cham-huong-dan-list.component.html',
     styleUrl: './cham-huong-dan-list.component.scss',
-    providers: [TableService],
+    providers: [TableService, GradingService],
     imports: [
         CommonModule,
         TranslateModule,

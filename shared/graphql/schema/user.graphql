@@ -29,3 +29,11 @@ query getUser($id: ID!) {
         ...UserInfo
     }
 }
+mutation getUpdatePassword($newPassword: String!) {
+    updatePassword(newPassword: $newPassword) {
+        status
+        error{
+            ...ErrorInfo
+        }
+    }
+}

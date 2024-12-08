@@ -72,7 +72,10 @@
         <mat-menu #notificationMenu="matMenu" class="!max-w-full !max-h-86 !overflow-x-hidden">
             <ng-template matMenuContent>
                 <div *ngIf="notifications.length > 0; else noNotifications" class="p-4 bg-white shadow-lg rounded-lg">
-                    <div *ngFor="let notification of notifications" class="flex items-center justify-between mb-2 p-2 border-b gap-2">
+                    <div
+                        *ngFor="let notification of notifications"
+                        class="flex items-center justify-between mb-2 p-2 border-b gap-2"
+                    >
                         <!-- Hiển thị thông báo -->
                         <p class="text-gray-800">{{ notification.message }}</p>
                         <div class="flex gap-2">
@@ -100,8 +103,6 @@
                 </ng-template>
             </ng-template>
         </mat-menu>
-        
-        
 
         @if (isLoggedIn()) {
             <div class="flex items-center">
@@ -125,14 +126,62 @@
                 <mat-menu #menuPersonal="matMenu" class="!bg-gradient-to-r from-[#3CC9C7] to-[#15677f]">
                     <div mat-menu-item>
                         <div
+                            (click)="openChangePasswordDialog()"
+                            class="flex items-center gap-3 no-underline text-[#ffffff] !text-[15px]"
+                        >
+                            <span class="material-symbols-outlined">lock</span>
+                            <div>Đổi mật khẩu</div>
+                        </div>
+                    </div>
+                    <div mat-menu-item>
+                        <div
                             (click)="onLogout()"
                             class="flex items-center gap-3 no-underline text-[#ffffff] !text-[15px]"
                         >
                             <span class="material-symbols-outlined">logout</span>
-                            <div>{{ 'navbar.personal.logout' | translate }}</div>
+                            <div>Đăng xuất</div>
                         </div>
                     </div>
                 </mat-menu>
+
+                <!-- Modal Change Password -->
+                <ng-template #changePasswordDialog>
+                    <div class="password-dialog">
+                        <h2>Đổi mật khẩu</h2>
+                        <form (ngSubmit)="onSubmit()" #changePasswordForm="ngForm">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Mật khẩu mới</mat-label>
+                                <input
+                                    matInput
+                                    type="password"
+                                    name="newPassword"
+                                    [(ngModel)]="passwords.newPassword"
+                                    required
+                                />
+                            </mat-form-field>
+
+                            <mat-form-field appearance="fill">
+                                <mat-label>Xác nhận mật khẩu mới</mat-label>
+                                <input
+                                    matInput
+                                    type="password"
+                                    name="confirmPassword"
+                                    [(ngModel)]="passwords.confirmPassword"
+                                    required
+                                />
+                            </mat-form-field>
+
+                            <button
+                                mat-raised-button
+                                color="primary"
+                                type="submit"
+                                [disabled]="changePasswordForm.invalid"
+                            >
+                                Lưu thay đổi
+                            </button>
+                        </form>
+                    </div>
+                </ng-template>
             </div>
         } @else {
             <div class="lg:block hidden">

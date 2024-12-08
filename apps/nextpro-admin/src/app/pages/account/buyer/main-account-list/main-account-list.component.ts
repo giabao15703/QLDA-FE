@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
 import { Component } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import * as FileSaver from 'file-saver';
@@ -33,8 +33,9 @@ import {
     I_ProfileFeaturesBuyer,
     I_QueryVariables,
 } from '#shared/types';
-import { formatDate, getQueryVariables } from '#shared/utils';
 import { AccountBuyerMainAccountDetailComponent } from '../main-account-detail/main-account-detail.component';
+import { getQueryVariables } from '#shared/utils';
+import { HttpClient } from '@angular/common/http';
 
 const TAB_NAME = 'main';
 
@@ -67,6 +68,7 @@ export class AccountBuyerMainAccountListComponent {
         private localStorageService: LocalStorageService,
         private restApiService: RestApiService,
         private modalService: ModalService,
+        private http: HttpClient,
     ) {
         this.table.config.filterForm = [
             {
@@ -199,6 +201,7 @@ export class AccountBuyerMainAccountListComponent {
                 label: 'Số điện thoại',
             },
             {
+                cellStyle: { 'max-width': '150px', overflow: 'hidden', 'text-overflow': 'ellipsis' },
                 sort: 'picture',
                 name: 'picture',
                 label: 'Ảnh',
@@ -212,13 +215,13 @@ export class AccountBuyerMainAccountListComponent {
                 sort: 'created',
                 name: 'created',
                 label: 'account.buyer-accounts.buyer-accounts-list.createdDate',
-                render: formatDate,
+                render: (cell) => formatDate(cell, 'mediumDate', 'en-US'),
             },
             {
                 sort: 'ngaySinh',
                 name: 'ngaySinh',
                 label: 'Ngày sinh',
-                render: formatDate,
+                render: (cell) => formatDate(cell, 'mediumDate', 'en-US'),
             },
             {
                 sort: 'noiSinh',
@@ -266,6 +269,7 @@ export class AccountBuyerMainAccountListComponent {
                     {
                         icon: 'edit',
                         onClick: (row: I_Buyer) => {
+                            console.log('Dữ liệu dòng khi nhấn Edit:', row);
                             this.routeService.goTo({ mode: E_Form_Mode.READ, id: row.id, prefix: TAB_NAME });
                         },
                     },
@@ -288,14 +292,13 @@ export class AccountBuyerMainAccountListComponent {
     }
 
     getBuyer = async (hash?: string) => {
+        console.log('Lấy dữ liệu người mua với hash (id):', hash); // Kiểm tra id nhận được
         this.detail = await this.routeService.getDetail({
             tab: TAB_NAME,
             hash,
-            detail: ({ id }) =>
-                this.accountService.getBuyer({
-                    id,
-                }),
+            detail: ({ id }) => this.accountService.getBuyer({ id }),
         });
+        console.log('Dữ liệu người mua nhận được:', this.detail); // Kiểm tra dữ liệu trả về
     };
 
     getUsers = async (variables?: I_QueryVariables) => {
@@ -367,6 +370,63 @@ export class AccountBuyerMainAccountListComponent {
         });
     };
 
+    handleCreate = () => {
+        this.routeService.goTo({ mode: E_Form_Mode.CREATE, prefix: TAB_NAME });
+    };
+
+    handleCloseDetailDrawer = () => {
+        this.routeService.removeHash({ prefix: TAB_NAME });
+        this.detail = null;
+    };
+    selectedFile: File | null = null;
+
+    onFileChange(event: any) {
+        const file = event.target.files[0];
+        if (file) {
+            this.selectedFile = file;
+        }
+    }
+
+    uploadFile() {
+        if (!this.selectedFile) {
+            alert('Vui lòng chọn file!');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('file', this.selectedFile);
+
+        const headers = { 'X-CSRFToken': this.getCsrfToken() };
+
+        this.http.post('http://localhost:8000/api/import-students/', formData, { headers }).subscribe(
+            (response: any) => {
+                console.log('Response:', response); // Log phản hồi từ server để kiểm tra
+
+                if (response && response.status === 'success') {
+                    this.notificationService.success(response.message || 'File đã được upload thành công!');
+                } else if (response && response.status === 'error') {
+                    // Nếu không import được tài khoản nào
+                    if (response.message.includes('Không có tài khoản nào được import')) {
+                        this.notificationService.error(response.message || 'Tất cả tài khoản đã tồn tại!');
+                    } else {
+                        this.notificationService.error(response.message || 'Đã xảy ra lỗi khi upload file!');
+                    }
+                } else {
+                    console.error('Unexpected response format:', response);
+                    this.notificationService.error('Đã xảy ra lỗi khi upload file!');
+                }
+            },
+            (error) => {
+                console.error('Error during file upload:', error); // Log chi tiết lỗi
+                this.notificationService.error('Đã xảy ra lỗi khi upload file!');
+            },
+        );
+    }
+
+    getCsrfToken(): string {
+        const match = document.cookie.match(/csrftoken=([\w-]+)/);
+        return match ? match[1] : '';
+    }
     handleExport = async () => {
         const result = await this.restApiService.get(this.exportUrl, {
             responseType: 'blob',
@@ -375,18 +435,8 @@ export class AccountBuyerMainAccountListComponent {
                 Authorization: `Token ${this.localStorageService.get('token')}`,
             },
         });
-
         if (result.status === 200) {
             FileSaver.saveAs(result.body, 'BuyerExport.csv');
         }
-    };
-
-    handleCreate = () => {
-        this.routeService.goTo({ mode: E_Form_Mode.CREATE, prefix: TAB_NAME });
-    };
-
-    handleCloseDetailDrawer = () => {
-        this.routeService.removeHash({ prefix: TAB_NAME });
-        this.detail = null;
     };
 }

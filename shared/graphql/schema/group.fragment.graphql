@@ -36,3 +36,8 @@ fragment JoinRequestInfo on JoinRequestNode {
     leaderUserId
     requestType
 }
+fragment StudentsInGroupInfo on StudentWithGroupNode {
+    joinGroup{
+        ...JoinGroupInfo
+    }
+}

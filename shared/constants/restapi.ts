@@ -4,7 +4,7 @@ export const REST_API_ADMIN_ENDPOINTS = {
     ACCOUNT: {
         BUYER: {
             MAIN_ACCOUNT: {
-                EXPORT: environmentAdmin.apiUrl + 'api/buyer/export/',
+                EXPORT: environmentAdmin.apiUrl + 'api/export/',
             },
         },
         SUPPLIER: {

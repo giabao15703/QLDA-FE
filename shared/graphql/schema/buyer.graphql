@@ -25,6 +25,14 @@ mutation createBuyer($user: UserInput!) {
         }
     }
 }
+mutation updateBuyer($user: UserInput!,$userId: ID!) {
+    buyerUpdate(user: $user, userId: $userId) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}
 
 mutation updateBuyerStatus($listStatus: [BuyerStatusUpdateInput]!, $reasonManual: String) {
     buyerStatusUpdate(listStatus: $listStatus, reasonManual: $reasonManual) {

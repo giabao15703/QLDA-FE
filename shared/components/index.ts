@@ -1,5 +1,4 @@
 export * from './account/buyer/basic-information-form/basic-information-form.component';
-export * from './account/buyer/upgrade-profile/upgrade-profile.component';
 export * from './account/supplier/advertisement/advertisement.component';
 export * from './account/supplier/basic-information-form/basic-information-form.component';
 export * from './account/supplier/core-business/core-business.component';

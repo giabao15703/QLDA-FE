@@ -37,7 +37,7 @@ export class GradingService {
         private getGradingGQL: GetGradingGQL,
         private createGradingGQL: CreateGradingGQL,
         private updateGradingGQL: UpdateGradingGQL,
-    ) { }
+    ) {}
 
     get error(): Observable<string> {
         return this.graphqlService.error;
@@ -89,15 +89,15 @@ export class GradingService {
                             mota: gradingNode.detai.mota || '',
                             idgvhuongdan: gradingNode.detai.idgvhuongdan
                                 ? {
-                                    ...gradingNode.detai.idgvhuongdan,
-                                    role: data.grading.detai.idgvhuongdan.role as unknown as AdminRole,
-                                }
+                                      ...gradingNode.detai.idgvhuongdan,
+                                      role: data.grading.detai.idgvhuongdan.role as unknown as AdminRole,
+                                  }
                                 : null,
                             idgvphanbien: gradingNode.detai.idgvphanbien
                                 ? {
-                                    ...gradingNode.detai.idgvphanbien,
-                                    role: data.grading.detai.idgvhuongdan.role as unknown as AdminRole,
-                                }
+                                      ...gradingNode.detai.idgvphanbien,
+                                      role: data.grading.detai.idgvhuongdan.role as unknown as AdminRole,
+                                  }
                                 : null,
                             // Chuyển đổi hoặc thêm các thuộc tính khác của I_DeTai nếu cần
                         },

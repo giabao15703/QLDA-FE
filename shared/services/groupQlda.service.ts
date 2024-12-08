@@ -26,6 +26,9 @@ import {
     GetInviteUserToGroupMutation,
     GetInviteUserToGroupMutationVariables,
     GetInviteUserToGroupGQL,
+    GetStudentsInGroupQuery,
+    GetStudentsInGroupQueryVariables,
+    GetStudentsInGroupGQL,
 } from '#shared/graphql/types';
 import { E_Role, I_GraphQLOptions, I_MutationResponse, I_NormalizeExtra, I_TableState, I_User } from '#shared/types';
 import { normalizeWithPagination } from '#shared/utils';
@@ -50,6 +53,7 @@ export class GroupQLDAService {
         private getJoinGroupsGQL: GetJoinGroupsGQL,
         private getStudentsWithoutGroupGQL: GetStudentsWithoutGroupGQL,
         private getInviteUserToGroupGQL: GetInviteUserToGroupGQL,
+        private getStudentsInGroupGQL: GetStudentsInGroupGQL,
         private http: HttpClient,
     ) {}
 
@@ -208,4 +212,29 @@ export class GroupQLDAService {
             params: { user_id: userId },
         });
     }
+    private normalizeStudentsInGroupList = (data: GetStudentsInGroupQuery, extra?: any): I_TableState<I_JoinGroup> => {
+        // Nếu không có dữ liệu, trả về mảng trống
+        return { data: (data.getStudentsInGroup || []).map((student) => student.joinGroup?.user) as I_JoinGroup[] };
+    };
+
+    // Phương thức chính để lấy sinh viên trong nhóm
+    getStudentsInGroup = (
+        variables?: GetStudentsInGroupQueryVariables,
+        options?: any, // có thể thêm các tùy chọn tùy chỉnh
+    ) => {
+        return this.graphqlService.query<
+            GetStudentsInGroupQuery,
+            GetStudentsInGroupQueryVariables,
+            I_TableState<I_JoinGroup>
+        >(
+            this.getStudentsInGroupGQL, // Giả sử bạn có query GraphQL getStudentsInGroupGQL
+            variables, // Các biến truyền vào query GraphQL
+            {
+                normalize: (data) => {
+                    return this.normalizeStudentsInGroupList(data, options?.extra);
+                },
+                ...options, // Kết hợp các tùy chọn bổ sung
+            },
+        ) as Promise<I_TableState<I_JoinGroup>>; // Đảm bảo trả về kiểu dữ liệu chuẩn
+    };
 }

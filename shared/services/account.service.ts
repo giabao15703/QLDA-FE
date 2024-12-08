@@ -74,6 +74,9 @@ import {
     GetSuppliersWithProductsGQL,
     GetSuppliersWithProductsQuery,
     GetSuppliersWithProductsQueryVariables,
+    GetUpdatePasswordGQL,
+    GetUpdatePasswordMutation,
+    GetUpdatePasswordMutationVariables,
     GetUserGQL,
     GetUserPermissionsGQL,
     GetUserPermissionsQuery,
@@ -92,6 +95,9 @@ import {
     UpdateBuyerDetailGQL,
     UpdateBuyerDetailMutation,
     UpdateBuyerDetailMutationVariables,
+    UpdateBuyerGQL,
+    UpdateBuyerMutation,
+    UpdateBuyerMutationVariables,
     UpdateBuyerStatusGQL,
     UpdateBuyerStatusMutation,
     UpdateBuyerStatusMutationVariables,
@@ -192,6 +198,9 @@ export class AccountService {
 
         private getUsersGQL: GetUsersGQL,
         private getUserGQL: GetUserGQL,
+
+        private getUpdatePasswordGQL: GetUpdatePasswordGQL,
+        private updateBuyerGQL: UpdateBuyerGQL,
     ) {}
 
     get error(): Observable<string> {
@@ -675,6 +684,16 @@ export class AccountService {
             { buyerCreate: I_MutationResponse }
         >(this.createBuyerGQL, variables, options);
     };
+    updateBuyer = (
+        variables?: UpdateBuyerMutationVariables,
+        options?: I_GraphQLOptions<UpdateBuyerMutation, { buyerUpdate: I_MutationResponse }>,
+    ) => {
+        return this.graphqlService.mutate<
+            UpdateBuyerMutation,
+            UpdateBuyerMutationVariables,
+            { buyerUpdate: I_MutationResponse }
+        >(this.updateBuyerGQL, variables, options);
+    };
     updateAdmin = (
         variables?: UpdateAdminMutationVariables,
         options?: I_GraphQLOptions<UpdateAdminMutation, { adminUpdate: I_MutationResponse }>,
@@ -721,4 +740,14 @@ export class AccountService {
         }) as Promise<I_TableState<I_ClientFocus>>;
     };
     // #endregion
+    getUpdatePassword = (
+        variables?: GetUpdatePasswordMutationVariables,
+        options?: I_GraphQLOptions<GetUpdatePasswordMutation, { updatePassword: I_MutationResponse }>,
+    ) => {
+        return this.graphqlService.mutate<
+            GetUpdatePasswordMutation,
+            GetUpdatePasswordMutationVariables,
+            { updatePassword: I_MutationResponse }
+        >(this.getUpdatePasswordGQL, variables, options);
+    };
 }

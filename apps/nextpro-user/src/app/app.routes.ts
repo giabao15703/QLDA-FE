@@ -7,7 +7,6 @@ import { BecomeBuyerPage } from '#user/pages/auth/register/become-buyer/become-b
 import { BecomeSupplierPage } from '#user/pages/auth/register/become-supplier/become-supplier.component';
 import { ThankYouPage } from '#user/pages/auth/register/thank-you/thank-you.component';
 import { BuyerClubPage } from '#user/pages/buyer/buyer-club/buyer-club.component';
-import { BuyerProfilePage } from '#user/pages/buyer/profile/profile.component';
 // import { CartPage } from '#user/pages/cart/cart.component';
 // import { CustomerSupportBuyerPage } from '#user/pages/customer-support/buyer/buyer.component';
 // import { CustomerSupportSupplierPage } from '#user/pages/customer-support/supplier/supplier.component';
@@ -129,10 +128,6 @@ export const appRoutes: Routes = [
     {
         path: ROUTES.USER.BUYER.ORDER.ROOT,
         component: OrderBuyerComponent,
-    },
-    {
-        path: ROUTES.USER.BUYER.PROFILE,
-        component: BuyerProfilePage,
     },
     {
         path: ROUTES.USER.BUYER_CLUB.ROOT,

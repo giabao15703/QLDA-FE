@@ -1,23 +1,23 @@
 query getGroupQldas(
-        $before: String, 
-        $after: String, 
-        $first: Int, 
-        $last: Int, 
-        $name: String, 
-        $status: Boolean,
-        $idgvhuongdan: String
-        $idgvphanbien: String
-        $userId: String
-        $groupId: String
-        $mssv: String
-    ) {
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+    $name: String
+    $status: Boolean
+    $idgvhuongdan: String
+    $idgvphanbien: String
+    $userId: String
+    $groupId: String
+    $mssv: String
+) {
     groupQldas(
-        before: $before, 
-        after: $after, 
-        first: $first, 
-        last: $last, 
-        name: $name, 
-        status: $status,
+        before: $before
+        after: $after
+        first: $first
+        last: $last
+        name: $name
+        status: $status
         idgvhuongdan: $idgvhuongdan
         idgvphanbien: $idgvphanbien
         userId: $userId
@@ -36,7 +36,6 @@ query getGroupQldas(
     }
 }
 
-
 query getGroupQldaRequests(
     $before: String
     $after: String
@@ -47,7 +46,6 @@ query getGroupQldaRequests(
     $isApproved: Boolean
     $leaderUserId: Float
     $requestType: String
-
 ) {
     joinRequests(
         before: $before
@@ -139,7 +137,6 @@ mutation acceptJoinRequest($joinRequestId: ID!) {
     }
 }
 
-
 mutation createGroupQlda($input: GroupQLDAInput!) {
     groupQldaCreate(input: $input) {
         status
@@ -151,7 +148,7 @@ mutation createGroupQlda($input: GroupQLDAInput!) {
         }
     }
 }
-query getStudentsWithoutGroup{
+query getStudentsWithoutGroup {
     studentsWithoutGroup {
         id
         shortName
@@ -171,5 +168,10 @@ mutation getInviteUserToGroup($groupId: ID!, $userId: ID!) {
             code
             message
         }
+    }
+}
+query getStudentsInGroup {
+    getStudentsInGroup {
+       ...StudentsInGroupInfo
     }
 }

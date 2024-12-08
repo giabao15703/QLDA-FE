@@ -28,7 +28,7 @@ export class DeTaiService {
         private getDeTaiGQL: GetDeTaiGQL, // Hàm lấy chi tiết DeTai
         private createDeTaiGQL: CreateDeTaiGQL, // Hàm tạo DeTai
         private updateDeTaiGQL: UpdateDeTaiGQL, // Hàm cập nhật danh sách DeTai
-    ) { }
+    ) {}
 
     get error(): Observable<string> {
         return this.graphqlService.error;
@@ -67,15 +67,15 @@ export class DeTaiService {
                     mota: data.deTai.mota || '', // Nếu mota là null hoặc undefined, gán giá trị mặc định là chuỗi rỗng
                     idgvhuongdan: data.deTai.idgvhuongdan
                         ? {
-                            ...data.deTai.idgvhuongdan,
-                            role: data.deTai.idgvhuongdan.role as unknown as E_Role,
-                        }
+                              ...data.deTai.idgvhuongdan,
+                              role: data.deTai.idgvhuongdan.role as unknown as E_Role,
+                          }
                         : null, // Nếu idgvhuongdan là null, giữ nguyên null
                     idgvphanbien: data.deTai.idgvphanbien
                         ? {
-                            ...data.deTai.idgvphanbien,
-                            role: data.deTai.idgvphanbien.role as unknown as E_Role,
-                        }
+                              ...data.deTai.idgvphanbien,
+                              role: data.deTai.idgvphanbien.role as unknown as E_Role,
+                          }
                         : null, // Nếu idgvphanbien là null, giữ nguyên null
                     // Add new fields here
                     // giangVienLongName: data.deTai.giangVienLongName || '',

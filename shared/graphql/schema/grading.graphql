@@ -6,6 +6,7 @@ query getGradings(
     $detai: String,
     $diemHuongdan: Float,
     $diemPhanbien: Float,
+    $type: String,
 ){
     gradings(
         before: $before,
@@ -15,6 +16,7 @@ query getGradings(
         detai: $detai,
         diemHuongdan: $diemHuongdan,
         diemPhanbien: $diemPhanbien,
+        type: $type,
     ) {
         totalCount
         pageInfo {

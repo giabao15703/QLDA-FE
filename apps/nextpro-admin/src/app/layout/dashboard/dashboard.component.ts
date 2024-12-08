@@ -29,7 +29,7 @@ export class LayoutDashboard {
         private authService: AuthService,
         private translateService: TranslateService,
         private localStorageService: LocalStorageService,
-    ) {}
+    ) { }
     user: I_Profile = {};
     showSidebar = true;
     menuData: I_NavItem[] = [];
@@ -69,107 +69,136 @@ export class LayoutDashboard {
             },
             ...(isTruongKhoa
                 ? [
-                      {
-                          name: 'Account',
-                          icon: '/assets/icons/account.svg',
-                          children: [
-                              {
-                                  name: 'Account',
-                                  icon: '/assets/icons/buyer.svg',
-                                  href: '/admin/account/',
-                              },
-                              {
-                                  name: 'Admin Account',
-                                  icon: '/assets/icons/admin.svg',
-                                  href: '/admin/account/admin',
-                              },
-                          ],
-                      },
-                      {
-                          name: 'Kế hoạch đồ án',
-                          icon: '/assets/icons/setting-3-svgrepo-com.svg',
-                          href: '/admin/keHoach',
-                      },
-                      {
-                          name: 'Đề Tài',
-                          icon: '/assets/icons/setting-3-svgrepo-com.svg',
-                          href: '/admin/deTai',
-                      },
-                      {
-                          name: 'Nhóm đồ án',
-                          icon: '/assets/icons/setting-3-svgrepo-com.svg',
-                          href: '/admin/group',
-                      },
-                      {
-                            name:'Chấm điểm hướng dẫn',
-                            icon:'/assets/icons/setting-3-svgrepo-com.svg',
-                            href:'/admin/cham-huong-dan'
-                      }
-                  ]
+                    {
+                        name: 'Account',
+                        icon: '/assets/icons/account.svg',
+                        children: [
+                            {
+                                name: 'Account',
+                                icon: '/assets/icons/buyer.svg',
+                                href: '/admin/account/',
+                            },
+                            {
+                                name: 'Admin Account',
+                                icon: '/assets/icons/admin.svg',
+                                href: '/admin/account/admin',
+                            },
+                        ],
+                    },
+                    {
+                        name: 'Kế hoạch đồ án',
+                        icon: '/assets/icons/setting-3-svgrepo-com.svg',
+                        href: '/admin/keHoach',
+                    },
+                    {
+                        name: 'Đề Tài',
+                        icon: '/assets/icons/setting-3-svgrepo-com.svg',
+                        href: '/admin/deTai',
+                    },
+                    {
+                        name: 'Nhóm đồ án',
+                        icon: '/assets/icons/setting-3-svgrepo-com.svg',
+                        href: '/admin/group',
+                    },
+                    {
+                        name: 'Chấm điểm hướng dẫn',
+                        icon: '/assets/icons/setting-3-svgrepo-com.svg',
+                        href: '/admin/cham-huong-dan',
+                    },
+                    {
+                        name: 'Chấm điểm phản biện',
+                        icon: '/assets/icons/setting-3-svgrepo-com.svg',
+                        href: '/admin/cham-phan-bien',}
+                ]
                 : []),
             ...(isGiangVien
                 ? [
-                      {
-                          name: 'Đề Tài',
-                          icon: '/assets/icons/setting-3-svgrepo-com.svg',
-                          href: '/admin/deTai',
-                      },
-                      {
-                          name: 'Nhóm đồ án',
-                          icon: '/assets/icons/setting-3-svgrepo-com.svg',
-                          href: '/admin/group',
-                      },
-                  ]
+                    {
+                        name: 'Đề Tài',
+                        icon: '/assets/icons/setting-3-svgrepo-com.svg',
+                        href: '/admin/deTai',
+                    },
+                    {
+                        name: 'Nhóm đồ án',
+                        icon: '/assets/icons/setting-3-svgrepo-com.svg',
+                        href: '/admin/group',
+                    },
+                    {
+                        name: 'Chấm điểm hướng dẫn',
+                        icon: '/assets/icons/setting-3-svgrepo-com.svg',
+                        href: '/admin/cham-huong-dan',
+                    },
+                    {
+                        name: 'Chấm điểm phản biện',
+                        icon: '/assets/icons/setting-3-svgrepo-com.svg',
+                        href: '/admin/cham-phan-bien',
+                    }
+                ]
                 : []),
             ...(isGiaoVu
                 ? [
-                      {
-                          name: 'Account',
-                          icon: '/assets/icons/account.svg',
-                          children: [
-                              {
-                                  name: 'Account',
-                                  icon: '/assets/icons/buyer.svg',
-                                  href: '/admin/account/',
-                              },
-                              {
-                                  name: 'Admin Account',
-                                  icon: '/assets/icons/admin.svg',
-                                  href: '/admin/account/admin',
-                              },
-                          ],
-                      },
-                      {
-                          name: 'Nhóm đồ án',
-                          icon: '/assets/icons/setting-3-svgrepo-com.svg',
-                          href: '/admin/group',
-                      },
-                  ]
+                    {
+                        name: 'Account',
+                        icon: '/assets/icons/account.svg',
+                        children: [
+                            {
+                                name: 'Account',
+                                icon: '/assets/icons/buyer.svg',
+                                href: '/admin/account/',
+                            },
+                            {
+                                name: 'Admin Account',
+                                icon: '/assets/icons/admin.svg',
+                                href: '/admin/account/admin',
+                            },
+                        ],
+                    },
+                    {
+                        name: 'Nhóm đồ án',
+                        icon: '/assets/icons/setting-3-svgrepo-com.svg',
+                        href: '/admin/group',
+                    },
+                ]
                 : []),
             ...(isTruongBoMon
                 ? [
-                      {
-                          name: 'Account',
-                          icon: '/assets/icons/account.svg',
-                          children: [
-                              {
-                                  name: 'Account',
-                                  icon: '/assets/icons/buyer.svg',
-                                  href: '/admin/account/',
-                              },
-                              {
-                                  name: 'Admin Account',
-                                  icon: '/assets/icons/admin.svg',
-                                  href: '/admin/account/admin',
-                              },
-                          ],
-                      },
-                      {
-                          name: 'Nhóm đồ án',
-                          icon: '/assets/icons/setting-3-svgrepo-com.svg',
-                          href: '/admin/group',
-                      },
-                  ]
+                    {
+                        name: 'Account',
+                        icon: '/assets/icons/account.svg',
+                        children: [
+                            {
+                                name: 'Account',
+                                icon: '/assets/icons/buyer.svg',
+                                href: '/admin/account/',
+                            },
+                            {
+                                name: 'Admin Account',
+                                icon: '/assets/icons/admin.svg',
+                                href: '/admin/account/admin',
+                            },
+                        ],
+                    },
+                    {
+                        name: 'Nhóm đồ án',
+                        icon: '/assets/icons/setting-3-svgrepo-com.svg',
+                        href: '/admin/group',
+                    },
+                    {
+                        name: 'Đề Tài',
+                        icon: '/assets/icons/setting-3-svgrepo-com.svg',
+                        href: '/admin/deTai',
+                    },
+                    {
+                        name: 'Chấm điểm hướng dẫn',
+                        icon: '/assets/icons/setting-3-svgrepo-com.svg',
+                        href: '/admin/cham-huong-dan',
+                    },
+                    {
+                        name: 'Chấm điểm phản biện',
+                        icon: '/assets/icons/setting-3-svgrepo-com.svg',
+                        href: '/admin/cham-phan-bien',
+                    } 
+                ]
                 : []),
         ];
     }

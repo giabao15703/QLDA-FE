@@ -12,6 +12,7 @@ import { KeHoachListPage } from './pages/keHoach/list/keHoach-list.component';
 import { HomePage } from './pages/home/home.component';
 import { GroupListPage } from './pages/group/list/group-list.component';
 import { ChamHuongDanListPage } from './pages/cham-huong-dan/list/cham-huong-dan-list.component';
+import { ChamPhanBienListPage } from './pages/cham-phan-bien/list/cham-phan-bien-list.component';
 
 export const appRoutes: Routes = [
     { path: '', redirectTo: 'admin/home', pathMatch: 'full' },
@@ -49,6 +50,10 @@ export const appRoutes: Routes = [
             {
                 path: 'cham-huong-dan',
                 children: [{ path: '', component: ChamHuongDanListPage, data: { breadcrumb: 'Chấm hướng dẫn' } }],
+            },
+            {
+                path: 'cham-phan-bien',
+                children: [{ path: '', component: ChamPhanBienListPage, data: { breadcrumb: 'Chấm phản biện' } }],
             },
             {
                 path: 'group',

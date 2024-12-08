@@ -107,5 +107,5 @@ export class GroupDetailComponent {
             console.log(this.data);
         }
     }
-    handleSave = async () => { };
+    handleSave = async () => {};
 }

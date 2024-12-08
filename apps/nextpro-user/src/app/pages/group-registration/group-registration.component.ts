@@ -101,7 +101,7 @@ export class GroupRegistrationComponent implements OnInit {
     async onSubmitJoin(group_id: string) {
         try {
             console.log('requestType:', E_RequyestType.JOIN_REQUEST);
-            console.log('requestType type:', typeof E_RequyestType.JOIN_REQUEST);  // Kiểm tra kiểu
+            console.log('requestType type:', typeof E_RequyestType.JOIN_REQUEST); // Kiểm tra kiểu
 
             // Truyền giá trị enum vào GraphQL mutation, không cần ép kiểu
             const response = await this.groupQLDAService.getGroupQldaJoin({
@@ -120,5 +120,4 @@ export class GroupRegistrationComponent implements OnInit {
             this.errorMessage = 'Có lỗi xảy ra khi tham gia nhóm.';
         }
     }
-
 }

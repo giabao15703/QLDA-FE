@@ -27,9 +27,9 @@ const FORM_NAME = 'FORM_ADMIN_KEHOACH'; // Đổi tên form
 
 @Component({
     standalone: true,
-    selector: 'nextpro-admin-cham-huong-dan-detail',
-    templateUrl: './cham-huong-dan-detail.component.html', // Đổi tên file template và style
-    styleUrl: './cham-huong-dan-detail.component.scss', // Đổi tên file style
+    selector: 'nextpro-admin-cham-phan-bien-detail',
+    templateUrl: './cham-phan-bien-detail.component.html', // Đổi tên file template và style
+    styleUrl: './cham-phan-bien-detail.component.scss', // Đổi tên file style
     providers: [FormService],
     imports: [
         CommonModule,
@@ -44,7 +44,7 @@ const FORM_NAME = 'FORM_ADMIN_KEHOACH'; // Đổi tên form
         MatInputModule,
     ],
 })
-export class ChamHuongDanDetailComponent {
+export class ChamPhanBienDetailComponent {
     
     constructor(
         public loadingService: LoadingService,
@@ -64,7 +64,7 @@ export class ChamHuongDanDetailComponent {
                 getOptions: () =>
                     this.deTaiService.getDeTais().then((res) => {
                         const gvOptions = res.data
-                            .filter((item) => item.trangthai === '1' && item.idnhom !== null && item.idgvhuongdan.id === currentUserId)
+                            .filter((item) => item.trangthai === '1' && item.idnhom !== null && item.idgvphanbien?.id == currentUserId)
                             .map((item: I_DeTai) => ({
                                 label: item.tendoan,
                                 value: item.id,
@@ -73,10 +73,10 @@ export class ChamHuongDanDetailComponent {
                     }),
             },
             {
-                label: 'Điểm hướng dẫn',
-                name: 'diemHuongdan',
+                label: 'Điểm phản biện',
+                name: 'diemPhanbien',
                 validate: [
-                    { rule: Validators.required, message: 'Điểm hướng dẫn là bắt buộc.' },
+                    { rule: Validators.required, message: 'Điểm phản biện là bắt buộc.' },
                     { rule: Validators.min(0), message: 'Điểm không thể nhỏ hơn 0.' },
                     { rule: Validators.max(10), message: 'Điểm không thể lớn hơn 10.' },
                 ],
@@ -97,11 +97,10 @@ export class ChamHuongDanDetailComponent {
             this.form.reset();
         } else {
             if (this.data) {
-                const chamHuongDanDetail = this.data;
-
+                const chamPhanbienDetail = this.data;
                 this.form.patchValue({
-                    detai: chamHuongDanDetail.detai?.id,
-                    diemHuongdan: chamHuongDanDetail.diemHuongdan,
+                    detai: chamPhanbienDetail.detai?.id,
+                    diemPhanbien: chamPhanbienDetail.diemPhanbien,
                 });
             }
         }
@@ -112,7 +111,7 @@ export class ChamHuongDanDetailComponent {
             const variables = {
                 input: {
                     detaiId: values.detai,
-                    diemHuongdan: values.diemHuongdan,
+                    diemPhanbien: values.diemPhanbien,
                 },
             };
 
@@ -133,9 +132,9 @@ export class ChamHuongDanDetailComponent {
             } else {
                 const { updateGrading } = await this.gradingService.updateGrading({
                     id: this.data.id,
-                    input:{
-                        diemHuongdan: values.diemHuongdan,
-                    },
+                    input: {
+                        diemPhanbien: values.diemPhanbien,
+                    }
                 });
 
                 if (updateGrading.status) {

@@ -74,6 +74,47 @@ export class ChamHuongDanListPage {
                 type: E_TableColumnType.SELECTION,
                 name: 'selection',
             },
+            {
+                label: 'Mã đề tài',
+                name: 'maDeTai',
+                render: (_, __, row) => {
+                    return row.detai?.id;
+                }
+            },
+            {
+                label: 'Tên đề tài',
+                name: 'tenDeTai',
+                render: (_, __, row) => {
+                    return row.detai?.tendoan;
+                }
+            },
+            {
+                label: 'Mã nhóm',
+                name: 'maNhom',
+                render: (_, __, row) => {
+                    return row.detai?.idnhom;
+                }
+            },
+            {
+                label: 'Điểm hướng dẫn',
+                name: 'diemHuongdan',
+            },
+            {
+                cellStyle: { width: '50px' },
+                sticky: 'right',
+                type: E_TableColumnType.ACTION,
+                name: 'action',
+                label: 'Hành động',
+                ctas: [
+                    {
+                        icon: 'edit',
+                        onClick: (row: I_Grading) => {
+                            this.routeService.goTo({ mode: E_Form_Mode.UPDATE, id: row.id });
+                        },
+                    },
+                ],
+            },
+
         ];
         this.table.config.refetch = this.getGrandings;
 
@@ -103,7 +144,12 @@ export class ChamHuongDanListPage {
     getGrandings = async (variables?: I_QueryVariables) => {
         const gradings = await this.gradingService.getGradings(
             {
-                ...getQueryVariables({ variables }),
+                ...getQueryVariables({
+                    variables: {
+                        ...variables,
+                        type: 'HUONG_DAN',
+                    },
+                }),
             },
             { extra: { variables } },
         );

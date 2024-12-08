@@ -106,15 +106,14 @@ export class DeTaiDetailComponent {
                         return [
                             { label: 'Chưa phân phối', value: { id: -1 } },
                             ...res.data
-                                .filter(item => item.role !== AdminRole.A_2)
-                                .map(item => ({
+                                .filter((item) => item.role !== AdminRole.A_2)
+                                .map((item) => ({
                                     label: item.shortName,
                                     value: item.id,
-                                }))
+                                })),
                         ];
                     }),
-
-            }
+            },
         ];
     }
 

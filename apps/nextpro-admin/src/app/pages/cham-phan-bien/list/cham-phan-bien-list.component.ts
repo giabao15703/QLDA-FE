@@ -8,6 +8,7 @@ import { FilterComponent, LoadingComponent, TableComponent } from '#shared/compo
 import { REST_API_ADMIN_ENDPOINTS } from '#shared/constants';
 import { MaterialModules } from '#shared/modules';
 import {
+    GradingService,
     KeHoachService,
     LoadingService,
     LocalStorageService,
@@ -16,15 +17,15 @@ import {
     RouteService,
     TableService,
 } from '#shared/services';
-import { E_FieldType, E_Form_Mode, E_TableColumnType, I_KeHoach, I_QueryVariables } from '#shared/types';
+import { E_FieldType, E_Form_Mode, E_TableColumnType, I_Grading, I_KeHoach, I_QueryVariables } from '#shared/types';
 import { formatDate, getQueryVariables } from '#shared/utils';
-import { KeHoachDetailComponent } from '../detail/keHoach-detail.component';
+import { ChamPhanBienDetailComponent } from '../detail/cham-phan-bien-detail.component';
 
 @Component({
     standalone: true,
-    selector: 'nextpro-admin-keHoach-list',
-    templateUrl: './keHoach-list.component.html',
-    styleUrl: './keHoach-list.component.scss',
+    selector: 'nextpro-admin-cham-phan-bien-list',
+    templateUrl: './cham-phan-bien-list.component.html',
+    styleUrl: './cham-phan-bien-list.component.scss',
     providers: [TableService],
     imports: [
         CommonModule,
@@ -33,18 +34,18 @@ import { KeHoachDetailComponent } from '../detail/keHoach-detail.component';
         LoadingComponent,
         TableComponent,
         FilterComponent,
-        KeHoachDetailComponent,
+        ChamPhanBienDetailComponent,
         RouterModule,
     ],
 })
-export class KeHoachListPage {
+export class ChamPhanBienListPage {
     constructor(
         public loadingService: LoadingService,
-        public table: TableService<I_KeHoach>,
+        public table: TableService<I_Grading>,
         private routeService: RouteService,
         private notificationService: NotificationService,
         private translateService: TranslateService,
-        private keHoachService: KeHoachService,
+        private gradingService: GradingService,
         private restApiService: RestApiService,
         private localStorageService: LocalStorageService,
     ) {
@@ -74,50 +75,29 @@ export class KeHoachListPage {
                 name: 'selection',
             },
             {
-                cellStyle: { width: '50px' },
-                sticky: 'left',
-                name: 'no',
-                label: 'STT',
-                render: (_, index) => {
-                    return (this.table.state.pagination.page - 1) * this.table.state.pagination.pageSize + index + 1;
-                },
-            },
-            /* {
-                sort: 'maKeHoach',
-                name: 'maKeHoach',
-                label: 'Mã kế hoạch',
-            }, */
-            {
-                sort: 'kyMo',
-                name: 'kyMo',
-                label: 'Kỳ mở',
-                cellStyle: { width: '150px' },
+                label: 'Mã đề tài',
+                name: 'maDeTai',
+                render: (_, __, row) => {
+                    return row.detai?.id;
+                }
             },
             {
-                sort: 'slSinhVien',
-                name: 'slSinhVien',
-                label: 'Số lượng sinh viên (trong 1 nhóm )',
-                cellStyle: { textAlign: 'center', width: '150px' },
+                label: 'Tên đề tài',
+                name: 'tenDeTai',
+                render: (_, __, row) => {
+                    return row.detai?.tendoan;
+                }
             },
             {
-                sort: 'slDoAn',
-                name: 'slDoAn',
-                label: 'Số lượng đồ án (giảng viên có thể đăng kí )',
-                cellStyle: { textAlign: 'center', width: '150px' },
+                label: 'Mã nhóm',
+                name: 'maNhom',
+                render: (_, __, row) => {
+                    return row.detai?.idnhom;
+                }
             },
             {
-                sort: 'tgbdDoAn',
-                name: 'tgbdDoAn',
-                label: 'Thời gian bắt đầu đồ án',
-                cellStyle: { width: '250px' },
-                render: formatDate,
-            },
-            {
-                sort: 'tgktDoAn',
-                name: 'tgktDoAn',
-                label: 'Thời gian kết thúc đồ án',
-                cellStyle: { width: '250px' },
-                render: formatDate,
+                label: 'Điểm phản biện',
+                name: 'diemPhanbien',
             },
             {
                 cellStyle: { width: '50px' },
@@ -128,17 +108,18 @@ export class KeHoachListPage {
                 ctas: [
                     {
                         icon: 'edit',
-                        onClick: (row: I_KeHoach) => {
+                        onClick: (row: I_Grading) => {
                             this.routeService.goTo({ mode: E_Form_Mode.UPDATE, id: row.id });
                         },
                     },
                 ],
             },
+
         ];
-        this.table.config.refetch = this.getKeHoachs;
+        this.table.config.refetch = this.getGrandings;
 
         this.routeService.onChange(({ hash }) => {
-            this.getKeHoach(hash);
+            this.getGranding(hash);
         });
     }
 
@@ -146,30 +127,37 @@ export class KeHoachListPage {
     exportUrl = REST_API_ADMIN_ENDPOINTS.COUPON.EXPORT;
 
     ngOnInit() {
-        this.getKeHoach();
-        this.getKeHoachs();
+        this.getGranding();
+        this.getGrandings();
     }
 
-    getKeHoach = async (hash?: string) => {
+    getGranding = async (hash?: string) => {
         this.detail = await this.routeService.getDetail({
             hash,
             detail: ({ id }) =>
-                this.keHoachService.getKeHoach({
+                this.gradingService.getGrading({
                     id,
                 }),
         });
     };
 
-    getKeHoachs = async (variables?: I_QueryVariables) => {
-        const keHoachs = await this.keHoachService.getKeHoachs(
+    getGrandings = async (variables?: I_QueryVariables) => {
+        const gradings = await this.gradingService.getGradings(
             {
-                ...getQueryVariables({ variables }),
+                ...getQueryVariables(
+                    {
+                        variables: {
+                            ...variables,
+                            type: 'PHAN_BIEN',
+                        },
+                    }
+                ),
             },
             { extra: { variables } },
         );
 
-        this.table.state.data = keHoachs.data;
-        this.table.state.pagination = keHoachs.pagination;
+        this.table.state.data = gradings.data;
+        this.table.state.pagination = gradings.pagination;
         this.table.state.selection?.clear();
     };
 

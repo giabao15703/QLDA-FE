@@ -29,5 +29,5 @@ export interface I_JoinRequest {
     createdAt?: string;
     membersCount?: number;
     requestType?: string;
-    leaderUserId?:number;
+    leaderUserId?: number;
 }

@@ -1,5 +1,26 @@
-import { CreateGradingGQL, CreateGradingMutation, CreateGradingMutationVariables, GetGradingGQL, GetGradingQuery, GetGradingQueryVariables, GetGradingsGQL, GetGradingsQuery, GetGradingsQueryVariables, UpdateGradingGQL, UpdateGradingMutation, UpdateGradingMutationVariables } from '#shared/graphql/types';
-import { AdminRole, E_Role, I_DeTai, I_GraphQLOptions, I_MutationResponse, I_NormalizeExtra, I_TableState } from '#shared/types';
+import {
+    CreateGradingGQL,
+    CreateGradingMutation,
+    CreateGradingMutationVariables,
+    GetGradingGQL,
+    GetGradingQuery,
+    GetGradingQueryVariables,
+    GetGradingsGQL,
+    GetGradingsQuery,
+    GetGradingsQueryVariables,
+    UpdateGradingGQL,
+    UpdateGradingMutation,
+    UpdateGradingMutationVariables,
+} from '#shared/graphql/types';
+import {
+    AdminRole,
+    E_Role,
+    I_DeTai,
+    I_GraphQLOptions,
+    I_MutationResponse,
+    I_NormalizeExtra,
+    I_TableState,
+} from '#shared/types';
 import { normalizeWithPagination } from '#shared/utils';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -22,8 +43,8 @@ export class GradingService {
         return this.graphqlService.error;
     }
 
-    private normalizeGradingList = (data: GetGradingQuery, extra?: I_NormalizeExtra): I_TableState<I_Grading> => {
-        return normalizeWithPagination<I_Grading>(data.grading, extra);
+    private normalizeGradingList = (data: GetGradingsQuery, extra?: I_NormalizeExtra): I_TableState<I_Grading> => {
+        return normalizeWithPagination<I_Grading>(data.gradings, extra);
     };
 
     getGradings = (
@@ -40,10 +61,7 @@ export class GradingService {
         ) as Promise<I_TableState<I_Grading>>;
     };
 
-    getGrading = (
-        variables?: GetGradingQueryVariables,
-        options?: I_GraphQLOptions<GetGradingQuery, I_Grading>
-    ) => {
+    getGrading = (variables?: GetGradingQueryVariables, options?: I_GraphQLOptions<GetGradingQuery, I_Grading>) => {
         return this.graphqlService.query<GetGradingQuery, GetGradingQueryVariables, I_Grading>(
             this.getGradingGQL,
             variables,
@@ -92,7 +110,6 @@ export class GradingService {
         ) as Promise<I_Grading>;
     };
 
-
     createGrading = (
         variables?: CreateGradingMutationVariables,
         options?: I_GraphQLOptions<CreateGradingMutation, { createGrading: I_MutationResponse }>,
@@ -114,5 +131,4 @@ export class GradingService {
             { updateGrading: I_MutationResponse }
         >(this.updateGradingGQL, variables, options);
     };
-
 }

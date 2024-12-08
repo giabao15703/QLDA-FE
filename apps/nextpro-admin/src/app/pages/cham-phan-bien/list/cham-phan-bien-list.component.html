@@ -1,10 +1,10 @@
-@if (loadingService.checkLoading(['getKeHoach'])) {
+@if (loadingService.checkLoading(['getGrading'])) {
 <app-loading [backdrop]="true" />
 }
 <mat-drawer-container [hasBackdrop]="false">
     <mat-drawer [disableClose]="true" [opened]="!!detail" mode="over" position="end" class="!w-full">
         @if (detail) {
-        <nextpro-admin-keHoach-detail [mode]="detail.mode" [data]="detail.data"
+        <nextpro-admin-cham-phan-bien-detail [mode]="detail.mode" [data]="detail.data"
             [onCloseDrawer]="handleCloseDetailDrawer" [refetch]="table.refetch" />
         }
     </mat-drawer>
@@ -13,7 +13,7 @@
             [formConfig]="table.config.filterForm" [onCloseDrawer]="table.toggleFilterDrawer" />
     </mat-drawer>
     <mat-drawer-content>
-        <app-table [attr.name]="table.name" [isLoading]="loadingService.checkLoading(['getKeHoachs'])"
+        <app-table [attr.name]="table.name" [isLoading]="loadingService.checkLoading(['getGrandings'])"
             [extendHeight]="180" [columns]="table.config.columns" [data]="table.state.data"
             [pagination]="table.state.pagination" [onSelectionInit]="table.onSelectionInit"
             [onShowFilter]="table.toggleFilterDrawer" [onSort]="table.handleSort"

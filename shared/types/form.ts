@@ -37,6 +37,7 @@ export enum E_FieldType {
     DATERANGEPICKER = 'daterangepicker',
     TABLE = 'table',
     BUTTON = 'button',
+    NUMBER = 'number',
 }
 
 export interface I_SelectOption {

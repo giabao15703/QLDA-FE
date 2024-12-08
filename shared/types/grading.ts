@@ -1,5 +1,5 @@
-import { I_DeTai } from "./deTai"
-import { I_GroupQLDA } from "./group"
+import { I_DeTai } from './deTai';
+import { I_GroupQLDA } from './group';
 
 export interface I_Grading {
     id?: string;

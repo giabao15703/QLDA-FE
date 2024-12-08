@@ -70,14 +70,21 @@ export class NavbarComponent {
                 const userId = parseFloat(user.id);
 
                 if (check_leader) {
-                    this.notifications = joinRequests.filter((request: I_JoinRequest) => request.leaderUserId == userId && request.requestType == E_RequyestType.JOIN_REQUEST)
+                    this.notifications = joinRequests
+                        .filter(
+                            (request: I_JoinRequest) =>
+                                request.leaderUserId == userId && request.requestType == E_RequyestType.JOIN_REQUEST,
+                        )
                         .map((request: I_JoinRequest) => ({
                             message: `Người dùng ${request.user?.shortName} muốn xin vào nhóm của ${request.group?.name}`,
                             id: request.id,
                         }));
-                }
-                else {
-                    this.notifications = joinRequests.filter((request: I_JoinRequest) => request.user.id == user.id && request.requestType == E_RequyestType.INVITE)
+                } else {
+                    this.notifications = joinRequests
+                        .filter(
+                            (request: I_JoinRequest) =>
+                                request.user.id == user.id && request.requestType == E_RequyestType.INVITE,
+                        )
                         .map((request: I_JoinRequest) => ({
                             message: `Bạn đã được mời tham gia nhóm ${request.group?.name}`,
                             id: request.id,
@@ -89,9 +96,6 @@ export class NavbarComponent {
                 // Xử lý lỗi nếu cần
             });
     }
-
-
-
 
     setJoinRequestId(joinRequestId: string) {
         if (!joinRequestId) {

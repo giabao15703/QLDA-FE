@@ -180,24 +180,24 @@ export class DeTaiListPage {
 
     getDeTais = async (variables?: I_QueryVariables) => {
         const currentUser = this.localStorageService.get('admin');
-        var variables_input={};
-        if(currentUser?.role == "A_3"){
+        let variables_input = {};
+        if (currentUser?.role == 'A_3') {
             variables_input = {
                 ...variables,
                 idgvhuongdan: currentUser.id,
-            }
-        }else if(currentUser?.role == "A_4" && currentUser?.role == "A_3"){
+            };
+        } else if (currentUser?.role == 'A_4' && currentUser?.role == 'A_1') {
             variables_input = {
                 ...variables,
-            }
+            };
         }
         const deTais = await this.deTaiService.getDeTais(
             {
-                ...getQueryVariables({ 
-                    variables:{
+                ...getQueryVariables({
+                    variables: {
                         ...variables_input,
-                    }
-                 }),
+                    },
+                }),
             },
             { extra: { variables } },
         );

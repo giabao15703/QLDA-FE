@@ -1,6 +1,14 @@
-<div class="overflow-hidden">
-    <nextpro-user-navbar-login />
-    <div class="relative">
+<div class=" inset-0 overflow-hidden h-[100vh] bg-cover bg-norepeat" style="background-image: url('/assets/images/bg_login_new.jpg')" >
+    <div class="relative max-w-3xl mx-auto translate-y-1/2 bg-white">
+        <mat-tab-group [selectedIndex]="currentTab" (selectedTabChange)="changeTab($event)"
+            class="background-auth-tab">
+            <mat-tab class="text-3xl font-bold" label="{{ 'auth.login.title' | translate }}">
+                <nextpro-user-auth-login [toggleForgotPassword]="toggleForgotPassword" />
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+
+    <!-- <div class="relative">
         <app-video
             class="block h-[calc(100vh-76px)] object-cover"
             contentClass="h-full w-full object-cover"
@@ -44,5 +52,5 @@
                 }
             </div>
         </div>
-    </div>
+    </div> -->
 </div>

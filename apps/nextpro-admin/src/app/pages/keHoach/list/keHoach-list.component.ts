@@ -58,11 +58,11 @@ export class KeHoachListPage {
                 name: 'kyMo',
             },
             {
-                label: 'Số lượng sinh viên',
+                label: 'Số lượng sinh viên trong 1 nhóm',
                 name: 'slSinhVien',
             },
             {
-                label: 'Số lượng đồ án',
+                label: 'Số lượng đề tài tối thiểu',
                 name: 'slDoAn',
             },
         ];
@@ -102,7 +102,7 @@ export class KeHoachListPage {
             {
                 sort: 'slDoAn',
                 name: 'slDoAn',
-                label: 'Số lượng đồ án (giảng viên có thể đăng kí )',
+                label: 'Số lượng đề tài tối thiểu 1 giáo viên cần tạo )',
                 cellStyle: { textAlign: 'center', width: '150px' },
             },
             {

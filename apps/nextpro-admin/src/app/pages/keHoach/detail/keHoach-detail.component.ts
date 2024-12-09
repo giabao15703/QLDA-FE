@@ -65,7 +65,7 @@ export class KeHoachDetailComponent {
                 name: 'slSinhVien',
             },
             {
-                label: 'Số lượng đề tài 1 giảng viên có thể tạo',
+                label: 'Số lượng đề tài tối thiểu 1 giảng viên cần tạo',
                 name: 'slDoAn',
             },
             {

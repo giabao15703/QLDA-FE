@@ -79,21 +79,21 @@ export class ChamPhanBienListPage {
                 name: 'maDeTai',
                 render: (_, __, row) => {
                     return row.detai?.id;
-                }
+                },
             },
             {
                 label: 'Tên đề tài',
                 name: 'tenDeTai',
                 render: (_, __, row) => {
                     return row.detai?.tendoan;
-                }
+                },
             },
             {
                 label: 'Mã nhóm',
                 name: 'maNhom',
                 render: (_, __, row) => {
                     return row.detai?.idnhom;
-                }
+                },
             },
             {
                 label: 'Điểm phản biện',
@@ -114,7 +114,6 @@ export class ChamPhanBienListPage {
                     },
                 ],
             },
-
         ];
         this.table.config.refetch = this.getGrandings;
 
@@ -144,14 +143,12 @@ export class ChamPhanBienListPage {
     getGrandings = async (variables?: I_QueryVariables) => {
         const gradings = await this.gradingService.getGradings(
             {
-                ...getQueryVariables(
-                    {
-                        variables: {
-                            ...variables,
-                            type: 'PHAN_BIEN',
-                        },
-                    }
-                ),
+                ...getQueryVariables({
+                    variables: {
+                        ...variables,
+                        type: 'PHAN_BIEN',
+                    },
+                }),
             },
             { extra: { variables } },
         );

@@ -79,21 +79,21 @@ export class ChamHuongDanListPage {
                 name: 'maDeTai',
                 render: (_, __, row) => {
                     return row.detai?.id;
-                }
+                },
             },
             {
                 label: 'Tên đề tài',
                 name: 'tenDeTai',
                 render: (_, __, row) => {
                     return row.detai?.tendoan;
-                }
+                },
             },
             {
                 label: 'Mã nhóm',
                 name: 'maNhom',
                 render: (_, __, row) => {
                     return row.detai?.idnhom;
-                }
+                },
             },
             {
                 label: 'Điểm hướng dẫn',
@@ -114,7 +114,6 @@ export class ChamHuongDanListPage {
                     },
                 ],
             },
-
         ];
         this.table.config.refetch = this.getGrandings;
 

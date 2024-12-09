@@ -45,7 +45,6 @@ const FORM_NAME = 'FORM_ADMIN_KEHOACH'; // Đổi tên form
     ],
 })
 export class ChamPhanBienDetailComponent {
-    
     constructor(
         public loadingService: LoadingService,
         public form: FormService<I_GradingForm>,
@@ -64,7 +63,12 @@ export class ChamPhanBienDetailComponent {
                 getOptions: () =>
                     this.deTaiService.getDeTais().then((res) => {
                         const gvOptions = res.data
-                            .filter((item) => item.trangthai === '1' && item.idnhom !== null && item.idgvphanbien?.id == currentUserId)
+                            .filter(
+                                (item) =>
+                                    item.trangthai === '1' &&
+                                    item.idnhom !== null &&
+                                    item.idgvphanbien?.id == currentUserId,
+                            )
                             .map((item: I_DeTai) => ({
                                 label: item.tendoan,
                                 value: item.id,
@@ -89,8 +93,7 @@ export class ChamPhanBienDetailComponent {
     @Input() onCloseDrawer;
     @Input() refetch;
 
-    ngOnInit() {
-    }
+    ngOnInit() {}
 
     ngOnChanges(changes) {
         if (changes?.mode?.currentValue === E_Form_Mode.CREATE) {
@@ -134,7 +137,7 @@ export class ChamPhanBienDetailComponent {
                     id: this.data.id,
                     input: {
                         diemPhanbien: values.diemPhanbien,
-                    }
+                    },
                 });
 
                 if (updateGrading.status) {

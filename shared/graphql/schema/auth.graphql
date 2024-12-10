@@ -93,7 +93,7 @@ query profile {
         lastName
         ... on AdminNode {
             id
-            longName
+            shortName
             language {
                 id
                 itemCode

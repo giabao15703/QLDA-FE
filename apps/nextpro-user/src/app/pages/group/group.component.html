@@ -24,8 +24,8 @@
                         <p><strong>Thành viên:</strong></p>
                         <ul class="list-disc pl-5" *ngIf="students.length > 0; else noMembers">
                             <li *ngFor="let student of students">
-                                <strong>{{ student.shortName }}</strong> - {{ student.email }} -
-                                {{ student.gender }} - {{student.role}}
+                                <strong>{{ student.user.shortName }}</strong> - {{ student.user.email }} - {{ student.user.lop }} -
+                                {{ student.user.gender }} - {{student.role}}
                             </li>
                         </ul>
                         <ng-template #noMembers>

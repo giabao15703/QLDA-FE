@@ -1,23 +1,22 @@
 <button
-        class="absolute top-0 right-0 translate-x-[100%] p-2 shadow-md  !text-black hover:text-orange-500 focus:outline-none !visible"
-        (click)="toggleSidebar()"
-    >
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
-            <path
-                fill-rule="evenodd"
-                d="M3 5.25a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 5.25zm0 6a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75a.75.75 0 01-.75-.75zm0 6a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75a.75.75 0 01-.75-.75z"
-                clip-rule="evenodd"
-            />
-        </svg>
-    </button>
+    class="absolute top-0 right-0 translate-x-[100%] p-2 shadow-md !text-black hover:text-orange-500 focus:outline-none !visible"
+    (click)="toggleSidebar()"
+>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+        <path
+            fill-rule="evenodd"
+            d="M3 5.25a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 5.25zm0 6a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75a.75.75 0 01-.75-.75zm0 6a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75a.75.75 0 01-.75-.75z"
+            clip-rule="evenodd"
+        />
+    </svg>
+</button>
 <div
-    class="sidebar p-5 shadow-md relative h-full transition-all duration-300  text-nowrap text-clip overflow-hidden"
+    class="sidebar p-5 shadow-md relative h-full transition-all duration-300 text-nowrap text-clip overflow-hidden"
     [ngClass]="{
         'translate-x-0 !p-5 visible w-full': isSidebarOpen,
         '-translate-x-full !p-0 invisible !w-0': !isSidebarOpen,
     }"
 >
-    
     <h3 class="text-lg font-semibold mb-3 text-nowrap text-clip">TRANG CHỦ</h3>
     <ul class="space-y-2">
         <li class="active">
@@ -42,9 +41,9 @@
             <a
                 href="/group-registration"
                 class="flex items-center text-gray-700 hover:text-orange-500"
-                [class.opacity-50]="isGroupRegistered"  
-                [class.cursor-not-allowed]="isGroupRegistered" 
-                (click)="isGroupRegistered ? $event.preventDefault() : null" 
+                [class.opacity-50]="isGroupRegistered"
+                [class.cursor-not-allowed]="isGroupRegistered"
+                (click)="isGroupRegistered ? $event.preventDefault() : null"
             >
                 <i class="icon mr-2 text-nowrap text-ellipsis"></i>Đăng kí nhóm
             </a>
@@ -54,6 +53,7 @@
     <ul class="space-y-2">
         <li>
             <a href="/notification" class="flex items-center text-gray-700 hover:text-orange-500">
+                <span *ngIf="unreadCount > 0" class="mr-2 text-xs font-bold text-red-500">{{ unreadCount }}</span>
                 <i class="icon mr-2 text-ellipsis"></i>Thông báo
             </a>
         </li>

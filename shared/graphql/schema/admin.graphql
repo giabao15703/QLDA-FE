@@ -10,7 +10,6 @@ query getAdmins(
     $first: Int
     $last: Int
     $id: ID
-    $longName: String
     $created: String
     $username: String
     $email: String
@@ -27,7 +26,6 @@ query getAdmins(
         first: $first
         last: $last
         id: $id
-        longName: $longName
         created: $created
         username: $username
         email: $email

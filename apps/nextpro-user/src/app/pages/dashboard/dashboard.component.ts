@@ -6,6 +6,7 @@ import { AccountService, DeTaiService, GroupQLDAService, NotificationService } f
 import { I_JoinGroup, I_JoinRequest, I_TableState, I_User } from '#shared/types';
 import { CommonModule } from '@angular/common';
 import { toPromise } from '@apollo/client/core';
+import { Router } from '@angular/router';
 
 @Component({
     standalone: true,
@@ -23,6 +24,7 @@ export class DashboardComponent {
         private notification: NotificationService,
         private groupQldaService: GroupQLDAService,
         private notificationService: NotificationService,
+        private router: Router,
     ) {}
 
     // Biến dữ liệu
@@ -207,8 +209,6 @@ export class DashboardComponent {
                 this.errorMessage = 'Không thể tải danh sách nhóm, vui lòng thử lại sau!';
             });
     }
-
-    // Mời người dùng vào nhóm
     async inviteUserToGroup(user: I_User) {
         console.log('Inviting user:', user); // Đảm bảo hàm này được gọi
         try {
@@ -315,7 +315,9 @@ export class DashboardComponent {
         }
     } */
 
-    openModal() {}
+    openModal() {
+        this.router.navigate(['/group']);
+    }
 
     getDeTai() {}
 }

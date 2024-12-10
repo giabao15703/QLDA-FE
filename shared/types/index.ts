@@ -22,3 +22,4 @@ export * from './group';
 export * from './deTai';
 export * from './keHoachDoAn';
 export * from './grading';
+export * from './notification';

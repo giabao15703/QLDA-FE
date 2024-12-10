@@ -12,7 +12,6 @@ export * from './core/restapi.service';
 export * from './core/route.service';
 export * from './core/store.service';
 export * from './core/table.service';
-
 export * from './account.service';
 export * from './auth.service';
 export * from './banner-group.service';
@@ -32,5 +31,6 @@ export * from './user-guide.service';
 export * from './delivery.service';
 export * from './deTai.service';
 export * from './groupQlda.service';
-export * from './keHoach.service';
 export * from './grading.service';
+export * from './notificationQLDA.service';
+export * from './keHoach.service';

@@ -100,10 +100,16 @@ export class LayoutDashboard {
                           icon: '/assets/icons/setting-3-svgrepo-com.svg',
                           href: '/admin/cham-huong-dan',
                       },
+
                       {
                           name: 'Chấm điểm phản biện',
                           icon: '/assets/icons/setting-3-svgrepo-com.svg',
                           href: '/admin/cham-phan-bien',
+                      },
+                      {
+                          name: 'Thông báo',
+                          icon: '/assets/icons/setting-3-svgrepo-com.svg',
+                          href: '/admin/notification',
                       },
                   ]
                 : []),
@@ -153,6 +159,11 @@ export class LayoutDashboard {
                           name: 'Nhóm đồ án',
                           icon: '/assets/icons/setting-3-svgrepo-com.svg',
                           href: '/admin/group',
+                      },
+                      {
+                          name: 'Đề Tài',
+                          icon: '/assets/icons/setting-3-svgrepo-com.svg',
+                          href: '/admin/deTai',
                       },
                   ]
                 : []),

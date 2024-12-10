@@ -3,7 +3,6 @@ fragment AdminInfo on AdminNode {
     user {
         ...UserWithPermissionAndSubstitutionPermissionInfo
     }
-    longName
     email
     shortName
     fullName

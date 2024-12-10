@@ -214,7 +214,9 @@ export class GroupQLDAService {
     }
     private normalizeStudentsInGroupList = (data: GetStudentsInGroupQuery, extra?: any): I_TableState<I_JoinGroup> => {
         // Nếu không có dữ liệu, trả về mảng trống
-        return { data: (data.getStudentsInGroup || []).map((student) => student.joinGroup?.user) as I_JoinGroup[] };
+        return {
+            data: (data.getStudentsInGroup || []).map((student) => student.joinGroup) as unknown as I_JoinGroup[],
+        };
     };
 
     // Phương thức chính để lấy sinh viên trong nhóm

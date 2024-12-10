@@ -18,7 +18,6 @@ export class GroupComponent implements OnInit {
         private groupService: GroupQLDAService,
         private cdr: ChangeDetectorRef,
     ) {}
-    groups: I_GroupQLDA[] = [];
     students: any[] = [];
     ngOnInit() {
         this.getStudentInGroup();

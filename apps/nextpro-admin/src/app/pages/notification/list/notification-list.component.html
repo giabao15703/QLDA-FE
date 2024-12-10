@@ -1,12 +1,12 @@
-@if (loadingService.checkLoading(['getBannerGroup'])) {
+@if (loadingService.checkLoading(['getNotification'])) {
     <app-loading [backdrop]="true" />
 }
 <mat-drawer-container [hasBackdrop]="false">
     <mat-drawer [disableClose]="true" [opened]="!!detail" mode="over" position="end" class="!w-full">
         @if (detail) {
-            <nextpro-admin-organization-management-detail
-                [mode]="detail?.mode"
-                [data]="detail?.data"
+            <nextpro-admin-notification-detail
+                [mode]="detail.mode"
+                [data]="detail.data"
                 [onCloseDrawer]="handleCloseDetailDrawer"
                 [refetch]="table.refetch"
             />
@@ -23,7 +23,7 @@
     <mat-drawer-content>
         <app-table
             [attr.name]="table.name"
-            [isLoading]="loadingService.checkLoading(['getBannerGroups'])"
+            [isLoading]="loadingService.checkLoading(['getNotifications'])"
             [extendHeight]="180"
             [columns]="table.config.columns"
             [data]="table.state.data"
@@ -35,6 +35,9 @@
         />
         @if (table.state.selection) {
             <div class="footer-fixed">
+               <!--  <div class="mr-3 font-bold">Số lượng đề tài: <span>{{ count_Total }}</span></div>
+                <div class="mr-3 font-bold">Đã duyệt: <span>{{ count_Approved }}</span></div>
+                <div class="mr-auto font-bold">Chưa duyệt: <span>{{ count_Not_Approved }}</span></div> -->
                 <button
                     mat-raised-button
                     color="primary"
@@ -44,6 +47,10 @@
                     <mat-icon>add</mat-icon>
                     {{ 'button.create' | translate | uppercase }}
                 </button>
+                <!-- <button mat-raised-button color="primary" (click)="handleExport()">
+                    <mat-icon>download</mat-icon>
+                    {{ 'button.exportAll' | translate | uppercase }}
+                </button> -->
             </div>
         }
     </mat-drawer-content>

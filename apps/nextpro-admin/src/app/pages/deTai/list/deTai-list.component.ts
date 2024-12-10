@@ -140,7 +140,13 @@ export class DeTaiListPage {
                     {
                         icon: 'edit',
                         onClick: (row: I_DeTai) => {
-                            this.routeService.goTo({ mode: E_Form_Mode.UPDATE, id: row.id });
+                            const admin = JSON.parse(localStorage.getItem('admin') || '{}');
+                            if (admin.role === 'A_2') {
+                                this.notificationService.error('Bạn không có quyền chỉnh sửa đề tài');
+                                return;
+                            } else {
+                                this.routeService.goTo({ mode: E_Form_Mode.UPDATE, id: row.id });
+                            }
                         },
                     },
                 ],
@@ -154,7 +160,6 @@ export class DeTaiListPage {
     }
 
     detail = null;
-    exportUrl = REST_API_ADMIN_ENDPOINTS.COUPON.EXPORT;
     count_Total: number = 0;
     count_Approved: number = 0;
     count_Not_Approved: number = 0;
@@ -177,7 +182,6 @@ export class DeTaiListPage {
             console.error('Error fetching deTai:', error);
         }
     };
-
     getDeTais = async (variables?: I_QueryVariables) => {
         const currentUser = this.localStorageService.get('admin');
         let variables_input = {};
@@ -212,11 +216,36 @@ export class DeTaiListPage {
     };
 
     handleCreate = () => {
-        this.routeService.goTo({ mode: E_Form_Mode.CREATE });
+        const admin = JSON.parse(localStorage.getItem('admin') || '{}');
+        if (admin.role === 'A_2') {
+            this.notificationService.error('Bạn không có quyền tạo đề tài');
+            return;
+        } else {
+            this.routeService.goTo({ mode: E_Form_Mode.CREATE });
+        }
     };
 
     handleCloseDetailDrawer = () => {
         this.routeService.removeHash();
         this.detail = null;
+    };
+    exportUrl = REST_API_ADMIN_ENDPOINTS.DE_TAI.EXPORT;
+    handleExport = async () => {
+        const admin = JSON.parse(localStorage.getItem('admin') || '{}');
+        if (admin.role != 'A_2') {
+            this.notificationService.error('Bạn không có xuất dữ liệu đề tài');
+            return;
+        } else {
+            const result = await this.restApiService.get(this.exportUrl, {
+                responseType: 'blob',
+                observe: 'response',
+                headers: {
+                    Authorization: `Token ${this.localStorageService.get('token')}`,
+                },
+            });
+            if (result.status === 200) {
+                FileSaver.saveAs(result.body, 'Detai.csv');
+            }
+        }
     };
 }

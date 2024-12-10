@@ -16,6 +16,9 @@ export const REST_API_ADMIN_ENDPOINTS = {
             EXPORT: environmentAdmin.apiUrl + 'api/admin/export/',
         },
     },
+    DE_TAI: {
+        EXPORT: environmentAdmin.apiUrl + 'api/export-de-tai/',
+    },
     MASTER_DATA: {
         CCC: {
             FAMILY_CODE: {

@@ -46,7 +46,7 @@ export class GroupDetailComponent {
                 cellStyle: { 'justify-content': 'start' },
             },
             {
-                name: 'class',
+                name: 'user.lop',
                 label: 'Lớp',
                 cellStyle: { 'justify-content': 'start' },
             },
@@ -56,7 +56,7 @@ export class GroupDetailComponent {
                 cellStyle: { 'justify-content': 'start' },
             },
             {
-                name: 'numberPhone',
+                name: 'user.phone',
                 label: 'Số điện thoại',
                 cellStyle: { 'justify-content': 'start' },
             },

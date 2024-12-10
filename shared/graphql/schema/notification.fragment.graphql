@@ -1,0 +1,7 @@
+fragment NotificationInfo on NotificationNode {
+    id
+    title
+    content
+    createdDate
+    status
+}

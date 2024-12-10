@@ -1,0 +1,59 @@
+query getNotifications(
+    $before: String,
+    $after: String,
+    $first: Int,
+    $last: Int,
+    $createdDate: DateTime,
+    $status: Boolean,
+){
+    notifications(
+        before: $before,
+        after: $after,
+        first: $first,
+        last: $last,
+        createdDate: $createdDate,
+        status: $status,
+    ) {
+        totalCount
+        pageInfo {
+            ...PageInfo
+        }
+        edges {
+            node {
+                ...NotificationInfo
+            }
+        }
+    }
+}
+
+query getNotification($id: ID!){
+    notification(id: $id){
+        ...NotificationInfo
+    }
+}
+
+mutation createNotification( $input: NotificationInput! ){
+    createNotification(input: $input){
+        status
+        notification{
+            ...NotificationInfo
+        }
+        error{
+            ...ErrorInfo
+        }
+    }
+}
+
+mutation updateNotification( $id: ID!, $input: NotificationInput! ){
+    updateNotification(id: $id, input: $input){
+        status
+        notification{
+            ...NotificationInfo
+        }
+        error{
+            ...ErrorInfo
+        }
+    }
+}
+
+

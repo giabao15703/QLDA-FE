@@ -49,29 +49,25 @@ export class AccountAdminDetailComponent {
     ) {
         this.form.config = [
             {
-                label: 'account.admin-accounts.shortName',
+                label: 'Tên',
                 name: 'shortName',
             },
             {
-                label: 'account.admin-accounts.longName',
-                name: 'longName',
-            },
-            {
-                label: 'account.admin-accounts.email',
+                label: 'Email',
                 name: 'email',
             },
             {
-                label: 'account.admin-accounts.password',
+                label: 'Mật khẩu',
                 name: 'password',
                 inputType: E_InputType.PASSWORD,
             },
             {
-                label: 'account.admin-accounts.confirmPassword',
+                label: 'Xác nhận mật khẩu',
                 name: 'confirmPassword',
                 inputType: E_InputType.PASSWORD,
             },
             {
-                label: 'account.admin-accounts.roles',
+                label: 'Quyền',
                 name: 'role',
                 fieldType: E_FieldType.SELECT,
                 options: [
@@ -123,7 +119,6 @@ export class AccountAdminDetailComponent {
                 const {
                     id,
                     shortName,
-                    longName,
                     email,
                     user: { status },
                     role,
@@ -132,7 +127,6 @@ export class AccountAdminDetailComponent {
                 this.form.patchValue({
                     id,
                     shortName,
-                    longName,
                     email,
                     status,
                     role,
@@ -150,7 +144,7 @@ export class AccountAdminDetailComponent {
                     status: parseInt(values.status),
                     ...(this.mode === E_Form_Mode.CREATE && { password: values.password }),
                 },
-                longName: values.longName,
+                shortName: values.shortName,
                 role: values.role,
             };
 

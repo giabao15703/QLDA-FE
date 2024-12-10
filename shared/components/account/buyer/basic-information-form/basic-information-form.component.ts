@@ -385,7 +385,6 @@ export class BuyerBasicInformationFormComponent {
                         if (data?.buyerUpdate?.status) {
                             this.notificationService.success('Thông tin buyer đã được cập nhật.');
                         } else {
-                            // eslint-disable-next-line prettier/prettier
                             this.form.setFieldError(
                                 'general',
                                 data?.buyerUpdate?.error?.message || 'Lỗi không xác định',

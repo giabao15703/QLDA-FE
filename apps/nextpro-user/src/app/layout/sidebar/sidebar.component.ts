@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 import { LanguageSwitchComponent } from '#shared/components';
 import { MaterialModules } from '#shared/modules';
-import { GroupQLDAService } from '#shared/services';
+import { GroupQLDAService, NotificationQLDAService } from '#shared/services';
+import { I_QueryVariables } from '#shared/types';
 
 @Component({
     standalone: true,
@@ -17,11 +18,18 @@ import { GroupQLDAService } from '#shared/services';
 export class SidebarComponent implements OnInit {
     isSidebarOpen = true; // Sidebar open/close state
     isGroupRegistered = false; // Flag to disable group registration
-
-    constructor(private joinGroupsGQL: GroupQLDAService) {}
+    unreadCount: number = 0; // Biến để lưu số lượng thông báo chưa đọc
+    students: any[] = [];
+    notifications: any[] = [];
+    hasViewedNotifications: boolean = false;
+    constructor(
+        private joinGroupsGQL: GroupQLDAService,
+        private notificationQLDAService: NotificationQLDAService,
+    ) {}
 
     ngOnInit() {
         this.checkGroupRegistration();
+        this.getNotifications();
     }
 
     toggleSidebar() {
@@ -36,7 +44,7 @@ export class SidebarComponent implements OnInit {
         }
 
         const parsedUser = JSON.parse(user);
-        const currentUserId = parsedUser?.user?.id; // Giữ nguyên userId là chuỗi
+        const currentUserId = parsedUser?.id; // Giữ nguyên userId là chuỗi
         console.log('UserId từ localStorage:', currentUserId); // Kiểm tra userId lấy từ localStorage
 
         try {
@@ -55,5 +63,27 @@ export class SidebarComponent implements OnInit {
         } catch (error) {
             console.error('Lỗi khi lấy danh sách nhóm:', error);
         }
+    }
+
+    getNotifications = async (variables?: I_QueryVariables) => {
+        const notifications = await this.notificationQLDAService.getNotifications({}, { extra: { variables } });
+        console.log('Danh sách thông báo:', notifications);
+
+        // Lọc các thông báo có status = true
+        this.notifications = (notifications.data || []).filter((notification: any) => notification.status === true);
+
+        // Cập nhật số lượng thông báo chưa đọc (status = true)
+        this.unreadCount = this.notifications.length;
+    };
+
+    onNotificationClick() {
+        this.hasViewedNotifications = true; // Đánh dấu đã xem thông báo
+        this.unreadCount = 0; // Đặt số lượng thông báo là 0
+    }
+
+    // Hàm tải lại số lượng thông báo mới khi có dữ liệu mới
+    reloadNotifications() {
+        this.hasViewedNotifications = false; // Đánh dấu lại chưa xem thông báo
+        this.getNotifications(); // Tải lại thông báo mới
     }
 }

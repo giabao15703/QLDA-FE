@@ -8,13 +8,17 @@ import {
     DeliveryService,
     GroupQLDAService,
     LoadingService,
+    LocalStorageService,
     OrderService,
+    RestApiService,
     RouteService,
     TableService,
 } from '#shared/services';
 import { E_FieldType, E_Form_Mode, E_TableColumnType, I_GroupQLDA, I_QueryVariables } from '#shared/types';
 import { getQueryVariables } from '#shared/utils';
 import { GroupDetailComponent } from '../../group/detail/group-detail.component';
+import { REST_API_ADMIN_ENDPOINTS } from '#shared/constants';
+import * as FileSaver from 'file-saver';
 
 @Component({
     standalone: true,
@@ -40,6 +44,8 @@ export class GroupListPage {
         private routeService: RouteService,
         private translateService: TranslateService,
         private GroupService: GroupQLDAService,
+        private restApiService: RestApiService,
+        private localStorageService: LocalStorageService,
     ) {
         this.table.config.filterForm = [];
 

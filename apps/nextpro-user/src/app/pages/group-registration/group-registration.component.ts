@@ -61,7 +61,7 @@ export class GroupRegistrationComponent implements OnInit {
             // Kiểm tra phản hồi từ server
             if (response.groupQldaCreate.status) {
                 this.notification.success('Bạn đã tạo nhóm thành công');
-                window.location.reload();
+                this.router.navigate(['/dashboard']);
             } else {
                 if (response.groupQldaCreate.error?.code === 'ALREADY_HAS_GROUP') {
                     this.notification.error(`Bạn đã có nhóm`);

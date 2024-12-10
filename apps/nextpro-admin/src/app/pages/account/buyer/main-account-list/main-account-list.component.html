@@ -40,24 +40,6 @@
                 <button
                     mat-raised-button
                     color="primary"
-                    (click)="handleUpdateStatus(1)"
-                    [disabled]="!table.state.selection.hasValue()"
-                >
-                    <mat-icon>check</mat-icon>
-                    {{ 'button.activate' | translate | uppercase }}
-                </button>
-                <button
-                    mat-raised-button
-                    color="warn"
-                    (click)="handleUpdateStatus(3)"
-                    [disabled]="!table.state.selection.hasValue()"
-                >
-                    <mat-icon>close</mat-icon>
-                    {{ 'button.deactivate' | translate | uppercase }}
-                </button>
-                <button
-                    mat-raised-button
-                    color="primary"
                     (click)="handleCreate()"
                     [disabled]="table.state.selection.hasValue()"
                 >

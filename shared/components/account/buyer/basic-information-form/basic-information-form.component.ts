@@ -386,7 +386,10 @@ export class BuyerBasicInformationFormComponent {
                             this.notificationService.success('Thông tin buyer đã được cập nhật.');
                         } else {
                             // eslint-disable-next-line prettier/prettier
-                            this.form.setFieldError('general', data?.buyerUpdate?.error?.message || 'Lỗi không xác định');
+                            this.form.setFieldError(
+                                'general',
+                                data?.buyerUpdate?.error?.message || 'Lỗi không xác định',
+                            );
                         }
                     })
                     .catch((error) => {

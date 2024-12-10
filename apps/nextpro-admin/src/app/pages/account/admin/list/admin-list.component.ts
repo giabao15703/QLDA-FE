@@ -29,6 +29,7 @@ import {
     I_UserPermission,
 } from '#shared/types';
 import { formatDate, getQueryVariables } from '#shared/utils';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
     standalone: true,
@@ -58,6 +59,7 @@ export class AccountAdminListPage {
         private localStorageService: LocalStorageService,
         private restApiService: RestApiService,
         private modalService: ModalService,
+        private http: HttpClient,
     ) {
         this.table.config.filterForm = [
             {
@@ -171,28 +173,28 @@ export class AccountAdminListPage {
             {
                 sort: 'username',
                 name: 'username',
-                label: 'account.admin-accounts.accountID',
+                label: 'Tài khoản',
             },
             {
                 sort: 'short_name',
                 name: 'shortName',
-                label: 'account.admin-accounts.accountName',
+                label: 'Tên Giảng Viên',
             },
             {
                 sort: 'email',
                 name: 'email',
-                label: 'account.admin-accounts.accountEmail',
+                label: 'Email',
             },
             {
                 sort: 'created',
                 name: 'created',
-                label: 'account.admin-accounts.createdDate',
+                label: 'Ngày tạo',
                 render: formatDate,
             },
             {
                 sort: 'role',
                 name: 'role',
-                label: 'account.admin-accounts.roles',
+                label: 'Vị trí công việc',
             },
             // {
             //     name: 'subId',
@@ -317,20 +319,55 @@ export class AccountAdminListPage {
 
         this.modalService.hide();
     };
+    selectedFile: File | null = null;
 
-    handleExport = async () => {
-        const result = await this.restApiService.get(this.exportUrl, {
-            responseType: 'blob',
-            observe: 'response',
-            headers: {
-                Authorization: `Token ${this.localStorageService.get('token')}`,
-            },
-        });
-
-        if (result.status === 200) {
-            FileSaver.saveAs(result.body, 'AdminExport.csv');
+    onFileChange(event: any) {
+        const file = event.target.files[0];
+        if (file) {
+            this.selectedFile = file;
         }
-    };
+    }
+
+    uploadFile() {
+        if (!this.selectedFile) {
+            alert('Vui lòng chọn file!');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('file', this.selectedFile);
+
+        const headers = { 'X-CSRFToken': this.getCsrfToken() };
+
+        this.http.post('http://localhost:8000/api/import-admins/', formData, { headers }).subscribe(
+            (response: any) => {
+                console.log('Response:', response); // Log phản hồi từ server để kiểm tra
+
+                if (response && response.status === 'success') {
+                    this.notificationService.success(response.message || 'File đã được upload thành công!');
+                } else if (response && response.status === 'error') {
+                    // Nếu không import được tài khoản nào
+                    if (response.message.includes('Không có tài khoản nào được import')) {
+                        this.notificationService.error(response.message || 'Tất cả tài khoản đã tồn tại!');
+                    } else {
+                        this.notificationService.error(response.message || 'Đã xảy ra lỗi khi upload file!');
+                    }
+                } else {
+                    console.error('Unexpected response format:', response);
+                    this.notificationService.error('Đã xảy ra lỗi khi upload file!');
+                }
+            },
+            (error) => {
+                console.error('Error during file upload:', error); // Log chi tiết lỗi
+                this.notificationService.error('Đã xảy ra lỗi khi upload file!');
+            },
+        );
+    }
+
+    getCsrfToken(): string {
+        const match = document.cookie.match(/csrftoken=([\w-]+)/);
+        return match ? match[1] : '';
+    }
 
     handleCreate = () => {
         this.routeService.goTo({ mode: E_Form_Mode.CREATE });

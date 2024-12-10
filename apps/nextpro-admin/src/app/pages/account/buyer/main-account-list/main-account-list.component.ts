@@ -176,19 +176,19 @@ export class AccountBuyerMainAccountListComponent {
                 },
             },
             {
-                sort: 'id',
-                name: 'id',
-                label: 'account.buyer-accounts.buyer-accounts-list.logID',
-            },
-            {
                 sort: 'mssv',
                 name: 'mssv',
                 label: 'MSSV',
             },
             {
+                sort: 'mssv',
+                name: 'shortName',
+                label: 'Tên',
+            },
+            {
                 sort: 'username',
                 name: 'username',
-                label: 'account.buyer-accounts.buyer-accounts-list.accountID',
+                label: 'Tài khoản',
             },
             {
                 sort: 'gender',
@@ -436,7 +436,7 @@ export class AccountBuyerMainAccountListComponent {
             },
         });
         if (result.status === 200) {
-            FileSaver.saveAs(result.body, 'BuyerExport.csv');
+            FileSaver.saveAs(result.body, 'Student.csv');
         }
     };
 }

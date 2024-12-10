@@ -508,8 +508,8 @@ import { Component, ViewEncapsulation } from '@angular/core';
                 <!--  WELCOME  -->
                 <div id="welcome">
                     <h1>
-                        <span> Hello there, </span>
-                        Welcome nextpro-user 👋
+                        <span> Chào bạn </span>
+                        Chào mừng bạn đến với <br />quản lý đồ án 👋
                     </h1>
                 </div>
                 <!--  HERO  -->

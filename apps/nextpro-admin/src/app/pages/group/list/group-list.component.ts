@@ -131,18 +131,20 @@ export class GroupListPage {
     };
     getGroupQldas = async (variables?: I_QueryVariables) => {
         const currentUser = localStorage.getItem('user');
+        const currentAdmin = localStorage.getItem('admin');
+        const user = JSON.parse(currentUser);
+        const admin = JSON.parse(currentAdmin);
         const groupQldas = await this.GroupService.getGroupQldas(
             {
                 ...getQueryVariables({
                     variables: {
                         ...variables,
-                        idgvhuongdan: JSON.parse(currentUser).id,
+                        idgvhuongdan: admin.role === 'A_2' ? undefined : user.id,
                     },
                 }),
             },
             { extra: { variables } },
         );
-
         this.table.state.data = groupQldas.data;
         this.table.state.pagination = groupQldas.pagination;
         this.table.state.selection?.clear();

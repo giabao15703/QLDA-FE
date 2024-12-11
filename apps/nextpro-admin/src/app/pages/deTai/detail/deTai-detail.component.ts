@@ -103,6 +103,7 @@ export class DeTaiDetailComponent {
                 //     }),
                 getOptions: () =>
                     this.accountService.getAdmins().then((res) => {
+                        if (localStorageService.get('admin').role === 'A_3') return [];
                         return [
                             { label: 'Chưa phân phối', value: -1 },
                             ...res.data

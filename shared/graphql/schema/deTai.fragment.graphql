@@ -16,6 +16,6 @@ fragment DeTaiInfo on DeTaiNode {
     idkehoach{
         ...KeHoachInfo
     }
-    giangVienLongName
-    giangVienPhanBienLongName
+    giangVienShortName
+    giangVienPhanBienShortName
 }

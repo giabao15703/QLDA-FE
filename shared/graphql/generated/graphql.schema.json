@@ -379,7 +379,7 @@
                 "deprecationReason": null
               },
               {
-                "name": "gvhdLongname",
+                "name": "gvhdShortname",
                 "description": null,
                 "type": {
                   "kind": "SCALAR",
@@ -616,7 +616,7 @@
                 "deprecationReason": null
               },
               {
-                "name": "gvhdLongname",
+                "name": "gvhdShortname",
                 "description": null,
                 "type": {
                   "kind": "SCALAR",
@@ -30902,7 +30902,7 @@
             "deprecationReason": null
           },
           {
-            "name": "giangVienLongName",
+            "name": "giangVienPhanBienShortName",
             "description": null,
             "args": [],
             "type": {
@@ -30914,7 +30914,7 @@
             "deprecationReason": null
           },
           {
-            "name": "giangVienPhanBienLongName",
+            "name": "giangVienShortName",
             "description": null,
             "args": [],
             "type": {
@@ -45514,7 +45514,7 @@
                 "deprecationReason": null
               },
               {
-                "name": "gvhdLongname",
+                "name": "gvhdShortname",
                 "description": null,
                 "type": {
                   "kind": "SCALAR",
@@ -81232,7 +81232,7 @@
                 "deprecationReason": null
               },
               {
-                "name": "gvhdLongname",
+                "name": "gvhdShortname",
                 "description": null,
                 "type": {
                   "kind": "SCALAR",

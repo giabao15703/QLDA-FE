@@ -59,7 +59,7 @@ export class DeTaiListPage {
             },
             {
                 label: 'Giảng viên phụ trách',
-                name: 'gvhdLongname',
+                name: 'gvhdShortName', // Thay đổi gvhdShortName thay vì giangVienShortName
             },
             {
                 label: 'Trạng thái', // Thay đổi label cho phù hợp
@@ -95,8 +95,8 @@ export class DeTaiListPage {
                 label: 'Tên đề tài', // Thay đổi label phù hợp
             },
             {
-                sort: 'giangVienLongName',
-                name: 'giangVienLongName',
+                sort: 'giangVienShortName',
+                name: 'giangVienShortName',
                 label: 'Giảng viên phụ trách',
             },
             {

@@ -12,7 +12,7 @@ query getDeTais(
     $tendoan: String
     $trangthai: String
     $idkehoach: String
-    $gvhdLongname: String
+    $gvhdShortname: String
 ) {
     deTais(
         before: $before
@@ -28,7 +28,7 @@ query getDeTais(
         tendoan: $tendoan
         trangthai: $trangthai
         idkehoach: $idkehoach
-        gvhdLongname: $gvhdLongname
+        gvhdShortname: $gvhdShortname
     ) {
         totalCount
         pageInfo {

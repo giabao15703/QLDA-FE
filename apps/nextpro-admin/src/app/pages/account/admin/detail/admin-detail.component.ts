@@ -40,6 +40,7 @@ const FORM_NAME = 'FORM_ADMIN_ACCOUNT_ADMIN';
     ],
 })
 export class AccountAdminDetailComponent {
+    id_admin: string;
     constructor(
         public loadingService: LoadingService,
         public form: FormService,
@@ -123,7 +124,8 @@ export class AccountAdminDetailComponent {
                     user: { status },
                     role,
                 } = this.data;
-
+                debugger;
+                this.id_admin = id;
                 this.form.patchValue({
                     id,
                     shortName,
@@ -147,6 +149,7 @@ export class AccountAdminDetailComponent {
                 shortName: values.shortName,
                 role: values.role,
             };
+            debugger;
 
             if (this.mode === E_Form_Mode.CREATE) {
                 const { adminCreate } = await this.accountService.createAdmin({
@@ -166,9 +169,25 @@ export class AccountAdminDetailComponent {
                         this.localStorageService.set('createdAdminInfo', JSON.stringify(adminInfo));
                         this.localStorageService.remove(FORM_NAME);
                         this.notificationService.success('notification.createSuccessfully');
+                        this.onCloseDrawer();
                     } else {
                         this.notificationService.error(adminCreate.error?.message || 'Unknown error');
                     }
+                }
+
+            }
+            if (this.mode === E_Form_Mode.UPDATE) {
+                const { adminUpdate } = await this.accountService.updateAdmin({
+                    admin: variables,
+                    id: this.id_admin,
+                    isDelete: false,
+                });
+
+                if (adminUpdate?.status) {
+                    this.notificationService.success('notification.updateSuccessfully');
+                    this.onCloseDrawer();
+                } else {
+                    this.notificationService.error(adminUpdate.error?.message || 'Unknown error');
                 }
             }
 

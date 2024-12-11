@@ -32,6 +32,7 @@ import {
     I_Gender,
     I_Industry,
     I_NumberOfEmployee,
+    I_User,
     T_Any,
 } from '#shared/types';
 import { translateData } from '#shared/utils';
@@ -68,11 +69,11 @@ export class BuyerBasicInformationFormComponent {
         this.translateService.use(JSON.parse(localStorage.getItem('languageCode') || 'en') === 'vi' ? 'vi' : 'en');
         this.form.config = [
             {
-                name: 'contactPersonContainer',
+                name: '',
                 class: 'grid gap-2 grid-cols-1 lg:grid-cols-3',
                 fieldType: E_FieldType.CONTAINER,
                 containerType: E_ContainerType.FIELDSET,
-                label: 'auth.register.become-buyer.form-buyer.contactPerson',
+                label: 'Thông tin tài khoản sinh viên',
                 children: [
                     {
                         label: 'auth.register.become-buyer.form-buyer.fullName',
@@ -192,7 +193,7 @@ export class BuyerBasicInformationFormComponent {
     }
 
     @Input() mode: E_Form_Mode;
-    @Input() data: I_Buyer;
+    @Input() data: I_User;
     @Input() onSave: (values, callback) => void;
     @Input() showTerms: boolean = false;
     @Input() showMainInfo: boolean = false;

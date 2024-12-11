@@ -18,9 +18,12 @@ import {
     RegisterSupplierGQL,
     RegisterSupplierMutation,
     RegisterSupplierMutationVariables,
+    UpdateBuyerGQL,
+    UpdateBuyerMutation,
+    UpdateBuyerMutationVariables,
 } from '#shared/graphql/types';
 import { GraphqlService, LocalStorageService, NotificationService } from '#shared/services';
-import { I_InviteInput, I_LoginInput } from '#shared/types';
+import { I_GraphQLOptions, I_InviteInput, I_LoginInput, I_MutationResponse } from '#shared/types';
 
 const userTypeMapper = {
     1: 'admin',
@@ -43,6 +46,7 @@ export class AuthService {
         private registerBuyerGQL: RegisterBuyerGQL,
         private registerSupplierGQL: RegisterSupplierGQL,
         private inviteGQL: InviteGQL,
+        private updateBuyerGQL: UpdateBuyerGQL
     ) {}
 
     getUserType(): string {
@@ -193,5 +197,16 @@ export class AuthService {
                 callback();
             }
         }
+    };
+
+    updateBuyer = (
+        variables?: UpdateBuyerMutationVariables,
+        options?: I_GraphQLOptions<UpdateBuyerMutation, { updateBuyer: I_MutationResponse }>,
+    ) => {
+        return this.graphqlService.mutate<
+            UpdateBuyerMutation,
+            UpdateBuyerMutationVariables,
+            { updateBuyer: I_MutationResponse }
+        >(this.updateBuyerGQL, variables, options);
     };
 }

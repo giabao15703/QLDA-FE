@@ -1,5 +1,5 @@
 import { CommonModule, formatDate } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import * as FileSaver from 'file-saver';
 import { utc } from 'moment';
@@ -57,6 +57,7 @@ const TAB_NAME = 'main';
     ],
 })
 export class AccountBuyerMainAccountListComponent {
+    @ViewChild('fileInput') fileInput: ElementRef<HTMLInputElement>;
     constructor(
         public loadingService: LoadingService,
         public table: TableService<I_Buyer>,
@@ -270,7 +271,7 @@ export class AccountBuyerMainAccountListComponent {
                         icon: 'edit',
                         onClick: (row: I_Buyer) => {
                             console.log('Dữ liệu dòng khi nhấn Edit:', row);
-                            this.routeService.goTo({ mode: E_Form_Mode.READ, id: row.id, prefix: TAB_NAME });
+                            this.routeService.goTo({ mode: E_Form_Mode.UPDATE, id: row.id, prefix: TAB_NAME });
                         },
                     },
                 ],
@@ -384,12 +385,31 @@ export class AccountBuyerMainAccountListComponent {
         const file = event.target.files[0];
         if (file) {
             this.selectedFile = file;
+            this.uploadFile();
         }
     }
 
+    getCsrfToken(): string {
+        const match = document.cookie.match(/csrftoken=([\w-]+)/);
+        return match ? match[1] : '';
+    }
+    handleExport = async () => {
+        const result = await this.restApiService.get(this.exportUrl, {
+            responseType: 'blob',
+            observe: 'response',
+            headers: {
+                Authorization: `Token ${this.localStorageService.get('token')}`,
+            },
+        });
+        if (result.status === 200) {
+            FileSaver.saveAs(result.body, 'BuyerExport.csv');
+        }
+    };
+
+
     uploadFile() {
         if (!this.selectedFile) {
-            alert('Vui lòng chọn file!');
+            this.notificationService.error('Vui lòng chọn file!');
             return;
         }
 
@@ -415,28 +435,25 @@ export class AccountBuyerMainAccountListComponent {
                     console.error('Unexpected response format:', response);
                     this.notificationService.error('Đã xảy ra lỗi khi upload file!');
                 }
+
+                // Reset the file input after upload
+                this.resetFileInput();
             },
             (error) => {
                 console.error('Error during file upload:', error); // Log chi tiết lỗi
                 this.notificationService.error('Đã xảy ra lỗi khi upload file!');
+                // Reset the file input in case of error
+                this.resetFileInput();
             },
         );
     }
 
-    getCsrfToken(): string {
-        const match = document.cookie.match(/csrftoken=([\w-]+)/);
-        return match ? match[1] : '';
-    }
-    handleExport = async () => {
-        const result = await this.restApiService.get(this.exportUrl, {
-            responseType: 'blob',
-            observe: 'response',
-            headers: {
-                Authorization: `Token ${this.localStorageService.get('token')}`,
-            },
-        });
-        if (result.status === 200) {
-            FileSaver.saveAs(result.body, 'Student.csv');
+    resetFileInput() {
+        this.selectedFile = null;
+        if (this.fileInput && this.fileInput.nativeElement) {
+            this.fileInput.nativeElement.value = '';
         }
-    };
+    }
+
+    // ... existing methods
 }

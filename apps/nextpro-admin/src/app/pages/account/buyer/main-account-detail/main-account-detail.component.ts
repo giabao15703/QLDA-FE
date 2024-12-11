@@ -50,5 +50,18 @@ export class AccountBuyerMainAccountDetailComponent {
                 },
             );
         }
-    };
+        else if (this.mode === E_Form_Mode.UPDATE) {
+            this.authService.updateBuyer(
+                {
+                    userId: this.data.id,
+                    
+                    user: {
+                        email,
+                        password,
+                        ...rest,
+                    },
+                },
+            );
+        }
+    }
 }

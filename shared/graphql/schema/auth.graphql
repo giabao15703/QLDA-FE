@@ -14,6 +14,15 @@ mutation login($user: LoginInput!) {
     }
 }
 
+mutation updateBuyer($user: UserInput!,$userId: ID!) {
+    buyerUpdate(user: $user,userId: $userId) {
+        status
+        error {
+            ...ErrorInfo
+        }
+    }
+}
+
 mutation logout($token: String!) {
     logout(token: $token) {
         status

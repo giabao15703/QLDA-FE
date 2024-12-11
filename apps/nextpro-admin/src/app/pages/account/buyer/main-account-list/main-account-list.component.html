@@ -50,13 +50,11 @@
                     <mat-icon>download</mat-icon>
                     {{ 'button.exportAll' | translate | uppercase }}
                 </button>
-                <div class="file-upload-container" style="margin-top: 20px; margin-bottom: 20px;">
-                    <label for="fileUpload" style="display:block; margin-bottom: 5px;">Chọn File:</label>
-                    <input type="file" id="fileUpload" accept=".xlsx" (change)="onFileChange($event)" style="margin-bottom: 10px;" />
-                    <button mat-raised-button color="primary" (click)="uploadFile()" [disabled]="!selectedFile">
-                        Import
-                    </button>
-                </div>
+                <input type="file" #fileInput accept=".xlsx" style="display: none;" (change)="onFileChange($event)" />
+                <button mat-raised-button color="primary" (click)="fileInput.click()" >
+                    <mat-icon>upload</mat-icon>
+                    {{ 'button.import' | translate | uppercase }}
+                </button>
             </div>
         }
     </mat-drawer-content>

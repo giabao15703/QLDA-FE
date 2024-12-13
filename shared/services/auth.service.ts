@@ -46,7 +46,7 @@ export class AuthService {
         private registerBuyerGQL: RegisterBuyerGQL,
         private registerSupplierGQL: RegisterSupplierGQL,
         private inviteGQL: InviteGQL,
-        private updateBuyerGQL: UpdateBuyerGQL
+        private updateBuyerGQL: UpdateBuyerGQL,
     ) {}
 
     getUserType(): string {

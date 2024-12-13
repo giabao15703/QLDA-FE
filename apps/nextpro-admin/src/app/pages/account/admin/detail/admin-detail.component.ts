@@ -40,6 +40,7 @@ const FORM_NAME = 'FORM_ADMIN_ACCOUNT_ADMIN';
     ],
 })
 export class AccountAdminDetailComponent {
+    id_admin: string;
     constructor(
         public loadingService: LoadingService,
         public form: FormService,
@@ -124,6 +125,7 @@ export class AccountAdminDetailComponent {
                     role,
                 } = this.data;
 
+                this.id_admin = id;
                 this.form.patchValue({
                     id,
                     shortName,
@@ -169,6 +171,20 @@ export class AccountAdminDetailComponent {
                     } else {
                         this.notificationService.error(adminCreate.error?.message || 'Unknown error');
                     }
+                }
+            }
+            if (this.mode === E_Form_Mode.UPDATE) {
+                const { adminUpdate } = await this.accountService.updateAdmin({
+                    admin: variables,
+                    id: this.id_admin,
+                    isDelete: false,
+                });
+
+                if (adminUpdate?.status) {
+                    this.notificationService.success('notification.updateSuccessfully');
+                    this.onCloseDrawer();
+                } else {
+                    this.notificationService.error(adminUpdate.error?.message || 'Unknown error');
                 }
             }
 

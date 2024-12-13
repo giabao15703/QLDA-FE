@@ -29,6 +29,9 @@ import {
     GetStudentsInGroupQuery,
     GetStudentsInGroupQueryVariables,
     GetStudentsInGroupGQL,
+    DeleteMemberFromGroupGQL,
+    DeleteMemberFromGroupMutationVariables,
+    DeleteMemberFromGroupMutation,
 } from '#shared/graphql/types';
 import { E_Role, I_GraphQLOptions, I_MutationResponse, I_NormalizeExtra, I_TableState, I_User } from '#shared/types';
 import { normalizeWithPagination } from '#shared/utils';
@@ -55,6 +58,7 @@ export class GroupQLDAService {
         private getInviteUserToGroupGQL: GetInviteUserToGroupGQL,
         private getStudentsInGroupGQL: GetStudentsInGroupGQL,
         private http: HttpClient,
+        private deleteMemberFromGroupGQL: DeleteMemberFromGroupGQL,
     ) {}
 
     get error(): Observable<string> {
@@ -238,5 +242,16 @@ export class GroupQLDAService {
                 ...options, // Kết hợp các tùy chọn bổ sung
             },
         ) as Promise<I_TableState<I_JoinGroup>>; // Đảm bảo trả về kiểu dữ liệu chuẩn
+    };
+
+    deleteMember = (
+        variables?: DeleteMemberFromGroupMutationVariables,
+        options?: I_GraphQLOptions<DeleteMemberFromGroupMutation, { deleteMemberFromGroup: I_MutationResponse }>,
+    ) => {
+        return this.graphqlService.mutate<
+            DeleteMemberFromGroupMutation,
+            DeleteMemberFromGroupMutationVariables,
+            { deleteMemberFromGroup: I_MutationResponse }
+        >(this.deleteMemberFromGroupGQL, variables, options);
     };
 }

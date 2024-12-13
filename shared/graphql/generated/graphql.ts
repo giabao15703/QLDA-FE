@@ -3599,6 +3599,12 @@ export type DeleteKeHoachDoAn = {
   success?: Maybe<Scalars['Boolean']['output']>;
 };
 
+export type DeleteMemberFromGroup = {
+  __typename?: 'DeleteMemberFromGroup';
+  error?: Maybe<Error>;
+  status?: Maybe<Scalars['Boolean']['output']>;
+};
+
 export type DeliveryResponsibleCreate = {
   __typename?: 'DeliveryResponsibleCreate';
   deliveryResponsible?: Maybe<DeliveryResponsibleNode>;
@@ -5967,6 +5973,7 @@ export type Mutation = {
   deTaiCreate?: Maybe<DeTaiCreate>;
   deTaiUpdate?: Maybe<DeTaiUpdate>;
   deleteKeHoachDoAn?: Maybe<DeleteKeHoachDoAn>;
+  deleteMemberFromGroup?: Maybe<DeleteMemberFromGroup>;
   deleteOrder?: Maybe<OrderDeleteMutation>;
   deliveryResponsibleCreate?: Maybe<DeliveryResponsibleCreate>;
   deliveryResponsibleDelete?: Maybe<DeliveryResponsibleDelete>;
@@ -6691,6 +6698,12 @@ export type MutationDeTaiUpdateArgs = {
 
 export type MutationDeleteKeHoachDoAnArgs = {
   id: Scalars['ID']['input'];
+};
+
+
+export type MutationDeleteMemberFromGroupArgs = {
+  groupId: Scalars['ID']['input'];
+  userId: Scalars['ID']['input'];
 };
 
 
@@ -17366,6 +17379,14 @@ export type GetStudentsInGroupQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetStudentsInGroupQuery = { __typename?: 'Query', getStudentsInGroup?: Array<{ __typename?: 'StudentWithGroupNode', joinGroup?: { __typename?: 'JoinGroupNode', id: string, role: string, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, ngaySinh?: any | null, noiSinh?: string | null, lop?: string | null, bacDaoTao?: string | null, khoaHoc?: string | null, loaiHinhDaoTao?: string | null, nganh?: string | null, gender?: string | null, picture?: string | null, phone?: string | null, mssv?: string | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, group: { __typename?: 'GroupQLDANode', id: string, maNhom: string, name: string, status: boolean, memberCount: number, maxMember: number, creatorShortName?: string | null, deTai?: { __typename?: 'DeTaiNode', id: string, madoan?: string | null, tendoan?: string | null, chuyennganh?: string | null, mota?: string | null, trangthai?: string | null, yeucau?: string | null, idnhom?: string | null, giangVienShortName?: string | null, giangVienPhanBienShortName?: string | null, idgvhuongdan?: { __typename?: 'AdminNode', id: string, email?: string | null, shortName?: string | null, fullName?: string | null, username?: string | null, userType?: number | null, created?: any | null, firstName?: string | null, lastName?: string | null, companyWebsite?: string | null, companyLongName?: string | null, companyShortName?: string | null, role: AdminRole, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, ngaySinh?: any | null, noiSinh?: string | null, lop?: string | null, bacDaoTao?: string | null, khoaHoc?: string | null, loaiHinhDaoTao?: string | null, nganh?: string | null, gender?: string | null, picture?: string | null, phone?: string | null, mssv?: string | null, userspermissionSet: { __typename?: 'UsersPermissionNodeConnection', edges: Array<{ __typename?: 'UsersPermissionNodeEdge', node?: { __typename?: 'UsersPermissionNode', id: string, validFrom?: any | null, validTo?: any | null, status: number, pk?: number | null, permission: { __typename?: 'GroupPermissionNode', id: string, role: number, group?: { __typename?: 'GroupNode', id: string, name: string } | null } } | null } | null> }, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, language?: { __typename?: 'LanguageNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'LanguageTranslationNode', id: string, languageCode: string, name: string }> } | null } | null, idgvphanbien?: { __typename?: 'AdminNode', id: string, email?: string | null, shortName?: string | null, fullName?: string | null, username?: string | null, userType?: number | null, created?: any | null, firstName?: string | null, lastName?: string | null, companyWebsite?: string | null, companyLongName?: string | null, companyShortName?: string | null, role: AdminRole, user: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, ngaySinh?: any | null, noiSinh?: string | null, lop?: string | null, bacDaoTao?: string | null, khoaHoc?: string | null, loaiHinhDaoTao?: string | null, nganh?: string | null, gender?: string | null, picture?: string | null, phone?: string | null, mssv?: string | null, userspermissionSet: { __typename?: 'UsersPermissionNodeConnection', edges: Array<{ __typename?: 'UsersPermissionNodeEdge', node?: { __typename?: 'UsersPermissionNode', id: string, validFrom?: any | null, validTo?: any | null, status: number, pk?: number | null, permission: { __typename?: 'GroupPermissionNode', id: string, role: number, group?: { __typename?: 'GroupNode', id: string, name: string } | null } } | null } | null> }, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } }, language?: { __typename?: 'LanguageNode', id: string, name: string, itemCode: string, status?: boolean | null, translations: Array<{ __typename?: 'LanguageTranslationNode', id: string, languageCode: string, name: string }> } | null } | null, idkehoach?: { __typename?: 'KeHoachDoAnNode', id: string, slSinhVien: number, slDoAn: number, kyMo: string, tgbdDoAn: any, tgktDoAn: any, tgbdTaoDoAn: any, tgktTaoDoAn: any, tgbdDangKyDeTai: any, tgktDangKyDeTai: any, tgbdLamDoAn: any, tgktLamDoAn: any, tgbdChamPhanBien: any, tgktChamPhanBien: any, tgbdChamHoiDong: any, tgktChamHoiDong: any } | null } | null } } | null } | null> | null };
 
+export type DeleteMemberFromGroupMutationVariables = Exact<{
+  groupId: Scalars['ID']['input'];
+  userId: Scalars['ID']['input'];
+}>;
+
+
+export type DeleteMemberFromGroupMutation = { __typename?: 'Mutation', deleteMemberFromGroup?: { __typename?: 'DeleteMemberFromGroup', status?: boolean | null, error?: { __typename?: 'Error', code?: string | null, message?: string | null } | null } | null };
+
 export type KeHoachInfoFragment = { __typename?: 'KeHoachDoAnNode', id: string, slSinhVien: number, slDoAn: number, kyMo: string, tgbdDoAn: any, tgktDoAn: any, tgbdTaoDoAn: any, tgktTaoDoAn: any, tgbdDangKyDeTai: any, tgktDangKyDeTai: any, tgbdLamDoAn: any, tgktLamDoAn: any, tgbdChamPhanBien: any, tgktChamPhanBien: any, tgbdChamHoiDong: any, tgktChamHoiDong: any };
 
 export type GetKeHoachsQueryVariables = Exact<{
@@ -24132,6 +24153,28 @@ export const GetStudentsInGroupDocument = gql`
   })
   export class GetStudentsInGroupGQL extends Apollo.Query<GetStudentsInGroupQuery, GetStudentsInGroupQueryVariables> {
     override document = GetStudentsInGroupDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const DeleteMemberFromGroupDocument = gql`
+    mutation deleteMemberFromGroup($groupId: ID!, $userId: ID!) {
+  deleteMemberFromGroup(groupId: $groupId, userId: $userId) {
+    status
+    error {
+      code
+      message
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class DeleteMemberFromGroupGQL extends Apollo.Mutation<DeleteMemberFromGroupMutation, DeleteMemberFromGroupMutationVariables> {
+    override document = DeleteMemberFromGroupDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

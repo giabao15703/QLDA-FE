@@ -175,3 +175,16 @@ query getStudentsInGroup {
        ...StudentsInGroupInfo
     }
 }
+
+mutation deleteMemberFromGroup($groupId: ID!,$userId: ID!)
+{
+    deleteMemberFromGroup(groupId: $groupId, userId: $userId)
+    {
+        status
+        error {
+            code
+            message
+        }
+
+    }
+}

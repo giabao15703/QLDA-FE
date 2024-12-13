@@ -17,7 +17,8 @@ import {
     OrderService,
     TableService,
 } from '#shared/services';
-import { E_FieldType, E_Form_Mode, I_GroupQLDA, I_JoinGroup, I_QueryVariables } from '#shared/types';
+import { E_FieldType, E_Form_Mode, E_TableColumnType, I_GroupQLDA, I_JoinGroup, I_QueryVariables } from '#shared/types';
+import { AdminInfoFragmentDoc } from '#shared/graphql/types';
 
 const FORM_NAME = 'FORM_ADMIN_DELIVERY_GROUP_STUDENT';
 
@@ -65,6 +66,21 @@ export class GroupDetailComponent {
                 label: 'Chức vụ',
                 cellStyle: { 'justify-content': 'start' },
             },
+            {
+                cellStyle: { width: '50px' },
+                sticky: 'right',
+                type: E_TableColumnType.ACTION,
+                name: 'action',
+                label: 'banner.action',
+                ctas: [
+                    {
+                        icon: 'delete',
+                        onClick: (row: I_JoinGroup) => {
+                            this.deleteMember(row);
+                        },
+                    },
+                ],
+            },
         ];
 
         this.table.config.refetch = this.getJoinGroups;
@@ -108,4 +124,56 @@ export class GroupDetailComponent {
         }
     }
     handleSave = async () => {};
+
+    deleteMember = async (row: I_JoinGroup) => {
+        // Nếu nhóm chỉ còn 1 thành viên (người này là leader), hỏi người dùng về việc xóa cả nhóm
+        // check role của account admin
+        const currentUser = localStorage.getItem('admin');
+        const user = JSON.parse(currentUser);
+        if (user.role !== 'A_2') {
+            this.notificationService.error('Bạn không có quyền xóa thành viên!');
+            return;
+        }
+
+        let confirmDelete;
+        if (this.table.state.data.length === 1 && row.role === 'leader') {
+            confirmDelete = confirm(
+                `Nhóm hiện chỉ còn leader (${row.user.shortName}). Bạn có muốn xóa cả nhóm thay vì xóa thành viên này không?`,
+            );
+        } else {
+            confirmDelete = confirm(`Bạn có chắc chắn muốn xóa thành viên ${row.user.shortName} khỏi nhóm không?`);
+        }
+
+        // Nếu nhóm không phải thành viên cuối cùng hoặc không phải leader
+        if (!confirmDelete) {
+            return;
+        }
+
+        try {
+            this.loadingService.show(); // Hiển thị loading
+            const { deleteMemberFromGroup } = await this.groupQLDAService.deleteMember({
+                groupId: this.data.id,
+                userId: row.user.id,
+            });
+
+            if (deleteMemberFromGroup.status) {
+                this.notificationService.success(deleteMemberFromGroup.error?.message);
+                if (this.table.state.data.length === 1) {
+                    this.onCloseDrawer();
+                    if (this.refetch) {
+                        this.refetch(); // Gọi refetch để làm mới danh sách ở GroupListPage
+                    }
+                } else {
+                    this.getJoinGroups(); // Làm mới danh sách thành viên trong nhóm
+                }
+            } else {
+                this.notificationService.error(deleteMemberFromGroup.error?.message);
+            }
+        } catch (error) {
+            console.error(error);
+            this.notificationService.error('Có lỗi xảy ra khi xóa thành viên!');
+        } finally {
+            this.loadingService.hide(); // Tắt loading
+        }
+    };
 }

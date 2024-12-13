@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { CommonModule, DatePipe } from '@angular/common';
 
 import { LanguageSwitchComponent } from '#shared/components';
 import { MaterialModules } from '#shared/modules';
-import { GroupQLDAService, NotificationQLDAService } from '#shared/services';
-import { I_QueryVariables } from '#shared/types';
+import { GroupQLDAService, NotificationQLDAService, NotificationService } from '#shared/services';
+import { E_RequyestType, I_JoinRequest, I_QueryVariables } from '#shared/types';
+import { MatMenuTrigger } from '@angular/material/menu';
 
 @Component({
     standalone: true,
@@ -22,9 +23,15 @@ export class SidebarComponent implements OnInit {
     students: any[] = [];
     notifications: any[] = [];
     hasViewedNotifications: boolean = false;
+    joinRequestId: I_JoinRequest;
+    router: any;
+    authService: any;
+
     constructor(
         private joinGroupsGQL: GroupQLDAService,
         private notificationQLDAService: NotificationQLDAService,
+        private notificationService: NotificationService,
+        private groupQldaService: GroupQLDAService,
     ) {}
 
     ngOnInit() {
@@ -85,5 +92,109 @@ export class SidebarComponent implements OnInit {
     reloadNotifications() {
         this.hasViewedNotifications = false; // Đánh dấu lại chưa xem thông báo
         this.getNotifications(); // Tải lại thông báo mới
+    }
+    LoadNotifications() {
+        const user = JSON.parse(localStorage.getItem('user') || '{}');
+        console.log('Dữ liệu user từ localStorage:', user);
+
+        if (!user || !user.shortName) {
+            console.error('Người dùng không có shortName.');
+            return;
+        }
+        const variable = [];
+        const check_leader = this.groupQldaService.getGroupQldaRequests({ leaderUserId: user.id });
+
+        this.groupQldaService
+            .getGroupQldaRequests() // Lấy tất cả yêu cầu tham gia nhóm
+            .then((joinRequests: I_JoinRequest[]) => {
+                console.log('Dữ liệu trả về từ API:', joinRequests);
+
+                if (!joinRequests || joinRequests.length === 0) {
+                    console.log('Không có yêu cầu tham gia nhóm.');
+                    this.notifications = [];
+                    return;
+                }
+
+                const check_leader = joinRequests.some((request: I_JoinRequest) => request.leaderUserId == user.id);
+                const userId = parseFloat(user.id);
+
+                if (check_leader) {
+                    this.notifications = joinRequests
+                        .filter(
+                            (request: I_JoinRequest) =>
+                                request.leaderUserId == userId && request.requestType == E_RequyestType.JOIN_REQUEST,
+                        )
+                        .map((request: I_JoinRequest) => ({
+                            message: `Người dùng ${request.user?.shortName} muốn xin vào nhóm của ${request.group?.name}`,
+                            id: request.id,
+                        }));
+                } else {
+                    this.notifications = joinRequests
+                        .filter(
+                            (request: I_JoinRequest) =>
+                                request.user.id == user.id && request.requestType == E_RequyestType.INVITE,
+                        )
+                        .map((request: I_JoinRequest) => ({
+                            message: `Bạn đã được mời tham gia nhóm ${request.group?.name}`,
+                            id: request.id,
+                        }));
+                }
+            })
+            .catch((error) => {
+                console.error('Lỗi khi lấy yêu cầu tham gia nhóm:', error);
+            });
+    }
+    setJoinRequestId(joinRequestId: string) {
+        if (!joinRequestId) {
+            console.error('joinRequestId is undefined or invalid.');
+            return;
+        }
+        this.joinRequestId = { id: joinRequestId } as I_JoinRequest;
+        console.log('Đã đặt joinRequestId:', this.joinRequestId);
+    }
+
+    async acceptJoinRequest(joinRequestId: string) {
+        if (!joinRequestId) {
+            this.notificationService.error('Join request ID không tồn tại');
+            console.error('Join request ID không tồn tại');
+            return;
+        }
+
+        try {
+            const response = await this.groupQldaService.acceptJoinRequest({
+                joinRequestId: joinRequestId,
+            });
+            if (response.acceptJoinRequest.status) {
+                this.notificationService.success('Đã chấp nhận yêu cầu tham gia');
+                window.location.reload(); // Cập nhật lại trang sau khi chấp nhận
+            } else {
+                this.notificationService.error(response.acceptJoinRequest.error?.message);
+            }
+        } catch (error) {
+            this.notificationService.error('Lỗi khi chấp nhận yêu cầu tham gia');
+            console.error('Lỗi khi chấp nhận yêu cầu tham gia:', error);
+        }
+    }
+
+    isActive(paths: string[]): boolean {
+        return paths.includes(this.router.url);
+    }
+
+    redirectTo(path: string) {
+        this.router.navigate([path]);
+    }
+
+    isLoggedIn() {
+        return this.authService.isLoggedIn();
+    }
+
+    onLogout() {
+        this.authService.logout();
+    }
+
+    @ViewChild('notificationTrigger') notificationTrigger: MatMenuTrigger;
+
+    openMenu(trigger: MatMenuTrigger) {
+        trigger.openMenu();
     }
 }

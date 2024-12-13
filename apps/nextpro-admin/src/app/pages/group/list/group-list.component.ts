@@ -145,7 +145,6 @@ export class GroupListPage {
                 ...getQueryVariables({
                     variables: {
                         ...variables,
-                        idgvhuongdan: admin.role === 'A_2' ? undefined : user.id,
                     },
                 }),
             },

@@ -280,7 +280,7 @@ export class AccountBuyerMainAccountListComponent {
         this.table.config.refetch = this.getUsers;
 
         this.routeService.onChange(({ hash }) => {
-            this.getBuyer(hash);
+            this.getUser(hash);
         });
     }
 
@@ -288,16 +288,16 @@ export class AccountBuyerMainAccountListComponent {
     exportUrl = REST_API_ADMIN_ENDPOINTS.ACCOUNT.BUYER.MAIN_ACCOUNT.EXPORT;
 
     ngOnInit() {
-        this.getBuyer();
+        this.getUser();
         this.getUsers();
     }
 
-    getBuyer = async (hash?: string) => {
+    getUser = async (hash?: string) => {
         console.log('Lấy dữ liệu người mua với hash (id):', hash); // Kiểm tra id nhận được
         this.detail = await this.routeService.getDetail({
             tab: TAB_NAME,
             hash,
-            detail: ({ id }) => this.accountService.getBuyer({ id }),
+            detail: ({ id }) => this.accountService.getUser({ id }),
         });
         console.log('Dữ liệu người mua nhận được:', this.detail); // Kiểm tra dữ liệu trả về
     };
@@ -405,7 +405,6 @@ export class AccountBuyerMainAccountListComponent {
             FileSaver.saveAs(result.body, 'BuyerExport.csv');
         }
     };
-
 
     uploadFile() {
         if (!this.selectedFile) {

@@ -13,7 +13,7 @@ export interface I_DeTai {
     yeucau?: string;
     idKeHoach?: string;
     idnhom?: string;
-    giangVienLongName?: string;
+    giangVienShortName?: string;
     keHoachDoAnId?: string;
     giangVienPhanBienLongName?: string;
     idgvphanbienScalar?: string;

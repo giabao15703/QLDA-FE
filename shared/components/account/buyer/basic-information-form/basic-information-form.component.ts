@@ -225,7 +225,6 @@ export class BuyerBasicInformationFormComponent {
         } else {
             if (this.data) {
                 const userDetail = this.data;
-
                 this.form.patchValue({
                     mssv: userDetail.mssv,
                     shortName: userDetail.shortName,
@@ -270,70 +269,134 @@ export class BuyerBasicInformationFormComponent {
     };
 
     handleSave = () => {
-        this.form.submit(
-            async ({
-                confirmPassword,
-                email,
-                password,
-                shortName,
-                phone,
-                lop,
-                bacDaoTao,
-                khoaHoc,
-                loaiHinhDaoTao,
-                ngaySinh,
-                noiSinh,
-                nganh,
-                gender,
-                picture,
-                mssv,
-            }) => {
-                if (password !== confirmPassword) {
-                    this.form.setFieldError('confirmPassword', 'VALIDATE_DESCRIPTION.password.notMatch');
-                    return;
-                }
-                const submitData = {
-                    user: {
-                        email: email ?? '',
-                        password: password ?? '',
-                        shortName: shortName ?? '',
-                        phone: phone ?? '',
-                        lop: lop ?? '',
-                        bacDaoTao: bacDaoTao ?? '',
-                        khoaHoc: khoaHoc ?? '',
-                        loaiHinhDaoTao: loaiHinhDaoTao ?? '',
-                        ngaySinh: ngaySinh ? new Date(ngaySinh).toISOString().split('T')[0] : '',
-                        noiSinh: noiSinh ?? '',
-                        nganh: nganh ?? '',
-                        gender: gender ?? '',
-                        picture: picture ?? '',
-                        mssv: mssv ?? '',
-                    },
-                };
+        if (this.mode === E_Form_Mode.CREATE) {
+            this.form.submit(
+                async ({
+                    confirmPassword,
+                    email,
+                    password,
+                    shortName,
+                    phone,
+                    lop,
+                    bacDaoTao,
+                    khoaHoc,
+                    loaiHinhDaoTao,
+                    ngaySinh,
+                    noiSinh,
+                    nganh,
+                    gender,
+                    picture,
+                    mssv,
+                }) => {
+                    if (password !== confirmPassword) {
+                        this.form.setFieldError('confirmPassword', 'VALIDATE_DESCRIPTION.password.notMatch');
+                        return;
+                    }
+                    const submitData = {
+                        user: {
+                            email: email ?? '',
+                            password: password ?? '',
+                            shortName: shortName ?? '',
+                            phone: phone ?? '',
+                            lop: lop ?? '',
+                            bacDaoTao: bacDaoTao ?? '',
+                            khoaHoc: khoaHoc ?? '',
+                            loaiHinhDaoTao: loaiHinhDaoTao ?? '',
+                            ngaySinh: ngaySinh ? new Date(ngaySinh).toISOString().split('T')[0] : '',
+                            noiSinh: noiSinh ?? '',
+                            nganh: nganh ?? '',
+                            gender: gender ?? '',
+                            picture: picture ?? '',
+                            mssv: mssv ?? '',
+                        },
+                    };
 
-                this.accountService
-                    .createBuyer(submitData) // Gọi mutation GraphQL
-                    .then((response: any) => {
-                        const data = response.data;
-                        if (data?.buyerCreate?.status) {
-                            // Tạo buyer thành công, xử lý trường hợp thành công
-                            this.localStorageService.remove(FORM_NAME);
-                            console.log('Buyer được tạo thành công:', data.buyerCreate);
-                        } else {
-                            // Xử lý lỗi từ phản hồi mutation
-                            this.form.setFieldError(
-                                'general',
-                                data?.buyerCreate?.error?.message || 'Lỗi không xác định',
-                            );
-                        }
-                    })
-                    .catch((error) => {
-                        // Xử lý lỗi khi gửi request
-                        this.form.setFieldError('general', error.message || 'Đã xảy ra lỗi khi tạo buyer');
-                    });
-            },
-            FORM_NAME,
-        );
+                    this.accountService
+                        .createBuyer(submitData) // Gọi mutation GraphQL
+                        .then((response: any) => {
+                            const data = response.data;
+                            if (data?.buyerCreate?.status) {
+                                // Tạo buyer thành công, xử lý trường hợp thành công
+                                this.localStorageService.remove(FORM_NAME);
+                                console.log('Buyer được tạo thành công:', data.buyerCreate);
+                            } else {
+                                // Xử lý lỗi từ phản hồi mutation
+                                this.form.setFieldError(
+                                    'general',
+                                    data?.buyerCreate?.error?.message || 'Lỗi không xác định',
+                                );
+                            }
+                        })
+                        .catch((error) => {
+                            // Xử lý lỗi khi gửi request
+                            this.form.setFieldError('general', error.message || 'Đã xảy ra lỗi khi tạo buyer');
+                        });
+                },
+                FORM_NAME,
+            );
+        } else {
+            this.form.submit(
+                async ({
+                    confirmPassword,
+                    email,
+                    password,
+                    shortName,
+                    phone,
+                    lop,
+                    bacDaoTao,
+                    khoaHoc,
+                    loaiHinhDaoTao,
+                    ngaySinh,
+                    noiSinh,
+                    nganh,
+                    gender,
+                    picture,
+                    mssv,
+                }) => {
+                    if (password !== confirmPassword) {
+                        this.form.setFieldError('confirmPassword', 'VALIDATE_DESCRIPTION.password.notMatch');
+                        return;
+                    }
+                    const submitData = {
+                        user: {
+                            email: email ?? '',
+                            password: password ?? '',
+                            shortName: shortName ?? '',
+                            phone: phone ?? '',
+                            lop: lop ?? '',
+                            bacDaoTao: bacDaoTao ?? '',
+                            khoaHoc: khoaHoc ?? '',
+                            loaiHinhDaoTao: loaiHinhDaoTao ?? '',
+                            ngaySinh: ngaySinh ? new Date(ngaySinh).toISOString().split('T')[0] : '',
+                            noiSinh: noiSinh ?? '',
+                            nganh: nganh ?? '',
+                            gender: gender ?? '',
+                            picture: picture ?? '',
+                            mssv: mssv ?? '',
+                        },
+                        userId: this.data?.id ?? '',
+                    };
+
+                    this.accountService
+                        .updateBuyer(submitData)
+                        .then((response: any) => {
+                            const data = response.data;
+                            if (data?.buyerUpdate?.status) {
+                                this.notificationService.success('Thông tin buyer đã được cập nhật.');
+                            } else {
+                                this.form.setFieldError(
+                                    'general',
+                                    data?.buyerUpdate?.error?.message || 'Lỗi không xác định',
+                                );
+                            }
+                        })
+                        .catch((error) => {
+                            this.form.setFieldError('general', error.message || 'Đã xảy ra lỗi khi cập nhật buyer');
+                        });
+                },
+                FORM_NAME,
+            );
+        }
     };
     handleUpdate = () => {
         this.form.submit(
@@ -358,7 +421,6 @@ export class BuyerBasicInformationFormComponent {
                     this.form.setFieldError('confirmPassword', 'VALIDATE_DESCRIPTION.password.notMatch');
                     return;
                 }
-
                 const submitData = {
                     user: {
                         email: email ?? '',

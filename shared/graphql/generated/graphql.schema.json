@@ -207,13 +207,9 @@
             "name": "user",
             "description": null,
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "INPUT_OBJECT",
-                "name": "UserInput",
-                "ofType": null
-              }
+              "kind": "INPUT_OBJECT",
+              "name": "UserInput",
+              "ofType": null
             },
             "defaultValue": null,
             "isDeprecated": false,
@@ -60078,8 +60074,24 @@
             "description": null,
             "args": [
               {
+                "name": "currentPassword",
+                "description": "Mật khẩu hiện tại của người dùng.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
                 "name": "newPassword",
-                "description": null,
+                "description": "Mật khẩu mới mà người dùng muốn đặt.",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -76357,18 +76369,6 @@
                 "type": {
                   "kind": "SCALAR",
                   "name": "Int",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "longName",
-                "description": null,
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -126247,13 +126247,9 @@
             "name": "password",
             "description": null,
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
             },
             "defaultValue": null,
             "isDeprecated": false,

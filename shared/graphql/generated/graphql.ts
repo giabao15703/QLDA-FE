@@ -74,7 +74,7 @@ export type AdminInput = {
   chuyenNganh?: InputMaybe<Scalars['String']['input']>;
   role: Scalars['Int']['input'];
   shortName: Scalars['String']['input'];
-  user: UserInput;
+  user?: InputMaybe<UserInput>;
 };
 
 export type AdminNode = CustomNode & UserInterface & {
@@ -7685,6 +7685,7 @@ export type MutationUpdateOrderStatusArgs = {
 
 
 export type MutationUpdatePasswordArgs = {
+  currentPassword: Scalars['String']['input'];
   newPassword: Scalars['String']['input'];
 };
 
@@ -9963,7 +9964,6 @@ export type QueryAdminsArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
-  longName?: InputMaybe<Scalars['String']['input']>;
   orderBy?: InputMaybe<Scalars['String']['input']>;
   role?: InputMaybe<Scalars['String']['input']>;
   shortName?: InputMaybe<Scalars['String']['input']>;
@@ -15718,7 +15718,7 @@ export type UserInput = {
   nganh?: InputMaybe<Scalars['String']['input']>;
   ngaySinh?: InputMaybe<Scalars['String']['input']>;
   noiSinh?: InputMaybe<Scalars['String']['input']>;
-  password: Scalars['String']['input'];
+  password?: InputMaybe<Scalars['String']['input']>;
   phone?: InputMaybe<Scalars['String']['input']>;
   picture?: InputMaybe<Scalars['Upload']['input']>;
   shortName?: InputMaybe<Scalars['String']['input']>;
@@ -20027,6 +20027,7 @@ export type GetUserQueryVariables = Exact<{
 export type GetUserQuery = { __typename?: 'Query', user?: { __typename?: 'UserNode', id: string, password: string, lastLogin?: any | null, isSuperuser: boolean, created: any, modified: any, username: string, isStaff: boolean, isActive: boolean, userType: number, email: string, activateToken: string, activateTime?: any | null, firstName?: string | null, lastName?: string | null, status?: number | null, shortName: string, fullName?: string | null, localTime: string, companyPosition: number, pk?: number | null, ngaySinh?: any | null, noiSinh?: string | null, lop?: string | null, bacDaoTao?: string | null, khoaHoc?: string | null, loaiHinhDaoTao?: string | null, nganh?: string | null, gender?: string | null, picture?: string | null, phone?: string | null, mssv?: string | null, language: { __typename?: 'LanguageNode', id: string, itemCode: string, name: string } } | null };
 
 export type GetUpdatePasswordMutationVariables = Exact<{
+  currentPassword: Scalars['String']['input'];
   newPassword: Scalars['String']['input'];
 }>;
 
@@ -30485,8 +30486,8 @@ export const GetUserDocument = gql`
     }
   }
 export const GetUpdatePasswordDocument = gql`
-    mutation getUpdatePassword($newPassword: String!) {
-  updatePassword(newPassword: $newPassword) {
+    mutation getUpdatePassword($currentPassword: String!, $newPassword: String!) {
+  updatePassword(currentPassword: $currentPassword, newPassword: $newPassword) {
     status
     error {
       ...ErrorInfo

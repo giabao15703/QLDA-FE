@@ -453,7 +453,6 @@ export interface I_UserSubstitutionPermission {
 export interface I_Admin {
     id?: string;
     user?: I_User;
-    longName?: string;
     picture?: string;
     email?: string;
     shortName?: string;

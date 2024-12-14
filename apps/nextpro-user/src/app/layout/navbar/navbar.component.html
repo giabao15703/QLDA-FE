@@ -145,10 +145,20 @@
 
                 <!-- Modal Change Password -->
                 <ng-template #changePasswordDialog>
-                    <div class="password-dialog">
-                        <h2>Đổi mật khẩu</h2>
+                    <div class="password-dialog p-8">
+                        <h2 class="text-center font-bold text-2xl pb-8">Đổi mật khẩu</h2>
                         <form (ngSubmit)="onSubmit()" #changePasswordForm="ngForm">
-                            <mat-form-field appearance="fill">
+                            <mat-form-field appearance="fill" class="w-full">
+                                <mat-label>Mật khẩu hiện tại</mat-label>
+                                <input
+                                    matInput
+                                    type="password"
+                                    name="currentPassword"
+                                    [(ngModel)]="passwords.currentPassword"
+                                    required
+                                />
+                            </mat-form-field>
+                            <mat-form-field appearance="fill" class="w-full">
                                 <mat-label>Mật khẩu mới</mat-label>
                                 <input
                                     matInput
@@ -159,7 +169,7 @@
                                 />
                             </mat-form-field>
 
-                            <mat-form-field appearance="fill">
+                            <mat-form-field appearance="fill" class="w-full">
                                 <mat-label>Xác nhận mật khẩu mới</mat-label>
                                 <input
                                     matInput

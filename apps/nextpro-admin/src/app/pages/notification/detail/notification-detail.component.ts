@@ -60,10 +60,7 @@ export class NotificationDetailComponent {
                 name: 'title',
             },
 
-            {
-                label: 'Nội dung',
-                name: 'content',
-            },
+            
             {
                 label: 'Tình trạng',
                 name: 'status',
@@ -78,6 +75,11 @@ export class NotificationDetailComponent {
                         value: false,
                     },
                 ],
+            },
+            {
+                label: 'Nội dung',
+                fieldType: E_FieldType.TEXT_EDITOR,
+                name: 'content',
             },
         ];
     }

@@ -126,8 +126,7 @@ export class GroupDetailComponent {
     handleSave = async () => {};
 
     deleteMember = async (row: I_JoinGroup) => {
-        // Nếu nhóm chỉ còn 1 thành viên (người này là leader), hỏi người dùng về việc xóa cả nhóm
-        // check role của account admin
+
         const currentUser = localStorage.getItem('admin');
         const user = JSON.parse(currentUser);
         if (user.role !== 'A_2') {

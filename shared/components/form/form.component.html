@@ -374,7 +374,8 @@
                                 </div>
                             }
                             @case ('text-editor') {
-                                <div class="mt-5 w-full" [matTooltip]="form.getFieldError(config)">
+                                <mat-label class="font-bold">{{ config.label | translate }}</mat-label>
+                                <div class="w-full mt-1 mb-5" [matTooltip]="form.getFieldError(config)">
                                     <ckeditor
                                         [formControlName]="config.name"
                                         [class]="config.class"

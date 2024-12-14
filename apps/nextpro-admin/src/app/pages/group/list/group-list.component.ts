@@ -140,13 +140,14 @@ export class GroupListPage {
         const currentAdmin = localStorage.getItem('admin');
         const user = JSON.parse(currentUser);
         const admin = JSON.parse(currentAdmin);
+        const queryVariables = {
+            ...variables,
+            ...(admin.role === 'A_2' ? {} : { idgvhuongdan: user.id }),
+        };
+
         const groupQldas = await this.GroupService.getGroupQldas(
             {
-                ...getQueryVariables({
-                    variables: {
-                        ...variables,
-                    },
-                }),
+                ...getQueryVariables({ variables: queryVariables }),
             },
             { extra: { variables } },
         );

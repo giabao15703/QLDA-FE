@@ -54,6 +54,9 @@ export class DashboardComponent {
     deTaiStatus: string = '';
     maDeTai: string = '';
     filteredUsers: I_User[] = [];
+    tenGVHD: string = '';
+    emailGVHD: string = '';
+    mota: string ='';
     toggleSidebar() {
         this.isSidebarOpen = !this.isSidebarOpen;
     }
@@ -102,7 +105,10 @@ export class DashboardComponent {
                         this.maxMember = group.maxMember;
                         this.deTaiName = deTai?.tendoan ?? 'Chưa có đề tài';
                         this.deTaiStatus = deTai?.trangthai ?? 'Chưa có trạng thái';
+                        this.tenGVHD = deTai.idgvhuongdan.shortName;
+                        this.emailGVHD = deTai.idgvhuongdan.email;
                         this.maDeTai = deTai?.madoan ?? 'Chưa có mã đồ án';
+                        this.mota = deTai?.mota ?? 'Chưa có mô tả'
                     } else {
                         console.log('Không tìm thấy thông tin nhóm chi tiết.');
                         this.errorMessage = 'Không tìm thấy thông tin nhóm chi tiết.';

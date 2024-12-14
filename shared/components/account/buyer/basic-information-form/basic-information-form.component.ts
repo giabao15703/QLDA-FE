@@ -25,13 +25,7 @@ import {
     E_FieldType,
     E_Form_Mode,
     E_InputType,
-    I_Buyer,
-    I_City,
-    I_Country,
-    I_Currency,
-    I_Gender,
     I_Industry,
-    I_NumberOfEmployee,
     I_User,
     T_Any,
 } from '#shared/types';
@@ -163,30 +157,30 @@ export class BuyerBasicInformationFormComponent {
                         name: 'nganh',
                         label: 'Ngành',
                     },
-                    {
-                        label: 'auth.register.become-buyer.form-buyer.password',
-                        placeholder: 'auth.register.become-buyer.form-buyer.password',
-                        name: 'password',
-                        inputType: E_InputType.PASSWORD,
-                        validate: [
-                            {
-                                rule: Validators.required,
-                                message: 'VALIDATE_DESCRIPTION.password.required',
-                            },
-                        ],
-                    },
-                    {
-                        label: 'auth.register.become-buyer.form-buyer.confirmPassword',
-                        placeholder: 'auth.register.become-buyer.form-buyer.confirmPassword',
-                        name: 'confirmPassword',
-                        inputType: E_InputType.PASSWORD,
-                        validate: [
-                            {
-                                rule: Validators.required,
-                                message: 'VALIDATE_DESCRIPTION.confirmPassword.required',
-                            },
-                        ],
-                    },
+                    // {
+                    //     label: 'auth.register.become-buyer.form-buyer.password',
+                    //     placeholder: 'auth.register.become-buyer.form-buyer.password',
+                    //     name: 'password',
+                    //     inputType: E_InputType.PASSWORD,
+                    //     validate: [
+                    //         {
+                    //             rule: Validators.required,
+                    //             message: 'VALIDATE_DESCRIPTION.password.required',
+                    //         },
+                    //     ],
+                    // },
+                    // {
+                    //     label: 'auth.register.become-buyer.form-buyer.confirmPassword',
+                    //     placeholder: 'auth.register.become-buyer.form-buyer.confirmPassword',
+                    //     name: 'confirmPassword',
+                    //     inputType: E_InputType.PASSWORD,
+                    //     validate: [
+                    //         {
+                    //             rule: Validators.required,
+                    //             message: 'VALIDATE_DESCRIPTION.confirmPassword.required',
+                    //         },
+                    //     ],
+                    // },
                 ],
             },
         ];
@@ -228,6 +222,17 @@ export class BuyerBasicInformationFormComponent {
                 this.form.patchValue({
                     mssv: userDetail.mssv,
                     shortName: userDetail.shortName,
+                    email: userDetail.email,
+                    ngaySinh:userDetail.ngaySinh,
+                    noiSinh: userDetail.noiSinh,
+                    phone: userDetail.phone,
+                    lop: userDetail.lop,
+                    bacDaoTao: userDetail.bacDaoTao,
+                    khoaHoc: userDetail.khoaHoc,
+                    loaiHinhDaoTao: userDetail.loaiHinhDaoTao,
+                    nganh: userDetail.nganh,
+                    gender: userDetail.gender,
+                    anh: userDetail.picture,
                 });
             }
         }
@@ -272,9 +277,7 @@ export class BuyerBasicInformationFormComponent {
         if (this.mode === E_Form_Mode.CREATE) {
             this.form.submit(
                 async ({
-                    confirmPassword,
                     email,
-                    password,
                     shortName,
                     phone,
                     lop,
@@ -288,14 +291,14 @@ export class BuyerBasicInformationFormComponent {
                     picture,
                     mssv,
                 }) => {
-                    if (password !== confirmPassword) {
-                        this.form.setFieldError('confirmPassword', 'VALIDATE_DESCRIPTION.password.notMatch');
-                        return;
-                    }
+                    // if (password !== confirmPassword) {
+                    //     this.form.setFieldError('confirmPassword', 'VALIDATE_DESCRIPTION.password.notMatch');
+                    //     return;
+                    // }
                     const submitData = {
                         user: {
                             email: email ?? '',
-                            password: password ?? '',
+                            password: mssv ?? '',
                             shortName: shortName ?? '',
                             phone: phone ?? '',
                             lop: lop ?? '',
@@ -318,7 +321,7 @@ export class BuyerBasicInformationFormComponent {
                             if (data?.buyerCreate?.status) {
                                 // Tạo buyer thành công, xử lý trường hợp thành công
                                 this.localStorageService.remove(FORM_NAME);
-                                console.log('Buyer được tạo thành công:', data.buyerCreate);
+                                console.log('Sinh viên được tạo thành công:', data.buyerCreate);
                             } else {
                                 // Xử lý lỗi từ phản hồi mutation
                                 this.form.setFieldError(
@@ -329,7 +332,7 @@ export class BuyerBasicInformationFormComponent {
                         })
                         .catch((error) => {
                             // Xử lý lỗi khi gửi request
-                            this.form.setFieldError('general', error.message || 'Đã xảy ra lỗi khi tạo buyer');
+                            this.form.setFieldError('general', error.message || 'Đã xảy ra lỗi khi tạo sinh viên');
                         });
                 },
                 FORM_NAME,
@@ -380,15 +383,16 @@ export class BuyerBasicInformationFormComponent {
                     this.accountService
                         .updateBuyer(submitData)
                         .then((response: any) => {
-                            const data = response.data;
-                            if (data?.buyerUpdate?.status) {
-                                this.notificationService.success('Thông tin buyer đã được cập nhật.');
+                            debugger;
+                            if (response?.buyerUpdate?.status) {
+                                this.notificationService.success('Thông tin sinh viên đã được cập nhật.');
                             } else {
                                 this.form.setFieldError(
                                     'general',
-                                    data?.buyerUpdate?.error?.message || 'Lỗi không xác định',
+                                    response?.buyerUpdate?.error?.message || 'Lỗi không xác định',
                                 );
                             }
+
                         })
                         .catch((error) => {
                             this.form.setFieldError('general', error.message || 'Đã xảy ra lỗi khi cập nhật buyer');
@@ -398,69 +402,7 @@ export class BuyerBasicInformationFormComponent {
             );
         }
     };
-    handleUpdate = () => {
-        this.form.submit(
-            async ({
-                confirmPassword,
-                email,
-                password,
-                shortName,
-                phone,
-                lop,
-                bacDaoTao,
-                khoaHoc,
-                loaiHinhDaoTao,
-                ngaySinh,
-                noiSinh,
-                nganh,
-                gender,
-                picture,
-                mssv,
-            }) => {
-                if (password !== confirmPassword) {
-                    this.form.setFieldError('confirmPassword', 'VALIDATE_DESCRIPTION.password.notMatch');
-                    return;
-                }
-                const submitData = {
-                    user: {
-                        email: email ?? '',
-                        password: password ?? '',
-                        shortName: shortName ?? '',
-                        phone: phone ?? '',
-                        lop: lop ?? '',
-                        bacDaoTao: bacDaoTao ?? '',
-                        khoaHoc: khoaHoc ?? '',
-                        loaiHinhDaoTao: loaiHinhDaoTao ?? '',
-                        ngaySinh: ngaySinh ? new Date(ngaySinh).toISOString().split('T')[0] : '',
-                        noiSinh: noiSinh ?? '',
-                        nganh: nganh ?? '',
-                        gender: gender ?? '',
-                        picture: picture ?? '',
-                        mssv: mssv ?? '',
-                    },
-                    userId: this.data?.id ?? '',
-                };
 
-                this.accountService
-                    .updateBuyer(submitData)
-                    .then((response: any) => {
-                        const data = response.data;
-                        if (data?.buyerUpdate?.status) {
-                            this.notificationService.success('Thông tin buyer đã được cập nhật.');
-                        } else {
-                            this.form.setFieldError(
-                                'general',
-                                data?.buyerUpdate?.error?.message || 'Lỗi không xác định',
-                            );
-                        }
-                    })
-                    .catch((error) => {
-                        this.form.setFieldError('general', error.message || 'Đã xảy ra lỗi khi cập nhật buyer');
-                    });
-            },
-            FORM_NAME,
-        );
-    };
     selectedFile: File | null = null;
 
     onFileChange(event: any) {
@@ -509,5 +451,62 @@ export class BuyerBasicInformationFormComponent {
     getCsrfToken(): string {
         const match = document.cookie.match(/csrftoken=([\w-]+)/);
         return match ? match[1] : '';
+    }
+
+    resetPassWord() {
+        this.form.submit(
+            async ({
+                email,
+                shortName,
+                phone,
+                lop,
+                bacDaoTao,
+                khoaHoc,
+                loaiHinhDaoTao,
+                ngaySinh,
+                noiSinh,
+                nganh,
+                gender,
+                picture,
+                mssv,
+            }) => {
+                const submitData = {
+                    user: {
+                        email: email ?? '',
+                        shortName: shortName ?? '',
+                        phone: phone ?? '',
+                        lop: lop ?? '',
+                        bacDaoTao: bacDaoTao ?? '',
+                        khoaHoc: khoaHoc ?? '',
+                        loaiHinhDaoTao: loaiHinhDaoTao ?? '',
+                        ngaySinh: ngaySinh ? new Date(ngaySinh).toISOString().split('T')[0] : '',
+                        noiSinh: noiSinh ?? '',
+                        nganh: nganh ?? '',
+                        gender: gender ?? '',
+                        picture: picture ?? '',
+                        mssv: mssv ?? '',
+                        password: mssv ?? '',
+                    },
+                    userId: this.data?.id ?? '',
+                };
+
+                this.accountService
+                    .updateBuyer(submitData)
+                    .then((response: any) => {
+                        if (response?.buyerUpdate?.status) {
+                            this.notificationService.success('Mật khẩu đã được reset.');
+                        } else {
+                            this.form.setFieldError(
+                                'general',
+                                response?.buyerUpdate?.error?.message || 'Lỗi không xác định',
+                            );
+                        }
+                    })
+                    .catch((error) => {
+                        this.form.setFieldError('general', error.message || 'Đã xảy ra lỗi khi cập nhật mật khẩu');
+                    });
+            },
+            FORM_NAME,
+        );
     }
 }

@@ -5,4 +5,13 @@
         [disabled]="isLoading || (showTerms && !isTermAccept)">
         {{ buttonText | translate | uppercase }}
     </button>
+    <button
+        class="m-1 w-48"
+        mat-raised-button
+        color="primary"
+        (click)="resetPassWord()"
+        [disabled]="mode !== 'UPDATE' || isLoading || (showTerms && !isTermAccept)"
+    >
+        Reset Password
+    </button>
 </div>

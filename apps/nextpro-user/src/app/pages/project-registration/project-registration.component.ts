@@ -59,6 +59,7 @@ export class ProjectRegistrationComponent {
             if (response.deTaiUpdate.status) {
                 this.notification.success('Bạn đã xin đăng kí thành công');
                 console.log('Đăng kí đề tài thành công:', response);
+                window.location.reload();
             } else {
                 this.notification.error(response.deTaiUpdate.error.message);
                 console.log('Đăng kí đề tài không thành công:', response);

@@ -60,7 +60,6 @@ export class NotificationDetailComponent {
                 name: 'title',
             },
 
-            
             {
                 label: 'Tình trạng',
                 name: 'status',

@@ -20,15 +20,7 @@ import {
     NotificationService,
     PromotionService,
 } from '#shared/services';
-import {
-    E_ContainerType,
-    E_FieldType,
-    E_Form_Mode,
-    E_InputType,
-    I_Industry,
-    I_User,
-    T_Any,
-} from '#shared/types';
+import { E_ContainerType, E_FieldType, E_Form_Mode, E_InputType, I_Industry, I_User, T_Any } from '#shared/types';
 import { translateData } from '#shared/utils';
 import { FormComponent } from '../../../form/form.component';
 import { IndustrySelectComponent } from '../../../industry-select/industry-select.component';
@@ -223,7 +215,7 @@ export class BuyerBasicInformationFormComponent {
                     mssv: userDetail.mssv,
                     shortName: userDetail.shortName,
                     email: userDetail.email,
-                    ngaySinh:userDetail.ngaySinh,
+                    ngaySinh: userDetail.ngaySinh,
                     noiSinh: userDetail.noiSinh,
                     phone: userDetail.phone,
                     lop: userDetail.lop,
@@ -383,7 +375,6 @@ export class BuyerBasicInformationFormComponent {
                     this.accountService
                         .updateBuyer(submitData)
                         .then((response: any) => {
-                            debugger;
                             if (response?.buyerUpdate?.status) {
                                 this.notificationService.success('Thông tin sinh viên đã được cập nhật.');
                             } else {
@@ -392,7 +383,6 @@ export class BuyerBasicInformationFormComponent {
                                     response?.buyerUpdate?.error?.message || 'Lỗi không xác định',
                                 );
                             }
-
                         })
                         .catch((error) => {
                             this.form.setFieldError('general', error.message || 'Đã xảy ra lỗi khi cập nhật buyer');

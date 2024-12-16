@@ -24,30 +24,13 @@ export class LoginComponent {
             {
                 label: 'auth.login.input-userID-label',
                 name: 'username',
-                class: 'w-full field-transparent',
+                class: 'w-full field-transparent text-black',
             },
             {
                 label: 'auth.login.input-password-placeholder',
                 name: 'password',
                 inputType: E_InputType.PASSWORD,
                 class: 'w-full field-transparent',
-            },
-            {
-                class: 'flex justify-between items-center w-full',
-                fieldType: E_FieldType.CONTAINER,
-                children: [
-                    {
-                        label: 'auth.login.remember-me',
-                        name: 'rememberMe',
-                        wrapperClass: 'flex items-center justify-between',
-                        fieldType: E_FieldType.CHECKBOX,
-                    },
-                    {
-                        label: 'auth.login.forgot-password',
-                        fieldType: E_FieldType.BUTTON,
-                        onClick: () => this.toggleForgotPassword(),
-                    },
-                ],
             },
         ];
     }

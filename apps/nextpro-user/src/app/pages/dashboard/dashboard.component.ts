@@ -56,7 +56,7 @@ export class DashboardComponent {
     filteredUsers: I_User[] = [];
     tenGVHD: string = '';
     emailGVHD: string = '';
-    mota: string ='';
+    mota: string = '';
     toggleSidebar() {
         this.isSidebarOpen = !this.isSidebarOpen;
     }
@@ -108,7 +108,7 @@ export class DashboardComponent {
                         this.tenGVHD = deTai.idgvhuongdan.shortName;
                         this.emailGVHD = deTai.idgvhuongdan.email;
                         this.maDeTai = deTai?.madoan ?? 'Chưa có mã đồ án';
-                        this.mota = deTai?.mota ?? 'Chưa có mô tả'
+                        this.mota = deTai?.mota ?? 'Chưa có mô tả';
                     } else {
                         console.log('Không tìm thấy thông tin nhóm chi tiết.');
                         this.errorMessage = 'Không tìm thấy thông tin nhóm chi tiết.';

@@ -32,6 +32,9 @@ import {
     DeleteMemberFromGroupGQL,
     DeleteMemberFromGroupMutationVariables,
     DeleteMemberFromGroupMutation,
+    RemoveDeTaiFromGroupMutation,
+    RemoveDeTaiFromGroupMutationVariables,
+    RemoveDeTaiFromGroupGQL,
 } from '#shared/graphql/types';
 import { E_Role, I_GraphQLOptions, I_MutationResponse, I_NormalizeExtra, I_TableState, I_User } from '#shared/types';
 import { normalizeWithPagination } from '#shared/utils';
@@ -59,6 +62,7 @@ export class GroupQLDAService {
         private getStudentsInGroupGQL: GetStudentsInGroupGQL,
         private http: HttpClient,
         private deleteMemberFromGroupGQL: DeleteMemberFromGroupGQL,
+        private removeDetaiFromGroupGQL: RemoveDeTaiFromGroupGQL,
     ) {}
 
     get error(): Observable<string> {
@@ -253,5 +257,16 @@ export class GroupQLDAService {
             DeleteMemberFromGroupMutationVariables,
             { deleteMemberFromGroup: I_MutationResponse }
         >(this.deleteMemberFromGroupGQL, variables, options);
+    };
+
+    removeDetaiFromGroup = (
+        variables?: RemoveDeTaiFromGroupMutationVariables,
+        options?: I_GraphQLOptions<RemoveDeTaiFromGroupMutation, { removeDeTaiFromGroup: I_MutationResponse }>,
+    ) => {
+        return this.graphqlService.mutate<
+            RemoveDeTaiFromGroupMutation,
+            RemoveDeTaiFromGroupMutationVariables,
+            { removeDeTaiFromGroup: I_MutationResponse }
+        >(this.removeDetaiFromGroupGQL, variables, options);
     };
 }

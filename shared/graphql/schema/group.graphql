@@ -188,3 +188,15 @@ mutation deleteMemberFromGroup($groupId: ID!,$userId: ID!)
 
     }
 }
+
+mutation removeDeTaiFromGroup($groupId: ID!)
+{
+    removeDeTaiFromGroup(groupId: $groupId)
+    {
+        status
+        error {
+            code
+            message
+        }
+    }
+}

@@ -31,6 +31,7 @@ const FORM_NAME = 'FORM_ADMIN_DELIVERY_GROUP_STUDENT';
     imports: [CommonModule, TranslateModule, LoadingComponent, MaterialModules, FormComponent, TableComponent],
 })
 export class GroupDetailComponent {
+    checkDetai: boolean = false;
     constructor(
         public loadingService: LoadingService,
         public table: TableService<I_JoinGroup>,
@@ -93,11 +94,19 @@ export class GroupDetailComponent {
 
     ngOnInit() {
         this.getJoinGroups();
-        const oldData = this.localStorageService.get(FORM_NAME);
+        this.updateButtonState();
+    }
 
-        // if (oldData) {
-        //     this.form.patchValue(oldData);
-        // }
+    updateButtonState() {
+        const currentUser = localStorage.getItem('admin');
+        const user = JSON.parse(currentUser);
+
+        // Đảm bảo checkDetai là true nếu có điều kiện hợp lệ
+        if (this.data?.deTai && user?.role === 'A_2') {
+            this.checkDetai = true;
+        } else {
+            this.checkDetai = false;
+        }
     }
 
     getJoinGroups = async (variables?: I_QueryVariables) => {
@@ -113,6 +122,7 @@ export class GroupDetailComponent {
             { extra: { variables } },
         );
 
+
         this.table.state.data = joinGroups.data;
         this.table.state.pagination = joinGroups.pagination;
         this.table.state.selection?.clear();
@@ -126,7 +136,6 @@ export class GroupDetailComponent {
     handleSave = async () => {};
 
     deleteMember = async (row: I_JoinGroup) => {
-
         const currentUser = localStorage.getItem('admin');
         const user = JSON.parse(currentUser);
         if (user.role !== 'A_2') {
@@ -173,6 +182,33 @@ export class GroupDetailComponent {
             this.notificationService.error('Có lỗi xảy ra khi xóa thành viên!');
         } finally {
             this.loadingService.hide(); // Tắt loading
+        }
+    };
+
+    removeDetaiFromGroup = async () => {
+        console.log(this.data.deTai?.id);
+        if (this.data.deTai?.id) {
+            try {
+                this.loadingService.show(); // Hiển thị loading
+                const { removeDeTaiFromGroup } = await this.groupQLDAService.removeDetaiFromGroup({
+                    groupId: this.data.id,
+                });
+
+                if (removeDeTaiFromGroup.status) {
+                    this.notificationService.success(removeDeTaiFromGroup.error?.message);
+                    this.onCloseDrawer();
+                    if (this.refetch) {
+                        this.refetch(); // Gọi refetch để làm mới danh sách ở GroupListPage
+                    }
+                } else {
+                    this.notificationService.error(removeDeTaiFromGroup.error?.message);
+                }
+            } catch (error) {
+                console.error(error);
+                this.notificationService.error('Có lỗi xảy ra khi xóa đề tài!');
+            } finally {
+                this.loadingService.hide(); // Tắt loading
+            }
         }
     };
 }

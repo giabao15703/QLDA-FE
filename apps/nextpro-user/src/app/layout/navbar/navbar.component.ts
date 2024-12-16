@@ -92,7 +92,6 @@ export class NavbarComponent {
 
     // Gọi service để thay đổi mật khẩu
     updatePassword() {
-        debugger;
         const variables = {
             currentPassword: this.passwords.currentPassword,
             newPassword: this.passwords.newPassword,

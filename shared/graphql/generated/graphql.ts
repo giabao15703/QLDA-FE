@@ -6089,6 +6089,7 @@ export type Mutation = {
   reasonUpdateStatus?: Maybe<ReasonUpdateStatus>;
   refundRequest?: Maybe<RefundRequest>;
   reloadDataEmailTemplate?: Maybe<ReloadDataEmailTemplate>;
+  removeDeTaiFromGroup?: Maybe<RemoveDeTaiFromGroup>;
   rfxAwardedCreate?: Maybe<RfxAwardCreate>;
   rfxClearAll?: Maybe<RfxClearAll>;
   rfxCreate?: Maybe<RfxCreate>;
@@ -7298,6 +7299,11 @@ export type MutationReasonUpdateStatusArgs = {
 
 export type MutationRefundRequestArgs = {
   input: RefundRequestInput;
+};
+
+
+export type MutationRemoveDeTaiFromGroupArgs = {
+  groupId: Scalars['ID']['input'];
 };
 
 
@@ -12839,6 +12845,12 @@ export type ReloadDataEmailTemplate = {
   status?: Maybe<Scalars['Boolean']['output']>;
 };
 
+export type RemoveDeTaiFromGroup = {
+  __typename?: 'RemoveDeTaiFromGroup';
+  error?: Maybe<Error>;
+  status?: Maybe<Scalars['Boolean']['output']>;
+};
+
 export type SicpCreate = {
   __typename?: 'SICPCreate';
   error?: Maybe<Error>;
@@ -17386,6 +17398,13 @@ export type DeleteMemberFromGroupMutationVariables = Exact<{
 
 
 export type DeleteMemberFromGroupMutation = { __typename?: 'Mutation', deleteMemberFromGroup?: { __typename?: 'DeleteMemberFromGroup', status?: boolean | null, error?: { __typename?: 'Error', code?: string | null, message?: string | null } | null } | null };
+
+export type RemoveDeTaiFromGroupMutationVariables = Exact<{
+  groupId: Scalars['ID']['input'];
+}>;
+
+
+export type RemoveDeTaiFromGroupMutation = { __typename?: 'Mutation', removeDeTaiFromGroup?: { __typename?: 'RemoveDeTaiFromGroup', status?: boolean | null, error?: { __typename?: 'Error', code?: string | null, message?: string | null } | null } | null };
 
 export type KeHoachInfoFragment = { __typename?: 'KeHoachDoAnNode', id: string, slSinhVien: number, slDoAn: number, kyMo: string, tgbdDoAn: any, tgktDoAn: any, tgbdTaoDoAn: any, tgktTaoDoAn: any, tgbdDangKyDeTai: any, tgktDangKyDeTai: any, tgbdLamDoAn: any, tgktLamDoAn: any, tgbdChamPhanBien: any, tgktChamPhanBien: any, tgbdChamHoiDong: any, tgktChamHoiDong: any };
 
@@ -24176,6 +24195,28 @@ export const DeleteMemberFromGroupDocument = gql`
   })
   export class DeleteMemberFromGroupGQL extends Apollo.Mutation<DeleteMemberFromGroupMutation, DeleteMemberFromGroupMutationVariables> {
     override document = DeleteMemberFromGroupDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const RemoveDeTaiFromGroupDocument = gql`
+    mutation removeDeTaiFromGroup($groupId: ID!) {
+  removeDeTaiFromGroup(groupId: $groupId) {
+    status
+    error {
+      code
+      message
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class RemoveDeTaiFromGroupGQL extends Apollo.Mutation<RemoveDeTaiFromGroupMutation, RemoveDeTaiFromGroupMutationVariables> {
+    override document = RemoveDeTaiFromGroupDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

@@ -10,6 +10,8 @@
         }}
     </div>
 </div>
-<mat-drawer-content>
-    <app-table [attr.name]="table.name" [columns]="table.config.columns" [data]="table.state.data" />
-</mat-drawer-content>
+<app-table [attr.name]="table.name" [columns]="table.config.columns" [data]="table.state.data" />
+<button mat-raised-button color="primary" class="!absolute bottom-4 right-4" (click)="removeDetaiFromGroup()"
+[disabled]="!checkDetai">
+    Gỡ đề tài
+</button>

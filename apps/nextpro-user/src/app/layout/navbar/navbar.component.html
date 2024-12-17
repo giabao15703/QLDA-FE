@@ -53,13 +53,9 @@
                 <div mat-menu-item class="!text-white !font-light">{{ 'navbar.order' | translate }}</div>
             </mat-menu>
         </div>
-        <div>
-            <img src="/assets/icons/navbar/Logo-Nextpro-Responsive.svg" alt="nextpro-logo" class="h-[45px]" />
-        </div>
     </div>
 
     <div class="flex items-center gap-3">
-        <app-language-switch />
         <!-- <div class="flex items-center gap-3 no-underline text-[#ffffff] !text-[15px] cursor-pointer">
             <span class="material-symbols-outlined">notifications</span>
             <div>{{ 'navbar.personal.notification' | translate }}</div>
@@ -218,18 +214,7 @@
                     />
                 </a>
             </div>
-            <div>
-                <button
-                    mat-raised-button
-                    [matMenuTriggerFor]="menuRegister"
-                    class="!bg-gradient-to-l !from-[#0B3440] !to-[#15677F]"
-                >
-                    <div class="flex items-center gap-2">
-                        <img src="/assets/icons/navbar/pen-square-svgrepo-com.svg" alt="" class="lg:w-7 w-5" />
-                        <div class="text-white pt-[2px]">{{ 'navbar.register-btn' | translate }}</div>
-                    </div>
-                </button>
-            </div>
+
             <div>
                 <mat-menu #menuRegister="matMenu" class="!bg-gradient-to-r from-[#3CC9C7] to-[#15677f]">
                     <div mat-menu-item>

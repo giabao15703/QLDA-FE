@@ -68,9 +68,7 @@ export class GroupRegistrationComponent implements OnInit {
                 } else if (response.groupQldaCreate.error?.code === 'USER_NOT_FOUND') {
                     this.notification.error('Không tìm thấy thông tin người dùng.');
                 } else {
-                    this.notification.error(
-                        'Có lỗi xảy ra: ' + (response.groupQldaCreate.error?.message || 'Lỗi không xác định.'),
-                    );
+                    this.notification.error(response.groupQldaCreate.error?.message || 'Lỗi không xác định.');
                 }
             }
         } catch (error) {

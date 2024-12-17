@@ -22,7 +22,7 @@
                             Giới tính: <span class="font-semibold">{{ gender }}</span>
                         </p>
                         <p>
-                            Ngày sinh: <span class="font-semibold">{{ ngaySinh }}</span>
+                            Ngày sinh: <span class="font-semibold">{{ formatDate(ngaySinh) }}</span>
                         </p>
                         <p>
                             Nơi sinh: <span class="font-semibold">{{ noiSinh }}</span>
@@ -94,7 +94,7 @@
                             <td class="px-4 py-2">{{ user.mssv }}</td>
                             <td class="px-4 py-2">{{ user.shortName }}</td>
                             <td class="px-4 py-2">{{ user.gender }}</td>
-                            <td class="px-4 py-2">{{ user.ngaySinh }}</td>
+                            <td class="px-4 py-2">{{ formatDate(user.ngaySinh) }}</td>
                             <td class="px-4 py-2">{{ user.lop }}</td>
                             <td class="px-4 py-2">{{ user.nganh }}</td>
                             <td class="px-4 py-2">{{ user.khoaHoc }}</td>

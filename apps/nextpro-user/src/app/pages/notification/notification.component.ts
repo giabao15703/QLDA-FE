@@ -16,6 +16,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 })
 export class NotificationComponent {
     notifications: any[] = [];
+    selectedNotification: any = null;
 
     constructor(
         private notificationQLDAService: NotificationQLDAService,
@@ -25,12 +26,17 @@ export class NotificationComponent {
     ngOnInit() {
         this.getNotifications();
     }
-    getNotifications = async (variables?: I_QueryVariables) => {
-        const notifications = await this.notificationQLDAService.getNotifications({}, { extra: { variables } });
-        console.log('Danh sách thông báo:', notifications);
-        this.notifications = (notifications.data || []).filter((notification: any) => notification.status === true);
+    getNotifications = async () => {
+        const notifications = await this.notificationQLDAService.getNotifications({});
+        this.notifications = (notifications.data || []).filter((n: any) => n.status === true);
     };
     formatDate(date: string): string {
         return this.datePipe.transform(date, 'dd/MM/yyyy') || '';
+    }
+    openModal(notification: any): void {
+        this.selectedNotification = notification;
+    }
+    closeModal(): void {
+        this.selectedNotification = null;
     }
 }

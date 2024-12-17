@@ -4,7 +4,7 @@ import { SidebarComponent } from '#user/layout/sidebar/sidebar.component';
 import { NavbarComponent } from '#user/layout';
 import { AccountService, DeTaiService, GroupQLDAService, NotificationService } from '#shared/services';
 import { I_JoinGroup, I_JoinRequest, I_TableState, I_User } from '#shared/types';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { toPromise } from '@apollo/client/core';
 import { Router } from '@angular/router';
 
@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.scss'], // Nếu bạn có tệp CSS cho trang này
     imports: [CommonModule, SidebarComponent, NavbarComponent],
+    providers: [DatePipe],
 })
 export class DashboardComponent {
     constructor(
@@ -25,7 +26,8 @@ export class DashboardComponent {
         private groupQldaService: GroupQLDAService,
         private notificationService: NotificationService,
         private router: Router,
-    ) {}
+        private datePipe: DatePipe,
+    ) { }
 
     // Biến dữ liệu
     user = JSON.parse(localStorage.getItem('user') || '{}');
@@ -138,10 +140,7 @@ export class DashboardComponent {
             return;
         }
 
-        // Chuyển chuỗi JSON từ localStorage thành đối tượng
         const parsedUser = JSON.parse(user);
-
-        // Kiểm tra nếu đối tượng parsedUser có thuộc tính id
         const currentUserId = parsedUser?.id;
 
         if (!currentUserId) {
@@ -150,58 +149,66 @@ export class DashboardComponent {
             return;
         }
 
-        console.log('UserId từ localStorage:', currentUserId); // Kiểm tra userId lấy từ localStorage
+        console.log('UserId từ localStorage:', currentUserId);
+
+        // Gọi API lấy danh sách JoinGroup
         this.groupQLDAService
             .getJoinGroups()
             .then((response: I_TableState<I_JoinGroup>) => {
-                console.log('Dữ liệu JoinGroup nhận được:', response); // Kiểm tra dữ liệu trả về từ getJoinGroups()
+                console.log('Dữ liệu JoinGroup nhận được:', response);
 
                 if (response?.data?.length) {
-                    // Kiểm tra nếu response.data có dữ liệu
-                    // Kiểm tra xem có userId nào có role là "leader"
+                    // Kiểm tra xem user hiện tại có phải là leader không
                     const isLeader = response.data.some((joinGroup) => {
-                        // Kiểm tra nếu joinGroup.user tồn tại và có id
                         const userIdInGroup = joinGroup.user?.id;
-
-                        // Kiểm tra kiểu dữ liệu của userId và currentUserId
-                        if (userIdInGroup && currentUserId) {
-                            // Nếu currentUserId là string và userIdInGroup là number, chuyển về string
-                            const currentId = String(currentUserId);
-                            const groupUserId = String(userIdInGroup);
-
-                            // So sánh
-                            const isUserLeader = joinGroup.role === 'leader' && currentId === groupUserId;
-                            console.log(
-                                `Kiểm tra JoinGroup với userId ${groupUserId}: role=${joinGroup.role}, isLeader=${isUserLeader}`,
-                            );
-
-                            return isUserLeader;
-                        }
-
-                        return false;
+                        return joinGroup.role === 'leader' && String(userIdInGroup) === String(currentUserId);
                     });
 
                     if (isLeader) {
-                        // Nếu userId là leader, mới gọi hàm getStudentsWithoutGroup
-                        console.log('UserId là leader, tiến hành tải danh sách sinh viên không có nhóm.');
+                        console.log('UserId là leader, kiểm tra nhóm chưa đầy thành viên.');
 
-                        this.groupQLDAService
-                            .getStudentsWithoutGroup()
-                            .then((studentsResponse: I_TableState<I_User>) => {
-                                console.log('Dữ liệu sinh viên không có nhóm:', studentsResponse); // Kiểm tra dữ liệu sinh viên trả về
+                        // Kiểm tra xem có nhóm nào chưa đầy không
+                        const hasAvailableGroup = response.data.some((joinGroup) => {
+                            const group = joinGroup.group;
 
-                                if (studentsResponse?.data) {
-                                    this.filteredUsers = studentsResponse.data; // Lưu kết quả vào filteredUsers
-                                    console.log('Cập nhật danh sách sinh viên không có nhóm:', this.filteredUsers);
-                                }
-                            })
-                            .catch((error) => {
-                                console.error('Lỗi khi lấy danh sách sinh viên không có nhóm:', error);
-                                this.errorMessage =
-                                    'Không thể tải danh sách sinh viên không có nhóm, vui lòng thử lại sau!';
-                            });
+                            // Kiểm tra điều kiện: member_count < max_member
+                            if (group?.memberCount < group?.maxMember) {
+                                console.log(
+                                    `Nhóm ${group.name} có member_count=${group.memberCount}, max_member=${group.maxMember} -> Chưa đầy.`,
+                                );
+                                return true;
+                            }
+                            console.log(
+                                `Nhóm ${group.name} đã đầy: member_count=${group.memberCount}, max_member=${group.maxMember}`,
+                            );
+                            return false;
+                        });
+
+                        if (hasAvailableGroup) {
+                            // Nếu có nhóm chưa đầy, gọi API lấy danh sách sinh viên không có nhóm
+                            console.log('Có nhóm chưa đầy, tiến hành tải danh sách sinh viên không có nhóm.');
+
+                            this.groupQLDAService
+                                .getStudentsWithoutGroup()
+                                .then((studentsResponse: I_TableState<I_User>) => {
+                                    console.log('Dữ liệu sinh viên không có nhóm:', studentsResponse);
+
+                                    if (studentsResponse?.data) {
+                                        this.filteredUsers = studentsResponse.data;
+                                        console.log('Cập nhật danh sách sinh viên không có nhóm:', this.filteredUsers);
+                                    }
+                                })
+                                .catch((error) => {
+                                    console.error('Lỗi khi lấy danh sách sinh viên không có nhóm:', error);
+                                    this.errorMessage =
+                                        'Không thể tải danh sách sinh viên không có nhóm, vui lòng thử lại sau!';
+                                });
+                        } else {
+                            // Tất cả nhóm đã đầy, không gọi API
+                            this.errorMessage = 'Tất cả các nhóm đã đủ thành viên.';
+                            console.log('Tất cả các nhóm đã đầy, không tải danh sách sinh viên.');
+                        }
                     } else {
-                        // Nếu userId không phải là leader, thông báo hoặc xử lý tùy ý
                         this.errorMessage = 'Bạn không phải là leader, không thể tải danh sách sinh viên.';
                         console.log('UserId không phải là leader, không thể tải danh sách sinh viên.');
                     }
@@ -215,6 +222,7 @@ export class DashboardComponent {
                 this.errorMessage = 'Không thể tải danh sách nhóm, vui lòng thử lại sau!';
             });
     }
+
     async inviteUserToGroup(user: I_User) {
         console.log('Inviting user:', user); // Đảm bảo hàm này được gọi
         try {
@@ -248,6 +256,8 @@ export class DashboardComponent {
     openModal() {
         this.router.navigate(['/group']);
     }
-
+    formatDate(date: string): string {
+        return this.datePipe.transform(date, 'dd/MM/yyyy') || '';
+    }
     getDeTai() {}
 }
